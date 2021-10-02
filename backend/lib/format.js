@@ -15,7 +15,7 @@ function formatVideoObj(originalObj, responseData) {
     releaseYear: parseInt(responseData.Year.substring(0,4)), // in case of series where their year is e.g. "2005-2014",
     rated: responseData.Rated,
     released: responseData.Released,
-    runtime: parseInt(responseData.Runtime),
+    runtimeMinutes: parseInt(responseData.Runtime),
     genres: responseData.Genre.split(','),
     director: responseData.Director.split(','),
     writer: responseData.Writer.split(','),
