@@ -26,9 +26,15 @@ async function fetchVideosWithDelayAndFormat(videosArr, plotType) {
 
         function handlePromise() {
           if (videos.find((x) => x.__error)) {
-            reject("Done fetching all videos, but some returned with errors!");
+            reject({
+              message: "Done fetching all videos, but some returned with errors!",
+              videos: videos,
+            });
           } else {
-            resolve("Done fetching all videos succesfully");
+            resolve({
+              message: "Done fetching all videos succesfully",
+              videos: videos,
+            });
           }
         }
 
@@ -58,6 +64,7 @@ async function fetchVideosWithDelayAndFormat(videosArr, plotType) {
           .catch((err) => {
             log(chalk.bgRed("fetch failed:", err));
             videos[currentVideoIndex].__error = true;
+            //videos[currentVideoIndex].__errorMessage = err;
           })
           .finally(() => {
             videos[currentVideoIndex].__finished = true;
