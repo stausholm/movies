@@ -10,10 +10,10 @@ function resizePosterUrl(posterUrl, size) {
 
 function formatVideoObj(originalObj, responseData) {
   let formattedObj = {
-    title: originalObj.title,
-    subtitles: originalObj.subtitles,
-    languages: originalObj.languages,
-    imdbId: originalObj.imdbId,
+    title: originalObj.title || responseData.Title,
+    subtitles: originalObj.subtitles || OMDB_API_EMPTY_VAL_RESPONSE,
+    languages: originalObj.languages || OMDB_API_EMPTY_VAL_RESPONSE,
+    imdbId: responseData.imdbID,
     imdbTitle: responseData.Title,
     year: responseData.Year,
     releaseYear: parseInt(responseData.Year.substring(0, 4)), // in case of series where their year is e.g. "2005-2014",
@@ -45,7 +45,7 @@ function formatVideoObj(originalObj, responseData) {
     imdbRating: responseData.imdbRating,
     imdbVotes: responseData.imdbVotes,
     type: responseData.Type,
-    imdbUrl: `https://www.imdb.com/title/${originalObj.imdbId}`,
+    imdbUrl: `https://www.imdb.com/title/${responseData.imdbID}`,
   };
 
   switch (formattedObj.type) {
