@@ -24,10 +24,27 @@ async function fetchVideosWithDelayAndFormat(videosArr, plotType) {
         // looped through all videos. Stop the loop
         clearInterval(intervalFunc);
 
-        if (videos.find((x) => x.__error)) {
-          reject("Done fetching videos, but some returned with errors!");
+        function handlePromise() {
+          if (videos.find((x) => x.__error)) {
+            reject("Done fetching all videos, but some returned with errors!");
+          } else {
+            resolve("Done fetching all videos succesfully");
+          }
+        }
+
+        if (videos.every((x) => x.__finished)) {
+          handlePromise();
         } else {
-          resolve("Done fetching all videos succesfully");
+          log("Waiting for all videos to finish fetching from omdb");
+          let unfinishedVideos = videos.filter((x) => !x.__finished);
+          // check periodically if all remaining fetches have finished
+          let checkIfFinishedIntervalFunc = setInterval(() => {
+            log("checking");
+            if (unfinishedVideos.every((vid) => vid.__finished)) {
+              handlePromise();
+              clearInterval(checkIfFinishedIntervalFunc);
+            }
+          }, 500);
         }
       } else {
         const currentVideoIndex = videoIndex;
