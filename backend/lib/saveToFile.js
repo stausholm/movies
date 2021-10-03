@@ -3,13 +3,17 @@ const path = require("path");
 const chalk = require("chalk");
 const log = console.log;
 
-function saveToFile(relativeFilePath, fileName, data, appendDataToFile = false) {
+function saveToFile(relativeFilePath, fileName, data, appendDataToFile = false, errorCallback) {
   fs.open(
     path.join(__dirname, "../", relativeFilePath, fileName),
     appendDataToFile ? "a" : "w",
     (e, id) => {
       if (e) {
-        return log(chalk.bgRed("Error opening file", e));
+        log(chalk.bgRed("Error opening file", e));
+        if (errorCallback) {
+          errorCallback();
+        }
+        return;
       }
       fs.write(id, data, null, "utf-8", () => {
         fs.close(id, () => {
