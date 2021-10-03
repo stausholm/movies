@@ -1,6 +1,6 @@
 const chalk = require("chalk");
 const log = console.log;
-const videos = require("./dataTest.json");
+const videos = require("./data.json");
 const db = require("./db.json");
 const { OMDB_VIDEO_TYPES } = require("./lib/config");
 const { hasEpisodes } = require("./lib/fetchSeries");
