@@ -13,6 +13,10 @@ Api calls are spread out using setInterval, as to not hit a ratelimit that the o
 
 If the data in db.json should use the short plot instead of a full plot, change the script in index.js to use `OMDB_PLOT_TYPES.short` instead of `OMDB_PLOT_TYPES.full`
 
+## First time setup
+1. Get apikey from https://www.omdbapi.com/
+2. add key to `secrets.js`. See `secrets.js.example`
+
 ## Start
 1. run `npm run start`
 2. wait for script to finish fetching and saving
