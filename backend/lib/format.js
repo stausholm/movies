@@ -46,6 +46,7 @@ function formatVideoObj(originalObj, responseData) {
     imdbVotes: responseData.imdbVotes,
     type: responseData.Type,
     imdbUrl: `https://www.imdb.com/title/${responseData.imdbID}`,
+    __formatted: true,
   };
 
   switch (formattedObj.type) {

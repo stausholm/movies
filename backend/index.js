@@ -5,7 +5,7 @@ const { saveToFile } = require("./lib/saveToFile");
 const videos = require("./dataTest.json");
 const { fetchVideosWithDelayAndFormat } = require("./lib/fetchVideosWithDelayAndFormat");
 const { hasDuplicates, findDuplicates } = require("./lib/findDuplicates");
-const { fetchSeriesData, formatSeriesData } = require("./lib/fetchSeries");
+const { fetchSeriesData, formatSeriesData, hasEpisodes } = require("./lib/fetchSeries");
 
 if (hasDuplicates(videos.map((x) => x.imdbId))) {
   return log(
@@ -35,26 +35,32 @@ fetchVideosWithDelayAndFormat(videos, OMDB_PLOT_TYPES.full)
         log(chalk.bgRed("Failed to save. Dumping data into console above instead"));
       },
       () => {
-        // wait to fetch series data until after writing videos to file
-        fetchSeriesData(videos, OMDB_PLOT_TYPES.full)
-          .then((series) => {
-            const seriesFormatted = formatSeriesData(series);
+        if (hasEpisodes(videos)) {
+          // wait to fetch series data until after writing videos to file
+          fetchSeriesData(videos, OMDB_PLOT_TYPES.full)
+            .then((series) => {
+              const seriesFormatted = formatSeriesData(series);
 
-            saveToFile(
-              "./",
-              "db.json",
-              JSON.stringify([...videos, ...seriesFormatted]),
-              false,
-              () => {
-                log(JSON.stringify(seriesFormatted));
-                log(chalk.bgRed("Failed to save series. Dumping data into console above instead"));
-              }
-            );
-          })
-          .catch((err) => {
-            log(chalk.bgRed("something went wrong while fetching all series"));
-            log(err);
-          });
+              saveToFile(
+                "./",
+                "db.json",
+                JSON.stringify([...videos, ...seriesFormatted]),
+                false,
+                () => {
+                  log(JSON.stringify(seriesFormatted));
+                  log(
+                    chalk.bgRed("Failed to save series. Dumping data into console above instead")
+                  );
+                }
+              );
+            })
+            .catch((err) => {
+              log(chalk.bgRed("something went wrong while fetching all series"));
+              log(err);
+            });
+        }
+
+        log(chalk.bgBlackBright("Remember to verify dataset with 'npm run verify-data'"));
       }
     );
 

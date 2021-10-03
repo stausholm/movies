@@ -11,6 +11,7 @@ const log = console.log;
  * So we can use promise.all here instead of setInterval, which we do in fetchVideosWithDelayAndFormat
  */
 async function fetchSeriesData(videos, plotType) {
+  log("fetching series data");
   // Find all episodes that have a "seriesId" property, and fetch data for that id
   const uniqueSeriesIds = [
     ...new Set(videos.filter((video) => video.seriesId).map((video) => video.seriesId)),
@@ -37,7 +38,12 @@ function formatSeriesData(videos) {
   return seriesFormatted;
 }
 
+function hasEpisodes(videos) {
+  return videos.findIndex((x) => x.seriesId) !== -1;
+}
+
 module.exports = {
   fetchSeriesData,
   formatSeriesData,
+  hasEpisodes,
 };
