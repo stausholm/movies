@@ -1,9 +1,7 @@
 const chalk = require("chalk");
 const log = console.log;
-const { fetchVideoData } = require("./lib/fetchContent");
 const { OMDB_PLOT_TYPES } = require("./lib/config");
 const { saveToFile } = require("./lib/saveToFile");
-const { formatVideoObj } = require("./lib/format");
 const videos = require("./dataTest.json");
 const { fetchVideosWithDelayAndFormat } = require("./lib/fetchVideosWithDelayAndFormat");
 const { hasDuplicates, findDuplicates } = require("./lib/findDuplicates");

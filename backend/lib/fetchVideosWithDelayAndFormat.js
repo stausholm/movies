@@ -64,7 +64,7 @@ async function fetchVideosWithDelayAndFormat(videosArr, plotType) {
           .catch((err) => {
             log(chalk.bgRed("fetch failed:", err));
             videos[currentVideoIndex].__error = true;
-            //videos[currentVideoIndex].__errorMessage = err;
+            videos[currentVideoIndex].__errorMessage = err.message;
           })
           .finally(() => {
             videos[currentVideoIndex].__finished = true;
