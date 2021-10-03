@@ -74,6 +74,41 @@
     "__finished": true
   },
   {
+    "title": "Invalid ID test",
+    "subtitles": "[Danish - Hardcoded]",
+    "languages": "[Danish]",
+    "imdbId": "tt1110208",
+    "imdbTitle": "The Bend",
+    "year": "2011",
+    "releaseYear": 2011,
+    "rated": "N/A",
+    "released": "08 Apr 2011",
+    "runtimeMinutes": 85,
+    "genres": ["Drama"],
+    "director": ["Jennifer Kierans"],
+    "writer": ["Jennifer Kierans", " Marguerite Pigott"],
+    "actors": ["Adam Butcher", " Sophie Traub", " Tommy Lioutas"],
+    "plot": "17yo Jason Campbell thinks he's losing his mind...and he could be right. His brother Mike killed himself on prom night exactly one year ago, and Jason knows that bipolar disorder is hereditary. With Mike's girlfriend and best friend home from college for a memorial service, Jason vows to find out what happened the night his brother died.",
+    "country": "Canada",
+    "awards": "N/A",
+    "posterUrl": {
+      "thumbnail": "https://m.media-amazon.com/images/M/MV5BYzM4YjNkZWQtNzUzNS00OThhLTk0NzctYWI1NjA5ZmY5ZGQwXkEyXkFqcGdeQXVyNTA1NDY3NzY@._V1_SX100.jpg",
+      "medium": "https://m.media-amazon.com/images/M/MV5BYzM4YjNkZWQtNzUzNS00OThhLTk0NzctYWI1NjA5ZmY5ZGQwXkEyXkFqcGdeQXVyNTA1NDY3NzY@._V1_SX300.jpg",
+      "large": "https://m.media-amazon.com/images/M/MV5BYzM4YjNkZWQtNzUzNS00OThhLTk0NzctYWI1NjA5ZmY5ZGQwXkEyXkFqcGdeQXVyNTA1NDY3NzY@._V1_SX600.jpg"
+    },
+    "ratings": [{ "source": "Internet Movie Database", "value": "6.2/10" }],
+    "metascore": "N/A",
+    "imdbRating": "6.2",
+    "imdbVotes": "39",
+    "type": "movie",
+    "imdbUrl": "https://www.imdb.com/title/tt1110208",
+    "DVD": "N/A",
+    "boxOffice": "N/A",
+    "production": "N/A",
+    "website": "N/A",
+    "__finished": true
+  },
+  {
     "title": "Blå mænd",
     "subtitles": "[Danish - Hardcoded]",
     "languages": "[Danish]",
@@ -105,13 +140,7 @@
     "DVD": "N/A",
     "boxOffice": "N/A",
     "production": "N/A",
-    "website": "N/A"
-  },
-  {
-    "title": "Blå mænd",
-    "subtitles": "[Danish - Hardcoded]",
-    "languages": "[Danish]",
-    "imdbId": "tt1110209",
+    "website": "N/A",
     "__finished": true
   },
   {
