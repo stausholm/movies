@@ -6,6 +6,7 @@ const videos = require("./data.json");
 const { fetchVideosWithDelayAndFormat } = require("./lib/fetchVideosWithDelayAndFormat");
 const { hasDuplicates, findDuplicates } = require("./lib/findDuplicates");
 const { fetchSeriesData, formatSeriesData, hasEpisodes } = require("./lib/fetchSeries");
+const DB = "db.json";
 
 if (hasDuplicates(videos.map((x) => x.imdbId))) {
   return log(
@@ -27,7 +28,7 @@ fetchVideosWithDelayAndFormat(videos, OMDB_PLOT_TYPES.full)
 
     saveToFile(
       "./",
-      "db.json",
+      DB,
       JSON.stringify(videos),
       false,
       () => {
@@ -41,18 +42,10 @@ fetchVideosWithDelayAndFormat(videos, OMDB_PLOT_TYPES.full)
             .then((series) => {
               const seriesFormatted = formatSeriesData(series);
 
-              saveToFile(
-                "./",
-                "db.json",
-                JSON.stringify([...videos, ...seriesFormatted]),
-                false,
-                () => {
-                  log(JSON.stringify(seriesFormatted));
-                  log(
-                    chalk.bgRed("Failed to save series. Dumping data into console above instead")
-                  );
-                }
-              );
+              saveToFile("./", DB, JSON.stringify([...videos, ...seriesFormatted]), false, () => {
+                log(JSON.stringify(seriesFormatted));
+                log(chalk.bgRed("Failed to save series. Dumping data into console above instead"));
+              });
             })
             .catch((err) => {
               log(chalk.bgRed("something went wrong while fetching all series"));
@@ -77,9 +70,9 @@ fetchVideosWithDelayAndFormat(videos, OMDB_PLOT_TYPES.full)
     log(chalk.bgRed(`${videosThatFailed.length}/${videos.length} entries threw an error`));
     listAllErroredFetches(videos);
 
-    log("Saving the successful fetches to db.json");
+    log(`Saving the successful fetches to ${DB}`);
     // save all the ones that didn't fail
-    saveToFile("./", "db.json", JSON.stringify(videosThatDidntFail), false, () => {
+    saveToFile("./", DB, JSON.stringify(videosThatDidntFail), false, () => {
       log(JSON.stringify(videosThatDidntFail));
       log(chalk.bgRed("Failed to save successful fetches. Dumping those above instead"));
     });
