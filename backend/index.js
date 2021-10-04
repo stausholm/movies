@@ -2,11 +2,12 @@ const chalk = require("chalk");
 const log = console.log;
 const { OMDB_PLOT_TYPES, OMDB_VIDEO_TYPES } = require("./lib/config");
 const { saveToFile } = require("./lib/saveToFile");
-const videos = require("./data.json");
 const { fetchVideosWithDelayAndFormat } = require("./lib/fetchVideosWithDelayAndFormat");
 const { hasDuplicates, findDuplicates } = require("./lib/findDuplicates");
 const { fetchSeriesData, formatSeriesData, hasEpisodes } = require("./lib/fetchSeries");
-const DB = "db.json";
+
+const videos = require("./data.json"); // Change this to pull videos from another file
+const DB = "db.json"; // change this to save videos to another file
 
 if (hasDuplicates(videos.map((x) => x.imdbId))) {
   return log(
