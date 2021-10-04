@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index",
-    "verify-data": "node verify-data"
+    "verify-data": "node verify-data",
+    "download-posters": "node download-posters"
   },
   "author": "",
   "license": "ISC",

@@ -104,3 +104,7 @@ dist
 .tern-port
 
 backend/secrets.js
+backend/images/*.jpg
+backend/images/*.png
+backend/images/*.jpeg
+backend/images/*.jpe

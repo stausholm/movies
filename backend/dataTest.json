@@ -34,5 +34,11 @@
     "subtitles": "[Danish - Hardcoded]",
     "languages": "[English]",
     "imdbId": "tt1245384"
+  },
+  {
+    "title": "Empty fields test (Hamlet)",
+    "subtitles": "[None]",
+    "languages": "[None]",
+    "imdbId": "tt7798632"
   }
 ]

@@ -25,6 +25,12 @@ If the data in db.json should use the short plot instead of a full plot, change 
 1. run `npm run verify-data`
 2. manually fix any potential errors found in the dataset from step 1
 
+## Download posters
+The OMDB api contains links to posters hosted externally. If you'd rather download those and selfhost them, this is the script to do that. Posters are by defaullt saved to ./images/
+1. Make sure you've already ran `npm run start` at least once. If you don't have any entries in db.json, there's nothing to get posters for
+2. run `npm run download-posters`
+3. manually handle any potential errors logged in the console, if any of the posters fail to download.
+
 ## OMDB api examples
 - Searching for titles + pagination: http://www.omdbapi.com/?s=Batman&page=1&apikey=aaa
 - Searching for seasons: http://www.omdbapi.com/?i=tt0944947&Season=1&apikey=aaa
