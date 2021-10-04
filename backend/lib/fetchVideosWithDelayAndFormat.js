@@ -55,7 +55,11 @@ async function fetchVideosWithDelayAndFormat(videosArr, plotType) {
       } else {
         const currentVideoIndex = videoIndex;
 
-        log("fetching", videos[currentVideoIndex].imdbId);
+        log(
+          "fetching",
+          videos[currentVideoIndex].imdbId,
+          ` (${currentVideoIndex + 1}/${videos.length})`
+        );
         fetchVideoData(videos[currentVideoIndex].imdbId, plotType)
           .then((data) => {
             const formattedVideoObj = formatVideoObj(videos[currentVideoIndex], data);
