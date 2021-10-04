@@ -2,7 +2,7 @@ const { imageFolderPathExists, fetchAndSaveVideoPosters } = require("./lib/downl
 const chalk = require("chalk");
 const log = console.log;
 
-const DB = require("./dbTest.json"); // change this to pull poster data from another file
+const DB = require("./db.json"); // change this to pull poster data from another file
 
 function downloadAllPosters(videos, index = 0) {
   fetchAndSaveVideoPosters(videos[index])
@@ -13,7 +13,7 @@ function downloadAllPosters(videos, index = 0) {
       log(chalk.bgRed(err));
     })
     .finally(() => {
-      log(`(${i + 1}/${videos.length})`);
+      log(`(${index + 1}/${videos.length})`);
       if (index + 1 === videos.length) {
         log(chalk.bgGreen("all done!"));
       } else {
