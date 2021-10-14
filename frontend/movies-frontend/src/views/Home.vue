@@ -112,6 +112,7 @@
       <!-- fresh is assigned to ratings at and above 60% positive -->
       <icon-tomato-fresh />
     </base-icon>
+    <base-icon name="MoreVert" />
   </div>
 </template>
 

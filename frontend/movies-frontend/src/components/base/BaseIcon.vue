@@ -9,17 +9,22 @@
   >
     <title lang="en">{{ label }} icon</title>
     <g :fill="color">
-      <slot />
+      <slot>
+        <component v-if="name" :is="iconComponent" />
+      </slot>
     </g>
   </svg>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, defineAsyncComponent } from 'vue';
 export default defineComponent({
   props: {
     label: {
       default: 'box',
+      type: String,
+    },
+    name: {
       type: String,
     },
     color: {
@@ -33,6 +38,20 @@ export default defineComponent({
     height: {
       type: [Number, String],
       default: 24,
+    },
+  },
+  computed: {
+    iconComponent() {
+      if (this.name) {
+        return defineAsyncComponent(
+          () =>
+            import(
+              /* webpackChunkName: "icon-[request]" */
+              '@/components/icons/Icon' + this.name + '.vue'
+            )
+        );
+      }
+      return null;
     },
   },
 });
