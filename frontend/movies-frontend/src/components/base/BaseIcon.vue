@@ -9,25 +9,26 @@
   >
     <title lang="en">{{ label }} icon</title>
     <g :fill="color">
-      <slot>
-        <transition name="icon-scale">
-          <component v-if="name" :is="iconComponent" />
-        </transition>
-      </slot>
+      <transition :name="transitionNameFormatted" :css="!!transitionNameFormatted">
+        <slot></slot>
+      </transition>
     </g>
   </svg>
 </template>
 
 <script lang="ts">
-import { defineComponent, defineAsyncComponent, ComponentPublicInstance } from 'vue';
+import { defineComponent } from 'vue';
 export default defineComponent({
   props: {
     label: {
       default: 'box',
       type: String,
     },
-    name: {
+    transition: {
       type: String,
+      validator(val: string) {
+        return ['rotate', 'scale'].includes(val);
+      },
     },
     color: {
       default: 'currentColor',
@@ -43,18 +44,8 @@ export default defineComponent({
     },
   },
   computed: {
-    iconComponent(): ComponentPublicInstance | null {
-      if (this.name) {
-        return defineAsyncComponent(
-          () =>
-            import(
-              /* webpackChunkName: "icon-[request]" */
-              '@/components/icons/Icon' + this.name + '.vue'
-            )
-          // TODO: don't animate on enter
-        );
-      }
-      return null;
+    transitionNameFormatted(): string {
+      return this.transition ? `__icon-transition-${this.transition}` : '';
     },
   },
 });
@@ -72,29 +63,28 @@ svg > g > g {
   transform-origin: center center;
 }
 
-// TODO: "transitionName" prop
-.icon-rotate-enter-from {
+.__icon-transition-rotate-enter-from {
   opacity: 0;
   transform: rotate(180deg);
 }
-.icon-rotate-enter-active {
+.__icon-transition-rotate-enter-active {
   transition: opacity 0.2s ease-out, transform 0.2s ease-out;
 }
-.icon-rotate-leave-active {
+.__icon-transition-rotate-leave-active {
   transition: opacity 0.2s ease-out, transform 0.4s ease-out;
   opacity: 0;
   transform: rotate(-180deg);
 }
 
-.icon-scale-enter-from,
-.icon-scale-leave-to {
+.__icon-transition-scale-enter-from,
+.__icon-transition-scale-leave-to {
   opacity: 0;
   transform: scale(0.7);
 }
-.icon-scale-enter-active {
+.__icon-transition-scale-enter-active {
   transition: opacity 0.2s ease-out, transform 0.2s ease-out;
 }
-.icon-scale-leave-active {
+.__icon-transition-scale-leave-active {
   transition: opacity 0.2s ease-out, transform 0.1s ease-out;
 }
 </style>

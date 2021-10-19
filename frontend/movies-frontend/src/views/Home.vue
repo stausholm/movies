@@ -104,18 +104,22 @@
     <base-icon>
       <icon-i-m-d-b />
     </base-icon> -->
+
+    <!-- splat is assigned to ratings below 60% positive -->
     <base-icon>
-      <!-- splat is assigned to ratings below 60% positive -->
       <icon-tomato-splat />
     </base-icon>
+
+    <!-- fresh is assigned to ratings at and above 60% positive -->
     <base-icon>
-      <!-- fresh is assigned to ratings at and above 60% positive -->
       <icon-tomato-fresh />
     </base-icon>
-    <base-icon name="MoreVert" />
-    <!-- <base-icon name="asdasd" /> TODO: error handling -->
+
     <button @click="showAltIcon = !showAltIcon">toggle dynamic icon</button>
-    <base-icon :name="dynamicIcon" />
+    <base-icon transition="scale">
+      <icon-github v-if="showAltIcon" />
+      <icon-i-m-d-b v-else />
+    </base-icon>
   </div>
 </template>
 
@@ -155,8 +159,8 @@ import BaseIcon from '@/components/base/BaseIcon.vue';
 // import IconGridView from '@/components/icons/IconGridView.vue';
 // import IconListView from '@/components/icons/IconListView.vue';
 // import IconShare from '@/components/icons/IconShare.vue';
-// import IconGithub from '@/components/icons/IconGithub.vue';
-// import IconIMDB from '@/components/icons/IconIMDB.vue';
+import IconGithub from '@/components/icons/IconGithub.vue';
+import IconIMDB from '@/components/icons/IconIMDB.vue';
 import IconTomatoSplat from '@/components/icons/IconTomatoSplat.vue';
 import IconTomatoFresh from '@/components/icons/IconTomatoFresh.vue';
 
@@ -197,8 +201,8 @@ export default defineComponent({
     // IconGridView,
     // IconListView,
     // IconShare,
-    // IconGithub,
-    // IconIMDB,
+    IconGithub,
+    IconIMDB,
     IconTomatoSplat,
     IconTomatoFresh,
   },
