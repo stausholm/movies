@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, defineAsyncComponent } from 'vue';
+import { defineComponent, defineAsyncComponent, ComponentPublicInstance } from 'vue';
 export default defineComponent({
   props: {
     label: {
@@ -43,15 +43,15 @@ export default defineComponent({
     },
   },
   computed: {
-    iconComponent(): any {
-      // TODO: "any" type
+    iconComponent(): ComponentPublicInstance | null {
       if (this.name) {
         return defineAsyncComponent(
           () =>
             import(
               /* webpackChunkName: "icon-[request]" */
               '@/components/icons/Icon' + this.name + '.vue'
-            ) // TODO: don't animate on enter
+            )
+          // TODO: don't animate on enter
         );
       }
       return null;
