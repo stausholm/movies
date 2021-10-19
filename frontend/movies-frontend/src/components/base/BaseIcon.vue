@@ -10,7 +10,12 @@
     <title lang="en">{{ label }} icon</title>
     <g :fill="color">
       <transition :name="transitionNameFormatted" :css="!!transitionNameFormatted">
-        <slot></slot>
+        <slot>
+          <g>
+            <rect fill="none" height="24" width="24" />
+            <path d="M12,2C6.47,2,2,6.47,2,12s4.47,10,10,10s10-4.47,10-10S17.53,2,12,2z" />
+          </g>
+        </slot>
       </transition>
     </g>
   </svg>
@@ -21,7 +26,7 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   props: {
     label: {
-      default: 'box',
+      default: '',
       type: String,
     },
     transition: {
@@ -58,6 +63,7 @@ svg {
   /* margin-bottom: -2px; */
 }
 
+// NOTE: this expects all icon components to use a <g> element as a root element in the icon's template
 svg > g > g {
   position: absolute;
   transform-origin: center center;

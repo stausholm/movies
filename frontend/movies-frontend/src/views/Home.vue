@@ -120,6 +120,7 @@
       <icon-github v-if="showAltIcon" />
       <icon-i-m-d-b v-else />
     </base-icon>
+    <base-icon></base-icon>
   </div>
 </template>
 
