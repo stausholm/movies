@@ -1,5 +1,15 @@
-@import "test";
+// 3rd. party
+@import './vendor/normalize.scss';
 
-body {
-  background-color: red;
-}
+// Configuration
+@import './variables/index.scss';
+@import './mixins/index.scss';
+
+// Utilities
+@import './utilities/index.scss';
+
+// Base
+@import './root';
+@import './base/index.scss';
+
+// Components
