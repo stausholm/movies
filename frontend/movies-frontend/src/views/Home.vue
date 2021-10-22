@@ -115,12 +115,15 @@
       <icon-tomato-fresh />
     </base-icon>
 
-    <button @click="showAltIcon = !showAltIcon">toggle dynamic icon</button>
+    <button @click="showAltIcon = !showAltIcon">toggle alt icon</button>
     <base-icon transition="scale">
       <icon-github v-if="showAltIcon" />
       <icon-i-m-d-b v-else />
     </base-icon>
     <base-icon></base-icon>
+    <base-icon>
+      <icon-youtube />
+    </base-icon>
   </div>
 </template>
 
@@ -164,6 +167,7 @@ import IconGithub from '@/components/icons/IconGithub.vue';
 import IconIMDB from '@/components/icons/IconIMDB.vue';
 import IconTomatoSplat from '@/components/icons/IconTomatoSplat.vue';
 import IconTomatoFresh from '@/components/icons/IconTomatoFresh.vue';
+import IconYoutube from '@/components/icons/IconYoutube.vue';
 
 export default defineComponent({
   name: 'Home',
@@ -206,16 +210,13 @@ export default defineComponent({
     IconIMDB,
     IconTomatoSplat,
     IconTomatoFresh,
+    IconYoutube,
   },
   data() {
     return {
       showAltIcon: false,
     };
   },
-  computed: {
-    dynamicIcon(): string {
-      return this.showAltIcon ? 'Share' : 'Television';
-    },
-  },
+  computed: {},
 });
 </script>
