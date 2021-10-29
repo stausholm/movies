@@ -1,0 +1,18 @@
+@import '../mixins/utilities';
+
+$utilities: (
+  "display": (
+    "prefix": "d",
+    "responsive": true,
+    "values": (
+      "none": "none",
+      "flex": "flex",
+      "block": "block",
+      "inline": "inline",
+      "inline-block": "inline-block",
+      "inline-flex": "inline-flex"
+    )
+  )
+);
+
+@include generate-utilities($utilities);

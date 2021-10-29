@@ -1,0 +1,47 @@
+@import '../mixins/utilities';
+
+$utilities: (
+  "position": (
+    "prefix": "position",
+    "values": (
+      "top": "top",
+      "bottom": "bottom",
+      "left": "left",
+      "right": "right"
+    )
+  ),
+  "top": (
+    "prefix": "top",
+    "values": (
+      "0": 0,
+      "50": 50%,
+      "100": 100%
+    )
+  ),
+  "bottom": (
+    "prefix": "bottom",
+    "values": (
+      "0": 0,
+      "50": 50%,
+      "100": 100%
+    )
+  ),
+  "left": (
+    "prefix": "left",
+    "values": (
+      "0": 0,
+      "50": 50%,
+      "100": 100%
+    )
+  ),
+  "right": (
+    "prefix": "right",
+    "values": (
+      "0": 0,
+      "50": 50%,
+      "100": 100%
+    )
+  )
+);
+
+@include generate-utilities($utilities);

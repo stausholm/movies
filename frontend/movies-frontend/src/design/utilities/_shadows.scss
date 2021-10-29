@@ -1,0 +1,19 @@
+@import '../variables/shadows';
+@import '../mixins/utilities';
+
+$utilities: (
+  "box-shadow": (
+    "prefix": "shadow",
+    "values": (
+      "none": "none",
+      null: $box-shadow,
+      "sm": $box-shadow-sm,
+      "lg": $box-shadow-lg,
+      "inset": $box-shadow-inset
+    )
+  )
+);
+
+@include generate-utilities($utilities);
+
+// https://getbootstrap.com/docs/5.1/utilities/shadows/

@@ -1,0 +1,5 @@
+@function rgba-to-rgb($rgba, $background: #fff) { // default to white background
+  @return mix(rgb(red($rgba), green($rgba), blue($rgba)), $background, alpha($rgba) * 100%);
+}
+
+// https://makandracards.com/makandra/42500-sass-how-to-convert-an-rgba-color-to-its-rgb-look-alike

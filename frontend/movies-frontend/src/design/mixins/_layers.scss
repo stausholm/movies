@@ -1,0 +1,8 @@
+@import '../functions/layers';
+
+// @include z-index(modal, - 2)
+@mixin z-index($key, $modifier: 0) {
+  z-index: get-z-index($key) + $modifier;
+}
+
+// https://jonsuh.com/blog/organizing-z-index-with-sass/

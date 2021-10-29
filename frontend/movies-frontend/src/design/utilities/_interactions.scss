@@ -1,0 +1,23 @@
+@import '../mixins/utilities';
+
+$utilities: (
+  "user-select": (
+    "prefix": "user-select",
+    "values": (
+      "none": "none",
+      "auto": "auto",
+      "all": "all",
+    )
+  ),
+  "pointer-events": (
+    "prefix": "pe",
+    "values": (
+      "none": "none",
+      "auto": "auto",
+    )
+  ),
+);
+
+@include generate-utilities($utilities);
+
+// https://getbootstrap.com/docs/5.1/utilities/interactions/

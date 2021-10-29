@@ -1,0 +1,54 @@
+// grayscale
+$white: #fff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black: #000;
+
+// base colors
+$red:     #dc3545;
+$yellow:  #ffc107;
+$green:   #198754;
+$cyan:    #0dcaf0;
+
+// text colors
+$text-color-dark: $gray-900;
+$text-color-light: $gray-100;
+$link-color: $cyan;
+$body-color: $text-color-dark;
+$headings-color: $body-color;
+
+// brand colors
+$brand-primary: #0d6efd;
+$brand-primary-light:               lighten($brand-primary, 7%) !default;
+$brand-primary-lighter:             lighten($brand-primary, 14%) !default;
+$brand-primary-dark:                #001D2D !default;
+$brand-primary-darker:              darken($brand-primary-dark, 7%) !default;
+$brand-primary-bg__text-color:      $text-color-light !default; // the text color that can be shown ontop of the brand primary color
+
+$brand-secondary: #fd7e14;
+$brand-secondary-light:             lighten($brand-secondary, 7%) !default;
+$brand-secondary-dark:              darken($brand-secondary, 7%) !default;
+$brand-secondary-darker:            darken($brand-secondary, 14%) !default;
+$brand-secondary-bg__text-color:    $text-color-dark !default; // the text color that can be shown ontop of the brand secondary color
+
+$brand-tertiary: #20c997;
+$brand-tertiary-bg__text-color:     $text-color-dark !default; // the text color that can be shown ontop of the brand tertiary color
+
+$brand-success: $green;
+$brand-info: $cyan;
+$brand-warning: $yellow;
+$brand-danger: $red;
+
+$brand-light: $gray-100;
+$brand-dark: $gray-900;
+
+// layout
+$body-bg: $white;
+

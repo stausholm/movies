@@ -1,0 +1,34 @@
+@import '../variables/breakpoints';
+
+// respond above (min) breakpoints
+// @include breakpoint(sm) { }
+@mixin breakpoint($breakpoint) {
+  $breakpoint-value: map-get($breakpoints, $breakpoint);
+
+  @media (min-width: $breakpoint-value) {
+    @content;
+  }
+}
+
+// respond below (max) breakpoints
+// @include breakpoint-max(sm) { }
+@mixin breakpoint-max($breakpoint) {
+  $breakpoint-value: map-get($breakpoints, $breakpoint);
+
+  @media (max-width: ($breakpoint-value - 1)) {
+    @content;
+  }
+}
+
+// respond between (min) and (max) breakpoints
+// @include breakpoint-between(sm, md) { }
+@mixin breakpoint-between($breakpointMin, $breakpointMax) {
+  $min-val: map-get($breakpoints, $breakpointMin);
+  $max-val: map-get($breakpoints, $breakpointMax);
+
+  @media (min-width: $min-val) and (max-width: $max-val - 1) {
+    @content;
+  }
+}
+
+// https://glennmccomb.com/articles/useful-sass-scss-media-query-mixins-for-bootstrap/#the-entire-code

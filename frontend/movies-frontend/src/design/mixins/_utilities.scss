@@ -1,0 +1,48 @@
+@import '../variables/breakpoints';
+@import './breakpoints';
+
+@mixin generate-utilities($utilities) {
+  // generate utility classes
+  @each $property, $map in $utilities {
+    $prefix: map-get($map, 'prefix');
+    $values: map-get($map, 'values');
+    $make-responsive: map-get($map, 'responsive');
+
+    // make utility classes using only the prefix and values. 
+    // e.g. .pl-2 for padding-left: $default-spacing*2; 
+    @each $k, $v in $values {
+      @if (not $k) { 
+        // if the key is null or false, dont append anything to the prefix
+        // e.g. .pl will be generated to add padding-left: $default-spacing; 
+        .#{$prefix} {
+          #{$property}: $v;
+        }
+      } @else {
+        .#{$prefix}-#{$k} {
+          #{$property}: $v;
+        }
+      }
+    }
+
+    // make responsive utility classes. 
+    // e.g. .pl-sm-2 for adding padding-left: $default-spacing*2 on viewports 
+    // above the sm breakpoint
+    @if ($make-responsive) {
+      @each $key, $breakpoint in $breakpoints {
+        @include breakpoint($key) {
+          @each $k, $v in $values {
+            @if (not $k) {
+              .#{$prefix}-#{$key} {
+                #{$property}: $v;
+              }
+            } @else {
+              .#{$prefix}-#{$key}-#{$k} {
+                #{$property}: $v;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+@import '../mixins/utilities';
+@import '../variables/colors';
+
+$utilities: (
+  "color": (
+    "prefix": "text",
+    "responsive": true,
+    "values": (
+      "primary": $brand-primary,
+      "secondary": $brand-secondary,
+      "tertiary": $brand-tertiary,
+      "success": $brand-success,
+      "danger": $brand-danger,
+      "warning": $brand-warning,
+      "info": $brand-info,
+      "light": $brand-light,
+      "dark": $brand-dark,
+      "white": $white,
+      "body": $body-color,
+      "heading": $headings-color,
+      "reset": inherit
+    )
+  )
+);
+
+@include generate-utilities($utilities);
+
+// https://getbootstrap.com/docs/5.1/utilities/colors/

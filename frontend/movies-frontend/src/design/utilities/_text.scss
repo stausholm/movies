@@ -1,0 +1,30 @@
+@import '../mixins/utilities';
+
+$utilities: (
+  "text-align": (
+    "prefix": "text",
+    "values": (
+      "left": "left",
+      "right": "right",
+      "center": "center",
+    )
+  ),
+  "text-transform": (
+    "prefix": "text",
+    "values": (
+      "uppercase": "uppercase",
+      "lowercase": "lowercase",
+      "capitalize": "capitalize",
+    )
+  ),
+  "font-weight": (
+    "prefix": "fw",
+    "values": (
+      "bold": "bold",
+      "normal": "normal",
+      "light": "light",
+    )
+  )
+);
+
+@include generate-utilities($utilities);

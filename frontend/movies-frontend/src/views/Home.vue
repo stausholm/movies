@@ -2,6 +2,10 @@
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <div class="ratio ratio-16x9" style="width: 200px">
+      <p>test</p>
+    </div>
+    <p class="pl-sm p-md-2">test</p>
     <!-- <base-icon>
       <icon-more-vert />
     </base-icon>

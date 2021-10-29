@@ -1,0 +1,35 @@
+@import '../mixins/utilities';
+
+$utilities: (
+  "flex-direction": (
+    "prefix": "flex",
+    "responsive": true,
+    "values": (
+      "row": "row",
+      "row-reverse": "row-reverse",
+      "column": "column",
+      "column-reverse": "column-reverse"
+    )
+  ),
+  "justify-content": (
+    "prefix": "justify-content",
+    "responsive": true,
+    "values": (
+      "center": "center",
+      "start": "start",
+      "end": "end",
+      "between": "between"
+    )
+  ),
+  "align-items": (
+    "prefix": "align-items",
+    "responsive": true,
+    "values": (
+      "center": "center",
+      "start": "start",
+      "end": "end"
+    )
+  ),
+);
+
+@include generate-utilities($utilities);

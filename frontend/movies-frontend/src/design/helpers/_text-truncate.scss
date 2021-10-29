@@ -1,0 +1,7 @@
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// https://getbootstrap.com/docs/5.1/helpers/text-truncation/

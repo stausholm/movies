@@ -1,0 +1,27 @@
+@import '../variables/aspect-ratios';
+
+.ratio {
+  position: relative;
+  width: 100%;
+
+  &::before {
+    display: block;
+    content: "";
+  }
+
+  @each $k, $v in $aspect-ratios {
+    &-#{$k}::before {
+      padding-top: $v;
+    }
+  }
+
+  > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// https://getbootstrap.com/docs/5.1/helpers/ratio/

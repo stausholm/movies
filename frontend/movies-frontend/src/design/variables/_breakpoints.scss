@@ -1,0 +1,18 @@
+$breakpoint-xl: 1400px;
+$breakpoint-lg: 1200px;
+$breakpoint-ipad-landscape: 1025px;
+$breakpoint-md: 1020px;
+$breakpoint-sm: 992px;
+$breakpoint-xs: 768px;
+$breakpoint-xxs: 576px;
+
+//breakpoints min-widths
+$breakpoints: (
+  xxs: $breakpoint-xxs,
+  xs: $breakpoint-xs,
+  sm: $breakpoint-sm,
+  md: $breakpoint-md,
+  ipad-landscape: $breakpoint-ipad-landscape,
+  lg: $breakpoint-lg,
+  xl: $breakpoint-xl,
+);

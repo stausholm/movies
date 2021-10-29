@@ -1,0 +1,12 @@
+@import '../variables/layers';
+
+
+@function get-z-index($layer) {
+  @if not map-has-key($z-indexes, $layer) {
+    @warn "No layer found for `#{$layer}` in $z-layers map. Property omitted.";
+  }
+
+  @return map-get($z-indexes, $layer);
+}
+
+// https://www.sitepoint.com/better-solution-managing-z-index-sass/

@@ -1,0 +1,24 @@
+@import '../mixins/utilities';
+@import '../variables/colors';
+
+$utilities: (
+  "background-color": (
+    "prefix": "bg",
+    "values": (
+      "primary": $brand-primary,
+      "secondary": $brand-secondary,
+      "tertiary": $brand-tertiary,
+      "success": $brand-success,
+      "danger": $brand-danger,
+      "warning": $brand-warning,
+      "info": $brand-info,
+      "light": $brand-light,
+      "dark": $brand-dark,
+      "body": $body-bg,
+      "white": $white,
+      "transparent": transparent,
+    )
+  )
+);
+
+@include generate-utilities($utilities);
