@@ -34,9 +34,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-p {
-  color: white;
-}
-</style>

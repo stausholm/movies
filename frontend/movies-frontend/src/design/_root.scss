@@ -1,8 +1,6 @@
 :root {
 
-}
+  @include prefers-dark {
 
-@media (prefers-color-scheme: dark) {
-  :root {
   }
 }

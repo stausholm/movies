@@ -1,0 +1,17 @@
+.theme {
+  &-primary {
+    @include element-theme($brand-primary, $brand-primary-bg__text-color);
+  }
+  &-secondary {
+    @include element-theme($brand-secondary, $brand-secondary-bg__text-color);
+  }
+  &-tertiary {
+    @include element-theme($brand-tertiary, $brand-tertiary-bg__text-color);
+  }
+  &-dark {
+    @include element-theme($brand-dark, $text-color-light);
+  }
+  &-light {
+    @include element-theme($brand-light, $text-color-dark);
+  }
+}

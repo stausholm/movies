@@ -20,9 +20,13 @@ $cyan:    #0dcaf0;
 // text colors
 $text-color-dark: $gray-900;
 $text-color-light: $gray-100;
-$link-color: $cyan;
+
 $body-color: $text-color-dark;
 $headings-color: $body-color;
+
+// links
+$link-color: $cyan;
+$link-hover-color: darken($link-color, 10);
 
 // brand colors
 $brand-primary: #0d6efd;
@@ -51,4 +55,11 @@ $brand-dark: $gray-900;
 
 // layout
 $body-bg: $white;
+
+
+// html elements
+$kbd-color: $white;
+$kbd-bg: $gray-900;
+$pre-color: $text-color-dark;
+$code-color: $gray-700;
 

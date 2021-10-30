@@ -1,131 +1,138 @@
-// html {
-//   font-size: $font-size-root - 4;
+html {
+  font-size: $font-size-root - 4;
 
-//   @include breakpoint(xs) {
-//     font-size: $font-size-root;
-//   }
-// }
+  @include breakpoint(xs) {
+    font-size: $font-size-root;
+  }
 
-// body {
-//   overflow-y: scroll;
-//   word-wrap: break-word;
-// }
+  @include prefers-dark {
+    // use with prefers-color-scheme dark if the project also supports darkmode
+    // Switching from subpixel rendering (default) to antialiasing for light text on dark backgrounds makes it look lighter weight (more crisp).
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
 
-// h1,
-// h2,
-// h3,
-// h4,
-// h5,
-// h6,
-// .h1,
-// .h2,
-// .h3,
-// .h4,
-// .h5,
-// .h6 {
-//   margin: 0 0 $default-spacing;
-//   font-weight: $headings-font-weight;
-//   letter-spacing: 0;
-//   line-height: $headings-line-height;
-// }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  letter-spacing: 0;
+}
 
-// p,
-// ul {
-//   margin: 0 0 $default-spacing;
-// }
+h1,
+.h1 {
+  font-size: $font-size-h1-responsive;
 
-// h1,
-// .h1 {
-//   font-size: $font-size-h1-responsive;
+  @include breakpoint(xs) {
+    font-size: $font-size-h1;
+  }
+}
 
-//   @include breakpoint(xs) {
-//     font-size: $font-size-h1;
-//   }
-// }
+h2,
+.h2 {
+  font-size: $font-size-h2-responsive;
 
-// h2,
-// .h2 {
-//   font-size: $font-size-h2-responsive;
+  @include breakpoint(xs) {
+    font-size: $font-size-h2;
+  }
+}
 
-//   @include breakpoint(xs) {
-//     font-size: $font-size-h2;
-//   }
-// }
+h3,
+.h3 {
+  font-size: $font-size-h3-responsive;
 
-// h3,
-// .h3 {
-//   font-size: $font-size-h3-responsive;
+  @include breakpoint(xs) {
+    font-size: $font-size-h3;
+  }
+}
 
-//   @include breakpoint(xs) {
-//     font-size: $font-size-h3;
-//   }
-// }
+h4,
+.h4 {
+  font-size: $font-size-h4-responsive;
 
-// h4,
-// .h4 {
-//   font-size: $font-size-h4-responsive;
+  @include breakpoint(xs) {
+    font-size: $font-size-h4;
+  }
+}
+h5,
+.h5 {
+  font-size: $font-size-h5;
+}
+h6,
+.h6 {
+  font-size: $font-size-h6;
+}
 
-//   @include breakpoint(xs) {
-//     font-size: $font-size-h4;
-//   }
-// }
-// h5,
-// .h5 {
-//   font-size: $font-size-h5;
-// }
-// h6,
-// .h6 {
-//   font-size: $font-size-h6;
-// }
+.text-normal {
+  font-family: $font-family-body;
+  font-size: $font-size-body;
+  font-weight: $font-weight-body;
+  line-height: $line-height-body;
+  margin-bottom: $paragraph-margin-bottom;
+}
 
-// .text-normal {
-//   font-family: $font-family-base;
-//   font-size: $font-size-base;
-//   font-weight: 400;
-//   line-height: $line-height-base;
-// }
+.text-xs {
+  font-size: $font-size-xs;
+}
+.text-small {
+  font-size: $font-size-small;
+}
+.text-big {
+  font-size: $font-size-big;
+}
+.text-pre-head {
+  font-weight: normal;
+  font-family: $font-family-body;
+  text-transform: uppercase;
+  opacity: 0.7;
+  line-height: 1.35;
+  letter-spacing: 1.8px;
+  font-size: $font-size-pre-head;
+  margin-bottom: 0;
+  
+  @include breakpoint(xs) {
+      letter-spacing: 2px;
+    }
+}
 
 
-// .text-xs {
-//   font-size: $font-size-xs;
-// }
-// .text-small {
-//   font-size: $font-size-small;
-// }
+blockquote {
+  $quote-icon-size: 60px;
 
-// .text-big {
-//   font-size: $font-size-big;
-// }
+  margin: $default-spacing * 2 0;
+  margin-top: $quote-icon-size;
+  padding: 0;
+  color: $body-color;
+  font-size: $font-size-h3-responsive;
+  line-height: $line-height-body;
+  border-left: none;
+  position: relative;
+  font-weight: normal;
 
+  @include breakpoint(xs) {
+    font-size: $font-size-h3;
+  }
 
-// blockquote {
-//   $quote-icon-size: 60px;
-
-//   margin: $default-spacing * 2 0;
-//   margin-top: $quote-icon-size;
-//   padding: 0;
-//   color: $text-color;
-//   font-size: $font-size-h3-responsive;
-//   line-height: $line-height-base;
-//   border-left: none;
-//   position: relative;
-//   font-weight: normal;
-
-//   @include breakpoint(xs) {
-//     font-size: $font-size-h3;
-//   }
-
-//   &:before {
-//     content: "“";
-//     position: absolute;
-//     bottom: calc(100% + 5px);
-//     line-height: 0;
-//     pointer-events: none;
-//     user-select: none;
-//     display: inline-block;
-//     font-size: $quote-icon-size;
-//     font-family: "Times New Roman", serif;
-//     font-weight: $font-weight-black;
-//     font-style: normal;
-//   }
-// }
+  &:before {
+    content: "“";
+    position: absolute;
+    bottom: calc(100% + 5px);
+    line-height: 0;
+    pointer-events: none;
+    user-select: none;
+    display: inline-block;
+    font-size: $quote-icon-size;
+    font-family: "Times New Roman", serif;
+    font-weight: 900;
+    font-style: normal;
+  }
+}

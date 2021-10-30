@@ -1,0 +1,29 @@
+// ensure correct text and link colors appear when used on a specific background-color
+// @include element-theme($brand-primary, $brand-primary-bg__text-color)
+@mixin element-theme($full-bg, $text-color) {
+  color: $text-color;
+  background: $full-bg;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6 {
+    color: inherit;
+  }
+
+  a {
+    color: inherit;
+
+    &:hover {
+      color: inherit;
+    }
+  }
+}

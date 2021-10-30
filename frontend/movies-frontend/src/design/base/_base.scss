@@ -1,0 +1,9 @@
+html {
+  //   TODO: background-color: $black; // seen when overscrolling the page on IOS. Apparently only works with solid colors?
+}
+
+body {
+  overflow-y: scroll;
+  word-wrap: break-word;
+  overscroll-behavior-y: none; // Disables pull-to-refresh and overscroll glow effect. Still keeps swipe navigations. https://developers.google.com/web/updates/2017/11/overscroll-behavior
+}

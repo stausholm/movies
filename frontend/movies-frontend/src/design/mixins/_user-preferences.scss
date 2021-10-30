@@ -1,0 +1,16 @@
+// respond to darkmode enabled
+// @include prefers-dark { }
+@mixin prefers-dark() {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
+
+// respond to prefering reduced motion
+// @include prefers-reduced-motion { }
+@mixin prefers-dark() {
+  @media (prefers-reduced-motion) {
+    @content;
+  }
+}
+

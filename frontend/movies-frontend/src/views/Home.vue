@@ -5,7 +5,22 @@
     <div class="ratio ratio-16x9" style="width: 200px">
       <p>test</p>
     </div>
+    <blockquote>This is a quote</blockquote>
+    <p class="text-pre-head">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. In, nostrum nisi atque ullam illum
+      asperiores inventore quos consequatur nihil fugiat quam repellendus mollitia fugit ipsa totam,
+      ea iste. Officia, quisquam.
+    </p>
     <p class="pl-sm p-md-2">test</p>
+    <div class="p theme-dark">
+      <p class="text-pre-head">pre head</p>
+      <h2 class="text-normal">lorem ipsum</h2>
+      <p>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit incidunt quo labore ullam
+        optio quas <a href="#">nulla cum itaque</a> distinctio, necessitatibus fugit temporibus
+        similique a ratione suscipit nesciunt eveniet quaerat tempora?
+      </p>
+    </div>
     <!-- <base-icon>
       <icon-more-vert />
     </base-icon>

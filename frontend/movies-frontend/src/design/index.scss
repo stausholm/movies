@@ -1,5 +1,5 @@
 // 3rd. party
-@import './vendor/normalize.scss';
+//@import './vendor/normalize.scss'; we use our own reboot instead, based on normalize 8.0.1 and bootstrap 5.1
 
 // Configuration
 @import './variables/index.scss';
