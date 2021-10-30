@@ -1,4 +1,122 @@
-// grid
-// row
-// column
-// container
+@use 'sass:math';
+
+// container gutters
+.container-fluid,
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $grid-gutter;
+  padding-right: $grid-gutter;
+
+  @include breakpoint(xs) {
+    padding-left: $grid-xs-gutter;
+    padding-right: $grid-xs-gutter;
+  }
+  @include breakpoint(sm) {
+    padding-left: $grid-sm-gutter;
+    padding-right: $grid-sm-gutter;
+  }
+}
+
+// container sizes
+.container {
+  max-width: $container-width;
+}
+.container--small {
+  max-width: $container-width-small;
+}
+.container--big {
+  max-width: $container-width-big;
+}
+.container--fluid {
+  max-width: 100%;
+}
+
+// rows
+.row {
+  display: flex;
+  flex-flow: row wrap;
+  margin-left: -(math.div($grid-gutter, 2));
+  margin-right: -(math.div($grid-gutter, 2));
+
+  @include breakpoint(xs) {
+    margin-left: -(math.div($grid-xs-gutter, 2));
+    margin-right: -(math.div($grid-xs-gutter, 2));
+  }
+  @include breakpoint(sm) {
+    margin-left: -(math.div($grid-sm-gutter, 2));
+    margin-right: -(math.div($grid-sm-gutter, 2));
+  }
+
+  // align columns. e.g. in a 12 column grid and a row with 2 5-wide columns, they can be centered with .row--center
+  &.row--center {
+    justify-content: center;
+  }
+  &.row--right {
+    justify-content: flex-end;
+  }
+
+  // remove gutters
+  &.row--flat {
+    margin-left: 0;
+    margin-right: 0;
+
+    > [class*='col-'],
+    > .col {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  // make all direct child columns of this row take up equal width. 
+  // Same as if all children used just .col class
+  &.row--grow {
+    > [class*='col-'],
+    > .col {
+      flex: 1 0 0%;
+    }
+  }
+}
+
+// this column will take up the available width.
+// If multiple of these are in the same row, they will split the available space and have equal width
+.col {
+  flex: 1 0 0%;
+}
+
+// column gutters
+[class*='col-'],
+.col {
+  padding-left: (math.div($grid-gutter, 2));
+  padding-right: (math.div($grid-gutter, 2));
+
+  @include breakpoint(xs) {
+    padding-left: (math.div($grid-xs-gutter, 2));
+    padding-right: (math.div($grid-xs-gutter, 2));
+  }
+  @include breakpoint(sm) {
+    padding-left: (math.div($grid-sm-gutter, 2));
+    padding-right: (math.div($grid-sm-gutter, 2));
+  }
+}
+
+// generate column classes
+@for $i from 1 through $grid-columns {
+  // make base column classes. e.g. .col-6
+  .col-#{$i} {
+    flex: 0 0 auto;
+    width: math.div($i * 100%, $grid-columns);
+  }
+}
+@for $i from 1 through $grid-columns {
+  // make responsive column classes. e.g. .col-sm-6
+  @each $k, $v in $grid-breakpoints {
+    @include breakpoint($k) {
+      .col-#{$k}-#{$i} {
+        flex: 0 0 auto;
+        width: math.div($i * 100%, $grid-columns);
+      }
+    }
+  }
+}
+

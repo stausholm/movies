@@ -1,0 +1,12 @@
+$grid-columns: 12;
+$grid-breakpoints: $breakpoints;
+
+// gutters
+$grid-gutter: $default-spacing - 10;
+$grid-xs-gutter: $default-spacing - 5;
+$grid-sm-gutter: $default-spacing;
+
+// container width
+$container-width: 1300px;
+$container-width-small: 1000px;
+$container-width-big: 1600px;

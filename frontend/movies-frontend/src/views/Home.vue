@@ -5,6 +5,24 @@
     <div class="ratio ratio-16x9" style="width: 200px">
       <p>test</p>
     </div>
+    <div class="container container--small">
+      <h1>aaaaaaaaaaa</h1>
+    </div>
+    <div class="container container--small">
+      <div class="row">
+        <div class="col">lorem</div>
+        <div class="col">ipsum</div>
+        <div class="col">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+      </div>
+    </div>
+    <div class="container container--small">
+      <div class="row row--flat">
+        <div class="col">lorem</div>
+        <div class="col">ipsum</div>
+        <!-- <div class="col-12 col-sm-6 col-lg-8">lorem</div> -->
+        <div class="col">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+      </div>
+    </div>
     <blockquote>This is a quote</blockquote>
     <p class="text-pre-head">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. In, nostrum nisi atque ullam illum
