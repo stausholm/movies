@@ -1,6 +1,7 @@
 <template>
   <div class="">
     <h1>Licenses</h1>
+    <p>MIT</p>
   </div>
 </template>
 

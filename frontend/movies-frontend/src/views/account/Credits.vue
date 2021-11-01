@@ -1,6 +1,14 @@
 <template>
   <div class="">
     <h1>Credits</h1>
+    <p>
+      {{ appName }} uses some awesome free resources in order to look and function the way it does
+    </p>
+    <ul>
+      <li>XX</li>
+      <li>YY</li>
+      <li>ZZ</li>
+    </ul>
   </div>
 </template>
 
@@ -9,5 +17,10 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'Credits',
+  data() {
+    return {
+      appName: 'TODO',
+    };
+  },
 });
 </script>

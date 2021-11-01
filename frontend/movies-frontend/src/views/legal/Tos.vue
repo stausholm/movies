@@ -1,6 +1,7 @@
 <template>
   <div class="">
     <h1>TOS</h1>
+    <p>¯\_(ツ)_/¯ Have fun!</p>
   </div>
 </template>
 

@@ -30,11 +30,20 @@
           </li>
           <li>
             Export my data
-            <span>Export data as JSON</span>
+            <span>Download your data as a JSON file</span>
           </li>
           <li>
             Import data
             <span>Requires valid JSON file</span>
+            <span>
+              Import existing data. You can choose between overwriting your current locally stored
+              data, or adding the imported data to your current dataset
+            </span>
+            <button>(opens overlay) More info for the JSON data structure</button>
+            <p>
+              Modal: Please select an import type: Overwrite: Overwrites all your existing local
+              data Merge and add: Merges existing data and adds new
+            </p>
           </li>
         </ul>
       </li>
