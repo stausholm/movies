@@ -174,11 +174,24 @@
     <teleport to="#teleporttarget" v-if="showStuff">
       <p>showStuff aaa {{ showStuff }}</p>
     </teleport>
+    <div v-if="dummy">
+      <p v-for="dum in dummy" :key="dum.title"></p>
+    </div>
+    <ul>
+      <li v-for="video in videos" :key="video.imdbId">
+        {{ video.posterUrl?.medium }}
+      </li>
+    </ul>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
+import Episode from '@/types/Episode';
+import Movie from '@/types/Movie';
+import Series from '@/types/Series';
+import { VIDEO_TYPES } from '@/constants/videoTypes';
+
 import BaseIcon from '@/components/base/BaseIcon.vue';
 import IconMoreVert from '@/components/icons/IconMoreVert.vue';
 import IconInstall from '@/components/icons/IconInstall.vue';
@@ -260,20 +273,44 @@ export default defineComponent({
     IconTomatoFresh,
     IconYoutube,
   },
+  props: {
+    dummy: {
+      required: false,
+      type: Array as PropType<Series[]>,
+    },
+  },
   data() {
     return {
       showAltIcon: false,
       wow: 'asdasd',
       numOrString: 25 as number | string,
       showStuff: true as boolean,
+      videos: [] as (Episode | Series | Movie)[],
     };
   },
-  computed: {},
+  computed: {
+    movies(): Movie[] {
+      return this.videos.filter((x): x is Movie => x.type === VIDEO_TYPES.MOVIE);
+    },
+    episodes(): Episode[] {
+      return this.videos.filter((x): x is Episode => x.type === VIDEO_TYPES.EPISODE);
+    },
+    series(): Series[] {
+      return this.videos.filter((x): x is Series => x.type === VIDEO_TYPES.SERIES);
+    },
+  },
   methods: {
     changeWow(val: string) {
       this.wow = val;
       return val;
     },
+  },
+  created() {
+    fetch('/db.json')
+      .then((res) => res.json())
+      .then((data) => {
+        this.videos = data;
+      });
   },
 });
 </script>
