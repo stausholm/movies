@@ -20,10 +20,10 @@ function formatVideoObj(originalObj, responseData) {
     rated: responseData.Rated,
     released: responseData.Released,
     runtimeMinutes: parseInt(responseData.Runtime),
-    genres: responseData.Genre.split(","),
-    director: responseData.Director.split(","),
-    writer: responseData.Writer.split(","),
-    actors: responseData.Actors.split(","),
+    genres: responseData.Genre.split(",").map((x) => x.trim()),
+    director: responseData.Director.split(",").map((x) => x.trim()),
+    writer: responseData.Writer.split(",").map((x) => x.trim()),
+    actors: responseData.Actors.split(",").map((x) => x.trim()),
     plot: responseData.Plot,
     country: responseData.Country,
     awards: responseData.Awards,
@@ -60,8 +60,8 @@ function formatVideoObj(originalObj, responseData) {
       formattedObj.totalSeasons = parseInt(responseData.totalSeasons);
       break;
     case OMDB_VIDEO_TYPES.episode:
-      (formattedObj.seriesId = responseData.seriesID),
-        (formattedObj.season = parseInt(responseData.Season));
+      formattedObj.seriesId = responseData.seriesID;
+      formattedObj.season = parseInt(responseData.Season);
       formattedObj.episode = parseInt(responseData.Episode);
       break;
     default:
