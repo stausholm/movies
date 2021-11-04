@@ -4,7 +4,7 @@ import { user } from './user';
 
 const store: StoreOptions<RootState> = {
   state: {
-    helloMessage: 'aaaaa',
+    __: null,
   },
   modules: {
     user,
