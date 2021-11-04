@@ -177,20 +177,51 @@
     <div v-if="dummy">
       <p v-for="dum in dummy" :key="dum.title"></p>
     </div>
-    <ul>
+    <!-- <ul>
       <li v-for="video in videos" :key="video.imdbId">
-        {{ video.posterUrl?.medium }}
+        {{ video.posterUrl?.medium || 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' }}
+      </li>
+    </ul> -->
+
+    <br />
+    <button @click="getAveragePosterRatio">getAveragePosterRatio</button>
+    <p>imageRatioPercentage: {{ imageRatioPercentage }}%</p>
+
+    <ul>
+      <li v-for="video in episodes" :key="video.imdbId">
+        <img :src="'/img/posters/' + video.imdbId + '_SX600.jpg'" alt="" />
+        <br />
+        <br />
       </li>
     </ul>
   </div>
 </template>
 
 <script lang="ts">
+const ratios = {
+  movie: {
+    thumbnail: 67.64734196768504,
+    medium: 67.60758715673957,
+    large: 67.61918247371314,
+  },
+  series: {
+    thumbnail: 70.84101871820573,
+    medium: 70.74502823443541,
+    large: 70.74013393835907,
+  },
+  episode: {
+    thumbnail: 139.10163228061094,
+    medium: 139.04155065082693,
+    large: 139.02263494536936,
+  },
+};
+
 import { defineComponent, PropType } from 'vue';
 import Episode from '@/types/Episode';
 import Movie from '@/types/Movie';
 import Series from '@/types/Series';
 import { VIDEO_TYPES } from '@/constants/videoTypes';
+import { getAverageImageRatio } from '@/utils/imageRatio';
 
 import BaseIcon from '@/components/base/BaseIcon.vue';
 import IconMoreVert from '@/components/icons/IconMoreVert.vue';
@@ -286,6 +317,7 @@ export default defineComponent({
       numOrString: 25 as number | string,
       showStuff: true as boolean,
       videos: [] as (Episode | Series | Movie)[],
+      imageRatioPercentage: 0,
     };
   },
   computed: {
@@ -303,6 +335,10 @@ export default defineComponent({
     changeWow(val: string) {
       this.wow = val;
       return val;
+    },
+    getAveragePosterRatio() {
+      const ratio = getAverageImageRatio();
+      this.imageRatioPercentage = ratio;
     },
   },
   created() {

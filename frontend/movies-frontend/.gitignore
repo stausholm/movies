@@ -21,3 +21,9 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Movie posters
+/public/img/posters/*.jpg
+/public/img/posters/*.jpeg
+/public/img/posters/*.png
+/public/img/posters/*.jpe
