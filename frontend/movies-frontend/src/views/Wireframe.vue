@@ -198,6 +198,7 @@
 </template>
 
 <script lang="ts">
+// eslint-disable-next-line
 const ratios = {
   movie: {
     thumbnail: 67.64734196768504,

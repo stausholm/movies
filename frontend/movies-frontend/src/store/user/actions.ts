@@ -1,13 +1,18 @@
 import { ActionTree } from 'vuex';
 import { RootState } from '../types';
+import { UserMutations } from './mutations';
 import { UserState } from './types';
 
+export enum UserActions {
+  LOAD_USERS = 'LOAD_USERS',
+}
+
 export const actions: ActionTree<UserState, RootState> = {
-  loadAPIResult({ commit }): void {
+  [UserActions.LOAD_USERS]({ commit }): void {
     fetch('https://jsonplaceholder.typicode.com/users')
       .then((res) => res.json())
       .then((data) => {
-        commit('SET_USERS', data);
+        commit(UserMutations.SET_USERS, data);
       });
   },
 };

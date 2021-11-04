@@ -13,6 +13,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { UserMutations } from '@/store/user/mutations';
+import { UserActions } from '@/store/user/actions';
 export default defineComponent({
   computed: {
     helloMessage() {
@@ -28,7 +29,7 @@ export default defineComponent({
     },
   },
   mounted() {
-    this.$store.dispatch('loadAPIResult');
+    this.$store.dispatch(UserActions.LOAD_USERS);
     setTimeout(() => {
       this.username = 'changed hehehehe';
     }, 3000);
