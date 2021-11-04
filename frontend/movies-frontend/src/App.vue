@@ -9,3 +9,29 @@
   <div id="teleporttarget"></div>
   <router-view />
 </template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { UserMutations } from '@/store/user/mutations';
+export default defineComponent({
+  computed: {
+    helloMessage() {
+      return this.$store.state.helloMessage;
+    },
+    username: {
+      get(): string {
+        return this.$store.getters.getUsername;
+      },
+      set(value: string): void {
+        this.$store.commit(UserMutations.SET_USERNAME, value);
+      },
+    },
+  },
+  mounted() {
+    this.$store.dispatch('loadAPIResult');
+    setTimeout(() => {
+      this.username = 'changed hehehehe';
+    }, 3000);
+  },
+});
+</script>
