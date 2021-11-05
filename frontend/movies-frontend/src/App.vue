@@ -1,5 +1,6 @@
 <template>
   <div id="nav">
+    {{ isReducedMotion }}
     <router-link to="/">Home</router-link>
     |
     <router-link to="/search">Search</router-link> |
@@ -13,26 +14,28 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { UserMutations } from '@/store/user/mutations';
-import { UserActions } from '@/store/user/actions';
 import { ContentActions } from '@/store/content/actions';
+import { AppSettingPayload } from '@/store/user/types';
 export default defineComponent({
   computed: {
     helloMessage() {
       return this.$store.state.helloMessage;
     },
-    username: {
-      get(): string {
-        return this.$store.getters.getUsername;
+    isReducedMotion: {
+      get(): boolean {
+        return this.$store.getters.getAppSettings.preferReducedMotion;
       },
-      set(value: string): void {
-        this.$store.commit(UserMutations.SET_USERNAME, value);
+      set(value: boolean): void {
+        this.$store.commit(UserMutations.SET_APPSETTING, {
+          key: 'preferReducedMotion',
+          val: value,
+        } as AppSettingPayload);
       },
     },
   },
   mounted() {
-    this.$store.dispatch(UserActions.LOAD_USERS);
     setTimeout(() => {
-      this.username = 'changed hehehehe';
+      this.isReducedMotion = true;
     }, 3000);
   },
   created() {

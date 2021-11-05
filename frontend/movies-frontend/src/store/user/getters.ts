@@ -1,12 +1,12 @@
 import { GetterTree } from 'vuex';
 import { RootState } from '../types';
-import { UserState } from './types';
+import { AppSettings, UserState } from './types';
 
 export const getters: GetterTree<UserState, RootState> = {
-  getUserInfo(state): string {
-    return `Username: ${state.username} - Email: ${state.email}`;
+  getStarredIds(state): string[] {
+    return state.starredIds;
   },
-  getUsername(state): string {
-    return state.username;
+  getAppSettings(state): AppSettings {
+    return state.appSettings;
   },
 };
