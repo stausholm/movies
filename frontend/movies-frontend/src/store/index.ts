@@ -1,6 +1,7 @@
 import Vuex, { StoreOptions } from 'vuex';
 import { RootState } from './types';
 import { user } from './user';
+import { content } from './content';
 
 const store: StoreOptions<RootState> = {
   state: {
@@ -8,6 +9,7 @@ const store: StoreOptions<RootState> = {
   },
   modules: {
     user,
+    content,
   },
   strict: process.env.NODE_ENV !== 'production',
 };

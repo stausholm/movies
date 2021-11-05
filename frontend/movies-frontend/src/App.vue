@@ -14,6 +14,7 @@
 import { defineComponent } from 'vue';
 import { UserMutations } from '@/store/user/mutations';
 import { UserActions } from '@/store/user/actions';
+import { ContentActions } from '@/store/content/actions';
 export default defineComponent({
   computed: {
     helloMessage() {
@@ -33,6 +34,9 @@ export default defineComponent({
     setTimeout(() => {
       this.username = 'changed hehehehe';
     }, 3000);
+  },
+  created() {
+    this.$store.dispatch(ContentActions.LOAD_VIDEOS);
   },
 });
 </script>
