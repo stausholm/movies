@@ -1,11 +1,9 @@
 <template>
   <div class="">
     <h1>Account</h1>
-    <div class="profile-card">
-      <img src="../../assets/logo.png" alt="Profile image" class="profile-card__image" />
-      <p class="profile-card__stat">Movies:<span>X</span></p>
-      <p class="profile-card__stat">Series:<span>X</span></p>
-      <p class="profile-card__stat">Starred:<span>X</span></p>
+    <div class="container">
+      <account-card :enableAvatarEditing="true" />
+      <account-card :alt="true" class="mt-2 border" />
     </div>
     <button>Reload app or something else idunno yet</button>
 
@@ -81,8 +79,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import AccountCard from '@/components/account/AccountCard.vue';
 
 export default defineComponent({
   name: 'Account',
+  components: {
+    AccountCard,
+  },
 });
 </script>

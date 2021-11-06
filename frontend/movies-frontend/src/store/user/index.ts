@@ -22,7 +22,8 @@ export const state: UserState = {
       language: 'en',
       showOnboarding: true,
       avatar: {
-        name: 'user',
+        name: 'user@user.com',
+        displayName: 'user',
         colors: ['#A3A948', '#EDB92E', '#F85931', '#CE1836', '#009989'],
       },
     } as AppSettings,

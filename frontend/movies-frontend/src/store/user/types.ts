@@ -3,6 +3,7 @@ export type Language = 'en' | 'dk';
 
 export interface Avatar {
   name: string;
+  displayName: string;
   colors: [string, string, string, string, string];
 }
 
