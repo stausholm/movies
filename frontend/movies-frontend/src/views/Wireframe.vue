@@ -105,6 +105,9 @@
     <base-icon>
       <icon-i-m-d-b />
     </base-icon>
+    <base-icon>
+      <icon-edit />
+    </base-icon>
 
     <!-- splat is assigned to ratings below 60% positive -->
     <base-icon>
@@ -262,6 +265,7 @@ import IconIMDB from '@/components/icons/IconIMDB.vue';
 import IconTomatoSplat from '@/components/icons/IconTomatoSplat.vue';
 import IconTomatoFresh from '@/components/icons/IconTomatoFresh.vue';
 import IconYoutube from '@/components/icons/IconYoutube.vue';
+import IconEdit from '@/components/icons/IconEdit.vue';
 
 export default defineComponent({
   name: 'Wireframe',
@@ -304,6 +308,7 @@ export default defineComponent({
     IconTomatoSplat,
     IconTomatoFresh,
     IconYoutube,
+    IconEdit,
   },
   props: {
     dummy: {
