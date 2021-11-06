@@ -5,7 +5,7 @@ $utilities: (
   "box-shadow": (
     "prefix": "shadow",
     "values": (
-      "none": "none",
+      "none": none,
       null: $box-shadow,
       "sm": $box-shadow-sm,
       "lg": $box-shadow-lg,

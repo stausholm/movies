@@ -6,28 +6,28 @@ $utilities: (
     "responsive": true,
     "values": (
       "row": "row",
-      "row-reverse": "row-reverse",
-      "column": "column",
-      "column-reverse": "column-reverse"
+      "row-reverse": row-reverse,
+      "column": column,
+      "column-reverse": column-reverse
     )
   ),
   "justify-content": (
     "prefix": "justify-content",
     "responsive": true,
     "values": (
-      "center": "center",
-      "start": "start",
-      "end": "end",
-      "between": "between"
+      "center": center,
+      "start": start,
+      "end": end,
+      "between": space-between
     )
   ),
   "align-items": (
     "prefix": "align-items",
     "responsive": true,
     "values": (
-      "center": "center",
-      "start": "start",
-      "end": "end"
+      "center": center,
+      "start": start,
+      "end": end
     )
   ),
 );

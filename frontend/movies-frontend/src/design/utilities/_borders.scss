@@ -6,40 +6,40 @@ $utilities: (
     "prefix": "border",
     "values": (
       null: $border-width solid currentColor,
-      "0": "0",
-      "none": "none"
+      "0": 0,
+      "none": none
     )
   ),
   "border-top": (
     "prefix": "border-top",
     "values": (
       null: $border-width solid currentColor,
-      "0": "0",
-      "none": "none"
+      "0": 0,
+      "none": none
     )
   ),
   "border-bottom": (
     "prefix": "border-bottom",
     "values": (
       null: $border-width solid currentColor,
-      "0": "0",
-      "none": "none"
+      "0": 0,
+      "none": none
     )
   ),
   "border-left": (
     "prefix": "border-left",
     "values": (
       null: $border-width solid currentColor,
-      "0": "0",
-      "none": "none"
+      "0": 0,
+      "none": none
     )
   ),
   "border-right": (
     "prefix": "border-right",
     "values": (
       null: $border-width solid currentColor,
-      "0": "0",
-      "none": "none"
+      "0": 0,
+      "none": none
     )
   ),
 );

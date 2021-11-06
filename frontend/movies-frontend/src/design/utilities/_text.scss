@@ -4,25 +4,25 @@ $utilities: (
   "text-align": (
     "prefix": "text",
     "values": (
-      "left": "left",
-      "right": "right",
-      "center": "center",
+      "left": left,
+      "right": right,
+      "center": center,
     )
   ),
   "text-transform": (
     "prefix": "text",
     "values": (
-      "uppercase": "uppercase",
-      "lowercase": "lowercase",
-      "capitalize": "capitalize",
+      "uppercase": uppercase,
+      "lowercase": lowercase,
+      "capitalize": capitalize,
     )
   ),
   "font-weight": (
     "prefix": "fw",
     "values": (
-      "bold": "bold",
-      "normal": "normal",
-      "light": "light",
+      "bold": bold,
+      "normal": normal,
+      "light": lighter,
     )
   )
 );
