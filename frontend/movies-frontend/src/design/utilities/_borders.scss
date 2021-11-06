@@ -5,7 +5,7 @@ $utilities: (
   "border": (
     "prefix": "border",
     "values": (
-      null: $border-width solid currentColor,
+      null: $border-width-base solid currentColor,
       "0": 0,
       "none": none
     )
@@ -13,7 +13,7 @@ $utilities: (
   "border-top": (
     "prefix": "border-top",
     "values": (
-      null: $border-width solid currentColor,
+      null: $border-width-base solid currentColor,
       "0": 0,
       "none": none
     )
@@ -21,7 +21,7 @@ $utilities: (
   "border-bottom": (
     "prefix": "border-bottom",
     "values": (
-      null: $border-width solid currentColor,
+      null: $border-width-base solid currentColor,
       "0": 0,
       "none": none
     )
@@ -29,7 +29,7 @@ $utilities: (
   "border-left": (
     "prefix": "border-left",
     "values": (
-      null: $border-width solid currentColor,
+      null: $border-width-base solid currentColor,
       "0": 0,
       "none": none
     )
@@ -37,7 +37,7 @@ $utilities: (
   "border-right": (
     "prefix": "border-right",
     "values": (
-      null: $border-width solid currentColor,
+      null: $border-width-base solid currentColor,
       "0": 0,
       "none": none
     )

@@ -4,10 +4,10 @@ $utilities: (
   "position": (
     "prefix": "position",
     "values": (
-      "top": top,
-      "bottom": bottom,
-      "left": left,
-      "right": right
+      "static": static,
+      "relative": relative,
+      "absolute": absolute,
+      "fixed": fixed
     )
   ),
   "top": (
