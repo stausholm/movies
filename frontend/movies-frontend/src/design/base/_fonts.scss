@@ -1,0 +1,15 @@
+@font-face {
+  font-family: 'DM Sans';
+  src: url('#{$font-path}DMSans-Regular.ttf');
+  src: url('#{$font-path}DMSans-Regular.ttf?#iefix') format('truetype'), url('#{$font-path}DMSans-Regular.woff2') format('woff2'), url('#{$font-path}DMSans-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('#{$font-path}DMSans-Bold.ttf');
+  src: url('#{$font-path}DMSans-Bold.ttf?#iefix') format('truetype'), url('#{$font-path}DMSans-Bold.woff2') format('woff2'), url('#{$font-path}DMSans-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}

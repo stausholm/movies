@@ -102,6 +102,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:math';
 @import '@/design/variables/index.scss';
 
 .account-card {
@@ -157,7 +158,7 @@ export default defineComponent({
       &__stats {
         clear: both;
         background: $gray-400;
-        padding: $default-spacing / 2;
+        padding: math.div($default-spacing, 2);
         border-radius: $border-radius-small;
       }
 
@@ -165,7 +166,7 @@ export default defineComponent({
         font-size: $font-size-small;
 
         &:not(:last-child) {
-          margin-bottom: $default-spacing / 4;
+          margin-bottom: math.div($default-spacing, 4);
         }
       }
     }
