@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="account-card__header pl pr">
-      <p class="account-card__title text-big mb-0 fw-bold text-truncate text-capitalize">
+      <p class="account-card__title text-big mb-0 fw-bold lh-1 text-truncate text-capitalize">
         {{ avatar.displayName }}
       </p>
       <p class="account-card__subtitle text-small text-truncate">Local user</p>

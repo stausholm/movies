@@ -1,15 +1,26 @@
-html {
-  font-size: $font-size-root - 4;
+@import '../variables/typography';
 
-  @include breakpoint(xs) {
-    font-size: $font-size-root;
-  }
+html {
+  font-size: $font-size-root;
+  // font-size: $font-size-root - 2;
+
+  // @include breakpoint($breakpoint-font-size-change) {
+  //   font-size: $font-size-root;
+  // }
 
   @include prefers-dark {
     // use with prefers-color-scheme dark if the project also supports darkmode
     // Switching from subpixel rendering (default) to antialiasing for light text on dark backgrounds makes it look lighter weight (more crisp).
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+body, .text-normal {
+  font-size: $font-size-body-responsive;
+  
+  @include breakpoint($breakpoint-font-size-change) {
+    font-size: $font-size-body;
   }
 }
 
@@ -32,7 +43,7 @@ h1,
 .h1 {
   font-size: $font-size-h1-responsive;
 
-  @include breakpoint(xs) {
+  @include breakpoint($breakpoint-font-size-change) {
     font-size: $font-size-h1;
   }
 }
@@ -41,7 +52,7 @@ h2,
 .h2 {
   font-size: $font-size-h2-responsive;
 
-  @include breakpoint(xs) {
+  @include breakpoint($breakpoint-font-size-change) {
     font-size: $font-size-h2;
   }
 }
@@ -50,7 +61,7 @@ h3,
 .h3 {
   font-size: $font-size-h3-responsive;
 
-  @include breakpoint(xs) {
+  @include breakpoint($breakpoint-font-size-change) {
     font-size: $font-size-h3;
   }
 }
@@ -59,36 +70,50 @@ h4,
 .h4 {
   font-size: $font-size-h4-responsive;
 
-  @include breakpoint(xs) {
+  @include breakpoint($breakpoint-font-size-change) {
     font-size: $font-size-h4;
   }
 }
 h5,
 .h5 {
-  font-size: $font-size-h5;
+  font-size: $font-size-h5-responsive;
+
+  @include breakpoint($breakpoint-font-size-change) {
+    font-size: $font-size-h5;
+  }
 }
 h6,
 .h6 {
-  font-size: $font-size-h6;
+  font-size: $font-size-h6-responsive;
+
+  @include breakpoint($breakpoint-font-size-change) {
+    font-size: $font-size-h6;
+  }
 }
 
 .text-normal {
   font-family: $font-family-body;
-  font-size: $font-size-body;
   font-weight: $font-weight-body;
   line-height: $line-height-body;
   margin-bottom: $paragraph-margin-bottom;
 }
 
-.text-xs {
-  font-size: $font-size-xs;
-}
 .text-small {
-  font-size: $font-size-small;
+  font-size: $font-size-small-responsive;
+  
+  @include breakpoint($breakpoint-font-size-change) {
+    font-size: $font-size-small;
+  }
 }
+
 .text-big {
-  font-size: $font-size-big;
+  font-size: $font-size-big-responsive;
+  
+  @include breakpoint($breakpoint-font-size-change) {
+    font-size: $font-size-big;
+  }
 }
+
 .text-pre-head {
   font-weight: normal;
   font-family: $font-family-body;
@@ -96,17 +121,19 @@ h6,
   opacity: 0.7;
   line-height: 1.35;
   letter-spacing: 1.8px;
-  font-size: $font-size-pre-head;
+  font-size: $font-size-pre-head-responsive;
   margin-bottom: 0;
   
-  @include breakpoint(xs) {
+  @include breakpoint($breakpoint-font-size-change) {
       letter-spacing: 2px;
+      font-size: $font-size-pre-head;
     }
 }
 
 
 blockquote {
   $quote-icon-size: 60px;
+  $quote-icon-size-responsive: 50px;
 
   margin: $default-spacing * 2 0;
   margin-top: $quote-icon-size;
@@ -118,10 +145,6 @@ blockquote {
   position: relative;
   font-weight: normal;
 
-  @include breakpoint(xs) {
-    font-size: $font-size-h3;
-  }
-
   &:before {
     content: "“";
     position: absolute;
@@ -130,9 +153,17 @@ blockquote {
     pointer-events: none;
     user-select: none;
     display: inline-block;
-    font-size: $quote-icon-size;
+    font-size: $quote-icon-size-responsive;
     font-family: "Times New Roman", serif;
     font-weight: 900;
     font-style: normal;
+  }
+
+  @include breakpoint($breakpoint-font-size-change) {
+    font-size: $font-size-h3;
+
+    &:before {
+      font-size: $quote-icon-size;
+    }
   }
 }

@@ -3,6 +3,24 @@
     <h1>Wireframe</h1>
     <p>A demo of boilerplate</p>
 
+    <div class="container">
+      <div class="row">
+        <div class="col-12 mb-2">
+          <h1>{{ fontSizeDemoText }}</h1>
+          <h2>{{ fontSizeDemoText }}</h2>
+          <h3>{{ fontSizeDemoText }}</h3>
+          <h4>{{ fontSizeDemoText }}</h4>
+          <h5>{{ fontSizeDemoText }}</h5>
+          <h6>{{ fontSizeDemoText }}</h6>
+          <h1 class="text-normal">{{ fontSizeDemoText }}</h1>
+          <p>{{ fontSizeDemoText }}</p>
+          <p class="text-small">{{ fontSizeDemoText }}</p>
+          <p class="text-big">{{ fontSizeDemoText }}</p>
+          <p class="text-pre-head">{{ fontSizeDemoText }}</p>
+        </div>
+      </div>
+    </div>
+
     <base-icon>
       <icon-more-vert />
     </base-icon>
@@ -324,6 +342,7 @@ export default defineComponent({
       showStuff: true as boolean,
       videos: [] as (Episode | Series | Movie)[],
       imageRatioPercentage: 0,
+      fontSizeDemoText: 'Lorem ipsum dolor sit amet',
     };
   },
   computed: {
