@@ -1,6 +1,15 @@
 :root {
+  // TODO: default should be dark mode, if no user preference is set
+  @include createCssvars((
+    brand-primary: $__brand-primary,
+    brand-primary-light: $__brand-primary-light,
+    brand-primary-lighter: $__brand-primary-lighter,
+    brand-primary-dark: $__brand-primary-dark,
+    brand-primary-darker: $__brand-primary-darker,
+    brand-primary-bg__text-color: $__brand-primary-bg__text-color,
+  ));
 
-  @include prefers-dark {
+  @include prefers-light {
 
   }
 }

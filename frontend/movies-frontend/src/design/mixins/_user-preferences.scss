@@ -6,9 +6,17 @@
   }
 }
 
+// respond to lightmode enabled
+// @include prefers-light { }
+@mixin prefers-light() {
+  @media (prefers-color-scheme: light) {
+    @content;
+  }
+}
+
 // respond to prefering reduced motion
 // @include prefers-reduced-motion { }
-@mixin prefers-dark() {
+@mixin prefers-reduced-motion() {
   @media (prefers-reduced-motion) {
     @content;
   }

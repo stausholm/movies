@@ -1,0 +1,18 @@
+// sets a css custom property where mixin is included
+// @include setCssvar(brand-primary, $__brand-primary);
+@mixin setCssvar($name, $value: '', $prefix: ui) {
+  --#{$prefix}-#{$name}: #{$value};
+}
+
+// set a list of css custom properties where mixin is included. E.g. useful on :root
+// @include createCssvars((
+//   brand-primary: $__brand-primary,
+//   brand-secondary: $__brand-secondary
+// ));
+@mixin createCssvars($css_variables, $prefix: ui) {
+  @each $name, $value in $css_variables {
+    --#{$prefix}-#{$name}: #{$value};
+  }
+}
+
+// https://dev.to/felipperegazio/css-custom-properties-vars-with-sass-scss-a-practical-architecture-strategy-1m88

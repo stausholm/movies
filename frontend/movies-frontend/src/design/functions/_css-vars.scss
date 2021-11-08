@@ -1,0 +1,8 @@
+// example uses
+// background-color: cssvar(brand-primary);
+// $brand-primary: cssvar(brand-primary);
+@function cssvar($name, $prefix: ui) {
+  @return var(--#{$prefix}-#{$name});
+}
+
+// https://dev.to/felipperegazio/css-custom-properties-vars-with-sass-scss-a-practical-architecture-strategy-1m88
