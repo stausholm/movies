@@ -12,13 +12,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { APP_NAME, APP_FEEDBACK_URL } from '@/constants/SiteSettings.json';
 
 export default defineComponent({
   name: 'Feedback',
   data() {
     return {
-      appName: 'TODO',
-      appFeedbackUrl: 'TODO',
+      appName: APP_NAME,
+      appFeedbackUrl: APP_FEEDBACK_URL,
     };
   },
 });

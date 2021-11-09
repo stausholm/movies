@@ -48,7 +48,10 @@
       <li>
         <p>Application</p>
         <ul>
-          <li>Darkmode</li>
+          <li>
+            Darkmode
+            <theme-switcher />
+          </li>
           <li>
             Image saturation
             <span>Adjust the vibrance of colors in images</span>
@@ -80,11 +83,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import AccountCard from '@/components/account/AccountCard.vue';
+import ThemeSwitcher from '@/components/account/ThemeSwitcher.vue';
 
 export default defineComponent({
   name: 'Account',
   components: {
     AccountCard,
+    ThemeSwitcher,
   },
 });
 </script>

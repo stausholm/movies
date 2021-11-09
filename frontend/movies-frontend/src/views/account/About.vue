@@ -25,14 +25,15 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { APP_NAME, APP_VERSION, APP_CODE_URL } from '@/constants/SiteSettings.json';
 
 export default defineComponent({
   name: 'About',
   data() {
     return {
-      appName: 'TODO',
-      appVersion: 'TODO',
-      appCodeUrl: 'TODO',
+      appName: APP_NAME,
+      appVersion: APP_VERSION,
+      appCodeUrl: APP_CODE_URL,
     };
   },
 });

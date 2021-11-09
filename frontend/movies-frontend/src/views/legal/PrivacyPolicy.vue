@@ -15,16 +15,23 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import {
+  APP_NAME,
+  APP_HOST_NAME,
+  APP_HOST_LOG_PERIOD,
+  APP_HOST_PRIVACY_URL,
+  APP_HOST_GDPR_URL,
+} from '@/constants/SiteSettings.json';
 
 export default defineComponent({
   name: 'PrivacyPolicy',
   data() {
     return {
-      appName: 'TODO',
-      appHostName: 'TODO',
-      appHostLogPeriod: 'TODO',
-      appHostPrivacyUrl: 'TODO',
-      appHostGDPRUrl: 'TODO',
+      appName: APP_NAME,
+      appHostName: APP_HOST_NAME,
+      appHostLogPeriod: APP_HOST_LOG_PERIOD,
+      appHostPrivacyUrl: APP_HOST_PRIVACY_URL,
+      appHostGDPRUrl: APP_HOST_GDPR_URL,
     };
   },
 });

@@ -14,12 +14,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { APP_NAME } from '@/constants/SiteSettings.json';
 
 export default defineComponent({
   name: 'Credits',
   data() {
     return {
-      appName: 'TODO',
+      appName: APP_NAME,
     };
   },
 });

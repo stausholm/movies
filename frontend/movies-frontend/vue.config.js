@@ -1,10 +1,14 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { COLOR_THEME_STORAGE_KEY, APP_NAME } = require('./src/constants/SiteSettings.json');
+
 module.exports = {
   chainWebpack: (config) => {
     // https://cli.vuejs.org/guide/webpack.html#modifying-options-of-a-plugin
     // properties used in index.html
     config.plugin('html').tap((args) => {
-      args[0].title = 'TODO';
+      args[0].title = APP_NAME;
       args[0].mortenTest = 'TODO';
+      args[0].colorThemeStorageKey = COLOR_THEME_STORAGE_KEY;
       return args;
     });
   },

@@ -12,10 +12,7 @@ export const state: UserState = {
     APP_SETTINGS_STORAGE_KEY,
     {
       // default values
-      theme:
-        window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-          ? 'dark'
-          : 'light',
+      theme: 'auto',
       preferReducedMotion:
         window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
       imageSaturation: 0,

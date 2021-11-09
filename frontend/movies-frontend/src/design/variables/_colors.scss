@@ -1,6 +1,7 @@
 // Prefix with "__" to know that this variable is only for internal use with css custom properties. E.g. $__brand-primary is the internal one and $brand-primary is the one that should be used when writing css
 // This splitup is done so that we can use css custom properties and still have intellisense on scss variables when writing $brand-primary in our css 
 // css custom properties are defined in _root.scss
+@import '../functions/css-vars';
 
 // grayscale
 $white: #fff;
@@ -68,8 +69,8 @@ $brand-light: $gray-100;
 $brand-dark: $gray-900;
 
 // layout
-$body-bg: $white;
-
+$__body-bg: $white;
+$body-bg: cssvar(body-bg);
 
 // html elements
 $kbd-color: $white;

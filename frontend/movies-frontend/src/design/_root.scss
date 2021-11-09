@@ -7,9 +7,29 @@
     brand-primary-dark: $__brand-primary-dark,
     brand-primary-darker: $__brand-primary-darker,
     brand-primary-bg__text-color: $__brand-primary-bg__text-color,
+    body-bg: $__body-bg
   ));
 
   @include prefers-light {
-
+    @include createCssvars((
+      body-bg: purple
+    ));
   }
+}
+
+// Root element will have data-theme set, in case user has actively enabled a specific theme through the themeswitcher component
+html[data-theme="light"] {
+  @include createCssvars((
+    body-bg: pink
+  ));
+}
+html[data-theme="dark"] {
+  @include createCssvars((
+    body-bg: yellow
+  ));
+}
+html[data-theme="dim"] {
+  @include createCssvars((
+    body-bg: green
+  ));
 }

@@ -1,11 +1,21 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <script>
+      // set data-theme as early as possible to prevent flash of wrong theme 
+      // TODO: check with prod if this is necessary, or if we can move it into app.vue created(), or when initing vuex
+      const persistedColorPreference = window.localStorage.getItem('<%= htmlWebpackPlugin.options.colorThemeStorageKey %>');
+      const hasPersistedPreference = typeof persistedColorPreference === 'string';
+
+      if (hasPersistedPreference) {
+        document.documentElement.setAttribute('data-theme', persistedColorPreference);
+      }
+    </script>
   </head>
   <body>
     <noscript>

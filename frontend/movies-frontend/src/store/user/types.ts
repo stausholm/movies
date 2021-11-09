@@ -1,4 +1,4 @@
-export type ColorTheme = 'dark' | 'light';
+export type ColorTheme = 'dark' | 'light' | 'dim' | 'auto';
 export type Language = 'en' | 'dk';
 
 export interface Avatar {
