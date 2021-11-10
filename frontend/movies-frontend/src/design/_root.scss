@@ -12,7 +12,7 @@
 
   @include prefers-light {
     @include createCssvars((
-      body-bg: purple
+      //body-bg: purple
     ));
   }
 }
@@ -28,7 +28,7 @@ html[data-theme="dark"] {
     body-bg: yellow
   ));
 }
-html[data-theme="dim"] {
+html[data-theme="black"] {
   @include createCssvars((
     body-bg: green
   ));

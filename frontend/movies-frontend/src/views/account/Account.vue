@@ -59,6 +59,7 @@
           <li>
             Prefer reduced motion
             <span>Disable/enable app animations</span>
+            <input type="checkbox" v-model="isReducedMotion" />
           </li>
           <li>Change language</li>
           <li>Start product tour</li>
@@ -84,12 +85,27 @@
 import { defineComponent } from 'vue';
 import AccountCard from '@/components/account/AccountCard.vue';
 import ThemeSwitcher from '@/components/account/ThemeSwitcher.vue';
+import { AppSettingPayload } from '@/store/user/types';
+import { UserMutations } from '@/store/user/mutations';
 
 export default defineComponent({
   name: 'Account',
   components: {
     AccountCard,
     ThemeSwitcher,
+  },
+  computed: {
+    isReducedMotion: {
+      get(): boolean {
+        return this.$store.getters.getAppSettings.preferReducedMotion;
+      },
+      set(value: boolean): void {
+        this.$store.commit(UserMutations.SET_APPSETTING, {
+          key: 'preferReducedMotion',
+          val: value,
+        } as AppSettingPayload);
+      },
+    },
   },
 });
 </script>

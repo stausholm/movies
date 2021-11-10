@@ -9,6 +9,7 @@ html {
   // }
 
   @include prefers-dark {
+    // TODO: if html[data-theme="light"] is set but user preference is dark, these properties should NOT be set
     // use with prefers-color-scheme dark if the project also supports darkmode
     // Switching from subpixel rendering (default) to antialiasing for light text on dark backgrounds makes it look lighter weight (more crisp).
     -webkit-font-smoothing: antialiased;

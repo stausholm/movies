@@ -6,9 +6,13 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <!-- Tell the browser UA stylesheet we support dark and light scheme and we prefer dark.
+      Indicate which default UA scheme to use immediately, until our own styles have been loaded. Should help prevent flash of wrong theme. -->
+    <meta name="color-scheme" content="dark light">
     <script>
       // set data-theme as early as possible to prevent flash of wrong theme 
-      // TODO: check with prod if this is necessary, or if we can move it into app.vue created(), or when initing vuex
+      // This is placed here instead of e.g. app.vue created() to minimize any potential of unwanted "flash of wrong theme", 
+      // that could occur when the js is loaded after the stylesheet 
       const persistedColorPreference = window.localStorage.getItem('<%= htmlWebpackPlugin.options.colorThemeStorageKey %>');
       const hasPersistedPreference = typeof persistedColorPreference === 'string';
 
