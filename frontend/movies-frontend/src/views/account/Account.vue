@@ -1,13 +1,12 @@
 <template>
-  <div class="">
-    <h1>Account</h1>
-    <div class="container">
-      <account-card :enableAvatarEditing="true" />
-      <account-card :alt="true" class="mt-2 border" />
-    </div>
+  <layout>
+    <h1 class="visually-hidden">Account Page</h1>
+    <account-card class="mb" :enableAvatarEditing="true" />
+    <!-- <account-card :alt="true" class="mt-2 border" /> -->
+
     <button>Reload app or something else idunno yet</button>
 
-    <p>Settings</p>
+    <p class="h6">Settings</p>
     <ul>
       <li>
         <p>Account</p>
@@ -84,7 +83,7 @@
         </ul>
       </li>
     </ul>
-  </div>
+  </layout>
 </template>
 
 <script lang="ts">
@@ -93,12 +92,14 @@ import AccountCard from '@/components/account/AccountCard.vue';
 import ThemeSwitcher from '@/components/account/ThemeSwitcher.vue';
 import { AppSettingPayload } from '@/store/user/types';
 import { UserMutations } from '@/store/user/mutations';
+import Layout from '@/layouts/Main.vue';
 
 export default defineComponent({
   name: 'Account',
   components: {
     AccountCard,
     ThemeSwitcher,
+    Layout,
   },
   computed: {
     isReducedMotion: {

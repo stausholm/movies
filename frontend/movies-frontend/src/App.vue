@@ -1,7 +1,7 @@
 <template>
   <navbar />
-  <div id="teleporttarget"></div>
   <router-view />
+  <div id="teleporttarget"></div>
 </template>
 
 <script lang="ts">

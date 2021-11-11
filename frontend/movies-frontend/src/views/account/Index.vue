@@ -1,5 +1,4 @@
 <template>
-  <h1>Account index</h1>
   <router-view />
 </template>
 

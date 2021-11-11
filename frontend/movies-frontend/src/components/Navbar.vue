@@ -13,3 +13,8 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({});
 </script>
+
+<style lang="scss" scoped>
+@import '@/design/variables/_colors.scss';
+@import '@/design/mixins/_breakpoints.scss';
+</style>
