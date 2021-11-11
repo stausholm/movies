@@ -44,6 +44,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "account" */ '@/views/account/Changelog.vue'),
         meta: {},
       },
+      {
+        path: 'button',
+        component: () => import(/* webpackChunkName: "account" */ '@/views/account/Button.vue'),
+        meta: {},
+      },
     ],
   },
 ];

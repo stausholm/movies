@@ -75,6 +75,12 @@
           <li>
             <router-link to="/account/about">About</router-link>
           </li>
+          <li>
+            <router-link to="/account/button">
+              ???
+              <span>????</span>
+            </router-link>
+          </li>
         </ul>
       </li>
     </ul>

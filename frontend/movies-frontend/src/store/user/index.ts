@@ -15,6 +15,7 @@ export const state: UserState = {
       theme: 'auto',
       preferReducedMotion:
         window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+      buttonClicks: 0,
       imageSaturation: 0,
       language: 'en',
       showOnboarding: true,
