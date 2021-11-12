@@ -11,11 +11,13 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: '',
+        name: 'Account',
         component: () => import(/* webpackChunkName: "account" */ '@/views/account/Account.vue'),
         meta: {},
       },
       {
         path: 'starred',
+        name: 'Starred',
         component: () => import(/* webpackChunkName: "account" */ '@/views/account/Starred.vue'),
         meta: {},
       },

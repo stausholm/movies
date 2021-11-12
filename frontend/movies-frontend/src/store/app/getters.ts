@@ -1,0 +1,9 @@
+import { GetterTree } from 'vuex';
+import { RootState } from '../types';
+import { AppLayoutSizeWidth, AppState } from './types';
+
+export const getters: GetterTree<AppState, RootState> = {
+  layoutSizeWidth(state): AppLayoutSizeWidth {
+    return state.layoutSizeWidth;
+  },
+};

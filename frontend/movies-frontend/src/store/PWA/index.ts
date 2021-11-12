@@ -3,9 +3,10 @@ import { RootState } from '../types';
 import { PWAState } from './types';
 import { getters } from './getters';
 import { mutations } from './mutations';
+import { isLaunchedInBrowser } from '@/utils/PWAUtils';
 
 export const state: PWAState = {
-  launchedAsPWA: false,
+  launchedAsPWA: !isLaunchedInBrowser(),
   showPWAOverlay: false,
   deferredPrompt: null,
 };

@@ -9,6 +9,9 @@ export const getters: GetterTree<PWAState, RootState> = {
   showPWAInstallButton(state): boolean {
     return !state.launchedAsPWA;
   },
+  launchedAsPWA(state): boolean {
+    return state.launchedAsPWA;
+  },
   deferredPrompt(state) {
     return state.deferredPrompt;
   },
