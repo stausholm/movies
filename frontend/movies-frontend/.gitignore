@@ -27,3 +27,6 @@ pnpm-debug.log*
 /public/img/posters/*.jpeg
 /public/img/posters/*.png
 /public/img/posters/*.jpe
+
+# Secrets
+/secrets.ts
