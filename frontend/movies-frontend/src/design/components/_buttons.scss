@@ -1,0 +1,175 @@
+// button colors
+.btn {
+  @include createCssvars(
+    (
+      color: $body-color,
+      color-hover: $body-color,
+      color-active: $body-color,
+      bg: $white,
+      bg-hover: $gray-200,
+      bg-active: $gray-300,
+    ),
+    btn
+  );
+
+  &--primary {
+    @include createCssvars(
+      (
+        color: $brand-primary-bg__text-color,
+        color-hover: $brand-primary-bg__text-color,
+        color-active: $brand-primary-bg__text-color,
+        bg: $brand-primary,
+        bg-hover: $brand-primary-dark,
+        bg-active: $brand-primary-darker,
+      ),
+      btn
+    );
+  }
+
+  &--danger {
+    @include createCssvars(
+      (
+        color: $white,
+        color-hover: $white,
+        color-active: $white,
+        bg: $brand-danger,
+        bg-hover: darken($brand-danger, 10),
+        bg-active: darken($brand-danger, 20),
+      ),
+      btn
+    );
+  }
+
+  &--text {
+    @include createCssvars(
+      (
+        bg: transparent,
+        bg-hover: rgba(0, 0, 0, 0.04),
+        bg-active: rgba(0, 0, 0, 0.12),
+      ),
+      btn
+    );
+  }
+}
+
+// button styles
+.btn {
+  color: cssvar(color, btn);
+  background-color: cssvar(bg, btn);
+  min-height: $min-touch-target-size;
+  min-width: $min-touch-target-size;
+  user-select: none;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 1em 1.2em;
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: none;
+  line-height: 1;
+  vertical-align: middle;
+  border-radius: $border-radius-base;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+  transition-property: opacity, color, background-color, box-shadow, outline-offset;
+  font-weight: bold;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+
+  @include prefers-reduced-motion() {
+    transition-property: opacity, color, background-color, box-shadow;
+  }
+
+  // states
+  // hover on non-touch devices. This is to prevent "sticky hover" effect on touch devices
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: cssvar(color-hover, btn);
+      background-color: cssvar(bg-hover, btn);
+      text-decoration: none;
+    }
+  }
+
+  &:active {
+    color: cssvar(color-active, btn);
+    background-color: cssvar(bg-active, btn);
+  }
+
+  // when focus is triggered by keyboard navigation
+  &:focus-visible {
+    outline-offset: 4px;
+  }
+  // when focus is triggered by something that is NOT keyboard navigation
+  &:focus:not(:focus-visible) {
+  }
+
+  &:disabled {
+    pointer-events: none;
+    cursor: default;
+    background-color: rgba(0, 0, 0, 0.12);
+    color: rgba(0, 0, 0, 0.37);
+  }
+
+  // icons
+  .icon {
+    // assume icon on the left of the text
+    margin-right: 0.5em;
+    margin-left: -0.5em; // icon is more visually heavy, so we make the button padding visually smaller on the icon side
+    margin-top: -1em;
+    margin-bottom: -1em;
+
+    // icon shown to the right of the text
+    &:last-child {
+      margin-right: -0.5em;
+      margin-left: 0.5em;
+    }
+
+    // icon only button
+    &:only-child {
+      margin-right: -1.2em;
+      margin-left: -1.2em;
+    }
+  }
+
+  &--link {
+    background-color: transparent !important;
+    text-decoration: underline;
+  }
+
+  &--outline {
+    //--btn-bg-active: #{cssvar(bg-hover, btn)};
+    //--btn-bg-hover: #{cssvar(bg, btn)};
+    box-shadow: inset 0 0 0 1px cssvar(bg, btn);
+    background-color: transparent;
+    color: cssvar(bg, btn);
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        box-shadow: inset 0 0 0 1px cssvar(bg-hover, btn);
+      }
+    }
+
+    &:active {
+      box-shadow: inset 0 0 0 1px cssvar(bg-active, btn);
+    }
+  }
+  &--uppercase {
+    text-transform: uppercase;
+    letter-spacing: 0.0892857143em;
+    font-size: 0.875rem;
+  }
+  &--rounded {
+    border-radius: 100px;
+  }
+
+  // special styles when the button is only an icon, and we don't want to use the default "only icon" styles
+  &--icon {
+    flex-direction: column;
+
+    .icon {
+      margin: 0 0 0.5em;
+    }
+  }
+}

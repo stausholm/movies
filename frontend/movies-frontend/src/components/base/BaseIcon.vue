@@ -6,6 +6,7 @@
     viewBox="0 0 24 24"
     :aria-label="label"
     role="presentation"
+    class="icon"
   >
     <title lang="en">{{ label }} icon</title>
     <g :fill="color">
