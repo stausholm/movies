@@ -192,6 +192,7 @@ export default defineComponent({
   display: flex;
   flex-flow: row wrap;
   width: 460px;
+  max-width: 100vw;
   padding: 20px;
   border-radius: 0.5rem;
   position: relative;

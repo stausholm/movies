@@ -1,0 +1,148 @@
+.fade-enter-from {
+  opacity: 0;
+}
+.fade-enter-active {
+  transition: opacity 0.2s ease-out;
+}
+.fade-leave-active {
+  transition: opacity 0.2s ease-out;
+  opacity: 0;
+}
+
+.slide-up-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.slide-up-enter-active {
+  transition: opacity 0.15s ease-out, transform 0.2s ease-in-out;
+}
+.slide-up-leave-active {
+  transition: opacity 0.15s ease-out, transform 0.2s ease-in-out;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.slide-down-enter-from {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+.slide-down-enter-active {
+  transition: opacity 0.15s ease-out, transform 0.2s ease-in-out;
+}
+.slide-down-leave-active {
+  transition: opacity 0.15s ease-out, transform 0.2s ease-in-out;
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+// route transitions
+.route-primary {
+  &-enter-from {
+    opacity: 0;
+    transform: scale(0.95);
+    // transform-origin: 90% top;
+  }
+  &-enter-active {
+    transition: opacity 0.1s ease-out, transform 0.1s ease-out;
+  }
+
+  &-leave {
+    &-active {
+      transition: opacity 0.1s ease-out;
+      opacity: 0;
+    }
+  }
+}
+
+// TODO: go through all these
+.router-slide-mobile-left-enter-from {
+  transform: translateX(100%);
+  will-change: transform, opacity;
+}
+.router-slide-mobile-left-enter-active {
+  transition: opacity 0.15s ease-out, transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  background-color: $body-bg;
+  position: fixed;
+  padding-top: $nav-height;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.router-slide-mobile-left-leave-active {
+  transition: opacity 0.15s ease-out, transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  will-change: transform, opacity;
+  //opacity: 0;
+  transform: translateX(-20%);
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+}
+
+.router-slide-mobile-left-leave-to {
+  &::after {
+    opacity: 0.3;
+  }
+}
+
+.router-fade-left-enter-from {
+  opacity: 0;
+  transform: translateX(-16px);
+}
+.router-fade-left-enter-active {
+  transition: opacity 0.15s ease-out, transform 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.router-fade-left-leave-active {
+  transition: opacity 0.15s ease-out, transform 0.2s ease-in-out;
+  opacity: 0;
+  transform: translateX(16px);
+}
+
+.router-fade-left-fast-enter-from {
+  opacity: 0;
+  transform: translateX(-16px);
+}
+.router-fade-left-fast-enter-active {
+  transition: opacity 0.1s ease-out, transform 0.1s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.router-fade-left-fast-leave-active {
+  transition: opacity 0.1s ease-out, transform 0.1s ease-in-out;
+  opacity: 0;
+  transform: translateX(16px);
+}
+
+.router-fade-right-fast-enter-from {
+  opacity: 0;
+  transform: translateX(16px);
+}
+.router-fade-right-fast-enter-active {
+  transition: opacity 0.1s ease-out, transform 0.1s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.router-fade-right-fast-leave-active {
+  transition: opacity 0.1s ease-out, transform 0.1s ease-in-out;
+  opacity: 0;
+  transform: translateX(-16px);
+}
+
+.router-fade-right-enter-from {
+  opacity: 0;
+  transform: translateX(16px);
+}
+.router-fade-right-enter-active {
+  transition: opacity 0.15s ease-out, transform 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.router-fade-right-leave-active {
+  transition: opacity 0.15s ease-out, transform 0.2s ease-in-out;
+  opacity: 0;
+  transform: translateX(-16px);
+}

@@ -1,6 +1,10 @@
 <template>
   <navbar />
-  <router-view />
+  <router-view v-slot="{ Component }">
+    <transition :name="transitionName" mode="out-in" @after-leave="afterLeave">
+      <component :is="Component" />
+    </transition>
+  </router-view>
   <div id="teleporttarget"></div>
 </template>
 
@@ -17,12 +21,22 @@ export default defineComponent({
   components: {
     Navbar,
   },
+  data() {
+    return {
+      transitionName: 'route-primary',
+    };
+  },
   methods: {
     resizeWatcher(): void {
       const newSize = determineAppLayoutSizeWidth();
       if (this.$store.getters.layoutSize !== newSize) {
         this.$store.commit(AppMutations.SET_LAYOUT_WIDTH, newSize);
       }
+    },
+    afterLeave(): void {
+      // TODO: implement scrollposition in router
+      // console.log('afterLeave fired');
+      // this.$root.$emit('triggerScroll');
     },
   },
   created() {

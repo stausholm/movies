@@ -1,0 +1,11 @@
+// hover on non-touch devices. This is to prevent "sticky hover" effect on touch devices
+// @include hover { }
+@mixin hover() {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+// https://medium.com/@mezoistvan/finally-a-css-only-solution-to-hover-on-touchscreens-c498af39c31c

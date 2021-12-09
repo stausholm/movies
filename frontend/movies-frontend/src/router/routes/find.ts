@@ -9,6 +9,7 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: '',
+        name: 'Find',
         component: () => import(/* webpackChunkName: "find" */ '@/views/find/Find.vue'),
         meta: {},
       },

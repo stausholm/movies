@@ -1,47 +1,51 @@
 <template>
-  <header class="navbar">
+  <header class="navbar" :class="{ 'navbar--hide': hide }">
     <div class="container">
       <nav class="primary-nav">
-        <router-link :to="{ name: 'Home' }" class="nav-item">
+        <router-link :to="{ name: 'Home' }" class="nav-item nav-item--home">
           <base-icon class="nav-item__icon">
             <icon-home />
           </base-icon>
-          <span class="nav-item__label">Home</span>
+          <span class="nav-item__label text-small text-truncate">Home</span>
         </router-link>
 
-        <router-link :to="{ name: 'FindIndex' }" class="nav-item">
+        <router-link :to="{ name: 'Find' }" class="nav-item">
           <base-icon class="nav-item__icon">
             <icon-search />
           </base-icon>
-          <span class="nav-item__label">Find</span>
+          <span class="nav-item__label text-small text-truncate">Find</span>
         </router-link>
 
         <router-link :to="{ name: 'Library' }" class="nav-item">
           <base-icon class="nav-item__icon">
             <icon-video-library />
           </base-icon>
-          <span class="nav-item__label">Library</span>
+          <span class="nav-item__label text-small text-truncate">Library</span>
         </router-link>
 
         <router-link v-if="useSmallLayout" :to="{ name: 'Account' }" class="nav-item">
           <base-icon class="nav-item__icon">
             <icon-account-circle />
           </base-icon>
-          <span class="nav-item__label">My Stuff</span>
+          <span class="nav-item__label text-small text-truncate">My Stuff</span>
         </router-link>
         <div v-else class="dropdown-wrapper" v-click-outside="hideDropdown">
           <button @click="handleAccountClick" class="nav-item">
             <base-icon class="nav-item__icon">
               <icon-account-circle />
             </base-icon>
-            <span class="nav-item__label">My Stuff</span>
+            <span class="nav-item__label text-small text-truncate">My Stuff</span>
           </button>
 
           <transition name="slide-up">
             <div class="dropdown" v-if="!useSmallLayout && showAccountDropdown">
               <account-card :alt="true" />
-              <router-link :to="{ name: 'Starred' }">Starred</router-link>
-              <router-link :to="{ name: 'Account' }">Settings</router-link>
+              <router-link :to="{ name: 'Starred' }" class="btn" @click="hideDropdown">
+                Starred
+              </router-link>
+              <router-link :to="{ name: 'Account' }" class="btn" @click="hideDropdown">
+                Settings
+              </router-link>
             </div>
           </transition>
         </div>
@@ -59,6 +63,7 @@ import IconVideoLibrary from '@/components/icons/IconVideoLibrary.vue';
 import IconAccountCircle from '@/components/icons/IconAccountCircle.vue';
 import { AppLayoutSizeWidth } from '@/store/app/types';
 import AccountCard from '@/components/account/AccountCard.vue';
+import { isTouchOnlyDevice } from '@/utils/touchDevice';
 
 export default defineComponent({
   components: {
@@ -72,11 +77,25 @@ export default defineComponent({
   data() {
     return {
       showAccountDropdown: false,
+      onScreenKeyboardActive: false,
     };
   },
   computed: {
     useSmallLayout(): boolean {
       return this.$store.getters.layoutSizeWidth !== ('desktop' as AppLayoutSizeWidth);
+    },
+    hide(): boolean {
+      const isMobile = this.$store.getters.layoutSizeWidth === ('mobile' as AppLayoutSizeWidth);
+      const shouldHideOnMobile =
+        (this.$route.meta.hideNavOnMobile as boolean) || this.onScreenKeyboardActive;
+
+      // TODO: this class will be useful when showing a toast, so it doesn't overlap with the bottomnav
+      // if (shouldHide) {
+      //   document.body.classList.add('hide-bottom-nav')
+      // } else {
+      //   document.body.classList.remove('hide-bottom-nav')
+      // }
+      return isTouchOnlyDevice() && isMobile && shouldHideOnMobile;
     },
   },
   methods: {
@@ -86,11 +105,172 @@ export default defineComponent({
     hideDropdown(): void {
       this.showAccountDropdown = false;
     },
+    handleKeyboard({ type, target }: FocusEvent): void {
+      const t = target as HTMLElement;
+      if (
+        t.tagName === 'TEXTAREA' ||
+        (t.tagName === 'INPUT' &&
+          t.getAttribute('type')?.match(/password|text|number|search|email|tel|url/i))
+      ) {
+        if (type === 'focus') {
+          this.onScreenKeyboardActive = true;
+        } else {
+          this.onScreenKeyboardActive = false;
+        }
+      }
+    },
+  },
+  mounted() {
+    // prevent nav from being attached to the top of on-screen keyboard, by hiding it.
+    document.addEventListener('focus', this.handleKeyboard, true);
+    document.addEventListener('blur', this.handleKeyboard, true);
+  },
+  beforeUnmount() {
+    // we never destroy the bottom nav, but just in case we decide to in the future
+    document.removeEventListener('focus', this.handleKeyboard, true);
+    document.removeEventListener('blur', this.handleKeyboard, true);
   },
 });
 </script>
 
 <style lang="scss" scoped>
-@import '@/design/variables/_colors.scss';
-@import '@/design/mixins/_breakpoints.scss';
+@import '@/design/variables/index.scss';
+@import '@/design/mixins/index.scss';
+
+// TODO: move these variables
+$nav-bg: $white;
+$nav-link-color: inherit;
+$nav-link-color-active: $brand-primary;
+
+.navbar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: $nav-height;
+  @include z-index(nav);
+
+  .container {
+    height: 100%;
+  }
+
+  @include breakpoint-max($breakpoint-navigation-change) {
+    position: fixed;
+    bottom: 0;
+    background-color: $nav-bg;
+    left: 0;
+    right: 0;
+    top: auto;
+    transition: transform 0.2s;
+    box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.14), 0 0px 1px -2px rgba(0, 0, 0, 0.2),
+      0 0px 5px 0 rgba(0, 0, 0, 0.12);
+
+    // the fixed navbar should be hidden when an input is focused,
+    // so it doesn't take up the already very limited screenspace on mobile when an onscreen keyboard is showing
+    &.navbar--hide {
+      transform: translateY(calc(100% + 5px)); // + 5px to hide box shadow height
+    }
+  }
+}
+
+.primary-nav {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: $nav-link-color;
+  white-space: nowrap;
+  height: $min-touch-target-size;
+  text-decoration: none;
+  border: 0;
+  background-color: transparent;
+  padding: 0;
+  font-weight: bold;
+  margin-left: $default-spacing;
+
+  &.router-link-active {
+    color: $nav-link-color-active;
+  }
+
+  @include breakpoint($breakpoint-navigation-change) {
+    &--home {
+      flex-direction: row;
+      margin-left: 0;
+      margin-right: auto;
+
+      .nav-item__icon {
+        margin-right: $default-spacing/4;
+      }
+      .nav-item__label {
+        font-size: inherit;
+      }
+    }
+  }
+
+  @include breakpoint-max($breakpoint-navigation-change) {
+    flex: 1;
+    overflow: hidden;
+
+    .nav-item__label {
+      max-width: 80%;
+    }
+
+    &--home {
+      margin-left: 0;
+    }
+  }
+}
+
+.dropdown-wrapper {
+  position: relative;
+
+  .dropdown {
+    position: absolute;
+    top: calc(100% + $default-spacing);
+    border: 1px solid $gray-300;
+    right: 0;
+    min-width: 300px;
+    max-width: calc(100vw - #{$default-spacing * 3});
+    border-radius: $border-radius-small;
+    background-color: $white;
+    box-shadow: $box-shadow;
+    line-height: initial;
+    @include z-index(dropdown);
+
+    &::before {
+      content: '';
+      width: 12px;
+      height: 12px;
+      border-top: 1px solid $gray-300;
+      border-left: 1px solid $gray-300;
+      background-color: inherit;
+      display: block;
+      position: absolute;
+      top: -1px;
+      right: 0;
+      transform: translateX(-9px) translateY(-50%) rotate(45deg);
+      box-sizing: border-box;
+    }
+
+    a {
+      display: block;
+      padding: $default-spacing;
+      border-top: 1px solid $gray-300;
+      border-radius: 0;
+      font-weight: normal;
+
+      &:last-child {
+        border-bottom-left-radius: $border-radius-small;
+        border-bottom-right-radius: $border-radius-small;
+      }
+    }
+  }
+}
 </style>
