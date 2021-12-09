@@ -1,5 +1,5 @@
 // Prefix with "__" to know that this variable is only for internal use with css custom properties. E.g. $__brand-primary is the internal one and $brand-primary is the one that should be used when writing css
-// This splitup is done so that we can use css custom properties and still have intellisense on scss variables when writing $brand-primary in our css 
+// This splitup is done so that we can use css custom properties and still have intellisense on scss variables when writing $brand-primary in our css
 // css custom properties are defined in _root.scss
 @import '../functions/css-vars';
 
@@ -17,16 +17,16 @@ $gray-900: #212529;
 $black: #000;
 
 // base colors
-$red:     #dc3545;
-$yellow:  #ffc107;
-$green:   #198754;
-$cyan:    #0dcaf0;
+$red: #dc3545;
+$yellow: #ffc107;
+$green: #198754;
+$cyan: #0dcaf0;
 
 // text colors
 $text-color-dark: $gray-900;
 $text-color-secondary-dark: $gray-600; // used for secondary info. E.g. like you see on twitter profiles where a username has a primary text color, and the @ twitterhandle is a slightly different color
 $text-color-light: $gray-100;
-$text-color-secondary-light: $gray-400; 
+$text-color-secondary-light: $gray-400;
 
 $body-color: $text-color-dark;
 $headings-color: $body-color;
@@ -36,12 +36,12 @@ $link-color: $cyan;
 $link-hover-color: darken($link-color, 10);
 
 // brand colors
-$__brand-primary:                   #0d6efd;
-$__brand-primary-light:               lighten($__brand-primary, 7%) !default;
-$__brand-primary-lighter:             lighten($__brand-primary, 14%) !default;
-$__brand-primary-dark:                #001D2D !default;
-$__brand-primary-darker:              darken($__brand-primary-dark, 7%) !default;
-$__brand-primary-bg__text-color:      $text-color-light !default; // the text color that can be shown ontop of the brand primary color
+$__brand-primary: #0d6efd;
+$__brand-primary-light: lighten($__brand-primary, 7%) !default;
+$__brand-primary-lighter: lighten($__brand-primary, 14%) !default;
+$__brand-primary-dark: #001d2d !default;
+$__brand-primary-darker: darken($__brand-primary-dark, 7%) !default;
+$__brand-primary-bg__text-color: $text-color-light !default; // the text color that can be shown ontop of the brand primary color
 
 $brand-primary: cssvar(brand-primary);
 $brand-primary-light: cssvar(brand-primary-light);
@@ -50,15 +50,14 @@ $brand-primary-dark: cssvar(brand-primary-dark);
 $brand-primary-darker: cssvar(brand-primary-darker);
 $brand-primary-bg__text-color: cssvar(brand-primary-bg__text-color);
 
+$brand-secondary: #fd7e14;
+$brand-secondary-light: lighten($brand-secondary, 7%) !default;
+$brand-secondary-dark: darken($brand-secondary, 7%) !default;
+$brand-secondary-darker: darken($brand-secondary, 14%) !default;
+$brand-secondary-bg__text-color: $text-color-dark !default; // the text color that can be shown ontop of the brand secondary color
 
-$brand-secondary:                 #fd7e14;
-$brand-secondary-light:             lighten($brand-secondary, 7%) !default;
-$brand-secondary-dark:              darken($brand-secondary, 7%) !default;
-$brand-secondary-darker:            darken($brand-secondary, 14%) !default;
-$brand-secondary-bg__text-color:    $text-color-dark !default; // the text color that can be shown ontop of the brand secondary color
-
-$brand-tertiary:                  #20c997;
-$brand-tertiary-bg__text-color:     $text-color-dark !default; // the text color that can be shown ontop of the brand tertiary color
+$brand-tertiary: #20c997;
+$brand-tertiary-bg__text-color: $text-color-dark !default; // the text color that can be shown ontop of the brand tertiary color
 
 $brand-success: $green;
 $brand-info: $cyan;
@@ -69,7 +68,7 @@ $brand-light: $gray-100;
 $brand-dark: $gray-900;
 
 // layout
-$__body-bg: #F8F9FE;
+$__body-bg: #f8f9fe;
 $body-bg: cssvar(body-bg);
 
 // html elements

@@ -60,6 +60,7 @@
       <base-button class="btn--outline btn--text">outline text</base-button>
       <base-button class="btn--outline btn--warning">outline</base-button>
       <base-button class="btn--warning">warning</base-button>
+      <base-button class="btn--text-primary">text-primary</base-button>
     </div>
     <icons />
     <div class="ratio ratio-16x9" style="width: 200px">

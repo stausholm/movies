@@ -67,6 +67,20 @@
       btn
     );
   }
+  &--text-primary {
+    // todo: don't use internal __ variable for bg-hover and bg-active
+    @include createCssvars(
+      (
+        color: $brand-primary,
+        color-hover: $brand-primary,
+        color-active: $brand-primary,
+        bg: transparent,
+        bg-hover: rgba($__brand-primary-light, 0.04),
+        bg-active: rgba($__brand-primary-light, 0.12),
+      ),
+      btn
+    );
+  }
 }
 
 // button styles
@@ -152,7 +166,18 @@
 
   &--link {
     background-color: transparent !important;
-    text-decoration: underline;
+    text-decoration: $link-decoration;
+    color: $link-color;
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        text-decoration: $link-hover-decoration;
+        color: $link-hover-color;
+      }
+    }
+    &:active {
+      color: $link-hover-color;
+    }
   }
 
   &--outline {
