@@ -1,35 +1,48 @@
 :root {
+  color-scheme: dark;
   // TODO: default should be dark mode, if no user preference is set
-  @include createCssvars((
-    brand-primary: $__brand-primary,
-    brand-primary-light: $__brand-primary-light,
-    brand-primary-lighter: $__brand-primary-lighter,
-    brand-primary-dark: $__brand-primary-dark,
-    brand-primary-darker: $__brand-primary-darker,
-    brand-primary-bg__text-color: $__brand-primary-bg__text-color,
-    body-bg: $__body-bg
-  ));
+  @include createCssvars(
+    (
+      brand-primary: $__brand-primary,
+      brand-primary-light: $__brand-primary-light,
+      brand-primary-lighter: $__brand-primary-lighter,
+      brand-primary-dark: $__brand-primary-dark,
+      brand-primary-darker: $__brand-primary-darker,
+      brand-primary-bg__text-color: $__brand-primary-bg__text-color,
+      body-bg: $__body-bg,
+    )
+  );
 
   @include prefers-light {
-    @include createCssvars((
-      //body-bg: purple
-    ));
+    color-scheme: light;
+    // @include createCssvars((
+    //   //body-bg: purple
+    // ));
   }
 }
 
 // Root element will have data-theme set, in case user has actively enabled a specific theme through the themeswitcher component
-html[data-theme="light"] {
-  @include createCssvars((
-    body-bg: pink
-  ));
+html[data-theme='light'] {
+  color-scheme: light;
+  @include createCssvars(
+    (
+      body-bg: pink,
+    )
+  );
 }
-html[data-theme="dark"] {
-  @include createCssvars((
-    body-bg: yellow
-  ));
+html[data-theme='dark'] {
+  color-scheme: dark;
+  @include createCssvars(
+    (
+      body-bg: yellow,
+    )
+  );
 }
-html[data-theme="black"] {
-  @include createCssvars((
-    body-bg: green
-  ));
+html[data-theme='black'] {
+  color-scheme: dark;
+  @include createCssvars(
+    (
+      body-bg: green,
+    )
+  );
 }

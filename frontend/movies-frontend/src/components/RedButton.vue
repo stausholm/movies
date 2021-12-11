@@ -97,8 +97,8 @@ export default defineComponent({
     border-radius: 100%;
     transform: translateY(60px);
     background: linear-gradient(to bottom, #f0003c, hsl(345deg 100% 65%));
-    box-shadow: inset 4px 0px 2px -3px rgb(255 255 255 / 65%),
-      inset 32px 0px 29px -30px rgb(255 255 255 / 40%);
+    box-shadow: inset 4px 0px 2px -3px rgba(255, 255, 255, 0.65),
+      inset 32px 0px 29px -30px rgba(255, 255, 255, 0.4);
     pointer-events: all;
   }
 
@@ -140,7 +140,7 @@ export default defineComponent({
       filter: brightness(110%);
     }
     .red-button__shadow {
-      box-shadow: 9px 4px 23px 6px rgb(0 0 0 / 22%);
+      box-shadow: 9px 4px 23px 6px rgba(0, 0, 0, 0.22);
       transition: box-shadow 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
     }
     .red-button__top {
@@ -163,16 +163,17 @@ export default defineComponent({
       //   inset 20px 0px 30px rgb(0 0 0 / 20%),
       //   inset 0 -9px 23px -5px rgb(0 0 0 / 20%),
       //   inset 4px 3px 7px -4px rgb(0 0 0 / 20%);
-      box-shadow: inset 6px 20px 35px rgb(0 0 0 / 0%), inset 7px 3px 15px rgb(0 0 0 / 20%),
-        inset 20px 0px 30px rgb(0 0 0 / 20%), inset 0 -9px 23px -5px rgb(0 0 0 / 20%),
-        inset 4px 3px 7px -4px rgb(0 0 0 / 26%), inset -20px -20px 20px 10px rgb(255 255 255 / 18%);
+      box-shadow: inset 6px 20px 35px rgba(0, 0, 0, 0), inset 7px 3px 15px rgba(0, 0, 0, 0.2),
+        inset 20px 0px 30px rgba(0, 0, 0, 0.2), inset 0 -9px 23px -5px rgba(0, 0, 0, 0.2),
+        inset 4px 3px 7px -4px rgba(0, 0, 0, 0.26),
+        inset -20px -20px 20px 10px rgba(255, 255, 255, 0.18);
     }
     .red-button__edge {
       transform: translateY(34px);
       transition: transform 100ms;
     }
     .red-button__shadow {
-      box-shadow: 0px 0px 0px 0px rgb(0 0 0 / 0%);
+      box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
       transition: box-shadow 60ms 40ms;
     }
   }

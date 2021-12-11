@@ -17,9 +17,10 @@ html {
   }
 }
 
-body, .text-normal {
+body,
+.text-normal {
   font-size: $font-size-body-responsive;
-  
+
   @include breakpoint($breakpoint-font-size-change) {
     font-size: $font-size-body;
   }
@@ -101,7 +102,7 @@ h6,
 
 .text-small {
   font-size: $font-size-small-responsive;
-  
+
   @include breakpoint($breakpoint-font-size-change) {
     font-size: $font-size-small;
   }
@@ -109,7 +110,7 @@ h6,
 
 .text-big {
   font-size: $font-size-big-responsive;
-  
+
   @include breakpoint($breakpoint-font-size-change) {
     font-size: $font-size-big;
   }
@@ -124,13 +125,16 @@ h6,
   letter-spacing: 1.8px;
   font-size: $font-size-pre-head-responsive;
   margin-bottom: 0;
-  
+
   @include breakpoint($breakpoint-font-size-change) {
-      letter-spacing: 2px;
-      font-size: $font-size-pre-head;
-    }
+    letter-spacing: 2px;
+    font-size: $font-size-pre-head;
+  }
 }
 
+.text-mono {
+  font-family: $font-family-code;
+}
 
 blockquote {
   $quote-icon-size: 60px;
@@ -147,7 +151,7 @@ blockquote {
   font-weight: normal;
 
   &:before {
-    content: "“";
+    content: '“';
     position: absolute;
     bottom: calc(100% + 5px);
     line-height: 0;
@@ -155,7 +159,7 @@ blockquote {
     user-select: none;
     display: inline-block;
     font-size: $quote-icon-size-responsive;
-    font-family: "Times New Roman", serif;
+    font-family: 'Times New Roman', serif;
     font-weight: 900;
     font-style: normal;
   }

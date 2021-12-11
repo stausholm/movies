@@ -2,6 +2,7 @@
   <layout>
     <div class="container">
       <h1 class="visually-hidden">Account Page</h1>
+      <base-spacer size="2" class="d-xs-none" />
       <account-card class="mb" :enableAvatarEditing="true" />
       <!-- <account-card :alt="true" class="mt-2 border" /> -->
 
@@ -95,6 +96,7 @@ import ThemeSwitcher from '@/components/account/ThemeSwitcher.vue';
 import { AppSettingPayload } from '@/store/user/types';
 import { UserMutations } from '@/store/user/mutations';
 import Layout from '@/layouts/Main.vue';
+import BaseSpacer from '@/components/base/BaseSpacer.vue';
 
 export default defineComponent({
   name: 'Account',
@@ -102,6 +104,7 @@ export default defineComponent({
     AccountCard,
     ThemeSwitcher,
     Layout,
+    BaseSpacer,
   },
   computed: {
     isReducedMotion: {

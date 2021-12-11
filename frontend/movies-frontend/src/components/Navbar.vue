@@ -134,6 +134,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:math';
 @import '@/design/variables/index.scss';
 @import '@/design/mixins/index.scss';
 
@@ -200,13 +201,15 @@ $nav-link-color-active: $brand-primary;
   }
 
   @include breakpoint($breakpoint-navigation-change) {
+    margin-left: $default-spacing * 2;
+
     &--home {
       flex-direction: row;
       margin-left: 0;
       margin-right: auto;
 
       .nav-item__icon {
-        margin-right: $default-spacing/4;
+        margin-right: math.div($default-spacing, 4);
       }
       .nav-item__label {
         font-size: inherit;
