@@ -1,10 +1,6 @@
 <template>
   <navbar />
-  <router-view v-slot="{ Component }">
-    <transition :name="transitionName" mode="out-in" @after-leave="afterLeave">
-      <component :is="Component" />
-    </transition>
-  </router-view>
+  <primary-router-view />
   <div id="teleporttarget"></div>
 </template>
 
@@ -16,15 +12,12 @@ import { AppMutations } from '@/store/app/mutations';
 import Navbar from '@/components/Navbar.vue';
 import { disableBrowserFeatures } from '@/utils/PWAUtils';
 import { replaceBrokenImagesInit, generateQuerySelector } from '@/utils/handleBrokenImages';
+import PrimaryRouterView from '@/router/PrimaryRouterView.vue';
 
 export default defineComponent({
   components: {
     Navbar,
-  },
-  data() {
-    return {
-      transitionName: 'route-primary',
-    };
+    PrimaryRouterView,
   },
   methods: {
     resizeWatcher(): void {
@@ -32,11 +25,6 @@ export default defineComponent({
       if (this.$store.getters.layoutSize !== newSize) {
         this.$store.commit(AppMutations.SET_LAYOUT_WIDTH, newSize);
       }
-    },
-    afterLeave(): void {
-      // TODO: implement scrollposition in router
-      // console.log('afterLeave fired');
-      // this.$root.$emit('triggerScroll');
     },
   },
   created() {

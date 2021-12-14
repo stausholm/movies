@@ -11,5 +11,7 @@ const app = createApp(App);
 
 app.use(store);
 app.use(router);
+router.app = app;
+
 app.directive('click-outside', clickOutside);
 app.mount('#app');

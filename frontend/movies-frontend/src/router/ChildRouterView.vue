@@ -1,3 +1,7 @@
+<!-- this wrapper <div> is required. otherwise this child <router-view> 
+would be a direct child of the main <router-view> in app.vue 
+and the route transitions from that router-view would 
+for some odd reason also be applied to this child router-view -->
 <template>
   <div class="child-router-view">
     <router-view v-slot="{ Component }">
@@ -14,11 +18,11 @@
 <script lang="ts">
 import { AppLayoutSizeWidth } from '@/store/app/types';
 import { defineComponent } from 'vue';
+import { triggerScrollEvent } from '@/router/index';
 
 export default defineComponent({
   name: 'ChildRouterView',
   props: {
-    // TODO: test props
     useAlternativeTransition: {
       type: Boolean,
       default: false,
@@ -36,16 +40,13 @@ export default defineComponent({
   },
   methods: {
     afterLeave() {
-      // TODO: implement scrollposition in router
-      // console.log('afterLeave fired');
-      // this.$root.$emit('triggerScroll');
+      triggerScrollEvent();
     },
   },
   watch: {
     $route(to, from) {
       const toDepth = to.path.split('/').length;
       const fromDepth = from.path.split('/').length;
-      console.log('changed', toDepth, fromDepth);
 
       if (this.$store.getters.layoutSizeWidth !== ('desktop' as AppLayoutSizeWidth)) {
         if (this.useAlternativeTransition) {
