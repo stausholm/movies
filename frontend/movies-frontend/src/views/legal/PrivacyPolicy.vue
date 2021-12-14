@@ -2,6 +2,8 @@
   <layout>
     <div class="container">
       <h1>Privacy Policy</h1>
+      <hr />
+      <p class="text-small">Last updated: {{ updateDateTimeLocalized }}</p>
       <p>
         The app <b>{{ appName }}</b> does not collect any user data, or track the user in any way.
         It does not use Cookies. All user submitted data is stored on the user's device. You can
@@ -23,6 +25,7 @@ import {
   APP_HOST_LOG_PERIOD,
   APP_HOST_PRIVACY_URL,
   APP_HOST_GDPR_URL,
+  APP_PRIVACY_POLICY_LAST_UPDATED,
 } from '@/constants/SiteSettings.json';
 import Layout from '@/layouts/Main.vue';
 
@@ -38,7 +41,13 @@ export default defineComponent({
       appHostLogPeriod: APP_HOST_LOG_PERIOD,
       appHostPrivacyUrl: APP_HOST_PRIVACY_URL,
       appHostGDPRUrl: APP_HOST_GDPR_URL,
+      appPolicyUpdateDateTime: APP_PRIVACY_POLICY_LAST_UPDATED,
     };
+  },
+  computed: {
+    updateDateTimeLocalized(): string {
+      return this.appPolicyUpdateDateTime; // TODO
+    },
   },
 });
 </script>
