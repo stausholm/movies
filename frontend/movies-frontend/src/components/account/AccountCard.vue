@@ -33,14 +33,14 @@
         ></button>
       </div>
     </div>
-    <div class="account-card__header pl pr">
+    <div class="account-card__header pl-1 pr-1">
       <p class="account-card__title text-big mb-0 fw-bold lh-1 text-truncate text-capitalize">
         {{ avatar.displayName }}
       </p>
       <p class="account-card__subtitle text-small text-truncate">Local user</p>
       <hr class="account-card__divider" />
     </div>
-    <div class="account-card__stats pl pr pb">
+    <div class="account-card__stats pl-1 pr-1 pb-1">
       <p class="account-card__stat fw-bold">
         Movies: <span class="fw-normal">{{ moviesCount }}</span>
       </p>
