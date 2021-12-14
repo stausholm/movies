@@ -105,6 +105,21 @@
     <base-icon>
       <icon-edit />
     </base-icon>
+    <base-icon>
+      <icon-folder-zip />
+    </base-icon>
+    <base-icon>
+      <icon-file />
+    </base-icon>
+    <base-icon>
+      <icon-document />
+    </base-icon>
+    <base-icon>
+      <icon-image />
+    </base-icon>
+    <base-icon>
+      <icon-ios-share />
+    </base-icon>
 
     <!-- splat is assigned to ratings below 60% positive -->
     <base-icon>
@@ -170,6 +185,11 @@ import IconTomatoSplat from '@/components/icons/IconTomatoSplat.vue';
 import IconTomatoFresh from '@/components/icons/IconTomatoFresh.vue';
 import IconYoutube from '@/components/icons/IconYoutube.vue';
 import IconEdit from '@/components/icons/IconEdit.vue';
+import IconFolderZip from '@/components/icons/IconFolderZip.vue';
+import IconFile from '@/components/icons/IconFile.vue';
+import IconDocument from '@/components/icons/IconDocument.vue';
+import IconImage from '@/components/icons/IconImage.vue';
+import IconIosShare from '@/components/icons/IconIosShare.vue';
 
 export default defineComponent({
   components: {
@@ -212,6 +232,11 @@ export default defineComponent({
     IconTomatoFresh,
     IconYoutube,
     IconEdit,
+    IconFolderZip,
+    IconFile,
+    IconDocument,
+    IconImage,
+    IconIosShare,
   },
 
   data() {
