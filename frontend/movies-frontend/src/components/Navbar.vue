@@ -30,7 +30,11 @@
           <span class="nav-item__label text-small text-truncate">My Stuff</span>
         </router-link>
         <div v-else class="dropdown-wrapper" v-click-outside="hideDropdown">
-          <button @click="handleAccountClick" class="nav-item">
+          <button
+            @click="handleAccountClick"
+            class="nav-item"
+            :class="{ 'router-link-active': $route.name === 'Account' }"
+          >
             <base-icon class="nav-item__icon">
               <icon-account-circle />
             </base-icon>
@@ -195,6 +199,25 @@ $nav-link-color-active: $brand-primary;
   padding: 0;
   font-weight: bold;
   margin-left: $default-spacing;
+
+  &::after {
+    content: '';
+    transition: background-color 0.125s ease-out;
+  }
+
+  @include hover() {
+    &::after {
+      // hover background color is added like this to make sure link/button labels are still visually aligned with the grid
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: math.div(-$default-spacing, 2);
+      right: math.div(-$default-spacing, 2);
+      z-index: -1;
+      border-radius: $border-radius-small;
+      background-color: $gray-200;
+    }
+  }
 
   &.router-link-active {
     color: $nav-link-color-active;

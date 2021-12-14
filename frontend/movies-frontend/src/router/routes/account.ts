@@ -23,31 +23,37 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'about',
+        name: 'About',
         component: () => import(/* webpackChunkName: "account" */ '@/views/account/About.vue'),
         meta: {},
       },
       {
         path: 'about/credits',
+        name: 'Credits',
         component: () => import(/* webpackChunkName: "account" */ '@/views/account/Credits.vue'),
         meta: {},
       },
       {
         path: 'delete',
+        name: 'Delete',
         component: () => import(/* webpackChunkName: "account" */ '@/views/account/Delete.vue'),
         meta: {},
       },
       {
         path: 'feedback',
+        name: 'Feedback',
         component: () => import(/* webpackChunkName: "account" */ '@/views/account/Feedback.vue'),
         meta: {},
       },
       {
         path: 'changelog',
+        name: 'Changelog',
         component: () => import(/* webpackChunkName: "account" */ '@/views/account/Changelog.vue'),
         meta: {},
       },
       {
         path: 'button',
+        name: 'ButtonPage',
         component: () => import(/* webpackChunkName: "account" */ '@/views/account/Button.vue'),
         meta: {},
       },

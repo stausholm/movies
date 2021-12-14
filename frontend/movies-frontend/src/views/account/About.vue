@@ -14,13 +14,14 @@
         The codebase is open source and available on
         <a :href="appCodeUrl">GitHub</a>
       </p>
-      <nav>
-        <router-link to="/account/about/credits">Credits</router-link>
-        <router-link to="/licenses">Licenses</router-link>
-        <router-link to="/privacy-policy">Privacy Policy</router-link>
-        <router-link to="/tos">Terms of Service</router-link>
+      <nav class="block-link-wrapper mb-2">
+        <block-link :to="{ name: 'Credits' }">Credits</block-link>
+        <block-link to="/licenses">Licenses</block-link>
+        <block-link to="/privacy-policy">Privacy Policy</block-link>
+        <block-link to="/tos">Terms of Service</block-link>
       </nav>
-      <p class="text-small">{{ appVersion }}</p>
+      <button class="btn btn--responsive btn--primary">Refresh app</button>
+      <p class="text-small mt">Version: {{ appVersion }}</p>
     </div>
   </layout>
 </template>
@@ -29,11 +30,13 @@
 import { defineComponent } from 'vue';
 import { APP_NAME, APP_VERSION, APP_CODE_URL } from '@/constants/SiteSettings.json';
 import Layout from '@/layouts/Main.vue';
+import BlockLink from '@/components/BlockLink.vue';
 
 export default defineComponent({
   name: 'About',
   components: {
     Layout,
+    BlockLink,
   },
   data() {
     return {
