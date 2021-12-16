@@ -64,6 +64,7 @@
         <base-button class="btn--text-primary">text-primary</base-button>
       </div>
       <icons />
+      <button @click="toast" class="btn btn--primary mt-2 mb-2">show toast</button>
       <div class="ratio ratio-16x9" style="width: 200px">
         <p>test</p>
       </div>
@@ -167,6 +168,8 @@ import Icons from '@/components/icons/All.vue';
 import BaseButton from '@/components/base/BaseButton.vue';
 import BaseIcon from '@/components/base/BaseIcon.vue';
 import Layout from '@/layouts/Main.vue';
+import { ToastMutations } from '@/store/toast/mutations';
+import { Toast } from '@/store/toast/types';
 
 export default defineComponent({
   name: 'Wireframe',
@@ -214,6 +217,15 @@ export default defineComponent({
     },
     alert() {
       alert('test');
+    },
+    toast() {
+      this.$store.commit(ToastMutations.CHANGE_TOAST, {
+        content: 'test content aaaaaaaa lorem ipsum',
+        action: () => {
+          console.log('action fired');
+        },
+        actionLabel: 'action label',
+      } as Toast);
     },
   },
   created() {

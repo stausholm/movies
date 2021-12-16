@@ -7,10 +7,10 @@ import { mutations } from './mutations';
 export const state: ToastState = {
   toast: {
     content: '',
-    duration: 1000, // ms
+    duration: 5000, // ms
     theme: 'default', // color settings,
     action: null,
-    label: 'Dismiss', // TODO: translations
+    actionLabel: '',
     dismissable: true,
   },
 };

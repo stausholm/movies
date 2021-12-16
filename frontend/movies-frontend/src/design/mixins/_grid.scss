@@ -1,0 +1,18 @@
+// generates responsive grid gutter spacings for properties
+// @include useGridSpacing(margin-bottom, margin-top);
+@mixin useGridSpacing($properties...) {
+  @for $i from 0 to length($properties) {
+    #{nth($properties, $i + 1)}: $grid-gutter;
+  }
+
+  @include breakpoint(xs) {
+    @for $i from 0 to length($properties) {
+      #{nth($properties, $i + 1)}: $grid-xs-gutter;
+    }
+  }
+  @include breakpoint(sm) {
+    @for $i from 0 to length($properties) {
+      #{nth($properties, $i + 1)}: $grid-sm-gutter;
+    }
+  }
+}

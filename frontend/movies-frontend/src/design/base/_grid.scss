@@ -5,17 +5,7 @@
 .container {
   margin-left: auto;
   margin-right: auto;
-  padding-left: $grid-gutter;
-  padding-right: $grid-gutter;
-
-  @include breakpoint(xs) {
-    padding-left: $grid-xs-gutter;
-    padding-right: $grid-xs-gutter;
-  }
-  @include breakpoint(sm) {
-    padding-left: $grid-sm-gutter;
-    padding-right: $grid-sm-gutter;
-  }
+  @include useGridSpacing(padding-left, padding-right);
 }
 
 // container sizes
@@ -68,7 +58,7 @@
     }
   }
 
-  // make all direct child columns of this row take up equal width. 
+  // make all direct child columns of this row take up equal width.
   // Same as if all children used just .col class
   &.row--grow {
     > [class*='col-'],
@@ -119,4 +109,3 @@
     }
   }
 }
-

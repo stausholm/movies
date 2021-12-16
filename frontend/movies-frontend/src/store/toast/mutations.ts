@@ -9,10 +9,10 @@ export const mutations: MutationTree<ToastState> = {
   [ToastMutations.CHANGE_TOAST](state, changes: Toast) {
     state.toast = {
       content: changes.content,
-      duration: changes.duration || 1000,
+      duration: changes.duration || 5000,
       theme: changes.theme || 'default',
       action: changes.action || null,
-      label: changes.label || '',
+      actionLabel: changes.actionLabel || '',
       dismissable: changes.dismissable !== undefined ? changes.dismissable : true,
     };
   },

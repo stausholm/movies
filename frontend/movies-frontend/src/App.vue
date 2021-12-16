@@ -2,6 +2,7 @@
   <navbar />
   <primary-router-view />
   <div id="teleporttarget"></div>
+  <toast />
 </template>
 
 <script lang="ts">
@@ -13,11 +14,13 @@ import Navbar from '@/components/Navbar.vue';
 import { disableBrowserFeatures } from '@/utils/PWAUtils';
 import { replaceBrokenImagesInit, generateQuerySelector } from '@/utils/handleBrokenImages';
 import PrimaryRouterView from '@/router/PrimaryRouterView.vue';
+import Toast from '@/components/Toast.vue';
 
 export default defineComponent({
   components: {
     Navbar,
     PrimaryRouterView,
+    Toast,
   },
   methods: {
     resizeWatcher(): void {

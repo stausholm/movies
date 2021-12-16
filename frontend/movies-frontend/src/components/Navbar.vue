@@ -93,12 +93,12 @@ export default defineComponent({
       const shouldHideOnMobile =
         (this.$route.meta.hideNavOnMobile as boolean) || this.onScreenKeyboardActive;
 
-      // TODO: this class will be useful when showing a toast, so it doesn't overlap with the bottomnav
-      // if (shouldHide) {
-      //   document.body.classList.add('hide-bottom-nav')
-      // } else {
-      //   document.body.classList.remove('hide-bottom-nav')
-      // }
+      // this class is useful when showing a toast, so it doesn't overlap with the bottomnav
+      if (shouldHideOnMobile) {
+        document.body.classList.add('mobile-hide-bottom-nav');
+      } else {
+        document.body.classList.remove('mobile-hide-bottom-nav');
+      }
       return isTouchOnlyDevice() && isMobile && shouldHideOnMobile;
     },
   },
