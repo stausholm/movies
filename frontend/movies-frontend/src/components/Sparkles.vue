@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { random, sample } from '@/utils/generic';
 
 interface Sparkle {
@@ -30,7 +30,7 @@ interface Sparkle {
   style: Record<string, unknown>;
   color: string;
   path: string;
-  viewbox: string;
+  viewBox: string;
 }
 /**
  * Sources:
@@ -43,11 +43,11 @@ export default defineComponent({
   data() {
     return {
       isOnScreen: true, // intersection observer updates this
-      observer: null,
+      observer: null as null | IntersectionObserver,
       sparkles: [] as Sparkle[],
       mediaQueryList: window.matchMedia('(prefers-reduced-motion: no-preference)'),
       prefersReducedMotion: false,
-      randomIntervalFunc: null,
+      randomIntervalFunc: null as null | number,
     };
   },
   props: {
@@ -78,7 +78,7 @@ export default defineComponent({
     },
     colors: {
       // a list of whitelisted colors that each new sparkle will randomly pick from
-      type: Array,
+      type: Array as PropType<string[]>,
       default: () => ['#FFC700', 'hsl(50deg, 100%, 50%)'],
     },
     constrainToEdges: {
@@ -102,7 +102,7 @@ export default defineComponent({
 
       const size = random(settings.minSize, settings.maxSize);
       const style = this.generatePosition(size);
-      const color = sample(settings.colors)[0];
+      const color = sample(settings.colors)[0] as string;
 
       // generate the svg path
       const sparkleType = this.sparkleType;
@@ -118,7 +118,7 @@ export default defineComponent({
           ? 'M92 0C92 0 96 63.4731 108.263 75.7365C120.527 88 184 92 184 92C184 92 118.527 98 108.263 108.263C98 118.527 92 184 92 184C92 184 86.4731 119 75.7365 108.263C65 97.5269 0 92 0 92C0 92 63.9731 87.5 75.7365 75.7365C87.5 63.9731 92 0 92 0Z'
           : 'M34 0C34 0 33.4886 20.0074 41.7749 26.3376C50.0612 32.6678 68 25.9737 68 25.9737C68 25.9737 49.7451 31.6449 46.58 41.8873C43.4149 52.1298 55.0132 68 55.0132 68C55.0132 68 44.2424 51.4976 34 51.4976C23.7576 51.4976 12.9868 68 12.9868 68C12.9868 68 24.5851 52.1298 21.42 41.8873C18.2549 31.6449 0 25.9737 0 25.9737C0 25.9737 17.9388 32.6678 26.2251 26.3376C34.5114 20.0074 34 0 34 0Z';
 
-      const sparkle = {
+      const sparkle: Sparkle = {
         id: random(1, 999999),
         createdAt: Date.now(),
         size,
@@ -126,14 +126,14 @@ export default defineComponent({
         color,
         path,
         viewBox: numOfPoints === 4 ? '0 0 184 184' : '0 0 84 84',
-      } as Sparkle;
+      };
 
       return sparkle;
     },
-    generatePosition(size) {
-      let style = {};
+    generatePosition(size: number) {
+      let style = {} as { left: string; zIndex: number; top?: string; bottom?: string };
       style.left = random(0, 100) + '%';
-      style.zIndex = sample([3, 5])[0]; // always appear on top of the wrapped content, but randomize the z-index relative to all other sparkles
+      style.zIndex = sample([3, 5])[0] as number; // always appear on top of the wrapped content, but randomize the z-index relative to all other sparkles
 
       if (this.constrainToEdges) {
         // only align the sparkles to the edges of the element
@@ -159,7 +159,7 @@ export default defineComponent({
 
       this.sparkles.push(sparkle);
     },
-    useRandomInterval(cb) {
+    useRandomInterval(cb: () => void) {
       if (!this.isOnScreen) {
         return;
       }
@@ -189,7 +189,7 @@ export default defineComponent({
       // disable animation if prefers reduced motion
       console.log(disableAnimations);
       if (disableAnimations) {
-        clearTimeout(this.randomIntervalFunc);
+        clearTimeout(this.randomIntervalFunc as number);
         this.randomIntervalFunc = null;
       } else if (this.randomIntervalFunc === null) {
         this.useRandomInterval(this.updateSparkles);
@@ -239,7 +239,7 @@ export default defineComponent({
       this.mediaQueryList.removeListener(this.usePrefersReducedMotion);
     }
 
-    window.clearTimeout(this.randomIntervalFunc);
+    window.clearTimeout(this.randomIntervalFunc as number);
     if (this.observer) {
       this.observer.disconnect();
     }
