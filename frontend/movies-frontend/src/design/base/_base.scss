@@ -8,3 +8,7 @@ body {
   word-wrap: break-word;
   overscroll-behavior-y: none; // Disables pull-to-refresh and overscroll glow effect. Still keeps swipe navigations. https://developers.google.com/web/updates/2017/11/overscroll-behavior
 }
+
+#app {
+  overflow: hidden;
+}

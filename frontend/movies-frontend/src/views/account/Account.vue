@@ -119,11 +119,13 @@
               />
             </li>
             <li>
-              <settings-item
-                @click="$router.push({ name: 'Changelog' })"
-                title="Changelog"
-                subtitle="See what's new"
-              />
+              <sparkles :animate="!isReducedMotion">
+                <settings-item
+                  @click="$router.push({ name: 'Changelog' })"
+                  title="Changelog"
+                  subtitle="See what's new"
+                />
+              </sparkles>
             </li>
             <li>
               <settings-item @click="$router.push({ name: 'Feedback' })" title="Send Feedback" />
@@ -154,6 +156,7 @@ import { UserMutations } from '@/store/user/mutations';
 import Layout from '@/layouts/Main.vue';
 import BaseSpacer from '@/components/base/BaseSpacer.vue';
 import SettingsItem from '@/components/account/SettingsItem.vue';
+import Sparkles from '@/components/Sparkles.vue';
 
 export default defineComponent({
   name: 'Account',
@@ -163,6 +166,7 @@ export default defineComponent({
     Layout,
     BaseSpacer,
     SettingsItem,
+    Sparkles,
   },
   computed: {
     isReducedMotion: {
@@ -185,7 +189,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @use 'sass:math';
 @import '@/design/variables/index.scss';
 @import '@/design/mixins/index.scss';
