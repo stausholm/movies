@@ -65,6 +65,8 @@
       </div>
       <icons />
       <button @click="toast" class="btn btn--primary mt-2 mb-2">show toast</button>
+      <button @click="toastPush" class="btn btn--primary mt-2 mb-2">push toast</button>
+      <button @click="removeToasts" class="btn btn--primary mt-2 mb-2">remove all toasts</button>
       <div class="ratio ratio-16x9" style="width: 200px">
         <p>test</p>
       </div>
@@ -222,7 +224,17 @@ export default defineComponent({
       this.$store.commit(ToastMutations.CHANGE_TOAST, {
         content: 'test content aaaaaaaa lorem ipsum',
         theme: 'danger',
+        duration: 1000000,
       } as Toast);
+    },
+    toastPush() {
+      this.$store.commit(ToastMutations.ADD_TOAST, {
+        content: 'pushed toast' + Date.now(),
+        theme: 'warning',
+      } as Toast);
+    },
+    removeToasts() {
+      this.$store.commit(ToastMutations.CLEAR_TOASTS);
     },
   },
   created() {

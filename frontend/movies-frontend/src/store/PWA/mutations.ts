@@ -14,7 +14,7 @@ export const mutations: MutationTree<PWAState> = {
   [PWAMutations.HIDE_INSTALL_BUTTON](state) {
     state.launchedAsPWA = true;
   },
-  [PWAMutations.SET_DEFERRED_PROMPT](state, prompt: 'TODO function???') {
+  [PWAMutations.SET_DEFERRED_PROMPT](state, prompt: () => void) {
     state.deferredPrompt = prompt;
   },
 };

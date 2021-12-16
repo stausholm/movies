@@ -5,12 +5,7 @@ import { getters } from './getters';
 import { mutations } from './mutations';
 
 export const state: ToastState = {
-  toast: {
-    content: '',
-    duration: 5000, // ms
-    theme: 'default', // color settings,
-    dismissable: true,
-  },
+  toasts: [],
 };
 
 export const toast: Module<ToastState, RootState> = {

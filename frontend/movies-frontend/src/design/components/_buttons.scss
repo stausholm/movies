@@ -131,9 +131,11 @@
   }
   // when focus is triggered by something that is NOT keyboard navigation
   &:focus:not(:focus-visible) {
+    outline: none;
   }
 
-  &:disabled {
+  &:disabled,
+  &[aria-disabled='true'] {
     pointer-events: none;
     cursor: default;
     background-color: rgba(0, 0, 0, 0.12);

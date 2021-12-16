@@ -3,15 +3,35 @@ import { Toast, ToastState } from './types';
 
 export enum ToastMutations {
   CHANGE_TOAST = 'CHANGE_TOAST',
+  ADD_TOAST = 'ADD_TOAST',
+  REMOVE_TOAST = 'REMOVE_TOAST',
+  CLEAR_TOASTS = 'CLEAR_TOASTS',
 }
 
 export const mutations: MutationTree<ToastState> = {
   [ToastMutations.CHANGE_TOAST](state, changes: Toast) {
-    state.toast = {
+    // overwrite the existing first toast, instead of pushing a new toast  to the screen. Useful in case of limited screenspace
+    state.toasts[0] = {
       content: changes.content,
       duration: changes.duration || 5000,
       theme: changes.theme || 'default',
       dismissable: changes.dismissable !== undefined ? changes.dismissable : true,
     };
+  },
+  [ToastMutations.ADD_TOAST](state, toast: Toast) {
+    state.toasts.push({
+      content: toast.content,
+      duration: toast.duration || 5000,
+      theme: toast.theme || 'default',
+      dismissable: toast.dismissable !== undefined ? toast.dismissable : true,
+    });
+  },
+  [ToastMutations.REMOVE_TOAST](state, toast: Toast) {
+    // TODO: this could be better in case 2 toasts are identical. Could add a guid for each toast,
+    // but then it becomes harder to programatically remove the toast unless we store that guid where we call the "add" mutation?
+    state.toasts = state.toasts.filter((x) => x !== toast);
+  },
+  [ToastMutations.CLEAR_TOASTS](state) {
+    state.toasts = [];
   },
 };

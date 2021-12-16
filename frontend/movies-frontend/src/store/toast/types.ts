@@ -8,5 +8,5 @@ export interface Toast {
 }
 
 export interface ToastState {
-  toast: Toast;
+  toasts: Toast[];
 }
