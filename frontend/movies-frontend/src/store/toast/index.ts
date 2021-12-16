@@ -9,8 +9,6 @@ export const state: ToastState = {
     content: '',
     duration: 5000, // ms
     theme: 'default', // color settings,
-    action: null,
-    actionLabel: '',
     dismissable: true,
   },
 };

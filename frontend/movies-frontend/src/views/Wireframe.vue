@@ -221,10 +221,7 @@ export default defineComponent({
     toast() {
       this.$store.commit(ToastMutations.CHANGE_TOAST, {
         content: 'test content aaaaaaaa lorem ipsum',
-        action: () => {
-          console.log('action fired');
-        },
-        actionLabel: 'action label',
+        theme: 'danger',
       } as Toast);
     },
   },

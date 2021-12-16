@@ -7,21 +7,11 @@
         v-if="showing"
         @click="dismiss"
         role="status"
-        :tabindex="notification.actionLabel && notification.action ? '0' : '-1'"
       >
         <div class="toast-inner">
           <div class="toast__content">
             <span>{{ notification.content }}</span>
           </div>
-          <button
-            class="toast__label"
-            v-if="notification.actionLabel && notification.action"
-            @click.stop="handleAction"
-            ref="btn"
-          >
-            {{ notification.actionLabel }}
-          </button>
-          <button class="visually-hidden" @click.stop="dismiss">Dismiss</button>
         </div>
       </output>
     </transition>
@@ -32,15 +22,12 @@
 import { Toast } from '@/store/toast/types';
 import { defineComponent } from 'vue';
 
-// should be focusable if there's an action. If there's an action there should also be a focussable dissmissable button. move focus to toast and focus trap.
-// Once toast dissapears, either by dismissing it or countdown expires, move focus back to previously focused element
 export default defineComponent({
   name: 'Toast',
   data() {
     return {
       showing: false,
       timer: null as null | number | undefined,
-      previousFocusEl: null as null | Element,
     };
   },
   computed: {
@@ -56,22 +43,12 @@ export default defineComponent({
       console.log('new notification');
       if (this.showing) {
         clearTimeout(this.timer as number);
-        (this.previousFocusEl as HTMLElement)?.focus();
       }
 
       this.showing = true;
 
-      // TODO: focus trap and esc to dismiss
-      if (this.notification.action && this.notification.actionLabel) {
-        this.$nextTick(() => {
-          this.previousFocusEl = document.activeElement;
-          (this.$refs.btn as HTMLButtonElement).focus();
-        });
-      }
-
       this.timer = setTimeout(() => {
         this.showing = false;
-        (this.previousFocusEl as HTMLElement)?.focus();
         console.log('hiding notification now');
         this.timer = null;
       }, this.notification.duration);
@@ -82,11 +59,6 @@ export default defineComponent({
       if (this.notification.dismissable) {
         this.showing = false;
         clearTimeout(this.timer as number);
-      }
-    },
-    handleAction() {
-      if (this.notification.action) {
-        this.notification.action();
       }
     },
   },
@@ -110,12 +82,12 @@ export default defineComponent({
   display: block;
   width: 100%;
   max-width: 450px; // WCAG 2.1 - 1.4.10. 450px = 1800px viewport at 400% zoom
-  box-shadow: $box-shadow;
   transform-origin: center 0%;
   user-select: none;
   @include useGridSpacing(margin-bottom);
 
   &-inner {
+    box-shadow: $box-shadow;
     transition: background-color 0.2s;
     border-radius: $border-radius-base;
     padding: $default-spacing;
@@ -134,29 +106,10 @@ export default defineComponent({
   &__content {
     flex: 1;
     word-break: break-word;
+    font-weight: bold;
   }
 
-  &__label {
-    text-transform: uppercase;
-    letter-spacing: 1.8px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-align: right;
-    white-space: nowrap;
-    color: $brand-info;
-    margin: math.div(-$default-spacing, 2);
-    margin-left: auto;
-    border: 0;
-    padding: math.div($default-spacing, 2);
-    background-color: transparent;
-
-    &:hover {
-      text-decoration: underline;
-      background-color: rgba($white, 0.05);
-    }
-  }
-
-  @mixin toast-theme($bg-color, $color, $label-color) {
+  @mixin toast-theme($color, $bg-color) {
     .toast-inner {
       background-color: $bg-color;
       color: rgba($color, 0.87);
@@ -164,23 +117,16 @@ export default defineComponent({
       &:hover {
         background-color: darken($bg-color, 5);
       }
-
-      .toast__label {
-        color: $label-color;
-      }
     }
   }
-  &--light {
-    @include toast-theme(#fefefe, $brand-primary-bg__text-color, $brand-primary);
-  }
   &--warning {
-    @include toast-theme($gray-900, $text-color-light, $brand-warning);
+    @include toast-theme($text-color-dark, $brand-warning);
   }
   &--danger {
-    @include toast-theme($gray-900, $white, $brand-danger);
+    @include toast-theme($white, $brand-danger);
   }
   &--success {
-    @include toast-theme($gray-900, $white, $brand-success);
+    @include toast-theme($white, $brand-success);
   }
 }
 

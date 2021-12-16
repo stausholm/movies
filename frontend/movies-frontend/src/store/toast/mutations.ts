@@ -11,8 +11,6 @@ export const mutations: MutationTree<ToastState> = {
       content: changes.content,
       duration: changes.duration || 5000,
       theme: changes.theme || 'default',
-      action: changes.action || null,
-      actionLabel: changes.actionLabel || '',
       dismissable: changes.dismissable !== undefined ? changes.dismissable : true,
     };
   },
