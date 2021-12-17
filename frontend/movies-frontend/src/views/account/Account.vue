@@ -6,11 +6,11 @@
         <base-spacer size="2" class="d-xs-none" />
         <account-card class="mb" :enableAvatarEditing="true" />
 
-        <button class="btn btn--primary btn--responsive mb-2">
-          Reload app or something else idunno yet
-        </button>
+        <pwa-install-button class="btn btn--primary btn--responsive" v-if="showPWAInstallButton">
+          <!-- Add app to homescreen -->
+        </pwa-install-button>
 
-        <h2 class="h6">Settings</h2>
+        <h2 class="h6 mt-2">Settings</h2>
       </div>
       <ul class="settings-list" role="menu">
         <li class="settings-list__group">
@@ -25,48 +25,7 @@
             </li>
           </ul>
         </li>
-        <li class="settings-list__group">
-          <h3 class="group__title">Data</h3>
-          <ul class="group__list">
-            <li>
-              <settings-item
-                @click="$router.push({ name: 'Delete' })"
-                title="Delete my data"
-                subtitle="Remove all locally stored content"
-              />
-            </li>
-            <li>
-              <settings-item
-                @click="test"
-                title="Export my data"
-                subtitle="Download your data as a JSON file"
-              />
-              <!-- TOAST 
-              show toast when file was downloaded
-              -->
-            </li>
-            <li>
-              <settings-item
-                @click="test"
-                title="Import data"
-                subtitle="Requires valid JSON file"
-                aria-haspopup="true"
-              />
-              <!-- MODAL
-              title: Import existing data
-              text: You can choose between overwriting your current locally stored data, or adding the imported data to your current dataset
-              fileinput: choose a file
-              fieldset legend: Please select an import type:
-              radio title: Overwrite
-              radio description: Overwrites all your existing local data
-              radio title: Merge and add
-              radio description: Merges existing data and adds new
-              external link: More info about the JSON data structure (external link icon) Link goes to public repo 
-              buttons: Cancel / Import
-               -->
-            </li>
-          </ul>
-        </li>
+        <settings-group-data />
         <li class="settings-list__group">
           <h3 class="group__title">Application</h3>
           <ul class="group__list">
@@ -156,7 +115,9 @@ import { UserMutations } from '@/store/user/mutations';
 import Layout from '@/layouts/Main.vue';
 import BaseSpacer from '@/components/base/BaseSpacer.vue';
 import SettingsItem from '@/components/account/SettingsItem.vue';
+import SettingsGroupData from '@/components/account/SettingsGroupData.vue';
 import Sparkles from '@/components/Sparkles.vue';
+import PwaInstallButton from '@/components/PwaInstallButton.vue';
 
 export default defineComponent({
   name: 'Account',
@@ -166,7 +127,9 @@ export default defineComponent({
     Layout,
     BaseSpacer,
     SettingsItem,
+    SettingsGroupData,
     Sparkles,
+    PwaInstallButton,
   },
   computed: {
     isReducedMotion: {
@@ -179,6 +142,9 @@ export default defineComponent({
           val: value,
         } as AppSettingPayload);
       },
+    },
+    showPWAInstallButton(): boolean {
+      return this.$store.getters.showPWAInstallButton;
     },
   },
   methods: {

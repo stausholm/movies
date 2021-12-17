@@ -47,12 +47,13 @@ export default defineComponent({
   right: 0;
   bottom: 0;
   pointer-events: none;
+  transition: transform 0.2s; // same as navbar
 }
 
 body:not(.mobile-hide-bottom-nav) {
   .toast-container {
     @include breakpoint-max($breakpoint-navigation-change) {
-      bottom: $nav-height;
+      transform: translateY(-$nav-height);
     }
   }
 }

@@ -187,7 +187,6 @@ export default defineComponent({
     },
     toggleAnimations(disableAnimations: boolean) {
       // disable animation if prefers reduced motion
-      console.log(disableAnimations);
       if (disableAnimations) {
         clearTimeout(this.randomIntervalFunc as number);
         this.randomIntervalFunc = null;

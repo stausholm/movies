@@ -2,6 +2,9 @@
   <navbar />
   <primary-router-view />
   <div id="teleporttarget"></div>
+  <transition name="fade">
+    <pwa-install-overlay v-if="showPwaOverlay" />
+  </transition>
   <toast-container />
 </template>
 
@@ -15,12 +18,19 @@ import { disableBrowserFeatures } from '@/utils/PWAUtils';
 import { replaceBrokenImagesInit, generateQuerySelector } from '@/utils/handleBrokenImages';
 import PrimaryRouterView from '@/router/PrimaryRouterView.vue';
 import ToastContainer from '@/components/ToastContainer.vue';
+import PwaInstallOverlay from '@/components/PwaInstallOverlay.vue';
 
 export default defineComponent({
   components: {
     Navbar,
     PrimaryRouterView,
     ToastContainer,
+    PwaInstallOverlay,
+  },
+  computed: {
+    showPwaOverlay(): boolean {
+      return this.$store.getters.showPWAOverlay;
+    },
   },
   methods: {
     resizeWatcher(): void {

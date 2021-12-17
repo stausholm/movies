@@ -2,6 +2,7 @@
   <layout>
     <div class="container">
       <h1>Find</h1>
+      <input type="search" name="" id="" />
     </div>
   </layout>
 </template>
