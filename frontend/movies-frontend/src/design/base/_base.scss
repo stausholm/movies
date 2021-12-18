@@ -1,6 +1,7 @@
 html {
   //   TODO: background-color: $black; // seen when overscrolling the page on IOS. Apparently only works with solid colors?
-  scrollbar-gutter: stable; // prevents layout shifts, by making sure the scrollbar still takes up width, even if overflow:hidden; is set
+  // can't use scrollbar-gutter for now, since position:fixed elements don't respect it, and gets cut off behind the scrollbar
+  //scrollbar-gutter: stable; // prevents layout shifts, by making sure the scrollbar still takes up width, even if overflow:hidden; is set
 }
 
 body {

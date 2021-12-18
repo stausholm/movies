@@ -13,7 +13,6 @@ export const mutations: MutationTree<UserState> = {
   [UserMutations.SET_APPSETTING](state, payload: AppSettingPayload) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (state.appSettings as any)[payload.key] = payload.val;
-    //state.appSettings = {...state.appSettings, [payload.key]: payload.val} // TODO: which way is most performant
 
     setLocalStorageValue(APP_SETTINGS_STORAGE_KEY, state.appSettings);
   },

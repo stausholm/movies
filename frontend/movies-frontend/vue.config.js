@@ -7,14 +7,13 @@ module.exports = {
     // properties used in index.html
     config.plugin('html').tap((args) => {
       args[0].title = APP_NAME;
-      args[0].mortenTest = 'TODO';
       args[0].colorThemeStorageKey = COLOR_THEME_STORAGE_KEY;
       return args;
     });
   },
   pwa: {
     // https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
-    name: 'TODO',
+    name: APP_NAME,
   },
   css: { sourceMap: process.env.NODE_ENV === 'development' },
 };

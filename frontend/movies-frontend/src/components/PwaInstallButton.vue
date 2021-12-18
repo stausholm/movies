@@ -26,6 +26,15 @@ import BaseIcon from '@/components/base/BaseIcon.vue';
 import IconInstall from '@/components/icons/IconInstall.vue';
 import { PWAMutations } from '@/store/PWA/mutations';
 
+interface BeforeInstallPromptEvent extends Event {
+  readonly platforms: string[];
+  readonly userChoice: Promise<{
+    outcome: 'accepted' | 'dismissed';
+    platform: string;
+  }>;
+  prompt(): Promise<void>;
+}
+
 export default defineComponent({
   name: 'PwaInstallButton',
   components: {
@@ -39,13 +48,13 @@ export default defineComponent({
     },
   },
   computed: {
-    deferredPrompt(): (() => void) | null | undefined {
+    deferredPrompt(): BeforeInstallPromptEvent | null | undefined {
       return this.$store.getters.deferredPrompt;
     },
   },
   methods: {
     showPrompt(): void {
-      if (this.deferredPrompt !== null) {
+      if (this.deferredPrompt) {
         this.deferredPrompt.prompt();
 
         this.deferredPrompt.userChoice.then((choice) => {

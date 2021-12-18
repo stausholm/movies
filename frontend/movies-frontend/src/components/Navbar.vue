@@ -142,11 +142,6 @@ export default defineComponent({
 @import '@/design/variables/index.scss';
 @import '@/design/mixins/index.scss';
 
-// TODO: move these variables
-$nav-bg: $white;
-$nav-link-color: inherit;
-$nav-link-color-active: $brand-primary;
-
 .navbar {
   position: absolute;
   left: 0;

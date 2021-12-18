@@ -1,12 +1,11 @@
 {
   "COLOR_THEME_STORAGE_KEY": "color-mode",
-  "APP_NAME": "TODO",
-  "APP_VERSION": "TODO",
-  "APP_FEEDBACK_URL": "TODO",
-  "APP_CODE_URL": "TODO",
-  "APP_HOST_NAME": "TODO",
-  "APP_HOST_LOG_PERIOD": "TODO",
-  "APP_HOST_PRIVACY_URL": "TODO",
-  "APP_HOST_GDPR_URL": "TODO",
-  "APP_PRIVACY_POLICY_LAST_UPDATED": "Tue Dec 14 2021 22:30:24 GMT+0100"
+  "APP_NAME": "Movies DB",
+  "APP_VERSION": "0.0.1",
+  "APP_FEEDBACK_URL": "https://github.com/stausholm/movies/issues",
+  "APP_CODE_URL": "https://github.com/stausholm/movies",
+  "APP_HOST_NAME": "Simply.com",
+  "APP_HOST_PRIVACY_URL": "https://www.simply.com/dk/privacy-policy/",
+  "APP_HOST_GDPR_URL": "https://www.simply.com/dk/compliance/",
+  "APP_PRIVACY_POLICY_LAST_UPDATED": "Dec 18 2021 12:30:24 GMT+0100"
 }
