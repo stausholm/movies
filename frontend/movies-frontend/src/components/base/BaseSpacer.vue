@@ -1,32 +1,29 @@
 <template>
-  <div :class="sizeClass" aria-hidden="true"></div>
+  <div :style="{ height: height }" class="spacer" aria-hidden="true"></div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
-
-type SpacerSize = 0 | 1 | 2 | null | undefined | '' | '0' | '1' | '2';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   props: {
     size: {
-      default: '',
-      type: [String, Number, null, undefined] as PropType<SpacerSize>,
+      default: 1,
+      type: [String, Number],
+    },
+    defaultSpacing: {
+      type: [String, Number],
+      default: 16, // same as scss $default-spacing
     },
   },
   computed: {
-    sizeClass(): string {
-      const num = this.size;
-      if (
-        num === '' ||
-        num === null ||
-        num === undefined ||
-        (typeof num === 'number' && isNaN(num))
-      ) {
-        return 'pt';
+    height(): string {
+      const num = parseFloat(this.size.toString());
+      if (isNaN(num)) {
+        return this.defaultSpacing + 'px';
       }
 
-      return `pt-${num}`;
+      return (this.defaultSpacing as number) * num + 'px';
     },
   },
 });
