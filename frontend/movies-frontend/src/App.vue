@@ -6,6 +6,7 @@
     <pwa-install-overlay v-if="showPwaOverlay" />
   </transition>
   <toast-container />
+  <pwa-install-listeners />
 </template>
 
 <script lang="ts">
@@ -19,6 +20,7 @@ import { replaceBrokenImagesInit, generateQuerySelector } from '@/utils/handleBr
 import PrimaryRouterView from '@/router/PrimaryRouterView.vue';
 import ToastContainer from '@/components/ToastContainer.vue';
 import PwaInstallOverlay from '@/components/PwaInstallOverlay.vue';
+import PwaInstallListeners from '@/components/PwaInstallListeners.vue';
 
 export default defineComponent({
   components: {
@@ -26,6 +28,7 @@ export default defineComponent({
     PrimaryRouterView,
     ToastContainer,
     PwaInstallOverlay,
+    PwaInstallListeners,
   },
   computed: {
     showPwaOverlay(): boolean {

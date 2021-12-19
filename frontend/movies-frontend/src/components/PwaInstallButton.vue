@@ -25,15 +25,7 @@ import { defineComponent } from 'vue';
 import BaseIcon from '@/components/base/BaseIcon.vue';
 import IconInstall from '@/components/icons/IconInstall.vue';
 import { PWAMutations } from '@/store/PWA/mutations';
-
-interface BeforeInstallPromptEvent extends Event {
-  readonly platforms: string[];
-  readonly userChoice: Promise<{
-    outcome: 'accepted' | 'dismissed';
-    platform: string;
-  }>;
-  prompt(): Promise<void>;
-}
+import BeforeInstallPromptEvent from '@/types/BeforeInstallPromptEvent';
 
 export default defineComponent({
   name: 'PwaInstallButton',
@@ -75,26 +67,6 @@ export default defineComponent({
         this.showPrompt();
       }
     },
-    handleBeforeInstallPrompt(e: Event): boolean {
-      e.preventDefault();
-      this.$store.commit(PWAMutations.SET_DEFERRED_PROMPT, e);
-      return false;
-    },
-    handleAppInstalledEvent(e: Event): void {
-      this.$store.commit(PWAMutations.HIDE_INSTALL_BUTTON);
-    },
-  },
-  created() {
-    if (this.deferredPrompt) return;
-
-    console.log('added event listener for beforeinstallprompt');
-    window.addEventListener('beforeinstallprompt', this.handleBeforeInstallPrompt);
-
-    window.addEventListener('appinstalled', this.handleAppInstalledEvent);
-  },
-  beforeUnmount() {
-    window.removeEventListener('beforeinstallprompt', this.handleBeforeInstallPrompt);
-    window.removeEventListener('appinstalled', this.handleAppInstalledEvent);
   },
 });
 </script>
