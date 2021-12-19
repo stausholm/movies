@@ -16,7 +16,7 @@
       <span class="description__subtitle d-block text-small" v-if="subtitle">{{ subtitle }}</span>
     </div>
     <div class="action">
-      <span class="action__label text-small" v-if="actionLabel">{{ actionLabel }}</span>
+      <span class="action__label text-small" v-if="actionLabel?.toString()">{{ actionLabel }}</span>
       <slot>
         <base-icon v-if="type === 'arrow'" aria-hidden="true" class="mr">
           <icon-chevron-right />
@@ -59,7 +59,7 @@ export default defineComponent({
       required: false,
     },
     actionLabel: {
-      type: String,
+      type: [String, Number],
       required: false,
     },
     type: {

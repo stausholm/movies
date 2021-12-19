@@ -20,7 +20,7 @@
         <block-link to="/privacy-policy">Privacy Policy</block-link>
         <block-link to="/tos">Terms of Service</block-link>
       </nav>
-      <button class="btn btn--responsive btn--primary">Refresh app</button>
+      <button class="btn btn--responsive btn--primary" @click="refresh">Refresh app</button>
       <p class="text-small mt">Version: {{ appVersion }}</p>
     </div>
   </layout>
@@ -44,6 +44,11 @@ export default defineComponent({
       appVersion: APP_VERSION,
       appCodeUrl: APP_CODE_URL,
     };
+  },
+  methods: {
+    refresh(): void {
+      window.location.reload();
+    },
   },
 });
 </script>

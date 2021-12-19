@@ -1,6 +1,6 @@
 <template>
   <layout>
-    <div class="">
+    <div class="container">
       <h1>Library</h1>
     </div>
   </layout>

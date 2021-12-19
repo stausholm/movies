@@ -3,13 +3,14 @@
     <div class="">
       <div class="container">
         <h1 class="visually-hidden">Account Page</h1>
-        <base-spacer size="2" class="d-xs-none" />
+        <base-spacer size="4" class="d-xs-none" />
         <account-card class="mb" :enableAvatarEditing="true" />
 
         <pwa-install-button class="btn btn--primary btn--responsive" v-if="showPWAInstallButton">
           <!-- Add app to homescreen -->
         </pwa-install-button>
       </div>
+      <base-spacer size="2" />
       <div class="container pl-0 pr-0 pl-sm-1 pr-sm-1">
         <h2 class="h6 mt-2 pl-1 pr-1">Settings</h2>
         <ul class="settings-list" role="menu">
@@ -18,7 +19,7 @@
               <settings-item
                 @click="$router.push({ name: 'Starred' })"
                 title="Starred"
-                actionLabel="starredCount"
+                :actionLabel="starredCount"
               />
             </li>
           </settings-group>
@@ -57,6 +58,9 @@ export default defineComponent({
   computed: {
     showPWAInstallButton(): boolean {
       return this.$store.getters.showPWAInstallButton;
+    },
+    starredCount(): number {
+      return this.$store.getters.getStarredIds.length;
     },
   },
   methods: {

@@ -10,6 +10,23 @@
         consequatur ex non accusamus illo voluptatibus? Laborum natus distinctio, earum corrupti
         blanditiis sapiente. Autem impedit officia voluptatum. In, magni?
       </p>
+      <div v-if="hasStarredContent">
+        <div>
+          <h2>Recommended for you</h2>
+        </div>
+        <div>
+          <h2><router-link :to="{ name: 'Starred' }">Starred</router-link></h2>
+        </div>
+      </div>
+      <div>
+        <h2>What are you in the mood for?</h2>
+        <p>lorem ipsum</p>
+      </div>
+      <div v-if="!hasStarredContent">
+        <img src="stars.png" alt="" />
+        <h2>Star something</h2>
+        <p>To get recommendations right here on your homescreen</p>
+      </div>
     </div>
   </layout>
 </template>
@@ -24,6 +41,12 @@ export default defineComponent({
   components: {
     Layout,
     PwaInstallButtonInFeed,
+  },
+  computed: {
+    hasStarredContent(): boolean {
+      const starredIds = this.$store.getters.getStarredIds as string[];
+      return starredIds.length > 0;
+    },
   },
 });
 </script>
