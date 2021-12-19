@@ -21,6 +21,28 @@
           </div>
         </div>
       </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-2 col-sm-2 col-xs-6">
+            <span class="theme-dark d-block" style="height: 200px"></span>
+          </div>
+          <div class="col-2 col-sm-2 col-xs-6">
+            <span class="theme-dark d-block" style="height: 200px"></span>
+          </div>
+          <div class="col-2 col-sm-2 col-xs-6">
+            <span class="theme-dark d-block" style="height: 200px"></span>
+          </div>
+          <div class="col-2 col-sm-2 col-xs-6">
+            <span class="theme-dark d-block" style="height: 200px"></span>
+          </div>
+          <div class="col-2 col-sm-2 col-xs-6">
+            <span class="theme-dark d-block" style="height: 200px"></span>
+          </div>
+          <div class="col-2 col-sm-2 col-xs-6">
+            <span class="theme-dark d-block" style="height: 200px"></span>
+          </div>
+        </div>
+      </div>
       <div class="">
         <base-button class="" @click="alert">button</base-button>
         <base-button class="btn--primary" @click="alert">button primary</base-button>
@@ -222,7 +244,7 @@ export default defineComponent({
     },
     toast() {
       this.$store.commit(ToastMutations.CHANGE_TOAST, {
-        content: 'test content aaaaaaaa lorem ipsum',
+        content: 'test content aaaaaaaa lorem ipsum dolor sit amet lorem ipsum dolor',
         theme: 'danger',
         duration: 1000000,
       } as Toast);

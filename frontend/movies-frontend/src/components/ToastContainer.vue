@@ -1,5 +1,5 @@
 <template>
-  <div class="container toast-container">
+  <div class="container-fluid toast-container">
     <transition-group name="toast">
       <toast
         v-for="toast in toasts"

@@ -1,0 +1,14 @@
+@import '../mixins/utilities';
+
+$utilities: (
+  'overflow': (
+    'prefix': 'overflow',
+    'responsive': true,
+    'values': (
+      'auto': auto,
+      'hide': hidden,
+    ),
+  ),
+);
+
+@include generate-utilities($utilities);

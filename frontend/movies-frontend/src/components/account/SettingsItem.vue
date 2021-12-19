@@ -11,19 +11,19 @@
     @keydown.space.prevent
     @keyup.space.enter="$emit('click')"
   >
-    <div class="description">
+    <div class="description pl-1">
       <span class="description__title d-block">{{ title }}</span>
       <span class="description__subtitle d-block text-small" v-if="subtitle">{{ subtitle }}</span>
     </div>
     <div class="action">
       <span class="action__label text-small" v-if="actionLabel">{{ actionLabel }}</span>
       <slot>
-        <base-icon v-if="type === 'arrow'" aria-hidden="true">
+        <base-icon v-if="type === 'arrow'" aria-hidden="true" class="mr">
           <icon-chevron-right />
         </base-icon>
         <div
           v-else-if="type === 'switch'"
-          class="switch"
+          class="switch mr-1"
           :class="{ checked: value }"
           aria-hidden="true"
         >
@@ -104,7 +104,8 @@ export default defineComponent({
 @import '@/design/mixins/index.scss';
 
 .settings-item {
-  padding: math.div($default-spacing, 2) 0;
+  padding-top: math.div($default-spacing, 2);
+  padding-bottom: math.div($default-spacing, 2);
   display: flex;
   justify-content: space-between;
   align-items: center;

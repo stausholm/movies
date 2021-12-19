@@ -77,13 +77,16 @@ export default defineComponent({
 @import '@/design/mixins/index.scss';
 
 .toast {
-  display: block;
-  width: 100%;
+  display: inline-block;
   max-width: 450px; // WCAG 2.1 - 1.4.10. 450px = 1800px viewport at 400% zoom
   transform-origin: center 0%;
   user-select: none;
   @include useGridSpacing(margin-bottom);
   pointer-events: auto;
+
+  @include breakpoint-max(xs) {
+    width: 100%;
+  }
 
   &-inner {
     box-shadow: $box-shadow;

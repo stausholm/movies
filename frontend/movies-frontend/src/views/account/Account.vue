@@ -9,13 +9,11 @@
         <pwa-install-button class="btn btn--primary btn--responsive" v-if="showPWAInstallButton">
           <!-- Add app to homescreen -->
         </pwa-install-button>
-
-        <h2 class="h6 mt-2">Settings</h2>
       </div>
-      <ul class="settings-list" role="menu">
-        <li class="settings-list__group">
-          <h3 class="group__title">Account</h3>
-          <ul class="group__list">
+      <div class="container pl-0 pr-0 pl-sm-1 pr-sm-1">
+        <h2 class="h6 mt-2 pl-1 pr-1">Settings</h2>
+        <ul class="settings-list" role="menu">
+          <settings-group name="Account">
             <li>
               <settings-item
                 @click="$router.push({ name: 'Starred' })"
@@ -23,11 +21,11 @@
                 actionLabel="starredCount"
               />
             </li>
-          </ul>
-        </li>
-        <settings-group-data />
-        <settings-group-application />
-      </ul>
+          </settings-group>
+          <settings-group-data />
+          <settings-group-application />
+        </ul>
+      </div>
     </div>
   </layout>
 </template>
@@ -40,6 +38,7 @@ import Layout from '@/layouts/Main.vue';
 import BaseSpacer from '@/components/base/BaseSpacer.vue';
 import SettingsItem from '@/components/account/SettingsItem.vue';
 import SettingsGroupData from '@/components/account/SettingsGroupData.vue';
+import SettingsGroup from '@/components/account/SettingsGroup.vue';
 import SettingsGroupApplication from '@/components/account/SettingsGroupApplication.vue';
 import PwaInstallButton from '@/components/PwaInstallButton.vue';
 
@@ -53,6 +52,7 @@ export default defineComponent({
     SettingsGroupData,
     SettingsGroupApplication,
     PwaInstallButton,
+    SettingsGroup,
   },
   computed: {
     showPWAInstallButton(): boolean {
@@ -82,9 +82,17 @@ export default defineComponent({
       background-color: $gray-200;
       margin: 0;
       text-transform: uppercase;
-      font-size: 0.875rem;
-      padding: math.div($default-spacing, 2) 0;
+      font-size: 0.875em;
+      padding-top: $default-spacing * 0.75;
+      padding-bottom: $default-spacing * 0.75;
+
+      // sticky
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      z-index: 1;
     }
+
     .group__list {
       list-style-type: none;
       padding: 0;
