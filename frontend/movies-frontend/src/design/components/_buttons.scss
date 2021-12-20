@@ -222,3 +222,28 @@
     }
   }
 }
+
+// imagine a button without a solid background color and we want the button text to align with the grid,
+// but still have enough padding on the button element for it to be an easy target to hit with your fingers or mouse.
+// This is that. Hover and color styles are left out to make that something to implement for each specific use case
+.btn--absolute-sized {
+  background-color: transparent;
+  border: 0;
+  position: relative;
+  z-index: 1;
+  padding: 0;
+  user-select: none;
+
+  cursor: pointer;
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-height: $min-touch-target-size;
+    min-width: $min-touch-target-size;
+    transform: translateY(-50%) translateX(-50%);
+    z-index: -1;
+    border-radius: $border-radius-base;
+  }
+}

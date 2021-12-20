@@ -276,7 +276,7 @@ export default defineComponent({
       position: absolute;
       top: -1px;
       right: 0;
-      transform: translateX(-9px) translateY(-50%) rotate(45deg);
+      transform: translateX(-19px) translateY(-50%) rotate(45deg);
       box-sizing: border-box;
     }
 

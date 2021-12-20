@@ -89,9 +89,60 @@
       <button @click="toast" class="btn btn--primary mt-2 mb-2">show toast</button>
       <button @click="toastPush" class="btn btn--primary mt-2 mb-2">push toast</button>
       <button @click="removeToasts" class="btn btn--primary mt-2 mb-2">remove all toasts</button>
+
       <div class="ratio ratio-16x9" style="width: 200px">
         <p>test</p>
       </div>
+
+      <button @click="showModal = true" class="btn btn--primary">Show modal</button>
+      <modal
+        v-if="showModal"
+        @close="showModal = false"
+        @confirm="handleConfirm"
+        confirmLabel="confirm"
+        :confirmIsDestructive="false"
+        :showCloseButton="false"
+        title="title asdasd"
+        :stackActions="false"
+      >
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+      </modal>
+
       <div class="container container--small">
         <h1>aaaaaaaaaaa</h1>
       </div>
@@ -194,6 +245,7 @@ import BaseIcon from '@/components/base/BaseIcon.vue';
 import Layout from '@/layouts/Main.vue';
 import { ToastMutations } from '@/store/toast/mutations';
 import { Toast } from '@/store/toast/types';
+import Modal from '@/components/Modal.vue';
 
 export default defineComponent({
   name: 'Wireframe',
@@ -202,6 +254,7 @@ export default defineComponent({
     BaseButton,
     BaseIcon,
     Layout,
+    Modal,
   },
   props: {
     dummy: {
@@ -217,6 +270,7 @@ export default defineComponent({
       videos: [] as (Episode | Series | Movie)[],
       imageRatioPercentage: 0,
       fontSizeDemoText: 'Lorem ipsum dolor sit amet',
+      showModal: false,
     };
   },
   computed: {
@@ -257,6 +311,9 @@ export default defineComponent({
     },
     removeToasts() {
       this.$store.commit(ToastMutations.CLEAR_TOASTS);
+    },
+    handleConfirm() {
+      console.log('confirmed aaaaa');
     },
   },
   created() {

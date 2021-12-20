@@ -59,7 +59,7 @@
   will-change: transform, opacity;
 }
 .router-slide-mobile-left-enter-active {
-  transition: opacity 0.15s ease-out, transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: opacity 0.15s ease-out, transform 0.3s $ease-out-cubic-ish;
   background-color: $body-bg;
   position: fixed;
   top: 0;
@@ -68,7 +68,7 @@
   bottom: 0;
 }
 .router-slide-mobile-left-leave-active {
-  transition: opacity 0.15s ease-out, transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: opacity 0.15s ease-out, transform 0.3s $ease-out-cubic-ish;
   will-change: transform, opacity;
   transform: translateX(-20%);
 
@@ -97,7 +97,7 @@
   transform: translateX(-16px);
 }
 .router-fade-left-enter-active {
-  transition: opacity 0.15s ease-out, transform 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: opacity 0.15s ease-out, transform 0.2s $ease-out-cubic-ish;
 }
 .router-fade-left-leave-active {
   transition: opacity 0.15s ease-out, transform 0.2s ease-in-out;
@@ -110,7 +110,7 @@
   transform: translateX(-16px);
 }
 .router-fade-left-fast-enter-active {
-  transition: opacity 0.1s ease-out, transform 0.1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: opacity 0.1s ease-out, transform 0.1s $ease-out-cubic-ish;
 }
 .router-fade-left-fast-leave-active {
   transition: opacity 0.1s ease-out, transform 0.1s ease-in-out;
@@ -123,7 +123,7 @@
   transform: translateX(16px);
 }
 .router-fade-right-fast-enter-active {
-  transition: opacity 0.1s ease-out, transform 0.1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: opacity 0.1s ease-out, transform 0.1s $ease-out-cubic-ish;
 }
 .router-fade-right-fast-leave-active {
   transition: opacity 0.1s ease-out, transform 0.1s ease-in-out;
@@ -136,7 +136,7 @@
   transform: translateX(16px);
 }
 .router-fade-right-enter-active {
-  transition: opacity 0.15s ease-out, transform 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: opacity 0.15s ease-out, transform 0.2s $ease-out-cubic-ish;
 }
 .router-fade-right-leave-active {
   transition: opacity 0.15s ease-out, transform 0.2s ease-in-out;

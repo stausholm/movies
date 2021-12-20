@@ -1,11 +1,17 @@
 <template>
   <navbar />
   <primary-router-view />
+
+  <!-- teleport targets -->
   <div id="teleporttarget"></div>
+  <div id="modal"></div>
+
   <transition name="fade">
     <pwa-install-overlay v-if="showPwaOverlay" />
   </transition>
+
   <toast-container />
+
   <pwa-install-listeners />
 </template>
 

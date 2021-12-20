@@ -16,6 +16,9 @@
 .container {
   max-width: $container-width;
 }
+.container--xxs {
+  max-width: $container-width-xxs;
+}
 .container--small {
   max-width: $container-width-small;
 }

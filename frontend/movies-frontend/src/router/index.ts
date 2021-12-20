@@ -43,6 +43,11 @@ const routes: Array<RouteRecordRaw> = [
   },
 ];
 
+// seems like vue router sets this on it's own, so we don't have to do it
+// if ('scrollRestoration' in history) {
+//   history.scrollRestoration = 'manual';
+// }
+
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,

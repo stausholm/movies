@@ -1,7 +1,7 @@
 <template>
   <div class="pwa-install-overlay">
     <!-- TODO: focus trap and esc key -->
-    <div class="container container--small">
+    <div class="container container--xxs">
       <div class="icons">
         <div class="icon"></div>
         <div class="icon"></div>
@@ -114,10 +114,6 @@ export default defineComponent({
   background-color: rgba($__brand-primary, 0.95);
   color: $brand-primary-bg__text-color;
   cursor: default;
-
-  .container {
-    max-width: 500px;
-  }
 
   .icons {
     display: flex;
