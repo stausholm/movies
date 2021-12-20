@@ -3,18 +3,34 @@
     <transition name="modal" appear @after-leave="closeModal">
       <div class="modal-container" v-if="openInternal">
         <div class="overlay" @click="handleClose"></div>
-        <div class="modal container p-0">
+        <div
+          class="modal container p-0"
+          role="dialog"
+          aria-labelledby="modaltitle"
+          aria-modal="true"
+          @keyup.esc.stop="handleEsc"
+          @keydown.tab.stop="handleTab"
+          ref="modal"
+        >
           <header class="modal__header p-1" v-if="title || showCloseButton">
-            <strong v-if="title" class="h4 mb-0 mr">{{ title }}</strong>
+            <strong
+              v-if="title"
+              id="modaltitle"
+              class="h4 mb-0 mr"
+              ref="modaltitle"
+              tabindex="-1"
+              >{{ title }}</strong
+            >
             <button v-if="showCloseButton" @click="handleClose" class="btn--absolute-sized">
               Close
             </button>
           </header>
-          <div class="modal__body" ref="modalbody" tabindex="0">
+          <p v-else-if="!title" id="modaltitle" class="visually-hidden">Modal</p>
+          <div class="modal__body" ref="modalbody" tabindex="-1">
             <slot></slot>
           </div>
           <div class="modal__footer" :class="{ 'actions-stack-mobile': stackActions }">
-            <button @click="handleClose" class="cancel btn btn--text">
+            <button @click="handleClose" class="cancel btn btn--text" ref="modalcancel">
               {{ cancelLabelFormatted }}
             </button>
             <button
@@ -36,7 +52,11 @@
 </template>
 
 <script lang="ts">
+// sources: https://www.w3.org/TR/wai-aria-practices/examples/dialog-modal/dialog.html#
+// sources: https://www.smashingmagazine.com/2021/07/accessible-dialog-from-scratch/
+
 import { defineComponent } from 'vue';
+import { trapTabKey, getFocusableChildren } from '@/utils/focus-trap';
 
 export default defineComponent({
   name: 'Modal',
@@ -67,6 +87,7 @@ export default defineComponent({
   data() {
     return {
       openInternal: true, // used to control transitions
+      previouslyFocused: null as null | HTMLElement,
     };
   },
   computed: {
@@ -85,17 +106,53 @@ export default defineComponent({
       this.$emit('confirm');
       this.openInternal = false;
     },
+    handleEsc(): void {
+      this.handleClose();
+    },
+    handleTab(e: KeyboardEvent): void {
+      console.log('tab');
+      trapTabKey(this.$refs.modal, e);
+    },
+    maintainFocus(e: Event): void {
+      const isInModal = e.target.closest('[aria-modal="true"]');
+      if (!isInModal) this.moveFocusIn();
+    },
+    moveFocusIn(): void {
+      /**
+       * if a child has autofocus property, focus the first of those
+       * else focus the title if it exists
+       * otherwise focus the first focusable element in the body.
+       * if there's nothing focusable in the body, focus the close button in the footer
+       */
+      const target =
+        this.$refs.modal.querySelector('[autofocus]') ||
+        this.$refs.modaltitle ||
+        getFocusableChildren(this.$refs.modalbody)[0] ||
+        this.$refs.modalcancel;
+
+      if (target) target.focus();
+    },
   },
   created() {
-    // todo esc and focus-trap
+    document.body.addEventListener('focus', this.maintainFocus, true);
+    // todo popstate
   },
   mounted() {
-    // todo esc and focus-trap
     document.body.classList.add('modal-open');
+    // store reference to el that opened modal
+    this.previouslyFocused = document.activeElement;
+    //move focus into modal
+    this.moveFocusIn();
   },
   beforeUnmount() {
-    // todo esc and focus-trap
     document.body.classList.remove('modal-open');
+    document.body.removeEventListener('focus', this.maintainFocus, true);
+
+    // restore focus back to element that opened modal
+    if (this.previouslyFocused && this.previouslyFocused.focus) {
+      this.previouslyFocused.focus();
+    }
+    // todo popstate
   },
 });
 </script>

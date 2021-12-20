@@ -106,6 +106,7 @@
         :stackActions="false"
       >
         <p>test</p>
+        <button @keyup.esc.stop="testkeyup" autofocus>test</button>
         <p>test</p>
         <p>test</p>
         <p>test</p>
@@ -137,6 +138,7 @@
         <p>test</p>
         <p>test</p>
         <p>test</p>
+        <button>another button</button>
         <p>test</p>
         <p>test</p>
         <p>test</p>
@@ -314,6 +316,9 @@ export default defineComponent({
     },
     handleConfirm() {
       console.log('confirmed aaaaa');
+    },
+    testkeyup() {
+      console.log('test keyup propagation stop');
     },
   },
   created() {
