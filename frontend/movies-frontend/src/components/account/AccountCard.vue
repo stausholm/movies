@@ -166,7 +166,7 @@ export default defineComponent({
         font-size: $font-size-small;
 
         &:not(:last-child) {
-          margin-bottom: math.div($default-spacing, 4);
+          margin-bottom: math.div($default-spacing, 2);
         }
       }
     }

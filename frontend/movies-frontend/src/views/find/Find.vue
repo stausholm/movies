@@ -7,7 +7,7 @@
         <icon-search />
       </base-icon>
 
-      <h2>Browse by</h2>
+      <h2 class="mt-2">Browse by</h2>
       <div class="row">
         <div class="col-6 col-sm-4">
           <router-link :to="{ name: 'Movies' }" class="btn btn--icon btn--block text-small">
@@ -35,7 +35,7 @@
         </div>
       </div>
 
-      <h2>Genres</h2>
+      <h2 class="mt-2">Genres</h2>
       <nav class="block-link-wrapper">
         <block-link
           v-for="genre in genresFormatted"

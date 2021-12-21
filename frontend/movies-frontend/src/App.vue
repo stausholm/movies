@@ -67,7 +67,7 @@ export default defineComponent({
       console.log('BROKEN IMAGE:', debugObj);
     };
 
-    replaceBrokenImagesInit('/img/TODO.png', imageCallback);
+    replaceBrokenImagesInit('/img/fallback-image.png', imageCallback);
   },
   beforeUnmount() {
     window.removeEventListener('resize', this.resizeWatcher);
