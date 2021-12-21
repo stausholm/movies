@@ -55,6 +55,8 @@
 // sources: https://www.w3.org/TR/wai-aria-practices/examples/dialog-modal/dialog.html#
 // sources: https://www.smashingmagazine.com/2021/07/accessible-dialog-from-scratch/
 
+// TODO: convert all accessibility code into a wrapper component that can be imported into this component, PwaInstallOverlay, actionSheet, etc
+
 import { defineComponent } from 'vue';
 import { trapTabKey, getFocusableChildren } from '@/utils/focus-trap';
 
@@ -111,10 +113,10 @@ export default defineComponent({
     },
     handleTab(e: KeyboardEvent): void {
       console.log('tab');
-      trapTabKey(this.$refs.modal, e);
+      trapTabKey(this.$refs.modal as HTMLElement, e);
     },
     maintainFocus(e: Event): void {
-      const isInModal = e.target.closest('[aria-modal="true"]');
+      const isInModal = (e.target as Element).closest('[aria-modal="true"]');
       if (!isInModal) this.moveFocusIn();
     },
     moveFocusIn(): void {
@@ -125,12 +127,12 @@ export default defineComponent({
        * if there's nothing focusable in the body, focus the close button in the footer
        */
       const target =
-        this.$refs.modal.querySelector('[autofocus]') ||
+        (this.$refs.modal as HTMLElement).querySelector('[autofocus]') ||
         this.$refs.modaltitle ||
-        getFocusableChildren(this.$refs.modalbody)[0] ||
+        getFocusableChildren(this.$refs.modalbody as HTMLElement)[0] ||
         this.$refs.modalcancel;
 
-      if (target) target.focus();
+      if (target) (target as HTMLElement).focus();
     },
   },
   created() {
@@ -140,7 +142,7 @@ export default defineComponent({
   mounted() {
     document.body.classList.add('modal-open');
     // store reference to el that opened modal
-    this.previouslyFocused = document.activeElement;
+    this.previouslyFocused = document.activeElement as HTMLElement;
     //move focus into modal
     this.moveFocusIn();
   },

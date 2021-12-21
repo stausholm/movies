@@ -1,5 +1,10 @@
 <template>
-  <router-link :to="to" v-if="!type || type === 'internal'" class="block-link">
+  <router-link
+    :to="to"
+    v-if="!type || type === 'internal'"
+    class="block-link"
+    :class="{ 'block-link--small': small }"
+  >
     <span class="slot">
       <slot></slot>
     </span>
@@ -7,7 +12,14 @@
       <component :is="icon" />
     </base-icon>
   </router-link>
-  <a :href="to" v-else target="_blank" rel="noopener noreferrer" class="block-link">
+  <a
+    :href="to"
+    v-else
+    target="_blank"
+    rel="noopener noreferrer"
+    class="block-link"
+    :class="{ 'block-link--small': small }"
+  >
     <span class="slot">
       <slot></slot>
     </span>
@@ -40,6 +52,10 @@ export default defineComponent({
     to: {
       type: [String, Object],
       required: true,
+    },
+    small: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {
@@ -90,6 +106,11 @@ export default defineComponent({
 
   .slot {
     flex: 1;
+  }
+
+  &--small {
+    padding: math.div($default-spacing, 2) 0;
+    min-height: $min-touch-target-size;
   }
 
   svg {

@@ -212,6 +212,10 @@
       width: 100%;
     }
   }
+  // make it full width of container on all screens sizes
+  &--block {
+    width: 100%;
+  }
 
   // special styles when the button is only an icon, and we don't want to use the default "only icon" styles
   &--icon {

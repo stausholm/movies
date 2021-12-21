@@ -1,4 +1,4 @@
-export const GENRES = {
+export const GENRES: { [index: string]: string } = {
   ACTION: 'Action',
   ADVENTURE: 'Adventure',
   ANIMATION: 'Animation',
