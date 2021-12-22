@@ -3,3 +3,19 @@ img {
   max-width: 100%;
   height: auto; //  Override the height to auto, otherwise images will be stretched when setting a width and height attribute on the img element.
 }
+
+// image saturation user setting
+:root {
+  @include createCssvars(
+    (
+      saturation-percentage: 0%,
+    )
+  );
+}
+
+img:not(.no-saturate-filter),
+.saturate-filter {
+  // NOTE: "Grayscale" is spelled with an uppercase G because sass has a built in function called grayscale that conflicts with
+  // the native filter: grayscale(); Sass is casse sensitive, native css is not. https://css-tricks.com/when-sass-and-new-css-features-collide/#the-solution
+  filter: Grayscale(cssvar(saturation-percentage));
+}

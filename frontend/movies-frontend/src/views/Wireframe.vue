@@ -1,10 +1,17 @@
 <template>
   <layout>
     <div class="">
-      <h1>Wireframe</h1>
-      <p>A demo of boilerplate</p>
-      <h2 class="bg-warning p">TODO: storybook instead of this wireframe stuff?</h2>
       <div class="container">
+        <h1>Wireframe</h1>
+        <p>A demo of boilerplate</p>
+      </div>
+      <div class="bg-warning">
+        <div class="container">
+          <h2 class="pt-1 pb-1">TODO: storybook instead of this wireframe stuff?</h2>
+        </div>
+      </div>
+      <div class="container">
+        <h2>Text</h2>
         <div class="row">
           <div class="col-12 mb-2">
             <h1>{{ fontSizeDemoText }}</h1>
@@ -18,10 +25,12 @@
             <p class="text-small">{{ fontSizeDemoText }}</p>
             <p class="text-big">{{ fontSizeDemoText }}</p>
             <p class="text-pre-head">{{ fontSizeDemoText }}</p>
+            <blockquote>This is a quote</blockquote>
           </div>
         </div>
       </div>
       <div class="container">
+        <h2>Grid</h2>
         <div class="row">
           <div class="col-2 col-sm-2 col-xs-6">
             <span class="theme-dark d-block" style="height: 200px"></span>
@@ -43,7 +52,8 @@
           </div>
         </div>
       </div>
-      <div class="">
+      <div class="container">
+        <h2>Buttons</h2>
         <base-button class="" @click="alert">button</base-button>
         <base-button class="btn--primary" @click="alert">button primary</base-button>
         <base-button class="btn--rounded" @click="alert">button rounded</base-button>
@@ -61,6 +71,10 @@
           <span>icon with text</span>
         </base-button>
         <base-button class="" @click="alert">
+          <span>icon with text left</span>
+          <base-icon></base-icon>
+        </base-button>
+        <base-button class="btn--primary btn--icon-pulse btn--block" @click="alert">
           <span>icon with text left</span>
           <base-icon></base-icon>
         </base-button>
@@ -86,91 +100,100 @@
         <base-button class="btn--text-primary">text-primary</base-button>
       </div>
       <icons />
-      <button @click="toast" class="btn btn--primary mt-2 mb-2">show toast</button>
-      <button @click="toastPush" class="btn btn--primary mt-2 mb-2">push toast</button>
-      <button @click="removeToasts" class="btn btn--primary mt-2 mb-2">remove all toasts</button>
 
-      <div class="ratio ratio-16x9" style="width: 200px">
-        <p>test</p>
+      <div class="container">
+        <h2>Toasts</h2>
+        <button @click="toast" class="btn btn--primary mb-2">show toast</button>
+        <button @click="toastPush" class="btn btn--primary mb-2">push toast</button>
+        <button @click="removeToasts" class="btn btn--primary mb-2">remove all toasts</button>
       </div>
 
-      <button @click="showModal = true" class="btn btn--primary">Show modal</button>
-      <modal
-        v-if="showModal"
-        @close="showModal = false"
-        @confirm="handleConfirm"
-        confirmLabel="confirm"
-        :confirmIsDestructive="false"
-        :showCloseButton="false"
-        title="title asdasd"
-        :stackActions="false"
-      >
-        <p>test</p>
-        <button @keyup.esc.stop="testkeyup" autofocus>test</button>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <button>another button</button>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-      </modal>
-
-      <div class="container container--small">
-        <h1>aaaaaaaaaaa</h1>
+      <div class="container">
+        <h2>Sparkles</h2>
+        <sparkles>wow some text</sparkles>
+        <br />
+        <br />
+        <sparkles :colors="['#fff']" :maxSize="30" sparkleType="random">
+          <img src="a" alt="" />
+        </sparkles>
       </div>
-      <div class="container container--small">
-        <div class="row">
-          <div class="col">lorem</div>
-          <div class="col">ipsum</div>
-          <div class="col">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+
+      <div class="container">
+        <h2>ratio</h2>
+        <div class="ratio ratio-16x9 theme-dark" style="width: 200px">
+          <p>test 16:9</p>
         </div>
       </div>
-      <div class="container container--small">
-        <div class="row row--flat">
-          <div class="col">lorem</div>
-          <div class="col">ipsum</div>
-          <!-- <div class="col-12 col-sm-6 col-lg-8">lorem</div> -->
-          <div class="col">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
-        </div>
+
+      <div class="container">
+        <h2>Modal</h2>
+        <button @click="showModal = true" class="btn btn--primary">Show modal</button>
+        <modal
+          v-if="showModal"
+          @close="showModal = false"
+          @confirm="handleConfirm"
+          confirmLabel="confirm"
+          :confirmIsDestructive="false"
+          :showCloseButton="false"
+          title="title asdasd"
+          :stackActions="false"
+        >
+          <p>test</p>
+          <button @keyup.esc.stop="testkeyup" autofocus>test</button>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <button>another button</button>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+        </modal>
       </div>
-      <blockquote>This is a quote</blockquote>
-      <p class="text-pre-head">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. In, nostrum nisi atque ullam illum
-        asperiores inventore quos consequatur nihil fugiat quam repellendus mollitia fugit ipsa
-        totam, ea iste. Officia, quisquam.
-      </p>
-      <p class="pl-sm p-md-2">test</p>
-      <div class="p theme-dark">
+
+      <div class="container">
+        <h2>block links</h2>
+        <nav class="block-link-wrapper">
+          <block-link to="https://google.com" type="external">google.com</block-link>
+          <block-link
+            to="https://i.kym-cdn.com/photos/images/newsfeed/000/823/349/06f.gif"
+            type="file"
+            >yeee</block-link
+          >
+          <block-link to="/nope.zip" type="file">Some external archive</block-link>
+          <block-link to="/someunknownfileextension" type="file">another file</block-link>
+        </nav>
+      </div>
+
+      <div class="p-1 theme-dark">
         <p class="text-pre-head">pre head</p>
         <h2 class="text-normal">lorem ipsum</h2>
         <p>
@@ -248,6 +271,8 @@ import Layout from '@/layouts/Main.vue';
 import { ToastMutations } from '@/store/toast/mutations';
 import { Toast } from '@/store/toast/types';
 import Modal from '@/components/Modal.vue';
+import Sparkles from '@/components/Sparkles.vue';
+import BlockLink from '@/components/BlockLink.vue';
 
 export default defineComponent({
   name: 'Wireframe',
@@ -257,6 +282,8 @@ export default defineComponent({
     BaseIcon,
     Layout,
     Modal,
+    Sparkles,
+    BlockLink,
   },
   props: {
     dummy: {
