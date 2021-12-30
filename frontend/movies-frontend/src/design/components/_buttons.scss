@@ -277,5 +277,9 @@
     transform: translateY(-50%) translateX(-50%);
     z-index: -1;
     border-radius: $border-radius-base;
+
+    // same padding as .btn
+    width: calc(100% + 1.2em);
+    height: calc(100% + 1em);
   }
 }

@@ -5,7 +5,24 @@
       <div>
         <motd class="h2 fw-normal mb-0" :animate="true" />
       </div>
-
+      <div class="todo bg-white shadow-sm rounded p-2 pb-1 mb-2">
+        <p class="text-pre-head mb-1">Did you know?</p>
+        <strong class="h2">Customize what you see in {{ appName }}</strong>
+        <p>Add or remove favourites, adjust app colors, animations, images & more</p>
+        <router-link
+          class="btn btn--text-primary btn--absolute-sized mr-1"
+          :to="{ name: 'Account' }"
+        >
+          Go to Settings
+        </router-link>
+        <button class="btn btn--text">Got it</button>
+      </div>
+      <div class="todo bg-white shadow-sm rounded p-2 mb-2">
+        <p class="text-pre-head mb-1">Did you know?</p>
+        <p>Use Quick Access to get around {{ appName }} quickly. Just press:</p>
+        <!-- Button will open quick access menu -->
+        <button class="btn btn--primary btn--uppercase">CTRL + K</button>
+      </div>
       <h1><router-link to="/wireframe">Wireframe</router-link></h1>
       <pwa-install-button-in-feed />
       <p class="mt">
@@ -39,6 +56,7 @@ import { defineComponent } from 'vue';
 import Layout from '@/layouts/Main.vue';
 import PwaInstallButtonInFeed from '@/components/PwaInstallButtonInFeed.vue';
 import Motd from '@/components/Motd.vue';
+import { APP_NAME } from '@/constants/SiteSettings.json';
 
 export default defineComponent({
   name: 'Home',
@@ -46,6 +64,11 @@ export default defineComponent({
     Layout,
     PwaInstallButtonInFeed,
     Motd,
+  },
+  data() {
+    return {
+      appName: APP_NAME,
+    };
   },
   computed: {
     hasStarredContent(): boolean {

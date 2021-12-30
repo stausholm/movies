@@ -15,6 +15,7 @@
         <a :href="appCodeUrl">GitHub</a>
       </p>
       <nav class="block-link-wrapper mb-2">
+        <block-link :to="{ name: 'Permissions' }">Permissions</block-link>
         <block-link :to="{ name: 'Credits' }">Credits</block-link>
         <block-link to="/licenses">Licenses</block-link>
         <block-link to="/privacy-policy">Privacy Policy</block-link>

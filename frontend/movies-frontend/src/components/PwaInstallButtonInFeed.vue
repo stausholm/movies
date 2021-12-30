@@ -4,7 +4,7 @@
       <slot>
         <img src="../assets/logo.png" alt="" />
         <div>
-          <strong class="text-big">Install</strong>
+          <strong class="text-big">Install {{ appName }}</strong>
           <p>Our app is fast, small, and works offline.</p>
         </div>
       </slot>
@@ -20,6 +20,7 @@
 // https://developers.google.com/web/fundamentals/app-install-banners/promoting-install-mobile
 import { defineComponent } from 'vue';
 import PwaInstallButton from '@/components/PwaInstallButton.vue';
+import { APP_NAME } from '@/constants/SiteSettings.json';
 
 export default defineComponent({
   components: {
@@ -28,6 +29,7 @@ export default defineComponent({
   data() {
     return {
       showBanner: true,
+      appName: APP_NAME,
     };
   },
   computed: {

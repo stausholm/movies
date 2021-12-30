@@ -34,6 +34,13 @@ const routes: Array<RouteRecordRaw> = [
         meta: {},
       },
       {
+        path: 'about/permissions',
+        name: 'Permissions',
+        component: () =>
+          import(/* webpackChunkName: "account" */ '@/views/account/Permissions.vue'),
+        meta: {},
+      },
+      {
         path: 'delete',
         name: 'Delete',
         component: () => import(/* webpackChunkName: "account" */ '@/views/account/Delete.vue'),
@@ -55,6 +62,12 @@ const routes: Array<RouteRecordRaw> = [
         path: 'button',
         name: 'ButtonPage',
         component: () => import(/* webpackChunkName: "account" */ '@/views/account/Button.vue'),
+        meta: {},
+      },
+      {
+        path: 'tips',
+        name: 'Tips',
+        component: () => import(/* webpackChunkName: "account" */ '@/views/account/Tips.vue'),
         meta: {},
       },
     ],

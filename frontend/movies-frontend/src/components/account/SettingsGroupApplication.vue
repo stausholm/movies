@@ -31,6 +31,13 @@
     <li>
       <settings-item @click="todo" title="Start product tour" subtitle="Short tour of the app" />
     </li>
+    <li>
+      <settings-item
+        @click="$router.push({ name: 'Tips' })"
+        title="Tips"
+        subtitle="Simple tips to personalize your experience and increase efficiency"
+      />
+    </li>
     <!-- Overflow-hide is necessary for mobile, because Sparkles component for some reason decides to overflow the body, even though the body has overflow-x: hidden; -->
     <li class="overflow-hide">
       <sparkles :animate="!isReducedMotion">
