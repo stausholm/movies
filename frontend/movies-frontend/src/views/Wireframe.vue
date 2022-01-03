@@ -193,6 +193,103 @@
         </nav>
       </div>
 
+      <div class="container">
+        <h2>Form inputs</h2>
+        <label for="">Text</label>
+        <input v-model="inputs.text" type="text" placeholder="type text" />
+        <input
+          v-model="inputs.text"
+          type="text"
+          placeholder="type text valid"
+          aria-invalid="false"
+        />
+        <input
+          v-model="inputs.text"
+          type="text"
+          placeholder="type text invalid"
+          aria-invalid="true"
+        />
+        <input v-model="inputs.text" type="text" placeholder="type text disabled" disabled />
+        <input
+          v-model="inputs.text"
+          type="text"
+          placeholder="type text disabled valid"
+          disabled
+          aria-invalid="false"
+        />
+        <input
+          v-model="inputs.text"
+          type="text"
+          placeholder="type text disabled invalid"
+          disabled
+          aria-invalid="true"
+        />
+
+        <label for="">.rounded</label>
+        <input v-model="inputs.text" type="text" placeholder="placeholder" class="rounded" />
+        <input type="color" class="rounded" />
+        <input type="file" class="rounded" />
+        <select name="" id="" class="rounded">
+          <option value="val">val</option>
+          <option value="val val">val val</option>
+          <option value="val val val">val val val</option>
+        </select>
+
+        <label for="">Other "text" inputs</label>
+        <input v-model="inputs.text" type="email" placeholder="type email" />
+        <input v-model="inputs.text" type="search" placeholder="type search" />
+        <input v-model="inputs.number" type="number" placeholder="type number" />
+        <input v-model="inputs.text" type="password" placeholder="type password" />
+        <input v-model="inputs.text" type="url" placeholder="type url" />
+        <input v-model="inputs.text" type="tel" placeholder="type tel" />
+
+        <label for="">Dates</label>
+        <input type="date" placeholder="placeholder" />
+        <input type="datetime-local" placeholder="placeholder" />
+        <input type="time" placeholder="placeholder" />
+        <input type="week" placeholder="placeholder" />
+
+        <label for="">Other</label>
+        <input type="file" placeholder="placeholder" />
+        <input type="range" name="" id="" />
+        <input type="color" name="" id="" />
+        <select name="" id="">
+          <option value="val">val</option>
+          <option value="val val">val val</option>
+          <option value="val val val">val val val</option>
+        </select>
+        <textarea name="" id=""></textarea>
+
+        <label for="">Checkbox/radio/checkbox with role="switch"</label>
+        <input type="checkbox" name="" id="" />
+        <input type="checkbox" name="" id="" aria-invalid="true" />
+        <input type="checkbox" name="" id="" aria-invalid="false" />
+        <input type="checkbox" name="" id="" role="switch" />
+        <input type="checkbox" name="" id="" role="switch" aria-invalid="true" />
+        <input type="checkbox" name="" id="" role="switch" aria-invalid="false" />
+        <input type="radio" name="bob" id="" />
+        <input type="radio" name="bob" id="" />
+        <input type="radio" name="bob" id="" aria-invalid="true" />
+        <input type="radio" name="bob" id="" aria-invalid="false" />
+
+        <label for="">Base input component</label>
+        <base-input
+          id="testId"
+          label="test label"
+          type="email"
+          description="this is a small helper text"
+          placeholder="placeholder lorem"
+          class="mb-2 mt-2"
+          :hasErrors="true"
+          errorMessage="Error message lorem"
+          prefix=""
+          suffix=".domain.com"
+          icon="Filmstrip"
+          v-model="inputs.text"
+          data-attribute-test="asdasd"
+        />
+      </div>
+
       <div class="p-1 theme-dark">
         <p class="text-pre-head">pre head</p>
         <h2 class="text-normal">lorem ipsum</h2>
@@ -273,6 +370,7 @@ import { Toast } from '@/store/toast/types';
 import Modal from '@/components/Modal.vue';
 import Sparkles from '@/components/Sparkles.vue';
 import BlockLink from '@/components/BlockLink.vue';
+import BaseInput from '@/components/base/BaseInput.vue';
 
 export default defineComponent({
   name: 'Wireframe',
@@ -284,6 +382,7 @@ export default defineComponent({
     Modal,
     Sparkles,
     BlockLink,
+    BaseInput,
   },
   props: {
     dummy: {
@@ -300,6 +399,10 @@ export default defineComponent({
       imageRatioPercentage: 0,
       fontSizeDemoText: 'Lorem ipsum dolor sit amet',
       showModal: false,
+      inputs: {
+        text: '',
+        number: undefined,
+      },
     };
   },
   computed: {
