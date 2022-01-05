@@ -21,17 +21,19 @@
     </li>
     <li>
       <settings-item
-        @click="todo"
         title="Prefer reduced motion"
         subtitle="Disable/enable app animations and transitions"
         type="switch"
-        :value="isReducedMotion"
+        v-model="isReducedMotion"
       />
-      <!-- TODO: make settings-item work with v-model -->
-      <input type="checkbox" v-model="isReducedMotion" />
     </li>
     <li>
-      <settings-item @click="todo" title="Change language" actionLabel="currentLanguage" />
+      <settings-item
+        @click="todo"
+        title="Change language"
+        actionLabel="currentLanguage TODO"
+        :disabled="true"
+      />
     </li>
     <li>
       <settings-item @click="todo" title="Start product tour" subtitle="Short tour of the app" />

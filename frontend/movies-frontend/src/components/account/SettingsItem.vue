@@ -9,7 +9,8 @@
     :role="ariaRole"
     :aria-checked="ariaChecked"
     @keydown.space.prevent
-    @keyup.space.enter="$emit('click')"
+    @keyup.space.enter="handleClick(false)"
+    @click="handleClick(true)"
   >
     <div class="description pl-1">
       <span class="description__title d-block">{{ title }}</span>
@@ -24,7 +25,7 @@
         <div
           v-else-if="type === 'switch'"
           class="switch mr-1"
-          :class="{ checked: value }"
+          :class="{ checked: modelValue }"
           aria-hidden="true"
         >
           <span class="slider"></span>
@@ -66,7 +67,7 @@ export default defineComponent({
       type: String as PropType<'arrow' | 'switch'>,
       default: 'arrow',
     },
-    value: {
+    modelValue: {
       // used with switch types
       type: Boolean,
       default: false,
@@ -89,10 +90,22 @@ export default defineComponent({
     },
     ariaChecked(): string | null {
       if (this.type === 'switch') {
-        return this.value ? 'true' : 'false';
+        return this.modelValue ? 'true' : 'false';
       }
 
-      return null; // property is left out if value is null
+      return null; // property is left out if modelValue is null
+    },
+  },
+  methods: {
+    handleClick(isMouseClick: boolean): void {
+      if (this.type === 'switch') {
+        this.$emit('update:modelValue', !this.modelValue);
+      }
+      if (!isMouseClick) {
+        // we check for isMouseClick, so we don't emit a click event on mouseclicks,
+        // as that is what we listen for when importing this component, and we don't want to trigger 2 mouseclick events
+        this.$emit('click');
+      }
     },
   },
 });
