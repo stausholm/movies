@@ -1,5 +1,10 @@
 {
   "COLOR_THEME_STORAGE_KEY": "color-mode",
+  "COLOR_THEME_COLOR_STORAGE_KEY": "color-mode-color",
+  "TODO": "the hex values for the color theme properties below",
+  "COLOR_THEME_DEFAULT": "#ffffff",
+  "COLOR_THEME_LIGHT": "#ffffff",
+  "COLOR_THEME_DARK": "#000000",
   "APP_NAME": "Movies DB",
   "APP_VERSION": "0.0.1",
   "APP_FEEDBACK_URL": "https://github.com/stausholm/movies/issues",

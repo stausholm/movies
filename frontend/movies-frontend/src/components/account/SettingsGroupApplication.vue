@@ -4,10 +4,15 @@
       <settings-item
         @click="showThemeModal = true"
         title="Theme"
-        actionLabel="currentTheme TODO"
+        :actionLabel="currentThemeLabel"
         aria-haspopup="true"
       />
-      <modal v-if="showThemeModal" @close="showThemeModal = false" title="Select theme">
+      <modal
+        v-if="showThemeModal"
+        @close="showThemeModal = false"
+        title="Select theme"
+        cancelLabel="Close"
+      >
         <theme-switcher />
       </modal>
     </li>
@@ -97,6 +102,9 @@ export default defineComponent({
           val: value,
         } as AppSettingPayload);
       },
+    },
+    currentThemeLabel(): string {
+      return this.$store.getters.getAppSettings.theme;
     },
   },
   methods: {

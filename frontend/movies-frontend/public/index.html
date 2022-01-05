@@ -22,6 +22,18 @@
     </script>
   </head>
   <body>
+    <script>
+      // this is added here, so that it comes after the <meta> theme-color that vue adds in <head> when generating the production files
+      const persistedColorPreferenceColor = window.localStorage.getItem('<%= htmlWebpackPlugin.options.colorThemeColorStorageKey %>');
+      const hasPersistedColorPreference = typeof persistedColorPreferenceColor === 'string';
+
+      if (hasPersistedColorPreference) {
+        const metaThemeColor = document.querySelector('meta[name=theme-color]');
+        if (metaThemeColor) {
+          metaThemeColor.setAttribute('content', persistedColorPreferenceColor);
+        }
+      }
+    </script>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>

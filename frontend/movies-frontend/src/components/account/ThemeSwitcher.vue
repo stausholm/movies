@@ -27,7 +27,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { AppSettingPayload, ColorTheme } from '@/store/user/types';
-import { COLOR_THEME_STORAGE_KEY } from '@/constants/SiteSettings.json'; // this is a json file because we also need access to these values inside vue.config.js which uses commonJs and not ESM. But both module types support importing json
+import {
+  COLOR_THEME_STORAGE_KEY,
+  COLOR_THEME_COLOR_STORAGE_KEY,
+  COLOR_THEME_LIGHT,
+  COLOR_THEME_DARK,
+  COLOR_THEME_DEFAULT,
+} from '@/constants/SiteSettings.json'; // this is a json file because we also need access to these values inside vue.config.js which uses commonJs and not ESM. But both module types support importing json
 import { UserMutations } from '@/store/user/mutations';
 
 export default defineComponent({
@@ -51,14 +57,23 @@ export default defineComponent({
       if (theme !== 'auto') {
         window.localStorage.setItem(COLOR_THEME_STORAGE_KEY, theme);
         document.documentElement.setAttribute('data-theme', theme);
+        this.updateMetaThemeColor(theme === 'light' ? COLOR_THEME_LIGHT : COLOR_THEME_DARK);
       } else {
         window.localStorage.removeItem(COLOR_THEME_STORAGE_KEY);
         document.documentElement.removeAttribute('data-theme');
+        this.updateMetaThemeColor(COLOR_THEME_DEFAULT);
       }
       this.$store.commit(UserMutations.SET_APPSETTING, {
         key: 'theme',
         val: theme,
       } as AppSettingPayload);
+    },
+    updateMetaThemeColor(color: string): void {
+      const metaThemeColor = document.querySelector('meta[name=theme-color]');
+      if (metaThemeColor) {
+        metaThemeColor.setAttribute('content', color);
+        window.localStorage.setItem(COLOR_THEME_COLOR_STORAGE_KEY, color);
+      }
     },
     transitionTheme(): void {
       document.documentElement.classList.add('theme-transition');
