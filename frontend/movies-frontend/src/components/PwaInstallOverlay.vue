@@ -39,8 +39,7 @@ import IconMoreVert from '@/components/icons/IconMoreVert.vue';
 import IconIosShare from '@/components/icons/IconIosShare.vue';
 import { APP_NAME } from '@/constants/SiteSettings.json';
 import { PWAMutations } from '@/store/PWA/mutations';
-
-type OS = 'windows' | 'macos' | 'linux';
+import { getOSName } from '@/utils/userAgent';
 
 export default defineComponent({
   name: 'PwaInstallOverlay',
@@ -57,7 +56,7 @@ export default defineComponent({
   },
   computed: {
     installLabel(): string {
-      const OS = 'windows' as OS; // TODO
+      const OS = getOSName();
       switch (OS) {
         case 'windows':
           return `Install ${this.appName}...`;
@@ -71,7 +70,7 @@ export default defineComponent({
       return 'Add to Home Screen';
     },
     installIcon(): string {
-      const OS = 'windows' as OS; // TODO
+      const OS = getOSName();
       switch (OS) {
         case 'windows':
           return 'icon-windows';
