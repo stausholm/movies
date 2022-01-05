@@ -162,6 +162,10 @@
       margin-left: -1.2em;
     }
   }
+  // remove icon margin if the text in the button is not shown
+  .visually-hidden + .icon {
+    margin-left: -0.5em;
+  }
 
   &--link {
     background-color: transparent !important;

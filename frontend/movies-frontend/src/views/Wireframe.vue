@@ -56,7 +56,7 @@
         <h2>Buttons</h2>
         <base-button class="" @click="alert">button</base-button>
         <base-button class="btn--primary" @click="alert">button primary</base-button>
-        <base-button class="btn--rounded" @click="alert">button rounded</base-button>
+        <base-button class="btn--primary btn--rounded" @click="alert">button rounded</base-button>
         <base-button class="btn--uppercase" @click="alert">button uppercase</base-button>
         <base-button class="btn--sm" @click="alert">button sm</base-button>
         <base-button class="btn--lg" @click="alert">button lg</base-button>
