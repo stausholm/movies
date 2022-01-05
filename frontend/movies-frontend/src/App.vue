@@ -27,6 +27,7 @@ import PrimaryRouterView from '@/router/PrimaryRouterView.vue';
 import ToastContainer from '@/components/ToastContainer.vue';
 import PwaInstallOverlay from '@/components/PwaInstallOverlay.vue';
 import PwaInstallListeners from '@/components/PwaInstallListeners.vue';
+import { setCssVariable } from '@/utils/setCssVariable';
 
 export default defineComponent({
   components: {
@@ -64,10 +65,16 @@ export default defineComponent({
         imgPath: img.dataset.brokenImageSrc,
         querySelector: generateQuerySelector(img),
       };
-      // console.log('BROKEN IMAGE:', debugObj);
+      console.log('BROKEN IMAGE:', debugObj);
     };
 
     replaceBrokenImagesInit('/img/fallback-image.png', imageCallback);
+
+    // init image saturation percentage setting
+    setCssVariable(
+      '--ui-saturation-percentage',
+      this.$store.getters.getAppSettings.imageSaturation + '%'
+    );
   },
   beforeUnmount() {
     window.removeEventListener('resize', this.resizeWatcher);

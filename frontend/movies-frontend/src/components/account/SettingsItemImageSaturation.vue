@@ -15,17 +15,21 @@
   >
     <p>
       Adjusting the saturation of images can make them easier on the eye. This can work great in
-      combination with darkmode enabled
+      combination with darkmode enabled. Around 50-70% tends to be the preferred choice.
     </p>
     <div class="row">
       <div class="col-6">
-        <img class="rounded" src="TODO" alt="" style="filter: grayscale(0)" />
+        <img
+          class="rounded no-saturate-filter shadow-sm"
+          src="../../assets/colorful-balls.jpg"
+          alt=""
+        />
         <span class="d-block text-center fw-bold mt text-small">No filters</span>
       </div>
       <div class="col-6">
         <img
-          class="rounded"
-          src="TODO"
+          class="rounded shadow-sm"
+          src="../../assets/colorful-balls.jpg"
           alt=""
           :style="`filter: grayscale(${imageSaturationValueLocal}%)`"
         />
@@ -77,15 +81,12 @@ export default defineComponent({
   methods: {
     updateImageSaturationValue(): void {
       // https://medium.com/dev-channel/re-colorization-for-dark-mode-19e2e17b584b
-      // TODO: image grayscale filter could also benefit from brightness(0.9)
-      // TODO: update css variable on initial pageload like we already do with color theme
       this.$store.commit(UserMutations.SET_APPSETTING, {
         key: 'imageSaturation',
         val: parseInt(this.imageSaturationValueLocal),
       } as AppSettingPayload);
 
-      // TODO: add css variable on :root css rule if possible. Currently it adds it inline on the html node
-      // TODO: hardcoded value for name :(
+      // NOTE: Variable is initialized in app.vue created() hook
       setCssVariable('--ui-saturation-percentage', this.imageSaturationValueLocal + '%');
     },
     closeImageSaturationModal(): void {

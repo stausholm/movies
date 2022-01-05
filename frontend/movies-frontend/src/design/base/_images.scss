@@ -16,6 +16,7 @@ img {
 img:not(.no-saturate-filter),
 .saturate-filter {
   // NOTE: "Grayscale" is spelled with an uppercase G because sass has a built in function called grayscale that conflicts with
-  // the native filter: grayscale(); Sass is casse sensitive, native css is not. https://css-tricks.com/when-sass-and-new-css-features-collide/#the-solution
+  // the native filter: grayscale(); Sass is case sensitive, native css is not. https://css-tricks.com/when-sass-and-new-css-features-collide/#the-solution
+  // NOTE: brightness(0.9) could also be added if saturation-percentage > 0% as it seems nice to have less brighter colors when browsing in the dark
   filter: Grayscale(cssvar(saturation-percentage));
 }
