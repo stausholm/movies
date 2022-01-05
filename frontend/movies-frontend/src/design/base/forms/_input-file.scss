@@ -1,0 +1,41 @@
+input[type='file'] {
+  padding-left: $default-spacing - 6px;
+
+  @mixin file-selector-button {
+    --background-color: #{$brand-primary};
+    --color: #{$brand-primary-bg__text-color};
+    cursor: pointer;
+    border: 0;
+    padding: 0.475em 1.15em;
+    border-radius: $border-radius-base;
+    background-color: var(--background-color);
+    color: var(--color);
+    transition: 0.2s ease-out;
+    font-family: inherit;
+    margin-right: math.div($default-spacing, 2);
+
+    &:hover {
+      --background-color: #{$brand-primary-dark};
+    }
+  }
+
+  &::file-selector-button {
+    @include file-selector-button();
+  }
+
+  &::-webkit-file-upload-button {
+    @include file-selector-button();
+  }
+
+  &::-ms-browse {
+    @include file-selector-button();
+  }
+
+  &:disabled,
+  &.disabled {
+    &::file-selector-button {
+      background-color: $gray-500;
+      color: inherit;
+    }
+  }
+}

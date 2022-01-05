@@ -64,7 +64,7 @@ export default defineComponent({
         imgPath: img.dataset.brokenImageSrc,
         querySelector: generateQuerySelector(img),
       };
-      console.log('BROKEN IMAGE:', debugObj);
+      // console.log('BROKEN IMAGE:', debugObj);
     };
 
     replaceBrokenImagesInit('/img/fallback-image.png', imageCallback);

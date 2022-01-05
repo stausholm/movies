@@ -195,6 +195,9 @@
 
       <div class="container">
         <h2>Form inputs</h2>
+        <button class="btn btn--primary btn--block" @click="inputsDisabled = !inputsDisabled">
+          Disable inputs: {{ inputsDisabled }}
+        </button>
         <label for="">Text</label>
         <input v-model="inputs.text" type="text" placeholder="type text" />
         <input
@@ -226,51 +229,91 @@
         />
 
         <label for="">.rounded</label>
-        <input v-model="inputs.text" type="text" placeholder="placeholder" class="rounded" />
-        <input type="color" class="rounded" />
-        <input type="file" class="rounded" />
-        <select name="" id="" class="rounded">
+        <input
+          v-model="inputs.text"
+          type="text"
+          placeholder="placeholder"
+          class="rounded"
+          :disabled="inputsDisabled"
+        />
+        <input type="color" class="rounded" :disabled="inputsDisabled" />
+        <input type="file" class="rounded" :disabled="inputsDisabled" />
+        <select name="" id="" class="rounded" :disabled="inputsDisabled">
           <option value="val">val</option>
           <option value="val val">val val</option>
           <option value="val val val">val val val</option>
         </select>
 
         <label for="">Other "text" inputs</label>
-        <input v-model="inputs.text" type="email" placeholder="type email" />
-        <input v-model="inputs.text" type="search" placeholder="type search" />
-        <input v-model="inputs.number" type="number" placeholder="type number" />
-        <input v-model="inputs.text" type="password" placeholder="type password" />
-        <input v-model="inputs.text" type="url" placeholder="type url" />
-        <input v-model="inputs.text" type="tel" placeholder="type tel" />
+        <input
+          v-model="inputs.text"
+          type="email"
+          placeholder="type email"
+          :disabled="inputsDisabled"
+        />
+        <input
+          v-model="inputs.text"
+          type="search"
+          placeholder="type search"
+          :disabled="inputsDisabled"
+        />
+        <input
+          v-model="inputs.number"
+          type="number"
+          placeholder="type number"
+          :disabled="inputsDisabled"
+        />
+        <input
+          v-model="inputs.text"
+          type="password"
+          placeholder="type password"
+          :disabled="inputsDisabled"
+        />
+        <input v-model="inputs.text" type="url" placeholder="type url" :disabled="inputsDisabled" />
+        <input v-model="inputs.text" type="tel" placeholder="type tel" :disabled="inputsDisabled" />
 
         <label for="">Dates</label>
-        <input type="date" placeholder="placeholder" />
-        <input type="datetime-local" placeholder="placeholder" />
-        <input type="time" placeholder="placeholder" />
-        <input type="week" placeholder="placeholder" />
+        <input type="date" placeholder="placeholder" :disabled="inputsDisabled" />
+        <input type="datetime-local" placeholder="placeholder" :disabled="inputsDisabled" />
+        <input type="time" placeholder="placeholder" :disabled="inputsDisabled" />
+        <input type="week" placeholder="placeholder" :disabled="inputsDisabled" />
 
         <label for="">Other</label>
-        <input type="file" placeholder="placeholder" />
-        <input type="range" name="" id="" />
-        <input type="color" name="" id="" />
-        <select name="" id="">
+        <input type="file" placeholder="placeholder" :disabled="inputsDisabled" />
+        <input type="range" name="" id="" :disabled="inputsDisabled" />
+        <input type="color" name="" id="" :disabled="inputsDisabled" />
+        <select name="" id="" :disabled="inputsDisabled">
           <option value="val">val</option>
           <option value="val val">val val</option>
           <option value="val val val">val val val</option>
         </select>
-        <textarea name="" id=""></textarea>
+        <textarea name="" id="" :disabled="inputsDisabled"></textarea>
 
         <label for="">Checkbox/radio/checkbox with role="switch"</label>
-        <input type="checkbox" name="" id="" />
-        <input type="checkbox" name="" id="" aria-invalid="true" />
-        <input type="checkbox" name="" id="" aria-invalid="false" />
-        <input type="checkbox" name="" id="" role="switch" />
-        <input type="checkbox" name="" id="" role="switch" aria-invalid="true" />
-        <input type="checkbox" name="" id="" role="switch" aria-invalid="false" />
-        <input type="radio" name="bob" id="" />
-        <input type="radio" name="bob" id="" />
-        <input type="radio" name="bob" id="" aria-invalid="true" />
-        <input type="radio" name="bob" id="" aria-invalid="false" />
+        <input type="checkbox" name="" id="" :disabled="inputsDisabled" />
+        <input type="checkbox" name="" id="" :disabled="inputsDisabled" aria-invalid="true" />
+        <input type="checkbox" name="" id="" :disabled="inputsDisabled" aria-invalid="false" />
+        <input type="checkbox" name="" id="" :disabled="inputsDisabled" role="switch" />
+        <input
+          type="checkbox"
+          name=""
+          id=""
+          :disabled="inputsDisabled"
+          role="switch"
+          aria-invalid="true"
+        />
+        <input
+          type="checkbox"
+          name=""
+          id=""
+          :disabled="inputsDisabled"
+          role="switch"
+          aria-invalid="false"
+        />
+        <input type="radio" name="bob" id="" :disabled="inputsDisabled" />
+        <input type="radio" name="bob" id="" :disabled="inputsDisabled" />
+        <input type="radio" name="bob" id="" :disabled="inputsDisabled" aria-invalid="true" />
+        <input type="radio" name="bob" id="" :disabled="inputsDisabled" aria-invalid="false" />
 
         <label for="">Base input component</label>
         <base-input
@@ -287,6 +330,7 @@
           icon="Filmstrip"
           v-model="inputs.text"
           data-attribute-test="asdasd"
+          :disabled="inputsDisabled"
         />
       </div>
 
@@ -403,6 +447,7 @@ export default defineComponent({
         text: '',
         number: undefined,
       },
+      inputsDisabled: false,
     };
   },
   computed: {

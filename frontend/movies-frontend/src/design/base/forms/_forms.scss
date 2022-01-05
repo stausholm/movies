@@ -1,0 +1,127 @@
+@use 'sass:math';
+@import '../../functions/url-encode-color';
+
+label {
+  @extend .text-uppercase;
+  @extend .fw-bold;
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: math.div($default-spacing, 4);
+  font-size: 0.875rem;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='search'],
+input[type='number'],
+input[type='password'],
+input[type='date'],
+input[type='datetime-local'],
+input[type='time'],
+input[type='week'],
+input[type='color'],
+input[type='url'],
+input[type='file'],
+input[type='tel'],
+select,
+textarea {
+  padding: math.div($default-spacing, 2) + 2 $default-spacing;
+  min-height: $min-touch-target-size;
+  width: 100%;
+  max-width: 100%;
+  vertical-align: middle;
+  border: 1px solid $gray-300;
+  background-color: $white;
+  outline: 0;
+  transition: box-shadow 0.15s ease-out;
+  border-radius: $border-radius-base;
+  box-shadow: $box-shadow-sm;
+  font-size: 16px; // prevent IOS zoom
+
+  &:focus {
+    box-shadow: 0 0 0 2px rgba($gray-700, 0.25);
+  }
+
+  &::placeholder {
+    color: $gray-500;
+    user-select: none;
+  }
+
+  &:disabled,
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    background-color: $gray-200;
+    border-color: $gray-500;
+    cursor: not-allowed;
+
+    &::placeholder {
+      color: $gray-700;
+    }
+  }
+
+  // validation colors
+  &[aria-invalid='true'] {
+    border-color: $brand-danger;
+    color: $brand-danger;
+
+    // &::placeholder {}
+  }
+
+  // rounded style override
+  &.rounded {
+    border-radius: 100px;
+    padding-left: $default-spacing * 1.25;
+    padding-right: $default-spacing * 1.25;
+  }
+}
+
+// hide number spinners
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+// Space password dots out better
+input[type='password'] {
+  letter-spacing: 0.2rem;
+
+  &::placeholder {
+    letter-spacing: initial;
+  }
+}
+
+// remove search clear button that would appear when input has value
+input[type='search'] {
+  &::-webkit-search-decoration,
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-results-button,
+  &::-webkit-search-results-decoration {
+    display: none;
+  }
+}
+
+select {
+  $select-arrow-color: $body-color;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#{encodecolor($select-arrow-color)}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px top 50%;
+  padding-right: calc(#{$default-spacing} + 24px);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 5rem;
+}
+
+@import './input-color';
+@import './input-file';
+@import './input-range';
+@import './input-checkbox-radio-switch';
+
+// TODO browser test

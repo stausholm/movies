@@ -1,0 +1,24 @@
+@function encodecolor($string) {
+  @if type-of($string) == 'color' and str-index(#{$string}, '#') == 1 {
+    $hex: str-slice(ie-hex-str($string), 4);
+    $string: unquote('#{$hex}');
+
+    @return '%23' + $string;
+  }
+
+  @return $string;
+}
+
+// https://gist.github.com/certainlyakey/e9c0d8f5c87ff47e3d5b
+// // TESTS
+// $test-key-color: cyan;
+// $test-hex-color: #1ef;
+// $test-hsl-color: hsl(184, 100%, 53%);
+// $test-rgb-color:  #11eeff;
+// $test-rgba-color: rgba(17, 238, 255, 0.69);
+
+// @debug encodecolor($test-key-color);  // cyan
+// @debug encodecolor($test-hex-color);  // %2311EEFF
+// @debug encodecolor($test-hsl-color);  // %230FEFFF
+// @debug encodecolor($test-rgb-color);  // %2311EEFF
+// @debug encodecolor($test-rgba-color);  // rgba(17, 238, 255, 0.69)
