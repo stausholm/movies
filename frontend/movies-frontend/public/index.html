@@ -35,7 +35,13 @@
       }
     </script>
     <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <div class="container pt-2 pb-2 text-center d-flex flex-column justify-center align-center" style="min-height:100vh;">
+        <img src="<%= BASE_URL %>img/icons/android-chrome-192x192.png" alt="logo" class="mb-1" />
+        <h1>Oops, that's awkward.</h1>
+        <p><strong><%= htmlWebpackPlugin.options.title %></strong> is a <a href="https://en.wikipedia.org/wiki/Web_application" target="_blank">web application</a>
+          and requires JavaScript to run. Please consider enabling it.</p>
+          <p class="mb-0">More info: <a href="<%= htmlWebpackPlugin.options.repositoryUrl %>" target="_blank"><%= htmlWebpackPlugin.options.title %> repository</a></p>
+      </div>
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
