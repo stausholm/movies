@@ -12,7 +12,7 @@
       </p>
       <p>
         The codebase is open source and available on
-        <a :href="appCodeUrl">GitHub</a>
+        <a :href="appCodeUrl" class="link" target="_blank">GitHub</a>
       </p>
       <nav class="block-link-wrapper mb-2">
         <block-link :to="{ name: 'Permissions' }">Permissions</block-link>

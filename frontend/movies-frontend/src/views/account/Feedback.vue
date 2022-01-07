@@ -5,7 +5,7 @@
       <h2>I want to make this better</h2>
       <p>
         Please, yes! Bugs? Feature requests? Other issues?
-        <a :href="appFeedbackUrl">Any contribution is very welcome!</a>
+        <a :href="appFeedbackUrl" class="link" target="_blank">Any contribution is very welcome!</a>
         Help improve {{ appName }} by leaving your feedback on how we can improve, via the link
         above.
       </p>

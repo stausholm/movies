@@ -33,13 +33,24 @@ export default defineComponent({
   computed: {
     iconComponent(): ComponentPublicInstance | null {
       if (this.name) {
-        return defineAsyncComponent(
-          () =>
+        return defineAsyncComponent({
+          loader: () =>
             import(
               /* webpackChunkName: "icon-[request]" */
               '@/components/icons/Icon' + this.name + '.vue'
-            )
-        );
+            ),
+          // onError: (e) => {
+          //   console.log(e);
+          // },
+          // loadingComponent: defineComponent({
+          //   template: 'loading',
+          // }),
+          // errorComponent: defineComponent({
+          //   template: 'error',
+          // }),
+          // delay: 200,
+          // timeout: 5000,
+        });
       }
       return null;
     },

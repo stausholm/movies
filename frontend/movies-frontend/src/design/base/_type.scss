@@ -172,3 +172,54 @@ blockquote {
     }
   }
 }
+
+code {
+  position: relative;
+  display: inline-block;
+  letter-spacing: -0.5px;
+  padding: 1px 6px;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: -1px;
+    right: -1px;
+    bottom: 0px;
+    opacity: 0.15;
+    border-radius: 3px;
+    background-color: $code-bg;
+    pointer-events: none;
+  }
+}
+
+.link {
+  position: relative;
+  font-weight: bold;
+  color: inherit;
+  text-decoration: none;
+  transition: color 200ms ease;
+  display: inline-block;
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: -2px;
+    right: -2px;
+    bottom: 0px;
+    height: 2px;
+    background-color: $brand-primary;
+    border-radius: 2px;
+    transition: transform 200ms ease 150ms, opacity 350ms ease 150ms;
+  }
+
+  &:hover,
+  &:focus {
+    color: $brand-primary;
+    &:after {
+      transform: translateY(-0.25em);
+      opacity: 0;
+      transition: transform 200ms ease 0s, opacity 350ms ease 0s;
+    }
+  }
+}
