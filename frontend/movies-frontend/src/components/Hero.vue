@@ -8,10 +8,8 @@
         </base-icon>
       </base-button>
       <span class="fw-bold" aria-hidden="true">{{ title }}</span>
-      <base-button v-if="actions && actions.length === 1 && actions[0].icon">
-        <base-icon>
-          <component :is="actions[0].icon" />
-        </base-icon>
+      <base-button v-if="actions && actions.length === 1 && actions[0].icon" class="btn--rounded">
+        <base-icon-async :name="actions[0].icon" />
       </base-button>
       <context-menu-button v-else-if="actions && actions.length" :actions="actions" />
     </div>
@@ -31,12 +29,13 @@
 import { defineComponent } from 'vue';
 import BaseButton from '@/components/base/BaseButton.vue';
 import BaseIcon from '@/components/base/BaseIcon.vue';
+import BaseIconAsync from '@/components/base/BaseIconAsync.vue';
 import IconArrowLeft from '@/components/icons/IconArrowLeft.vue';
 import ContextMenuButton from '@/components/ContextMenuButton.vue';
 import { AppLayoutSizeWidth } from '@/store/app/types';
 
 export default defineComponent({
-  components: { BaseButton, BaseIcon, IconArrowLeft, ContextMenuButton },
+  components: { BaseButton, BaseIcon, BaseIconAsync, IconArrowLeft, ContextMenuButton },
   name: 'Hero',
   props: {
     showBackButton: {

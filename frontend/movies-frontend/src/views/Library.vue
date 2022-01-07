@@ -53,7 +53,12 @@ export default defineComponent({
         {
           label: 'Share',
           emit: 'share',
-          icon: 'todo',
+          icon: 'Share',
+        },
+        {
+          label: 'Test',
+          emit: 'test',
+          icon: 'FilmStrip',
         },
       ],
     };

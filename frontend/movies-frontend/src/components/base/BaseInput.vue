@@ -4,9 +4,7 @@
     <div class="prefix-suffix-wrapper">
       <span class="prefix fw-bold mr user-select-none" v-if="prefix">{{ prefix }}</span>
       <div class="input-wrapper" :class="{ 'has-icon': icon }">
-        <base-icon v-if="icon" :class="{ error: hasErrors }">
-          <component :is="iconComponent" />
-        </base-icon>
+        <base-icon-async v-if="icon" :name="icon" :class="{ error: hasErrors }" />
         <input
           :type="type"
           :name="name"
@@ -31,11 +29,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, defineAsyncComponent, ComponentPublicInstance } from 'vue';
-import BaseIcon from '@/components/base/BaseIcon.vue';
+import { defineComponent } from 'vue';
+import BaseIconAsync from '@/components/base/BaseIconAsync.vue';
 
 export default defineComponent({
-  components: { BaseIcon },
+  components: { BaseIconAsync },
   inheritAttrs: false,
   name: 'BaseInput',
   props: {
@@ -99,18 +97,6 @@ export default defineComponent({
     helperIdFormatted(): string | null {
       if (this.description) {
         return 'base-input-helper--' + this.id;
-      }
-      return null;
-    },
-    iconComponent(): ComponentPublicInstance | null {
-      if (this.icon) {
-        return defineAsyncComponent(
-          () =>
-            import(
-              /* webpackChunkName: "icon-[request]" */
-              '@/components/icons/Icon' + this.icon + '.vue'
-            )
-        );
       }
       return null;
     },
