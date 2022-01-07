@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { ComponentPublicInstance, defineAsyncComponent, defineComponent } from 'vue';
+import { ComponentPublicInstance, defineAsyncComponent, defineComponent, h } from 'vue';
 import BaseIcon from './BaseIcon.vue';
 
 export default defineComponent({
@@ -39,15 +39,23 @@ export default defineComponent({
               /* webpackChunkName: "icon-[request]" */
               '@/components/icons/Icon' + this.name + '.vue'
             ),
-          // onError: (e) => {
-          //   console.log(e);
+          // onError: (err) => {
+          //   console.error(err);
           // },
           // loadingComponent: defineComponent({
           //   template: 'loading',
           // }),
-          // errorComponent: defineComponent({
-          //   template: 'error',
-          // }),
+          errorComponent: defineComponent({
+            // fallback to solid circle
+            render() {
+              return h('g', [
+                h('rect', { fill: 'none', height: 24, width: 24 }),
+                h('path', {
+                  d: 'M12,2C6.47,2,2,6.47,2,12s4.47,10,10,10s10-4.47,10-10S17.53,2,12,2z',
+                }),
+              ]);
+            },
+          }),
           // delay: 200,
           // timeout: 5000,
         });
