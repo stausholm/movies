@@ -90,6 +90,7 @@ export default defineComponent({
     return {
       openInternal: true, // used to control transitions
       previouslyFocused: null as null | HTMLElement,
+      closeEventIsPopstate: false,
     };
   },
   computed: {
@@ -101,7 +102,12 @@ export default defineComponent({
     closeModal(): void {
       this.$emit('close');
     },
-    handleClose(): void {
+    handleClose(e?: Event): void {
+      if (e && e.type === 'popstate') {
+        this.closeEventIsPopstate = true;
+      } else {
+        this.closeEventIsPopstate = false;
+      }
       this.openInternal = false;
     },
     handleConfirm(): void {
@@ -137,7 +143,10 @@ export default defineComponent({
   },
   created() {
     document.body.addEventListener('focus', this.maintainFocus, true);
-    // todo popstate
+
+    // Close modal in case user presses browser back button
+    window.addEventListener('popstate', this.handleClose);
+    this.$router.push({ query: { ...this.$route.query, modal: 1 } });
   },
   mounted() {
     document.body.classList.add('modal-open');
@@ -154,7 +163,14 @@ export default defineComponent({
     if (this.previouslyFocused && this.previouslyFocused.focus) {
       this.previouslyFocused.focus();
     }
-    // todo popstate
+
+    // if user closes modal by clicking on the overlay behind, or the close button inside the modal,
+    // we make sure to manually remove the extra route we pushed in this.created() to handle popstate navigation
+    if (!this.closeEventIsPopstate) {
+      this.$router.go(-1);
+    }
+    // Close modal in case user presses browser back button
+    window.removeEventListener('popstate', this.handleClose);
   },
 });
 </script>
