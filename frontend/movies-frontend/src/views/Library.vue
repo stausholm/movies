@@ -1,6 +1,6 @@
 <template>
   <layout>
-    <hero title="Library" :actions="contextMenuActions">
+    <hero title="Library" :actions="contextMenuActions" @share="handleShare">
       <template v-slot:stickyContent>
         <div class="container">
           <p>sticky content</p>
@@ -55,11 +55,6 @@ export default defineComponent({
           emit: 'share',
           icon: 'Share',
         },
-        {
-          label: 'Test',
-          emit: 'test',
-          icon: 'FilmStrip',
-        },
       ],
     };
   },
@@ -70,6 +65,9 @@ export default defineComponent({
       } else {
         this.displayMode = 'grid';
       }
+    },
+    handleShare() {
+      console.log('SHARING CLICKED');
     },
   },
 });

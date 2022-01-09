@@ -36,6 +36,7 @@
       </div>
 
       <h2 class="mt-2">Genres</h2>
+      <!-- TODO: rendering this list makes route navigation to this route slower? -->
       <nav class="block-link-wrapper">
         <block-link
           v-for="genre in genresFormatted"

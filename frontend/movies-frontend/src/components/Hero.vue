@@ -1,5 +1,5 @@
 <template>
-  <div class="hero">
+  <div class="hero" :class="className">
     <div class="sticky-top">
       <base-button class="btn--rounded" @click="goBack" v-if="isMobileLayout">
         <span class="visually-hidden">Go back</span>
@@ -7,11 +7,18 @@
           <icon-arrow-left />
         </base-icon>
       </base-button>
+
       <span class="fw-bold" aria-hidden="true">{{ title }}</span>
+
       <base-button v-if="actions && actions.length === 1 && actions[0].icon" class="btn--rounded">
         <base-icon-async :name="actions[0].icon" />
       </base-button>
-      <context-menu-button v-else-if="actions && actions.length" :actions="actions" />
+      <context-menu-button
+        v-else-if="actions && actions.length"
+        :actions="actions"
+        id="hero-actions"
+        v-bind="$attrs"
+      />
     </div>
     <slot>
       <div class="container">
@@ -35,6 +42,7 @@ import ContextMenuButton from '@/components/ContextMenuButton.vue';
 import { AppLayoutSizeWidth } from '@/store/app/types';
 
 export default defineComponent({
+  inheritAttrs: false,
   components: { BaseButton, BaseIcon, BaseIconAsync, IconArrowLeft, ContextMenuButton },
   name: 'Hero',
   props: {
@@ -50,6 +58,12 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    class: {
+      // since $attrs is bound to the <context-menu-button /> component we want to make sure if any class is set when importing this component,
+      // that classes are applied the correct place and not on <context-menu-button />
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {};
@@ -57,6 +71,9 @@ export default defineComponent({
   computed: {
     isMobileLayout(): boolean {
       return this.$store.getters.layoutSizeWidth === ('mobile' as AppLayoutSizeWidth);
+    },
+    className(): string {
+      return this.class;
     },
   },
   methods: {

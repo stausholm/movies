@@ -8,6 +8,22 @@ export type clickRegionType = 'topright' | 'topleft' | 'bottomright' | 'bottomle
 export const clickRegion = (ev: MouseEvent): clickRegionType => {
   const X = ev.clientX;
   const Y = ev.clientY;
+
+  return determineQuarter(X, Y);
+};
+
+/**
+ *
+ * @param el Html element
+ * @returns which quarter of the viewport the html element is shown
+ */
+export const clickRegionElement = (el: HTMLElement): clickRegionType => {
+  const rect = el.getBoundingClientRect();
+
+  return determineQuarter(rect.x, rect.y);
+};
+
+const determineQuarter = (X: string | number, Y: string | number): clickRegionType => {
   const topHalf = window.innerHeight / 2 > Y;
   const leftSide = window.innerWidth / 2 > X;
 
