@@ -5,6 +5,7 @@ import Account from './routes/account';
 import Legal from './routes/legal';
 import Onboarding from './routes/onboarding';
 import Find from './routes/find';
+import Wireframe from './routes/wireframe';
 
 import { nextTick } from 'vue';
 
@@ -14,83 +15,6 @@ export const triggerScrollEvent = (): void => {
 };
 
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/wireframe',
-    name: 'WireframeIndex',
-    component: () => import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/Index.vue'),
-    children: [
-      {
-        path: '',
-        name: 'Wireframe',
-        component: () =>
-          import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/Wireframe.vue'),
-        meta: {},
-      },
-      {
-        path: 'notes',
-        name: 'ExampleNotes',
-        component: () =>
-          import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleNotes.vue'),
-        meta: {},
-      },
-      {
-        path: 'inputs',
-        name: 'ExampleInputs',
-        component: () =>
-          import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleInputs.vue'),
-        meta: {},
-      },
-      {
-        path: 'blocklinks',
-        name: 'ExampleBlockLinks',
-        component: () =>
-          import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleBlockLinks.vue'),
-        meta: {},
-      },
-      {
-        path: 'sparkles',
-        name: 'ExampleSparkles',
-        component: () =>
-          import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleSparkles.vue'),
-        meta: {},
-      },
-      {
-        path: 'text',
-        name: 'ExampleText',
-        component: () =>
-          import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleText.vue'),
-        meta: {},
-      },
-      {
-        path: 'toast',
-        name: 'ExampleToast',
-        component: () =>
-          import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleToast.vue'),
-        meta: {},
-      },
-      {
-        path: 'buttons',
-        name: 'ExampleButtons',
-        component: () =>
-          import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleButtons.vue'),
-        meta: {},
-      },
-      {
-        path: 'modal',
-        name: 'ExampleModal',
-        component: () =>
-          import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleModal.vue'),
-        meta: {},
-      },
-      {
-        path: 'icons',
-        name: 'ExampleIcons',
-        component: () =>
-          import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleIcons.vue'),
-        meta: {},
-      },
-    ],
-  },
   {
     path: '/',
     name: 'Home',
@@ -105,6 +29,7 @@ const routes: Array<RouteRecordRaw> = [
   ...Account,
   ...Legal,
   ...Onboarding,
+  ...Wireframe,
   {
     path: '/:pathMatch(.*)*',
     name: 'ErrorPage',
@@ -116,6 +41,7 @@ const routes: Array<RouteRecordRaw> = [
 ];
 
 // seems like vue router sets this on it's own, so we don't have to do it
+// We want it set to 'manual' as some navigations would otherwise make the page jump because a popstate event is fired
 // if ('scrollRestoration' in history) {
 //   history.scrollRestoration = 'manual';
 // }
