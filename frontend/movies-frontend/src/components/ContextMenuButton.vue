@@ -40,6 +40,8 @@ import BaseIcon from '@/components/base/BaseIcon.vue';
 import IconMoreVert from '@/components/icons/IconMoreVert.vue';
 import ContextMenu from '@/components/ContextMenu.vue';
 
+// accessibility reference: https://www.w3.org/TR/wai-aria-practices/examples/menu-button/menu-button-actions.html
+
 export default defineComponent({
   inheritAttrs: false,
   name: 'ContextMenuButton',
