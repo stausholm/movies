@@ -97,6 +97,13 @@ const routes: Array<RouteRecordRaw> = [
           import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleContextMenu.vue'),
         meta: {},
       },
+      {
+        path: 'spoiler',
+        name: 'ExampleSpoiler',
+        component: () =>
+          import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleSpoiler.vue'),
+        meta: {},
+      },
     ],
   },
 ];
