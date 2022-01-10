@@ -1,12 +1,17 @@
 <template>
-  <div class="accordion__item" :class="{ 'accordion__item--active': visible }">
+  <div class="accordion__item js-accordion__item" :class="{ 'accordion__item--active': visible }">
     <div class="accordion__header">
       <component :is="headingLevel">
         <button
-          @click="open"
+          class="js-accordion-btn"
           :aria-expanded="visible"
           :id="idFormatted.header"
           :aria-controls="idFormatted.content"
+          @click="open"
+          @keyup.up="handleArrowKey(true)"
+          @keyup.down="handleArrowKey(false)"
+          @keydown.down.prevent
+          @keydown.up.prevent
         >
           <slot name="header">{{ title }}</slot>
         </button>
@@ -38,13 +43,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-
-// TODO: handle downarrow, uparrow, home, and End buttons
+import { defineComponent, inject } from 'vue';
+import { AccordionType } from '@/types/Accordion';
 
 export default defineComponent({
   name: 'AccordionItem',
-  inject: ['Accordion'],
+  // setup() method is needed for injection, in order to make it work with typescript
+  // inject: ['Accordion'],
+  setup() {
+    const Accordion = inject('Accordion') as AccordionType;
+
+    return {
+      Accordion,
+    };
+  },
   props: {
     expandOnCreated: {
       // open this accordion-item once it's created
@@ -58,12 +70,12 @@ export default defineComponent({
   },
   data() {
     return {
-      index: null,
+      index: 0,
       visibleInternal: false, // used for keeping track of the open state of the accordion-item, if 'allowMultiple' is set on the parent accordion component
     };
   },
   computed: {
-    visible() {
+    visible(): boolean {
       if (this.Accordion.allowMultiple) {
         return this.visibleInternal;
       }
@@ -97,6 +109,25 @@ export default defineComponent({
       // animation
       el.style.height = '';
     },
+    handleArrowKey(isUp: boolean) {
+      // TODO: this is very ugly, and arrow key navigation is optional https://www.w3.org/TR/wai-aria-practices-1.1/#keyboard-interaction
+      // Maybe just remove it entirely?
+      let nextIndex: number;
+      if (isUp) {
+        nextIndex = this.index === 0 ? this.Accordion.count - 1 : this.index - 1;
+      } else {
+        nextIndex = this.index === this.Accordion.count - 1 ? 0 : this.index + 1;
+      }
+      const wrapper = (this.$el as HTMLElement).closest('.js-accordion') as HTMLElement;
+      const accordionItems = wrapper.querySelectorAll(
+        '.js-accordion__item'
+        // eslint-disable-next-line no-undef
+      ) as NodeListOf<HTMLElement>;
+      const nextAccordionToFocus = accordionItems[nextIndex].querySelector(
+        '.js-accordion-btn'
+      ) as HTMLElement;
+      nextAccordionToFocus.focus();
+    },
   },
   created() {
     this.index = this.Accordion.count++;
@@ -104,5 +135,22 @@ export default defineComponent({
       this.open();
     }
   },
+  beforeUnmount() {
+    this.Accordion.count--;
+  },
 });
 </script>
+
+<style lang="scss" scoped>
+.accordion__item {
+}
+.accordion__header {
+  button {
+    &:focus {
+      background-color: red;
+    }
+  }
+}
+.accordion__content {
+}
+</style>

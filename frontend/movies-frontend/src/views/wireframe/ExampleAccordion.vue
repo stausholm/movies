@@ -9,6 +9,12 @@
       <accordion-item title="title lorem">
         <p>qwetur sdkhfg jk hkfdjhg kdjfhg .</p>
       </accordion-item>
+      <accordion-item title="title lorem">
+        <p>qwetur sdkhfg jk hkfdjhg kdjfhg .</p>
+      </accordion-item>
+      <accordion-item title="title lorem">
+        <p>qwetur sdkhfg jk hkfdjhg kdjfhg .</p>
+      </accordion-item>
     </accordion>
     <h3>Don't allow multiple open</h3>
     <accordion :allowMultiple="false" id="bb">

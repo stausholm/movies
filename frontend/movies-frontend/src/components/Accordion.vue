@@ -1,11 +1,12 @@
 <template>
-  <div class="accordion" :id="id">
+  <div class="accordion js-accordion" :id="id">
     <slot></slot>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { AccordionType } from '@/types/Accordion';
 
 // accessibility reference: https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html
 
@@ -36,7 +37,7 @@ export default defineComponent({
         allowMultiple: false,
         baseId: '',
         headingLevel: '',
-      },
+      } as AccordionType,
     };
   },
   created() {
