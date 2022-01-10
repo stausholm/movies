@@ -163,7 +163,7 @@ export default defineComponent({
     text-align: left;
     color: inherit;
     background-color: $gray-400;
-    padding: $default-spacing;
+    padding: $default-spacing $default-spacing * 1.25;
     transition-duration: 150ms;
     transition-timing-function: ease-out;
     transition-property: color, background-color, outline-offset, border-radius;
@@ -210,7 +210,7 @@ export default defineComponent({
     .icon-custom {
       // icon is more visually heavy, so we make the button padding visually smaller on the icon side
       margin-left: math.div(-$default-spacing, 4);
-      margin-right: math.div($default-spacing, 2);
+      margin-right: math.div($default-spacing * 1.25, 2);
     }
     .icon-chevron {
       // icon is more visually heavy, so we make the button padding visually smaller on the icon side
@@ -221,7 +221,8 @@ export default defineComponent({
 }
 .accordion__content {
   > div {
-    padding: $default-spacing;
+    padding: $default-spacing * 1.25;
+    padding-top: $default-spacing * 2;
 
     > *:last-child {
       margin-bottom: 0 !important;

@@ -3,10 +3,23 @@
     <!-- TODO: get enter/leave transition working again https://v3.vuejs.org/guide/migration/transition-as-root.html#overview -->
     <aside
       v-if="!dismissed && !!visible"
-      :class="['side-note', `side-note--${type}`, { 'side-note--dismissable': dismissable }]"
+      :class="[
+        'side-note',
+        `side-note--${type}`,
+        {
+          'side-note--dismissable': dismissable,
+          'hide-icon': hideIcon,
+          'side-note--bordered': bordered,
+        },
+      ]"
     >
       <div class="d-flex align-center mb" v-if="title || !hideIcon">
-        <div class="side-note__icon mr" aria-hidden="true" v-if="!hideIcon">
+        <div
+          class="side-note__icon mr"
+          :class="{ 'side-note__icon--bordered': bordered }"
+          aria-hidden="true"
+          v-if="!hideIcon"
+        >
           <base-icon-async :width="18" :height="18" :name="iconName" />
         </div>
         <strong class="side-note__title" v-if="title">{{ title }}</strong>
@@ -99,6 +112,10 @@ export default defineComponent({
       type: String,
       default: undefined,
     },
+    bordered: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -175,17 +192,17 @@ export default defineComponent({
 @import '@/design/mixins/index.scss';
 
 .side-note {
-  $color-muted: hsl(210deg, 55%, 92%);
-  $color-info: hsl(245deg, 100%, 60%);
-  $color-alert-background: hsla(52deg, 100%, 50%, 0.25);
-  $color-alert: hsl(37deg, 100%, 50%);
-  $color-success-background: hsla(160deg, 100%, 40%, 0.1);
-  $color-success: hsl(160deg, 100%, 40%);
-  $color-error-background: hsla(340deg, 95%, 43%, 0.1);
-  $color-error: hsl(340deg, 95%, 50%);
-  $color-background: hsl(0deg, 0%, 100%);
-  $color-text: hsl(222deg, 22%, 5%);
-  $color-primary: hsl(245deg, 100%, 60%);
+  $color-muted: #dfebf6;
+  $color-info: #4433ff;
+  $color-alert-background: #faf2be;
+  $color-alert: #ff9d00;
+  $color-success-background: #dff5f2;
+  $color-success: #00cc88;
+  $color-error-background: #f5e1ec;
+  $color-error: #f90657;
+  $color-background: #ffffff;
+  $color-text: #0a0c10;
+  $color-primary: #4433ff;
 
   // TODO: darkmode
   //darkmode variables
@@ -207,15 +224,27 @@ export default defineComponent({
   padding-left: $default-spacing;
   padding-right: $default-spacing;
   color: $color-text;
-  border-top: 3px solid;
-  border-radius: 3px 3px $border-radius-base $border-radius-base;
+  border-radius: $border-radius-base;
 
   @include breakpoint(sm) {
-    border-left: 3px solid;
-    border-top: 0;
-    border-radius: 3px $border-radius-base $border-radius-base 3px;
     padding-left: $default-spacing * 2;
     padding-right: $default-spacing * 2;
+  }
+
+  &.side-note--bordered {
+    border-width: $border-width-base;
+    border-style: solid;
+
+    .side-note__icon {
+      background: $color-background;
+      border-width: $border-width-base;
+      transform: translateY(calc(50% - math.div($border-width-base, 2))) translateX(-50%);
+
+      @include breakpoint(sm) {
+        left: $default-spacing * 2 - $border-width-base;
+        transform: translateY(calc(50% - math.div($border-width-base, 2)));
+      }
+    }
   }
 
   // TODO: margins should not be on the component itself
@@ -227,6 +256,10 @@ export default defineComponent({
     border-color: $color-info;
 
     .side-note__icon {
+      color: $color-muted;
+      background-color: #8a80ff;
+    }
+    .side-note__icon--bordered {
       color: $color-info;
     }
 
@@ -247,8 +280,12 @@ export default defineComponent({
     border-color: $color-alert;
 
     .side-note__icon {
-      color: $color-alert;
+      color: $color-alert-background;
+      background-color: #fea921;
       border-radius: 25% 25%;
+    }
+    .side-note__icon--bordered {
+      color: $color-alert;
     }
 
     .link {
@@ -268,6 +305,10 @@ export default defineComponent({
     border-color: $color-success;
 
     .side-note__icon {
+      color: $color-success-background;
+      background-color: $color-success;
+    }
+    .side-note__icon--bordered {
       color: $color-success;
     }
 
@@ -288,6 +329,10 @@ export default defineComponent({
     border-color: $color-error;
 
     .side-note__icon {
+      color: $color-error-background;
+      background-color: $color-error;
+    }
+    .side-note__icon--bordered {
       color: $color-error;
     }
 
@@ -304,10 +349,6 @@ export default defineComponent({
   }
 
   &__body {
-    > * {
-      margin-bottom: 1rem;
-    }
-
     > *:last-child {
       margin-bottom: 0 !important;
     }
@@ -315,10 +356,21 @@ export default defineComponent({
 
   &__icon {
     padding: math.div($default-spacing, 2);
-    background: $color-background;
     border-radius: 50%;
     display: inline-block;
-    border: 2px solid;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    border-style: solid;
+
+    // non --bordered stykes
+    border-width: $border-width-large;
+    transform: translateY(50%) translateX(-50%);
+
+    @include breakpoint(sm) {
+      left: $default-spacing * 2 - $border-width-large * 2;
+      transform: translateY(50%);
+    }
 
     svg {
       display: block;
