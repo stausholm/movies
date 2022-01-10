@@ -1,5 +1,5 @@
 <template>
-  <div class="accordion js-accordion" :id="id">
+  <div class="accordion" :id="id">
     <slot></slot>
   </div>
 </template>
