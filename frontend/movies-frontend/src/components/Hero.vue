@@ -1,7 +1,12 @@
 <template>
   <div class="hero" :class="className">
     <div class="sticky-top">
-      <base-button class="btn--rounded" @click="goBack" v-if="isMobileLayout">
+      <base-button
+        class="btn--rounded"
+        @click="goBack"
+        v-if="isMobileLayout"
+        data-pushtip="Go back"
+      >
         <span class="visually-hidden">Go back</span>
         <base-icon>
           <icon-arrow-left />
@@ -10,7 +15,11 @@
 
       <span class="fw-bold" aria-hidden="true">{{ title }}</span>
 
-      <base-button v-if="actions && actions.length === 1 && actions[0].icon" class="btn--rounded">
+      <base-button
+        v-if="actions && actions.length === 1 && actions[0].icon"
+        class="btn--rounded"
+        :data-pushtip="actions[0].label"
+      >
         <base-icon-async :name="actions[0].icon" />
       </base-button>
       <context-menu-button

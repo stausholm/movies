@@ -18,6 +18,18 @@
     </div>
 
     <div class="container mt-2">
+      <h2>Tooltips</h2>
+      <p>hold down your finger/mouse on the elements below for ~1s to see a tooltip</p>
+      <h3 data-pushtip="this is a tip">tooltip test on text</h3>
+      <button
+        class="btn btn--primary"
+        data-pushtip="testtesttesttesttetsetsetsetsetsetgisetgsjthgsjtghsjtghsjthg"
+      >
+        tooltip test 2
+      </button>
+    </div>
+
+    <div class="container mt-2">
       <h2>Grid</h2>
       <div class="row">
         <div class="col-2 col-sm-2 col-xs-6">

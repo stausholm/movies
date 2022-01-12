@@ -1,0 +1,47 @@
+@use 'sass:math';
+
+// this is based on a pattern seen on mobile, where if you have e.g. iconbuttons without a label,
+// you can hold down on it, and after a short while a small tooltip with the label will be shown.
+// this is NOT a replacement for an accessible .visually-hidden text. It's simply a further enhancement for mobile users
+// .visually-hidden text should still be added to things like iconbuttons without a visual label
+[data-pushtip] {
+  position: relative;
+  user-select: none;
+
+  &::after {
+    speak: never; // no browser support, but it could be nice
+    content: attr(data-pushtip);
+    position: fixed;
+    bottom: $nav-height + $default-spacing * 5;
+    left: 50%;
+    transform: translateX(-50%);
+    @include z-index(tooltip);
+    padding: math.div($default-spacing, 2) $default-spacing * 0.75;
+    font-size: $font-size-small-responsive;
+    font-weight: normal;
+    line-height: 1.25;
+    background-color: $gray-300;
+    color: $body-color;
+    box-shadow: $box-shadow-sm;
+    pointer-events: none;
+    user-select: none;
+    display: block;
+    border-radius: $border-radius-small;
+    max-width: 150px;
+    text-transform: capitalize;
+    opacity: 0;
+    transition: opacity 0.2s $ease-out-cubic-ish;
+
+    @include breakpoint($breakpoint-font-size-change) {
+      font-size: $font-size-small;
+      max-width: 200px;
+    }
+  }
+
+  &:active {
+    &::after {
+      transition-delay: 0.85s;
+      opacity: 1;
+    }
+  }
+}
