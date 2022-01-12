@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { nextTick } from 'vue';
 import Home from '@/views/Home.vue';
 import Library from '@/views/Library.vue';
 import Account from './routes/account';
@@ -6,8 +7,8 @@ import Legal from './routes/legal';
 import Onboarding from './routes/onboarding';
 import Find from './routes/find';
 import Wireframe from './routes/wireframe';
-
-import { nextTick } from 'vue';
+import handleMetaTags from './middleware/metaTags';
+import handlePageTitle from './middleware/pageTitle';
 
 export const TRIGGER_SCROLL_EVENT = new CustomEvent('triggerscroll');
 export const triggerScrollEvent = (): void => {
@@ -69,6 +70,11 @@ const router = createRouter({
       });
     });
   },
+});
+
+router.afterEach((to) => {
+  handlePageTitle(to);
+  handleMetaTags(to);
 });
 
 export default router;

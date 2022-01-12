@@ -5,6 +5,23 @@ const routes: Array<RouteRecordRaw> = [
     path: '/wireframe',
     name: 'WireframeIndex',
     component: () => import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/Index.vue'),
+    meta: {
+      metaTags: [
+        {
+          name: 'description',
+          content: 'The wireframe page of the app',
+        },
+        {
+          property: 'og:description',
+          content: 'the wireframe page of the app opengraph',
+        },
+        {
+          test: 'testval',
+          'data-test': 'asd',
+        },
+      ],
+      title: 'Wireframe',
+    },
     children: [
       {
         path: '',
