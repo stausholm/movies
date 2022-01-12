@@ -26,7 +26,13 @@ export default defineComponent({
   watch: {
     $route(to: RouteLocationNormalized, from: RouteLocationNormalized) {
       if (navigatedToNewPage(to, from)) {
-        this.$el.focus();
+        const $el = this.$el;
+        // wait for route transition to finish
+        document.addEventListener('triggerscroll', function handler(e) {
+          e.currentTarget?.removeEventListener(e.type, handler);
+
+          $el.focus();
+        });
       }
     },
   },
