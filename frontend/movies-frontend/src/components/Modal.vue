@@ -146,7 +146,7 @@ export default defineComponent({
 
     // Close modal in case user presses browser back button
     window.addEventListener('popstate', this.handleClose);
-    this.$router.push({ query: { ...this.$route.query, modal: 1 } });
+    this.$router.push({ ...this.$route, query: { ...this.$route.query, modal: 1 } });
   },
   mounted() {
     document.body.classList.add('modal-open');

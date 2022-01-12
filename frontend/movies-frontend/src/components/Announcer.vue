@@ -9,6 +9,7 @@
 </template>
 
 <script lang="ts">
+import { navigatedToNewPage } from '@/router';
 import { AppMutations } from '@/store/app/mutations';
 import { defineComponent } from 'vue';
 import { RouteLocationNormalized } from 'vue-router';
@@ -26,7 +27,7 @@ export default defineComponent({
   },
   watch: {
     $route(to: RouteLocationNormalized, from: RouteLocationNormalized): void {
-      if (to.name !== from.name) {
+      if (navigatedToNewPage(to, from)) {
         const announcer = to.meta.announcer;
         const suffix = ' has loaded';
         let title = 'New page';

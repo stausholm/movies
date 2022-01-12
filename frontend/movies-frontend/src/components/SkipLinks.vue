@@ -17,13 +17,17 @@
 </template>
 
 <script lang="ts">
+import { navigatedToNewPage } from '@/router';
 import { defineComponent } from 'vue';
+import { RouteLocationNormalized } from 'vue-router';
 
 export default defineComponent({
   name: 'SkipLinks',
   watch: {
-    $route() {
-      this.$el.focus();
+    $route(to: RouteLocationNormalized, from: RouteLocationNormalized) {
+      if (navigatedToNewPage(to, from)) {
+        this.$el.focus();
+      }
     },
   },
 });

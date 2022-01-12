@@ -1,4 +1,9 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import {
+  createRouter,
+  createWebHistory,
+  RouteLocationNormalized,
+  RouteRecordRaw,
+} from 'vue-router';
 import { nextTick } from 'vue';
 import Home from '@/views/Home.vue';
 import Library from '@/views/Library.vue';
@@ -13,6 +18,14 @@ import handlePageTitle from './middleware/pageTitle';
 export const TRIGGER_SCROLL_EVENT = new CustomEvent('triggerscroll');
 export const triggerScrollEvent = (): void => {
   document.dispatchEvent(TRIGGER_SCROLL_EVENT);
+};
+
+// This only includes changes to actual new pages, and not changes to hash or queryparams
+export const navigatedToNewPage = (
+  to: RouteLocationNormalized,
+  from: RouteLocationNormalized
+): boolean => {
+  return to.path !== from.path;
 };
 
 const routes: Array<RouteRecordRaw> = [
@@ -73,7 +86,7 @@ const router = createRouter({
 });
 
 router.afterEach((to, from) => {
-  if (to.name !== from.name) {
+  if (navigatedToNewPage(to, from)) {
     handlePageTitle(to);
     handleMetaTags(to);
   }
