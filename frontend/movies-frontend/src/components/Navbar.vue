@@ -42,7 +42,7 @@
           </button>
 
           <transition name="slide-up">
-            <div class="dropdown" v-if="!useSmallLayout && showAccountDropdown">
+            <div class="dropdown" v-if="!useSmallLayout && showAccountDropdown" role="dialog">
               <account-card :alt="true" />
               <router-link :to="{ name: 'Starred' }" class="btn" @click="hideDropdown">
                 Starred
@@ -245,52 +245,6 @@ export default defineComponent({
 
     &--home {
       margin-left: 0;
-    }
-  }
-}
-
-.dropdown-wrapper {
-  position: relative;
-
-  .dropdown {
-    position: absolute;
-    top: calc(100% + $default-spacing);
-    border: 1px solid $gray-300;
-    right: 0;
-    min-width: 300px;
-    max-width: calc(100vw - #{$default-spacing * 3});
-    border-radius: $border-radius-small;
-    background-color: $white;
-    box-shadow: $box-shadow;
-    line-height: initial;
-    @include z-index(dropdown);
-
-    &::before {
-      content: '';
-      width: 12px;
-      height: 12px;
-      border-top: 1px solid $gray-300;
-      border-left: 1px solid $gray-300;
-      background-color: inherit;
-      display: block;
-      position: absolute;
-      top: -1px;
-      right: 0;
-      transform: translateX(-19px) translateY(-50%) rotate(45deg);
-      box-sizing: border-box;
-    }
-
-    a {
-      display: block;
-      padding: $default-spacing;
-      border-top: 1px solid $gray-300;
-      border-radius: 0;
-      font-weight: normal;
-
-      &:last-child {
-        border-bottom-left-radius: $border-radius-small;
-        border-bottom-right-radius: $border-radius-small;
-      }
     }
   }
 }

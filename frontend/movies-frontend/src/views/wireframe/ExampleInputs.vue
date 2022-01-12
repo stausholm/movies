@@ -79,6 +79,14 @@
       <option value="val val val">val val val</option>
     </select>
     <textarea name="" id="" :disabled="inputsDisabled"></textarea>
+    <div class="mt-1 mb-1">
+      <input type="color" value="#0000ff" name="" id="" class="mr color-dot" />
+      <input type="color" value="#00ff00" name="" id="" class="mr color-dot" />
+      <input type="color" value="#ff0000" name="" id="" class="mr color-dot" />
+      <input type="color" value="#0000ff" name="" id="" class="mr color-dot color-dot--round" />
+      <input type="color" value="#00ff00" name="" id="" class="mr color-dot color-dot--round" />
+      <input type="color" value="#ff0000" name="" id="" class="mr color-dot color-dot--round" />
+    </div>
 
     <label for="">Checkbox/radio/checkbox with role="switch"</label>
     <input type="checkbox" name="" id="" :disabled="inputsDisabled" />

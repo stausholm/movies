@@ -1,6 +1,9 @@
 <template>
   <div class="account-card" :class="{ 'account-card--alt': alt }">
-    <div class="account-card__avatar d-block position-relative">
+    <div
+      class="account-card__avatar d-block position-relative dropdown-wrapper"
+      v-click-outside="hideAvatarEditor"
+    >
       <avatar class="avatar" :colors="avatar.colors" :name="avatar.name" />
       <button
         v-if="enableAvatarEditing"
@@ -23,15 +26,37 @@
           <icon-edit />
         </base-icon>
       </button>
-      <div class="todo shadow" v-if="showAvatarEditor">
-        <input type="text" :value="avatar.name" />
-        <button
-          v-for="color in avatar.colors"
-          :key="color"
-          :style="{ backgroundColor: color }"
-          class="todo-button border-0"
-        ></button>
-      </div>
+      <transition name="fade">
+        <div class="dropdown dropdown--center" role="dialog" v-if="showAvatarEditor">
+          <div class="p-1">
+            <label for="avatarname" class="label--small">Avatar seed</label>
+            <input
+              id="avatarname"
+              type="text"
+              :value="avatar.name"
+              @input="updateAvatarName($event.target.value)"
+              class="mb-1"
+            />
+            <fieldset>
+              <legend class="label label--small">Colors</legend>
+              <div class="d-flex justify-between">
+                <div class="d-inline-block" v-for="(color, index) in avatar.colors" :key="color">
+                  <label :for="'avatarcolor' + index" class="visually-hidden">
+                    Avatar color {{ index + 1 }}
+                  </label>
+                  <input
+                    type="color"
+                    :id="'avatarcolor' + index"
+                    :value="color"
+                    class="color-dot color-dot--round"
+                    @change="updateAvatarColor(index, $event.target.value)"
+                  />
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </transition>
     </div>
     <div class="account-card__header pl-1 pr-1">
       <p class="account-card__title text-big mb-0 fw-bold lh-1 text-truncate text-capitalize">
@@ -55,11 +80,12 @@
 </template>
 
 <script lang="ts">
-import { Avatar as AvatarType } from '@/store/user/types';
+import { AppSettingPayload, Avatar as AvatarType } from '@/store/user/types';
 import { defineComponent } from 'vue';
 import Avatar from '@/components/account/Avatar.vue';
 import BaseIcon from '@/components/base/BaseIcon.vue';
 import IconEdit from '@/components/icons/IconEdit.vue';
+import { UserMutations } from '@/store/user/mutations';
 
 export default defineComponent({
   components: { Avatar, BaseIcon, IconEdit },
@@ -97,6 +123,24 @@ export default defineComponent({
     toggleAvatarEditor(): void {
       this.showAvatarEditor = !this.showAvatarEditor;
     },
+    hideAvatarEditor(): void {
+      this.showAvatarEditor = false;
+    },
+    updateAvatarName(newVal: string): void {
+      this.$store.commit(UserMutations.SET_APPSETTING, {
+        key: 'avatar',
+        val: { ...this.avatar, name: newVal },
+      } as AppSettingPayload);
+    },
+    updateAvatarColor(index: number, hex: string): void {
+      const newColors = [...this.avatar.colors];
+      newColors[index] = hex;
+
+      this.$store.commit(UserMutations.SET_APPSETTING, {
+        key: 'avatar',
+        val: { ...this.avatar, colors: newColors },
+      } as AppSettingPayload);
+    },
   },
 });
 </script>
@@ -118,6 +162,7 @@ export default defineComponent({
     background: $gray-400;
     transform: translateY(-50%);
     margin: 48px auto (-48px + $default-spacing) auto;
+    z-index: 1;
 
     .avatar {
       width: 100%;
@@ -151,10 +196,6 @@ export default defineComponent({
         display: none;
       }
 
-      // &__title {
-      //   line-height: 1.25;
-      // }
-
       &__stats {
         clear: both;
         background: $gray-400;
@@ -184,44 +225,6 @@ export default defineComponent({
     background-color: rgba($gray-900, 0.55);
     color: $white;
     opacity: 1;
-  }
-}
-
-.todo {
-  background: white;
-  display: flex;
-  flex-flow: row wrap;
-  width: 460px;
-  max-width: 100vw;
-  padding: 20px;
-  border-radius: 0.5rem;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 20px;
-
-  &::before {
-    content: '';
-    width: 12px;
-    height: 12px;
-    background-color: inherit;
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-9px) translateY(-50%) rotate(45deg);
-    box-sizing: border-box;
-  }
-
-  input {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  &-button {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
   }
 }
 </style>

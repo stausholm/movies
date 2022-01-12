@@ -1,13 +1,19 @@
 @use 'sass:math';
 @import '../../functions/url-encode-color';
 
-label {
+label,
+.label {
   @extend .text-uppercase;
   @extend .fw-bold;
   display: inline-block;
   max-width: 100%;
   margin-bottom: math.div($default-spacing, 4);
   font-size: 0.875rem;
+
+  &.label--small {
+    margin-left: math.div($default-spacing, 4);
+    font-size: $font-size-small-responsive;
+  }
 }
 
 input[type='text'],

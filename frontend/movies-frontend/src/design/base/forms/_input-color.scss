@@ -1,4 +1,6 @@
 input[type='color'] {
+  cursor: pointer;
+
   // Wrapper
   @mixin color-wrapper {
     padding: 0;
@@ -24,5 +26,30 @@ input[type='color'] {
 
   &::-moz-color-swatch {
     @include color-swatch;
+  }
+}
+
+input[type='color'].color-dot {
+  padding: 0;
+  height: $min-touch-target-size;
+  width: $min-touch-target-size;
+
+  // Swatch
+  &::-webkit-color-swatch {
+    border-radius: $border-radius-base;
+  }
+  &::-moz-color-swatch {
+    border-radius: $border-radius-base;
+  }
+
+  &--round {
+    border-radius: 50%;
+    // Swatch
+    &::-webkit-color-swatch {
+      border-radius: 50%;
+    }
+    &::-moz-color-swatch {
+      border-radius: 50%;
+    }
   }
 }
