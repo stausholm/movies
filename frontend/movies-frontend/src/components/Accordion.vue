@@ -1,4 +1,20 @@
 <template>
+  <ul
+    v-if="showControls && allowMultiple"
+    class="accordion-controls"
+    aria-label="Accordion section controls"
+  >
+    <li class="mr-1">
+      <button @click="expandAll" class="btn btn--link">
+        Expand all <span class="visually-hidden">{{ Accordion.count }}</span>
+      </button>
+    </li>
+    <li class="">
+      <button @click="collapseAll" class="btn btn--link">
+        Collapse all <span class="visually-hidden">{{ Accordion.count }}</span>
+      </button>
+    </li>
+  </ul>
   <div class="accordion" :id="id">
     <slot></slot>
   </div>
@@ -28,6 +44,10 @@ export default defineComponent({
       type: String,
       default: 'h3',
     },
+    showControls: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -40,13 +60,42 @@ export default defineComponent({
       } as AccordionType,
     };
   },
+  methods: {
+    collapseAll(): void {
+      this.Accordion.active = [];
+    },
+    expandAll(): void {
+      this.Accordion.active = [...Array(this.Accordion.count).keys()];
+    },
+  },
   created() {
     this.Accordion.allowMultiple = this.allowMultiple;
     this.Accordion.baseId = this.id;
     this.Accordion.headingLevel = this.headingLevel;
+    if (this.allowMultiple) {
+      this.Accordion.active = [];
+    }
+    if (!this.allowMultiple && this.showControls) {
+      console.error('controls only supported with allowMultiple=true');
+    }
   },
   provide() {
     return { Accordion: this.Accordion };
   },
 });
 </script>
+
+<style lang="scss">
+.accordion-controls {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: flex-end;
+
+  .btn {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+</style>

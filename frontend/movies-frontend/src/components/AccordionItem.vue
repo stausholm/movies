@@ -7,7 +7,7 @@
           :aria-expanded="visible"
           :id="idFormatted.header"
           :aria-controls="idFormatted.content"
-          @click="open"
+          @click="toggle"
         >
           <base-icon-async v-if="icon" :name="icon" class="icon-custom" />
           <span class="text">
@@ -81,14 +81,13 @@ export default defineComponent({
   },
   data() {
     return {
-      index: null as null | number,
-      visibleInternal: false, // used for keeping track of the open state of the accordion-item, if 'allowMultiple' is set on the parent accordion component
+      index: -1,
     };
   },
   computed: {
     visible(): boolean {
       if (this.Accordion.allowMultiple) {
-        return this.visibleInternal;
+        return (this.Accordion.active as number[]).includes(this.index);
       }
       return this.index === this.Accordion.active;
     },
@@ -103,13 +102,16 @@ export default defineComponent({
     },
   },
   methods: {
-    open() {
-      this.visibleInternal = !this.visibleInternal;
-
-      if (this.visible || this.Accordion.allowMultiple) {
-        this.Accordion.active = null;
+    toggle() {
+      if (this.Accordion.allowMultiple) {
+        let list = this.Accordion.active as number[];
+        if (this.visible) {
+          list.splice(list.indexOf(this.index), 1);
+        } else {
+          list.push(this.index);
+        }
       } else {
-        this.Accordion.active = this.index;
+        this.Accordion.active = this.visible ? null : this.index;
       }
     },
     start(el: HTMLElement) {
@@ -123,8 +125,8 @@ export default defineComponent({
   },
   created() {
     this.index = this.Accordion.count++;
-    if (this.expandOnCreated) {
-      this.open();
+    if (this.expandOnCreated || window.location.hash === '#' + this.idFormatted.header) {
+      this.toggle();
     }
   },
 });
