@@ -1,4 +1,5 @@
 <template>
+  <skip-links />
   <navbar />
   <primary-router-view />
 
@@ -28,6 +29,7 @@ import ToastContainer from '@/components/ToastContainer.vue';
 import PwaInstallOverlay from '@/components/PwaInstallOverlay.vue';
 import PwaInstallListeners from '@/components/PwaInstallListeners.vue';
 import { setCssVariable } from '@/utils/setCssVariable';
+import SkipLinks from '@/components/SkipLinks.vue';
 
 export default defineComponent({
   components: {
@@ -36,6 +38,7 @@ export default defineComponent({
     ToastContainer,
     PwaInstallOverlay,
     PwaInstallListeners,
+    SkipLinks,
   },
   computed: {
     showPwaOverlay(): boolean {

@@ -90,5 +90,10 @@ export default defineComponent({
         .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())); // sort alphabetically
     },
   },
+  mounted() {
+    if (this.$route.query.focusSearch) {
+      // TODO: focus search input. This is e.g. called in skipLinks
+    }
+  },
 });
 </script>
