@@ -72,9 +72,11 @@ const router = createRouter({
   },
 });
 
-router.afterEach((to) => {
-  handlePageTitle(to);
-  handleMetaTags(to);
+router.afterEach((to, from) => {
+  if (to.name !== from.name) {
+    handlePageTitle(to);
+    handleMetaTags(to);
+  }
 });
 
 export default router;

@@ -19,7 +19,9 @@ const routes: Array<RouteRecordRaw> = [
         path: 'starred',
         name: 'Starred',
         component: () => import(/* webpackChunkName: "account" */ '@/views/account/Starred.vue'),
-        meta: {},
+        meta: {
+          title: 'Starred',
+        },
       },
       {
         path: 'about',

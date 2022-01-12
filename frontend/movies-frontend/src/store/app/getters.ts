@@ -6,4 +6,7 @@ export const getters: GetterTree<AppState, RootState> = {
   layoutSizeWidth(state): AppLayoutSizeWidth {
     return state.layoutSizeWidth;
   },
+  announceMessage(state): string {
+    return state.announceMessage;
+  },
 };

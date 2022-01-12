@@ -14,6 +14,7 @@
   <toast-container />
 
   <pwa-install-listeners />
+  <announcer />
 </template>
 
 <script lang="ts">
@@ -30,6 +31,7 @@ import PwaInstallOverlay from '@/components/PwaInstallOverlay.vue';
 import PwaInstallListeners from '@/components/PwaInstallListeners.vue';
 import { setCssVariable } from '@/utils/setCssVariable';
 import SkipLinks from '@/components/SkipLinks.vue';
+import Announcer from '@/components/Announcer.vue';
 
 export default defineComponent({
   components: {
@@ -39,6 +41,7 @@ export default defineComponent({
     PwaInstallOverlay,
     PwaInstallListeners,
     SkipLinks,
+    Announcer,
   },
   computed: {
     showPwaOverlay(): boolean {

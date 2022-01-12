@@ -21,6 +21,10 @@ const routes: Array<RouteRecordRaw> = [
         },
       ],
       title: 'Wireframe',
+      announcer: {
+        message: 'Announced wireframe title',
+        skip: false,
+      },
     },
     children: [
       {
