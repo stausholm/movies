@@ -1,35 +1,39 @@
 <template>
-  <div class="pwa-install-overlay">
-    <!-- TODO: focus trap and esc key -->
-    <div class="container container--xxs">
-      <div class="icons">
-        <div class="icon"></div>
-        <div class="icon"></div>
-        <div
-          class="icon"
-          style="background-image: url('/img/icons/android-chrome-512x512.png')"
-        ></div>
-        <div class="icon"></div>
-        <div class="icon"></div>
-      </div>
+  <overlay
+    class="pwa-install-overlay"
+    @close="toggleOverlay"
+    :label="`Install ${appName}`"
+    v-slot="slotProps"
+  >
+    <div class="icons">
+      <div class="icon"></div>
+      <div class="icon"></div>
+      <div
+        class="icon"
+        style="background-image: url('/img/icons/android-chrome-512x512.png')"
+      ></div>
+      <div class="icon"></div>
+      <div class="icon"></div>
+    </div>
 
-      <strong class="h2 text-center d-block mb-1 title">Install {{ appName }}</strong>
-      <p class="mb-1">
-        Pin {{ appName }} on your homescreen for quick and easy access when you're on the go
-      </p>
-      <p class="instructions mb-1">
-        Just tap
-        <base-icon width="18" height="18">
-          <component :is="installIcon" />
-        </base-icon>
-        then '{{ installLabel }}'
-      </p>
-      <!-- <p>
+    <strong class="h2 text-center d-block mb-1 title">Install {{ appName }}</strong>
+    <p class="mb-1">
+      Pin {{ appName }} on your homescreen for quick and easy access when you're on the go
+    </p>
+    <p class="instructions mb-1">
+      Just tap
+      <base-icon width="18" height="18">
+        <component :is="installIcon" />
+      </base-icon>
+      then '{{ installLabel }}'
+    </p>
+    <!-- <p>
           Tap your browser's settings icon, and select 'Add to homescreen' to pin the {{appName}} web app and enjoy offline support
         </p> -->
-      <button class="btn btn--responsive" @click.stop="toggleOverlay">Got it!</button>
+    <div class="d-flex justify-end">
+      <button class="btn btn--responsive" @click.stop="slotProps.close">Got it!</button>
     </div>
-  </div>
+  </overlay>
 </template>
 
 <script lang="ts">
@@ -40,6 +44,7 @@ import IconIosShare from '@/components/icons/IconIosShare.vue';
 import { APP_NAME } from '@/constants/SiteSettings.json';
 import { PWAMutations } from '@/store/PWA/mutations';
 import { getOSName } from '@/utils/userAgent';
+import Overlay from '@/components/Overlay.vue';
 
 export default defineComponent({
   name: 'PwaInstallOverlay',
@@ -48,6 +53,7 @@ export default defineComponent({
     'icon-android': IconMoreVert,
     'icon-windows': IconMoreVert,
     'icon-ios': IconIosShare,
+    Overlay,
   },
   data() {
     return {
@@ -89,36 +95,22 @@ export default defineComponent({
       this.$store.commit(PWAMutations.TOGGLE_OVERLAY);
     },
   },
-  mounted() {
-    document.body.classList.add('overflow-hide');
-  },
-  beforeUnmount() {
-    document.body.classList.remove('overflow-hide');
-  },
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @use 'sass:math';
 @import '@/design/variables/index.scss';
 @import '@/design/mixins/index.scss';
 
 .pwa-install-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  @include z-index(a2hs);
   background-color: rgba($__brand-primary, 0.95);
   color: $brand-primary-bg__text-color;
-  cursor: default;
 
   .icons {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: $default-spacing * 4;
     margin-bottom: $default-spacing * 2;
     margin-left: math.div(-$default-spacing, 2);
     margin-right: math.div(-$default-spacing, 2);
@@ -181,10 +173,6 @@ export default defineComponent({
     svg {
       margin: 0 math.div($default-spacing, 2);
     }
-  }
-
-  .btn {
-    float: right;
   }
 }
 </style>

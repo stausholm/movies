@@ -118,7 +118,6 @@ export default defineComponent({
       this.handleClose();
     },
     handleTab(e: KeyboardEvent): void {
-      console.log('tab');
       trapTabKey(this.$refs.modal as HTMLElement, e);
     },
     maintainFocus(e: Event): void {

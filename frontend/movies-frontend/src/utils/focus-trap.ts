@@ -23,7 +23,9 @@ export const trapTabKey = (node: HTMLElement, event: KeyboardEvent): void => {
   const lastIndex = focusableChildren.length - 1;
   const withShift = event.shiftKey;
 
-  if (withShift && focusedItemIndex === 0) {
+  if (focusableChildren.length === 0) {
+    event.preventDefault();
+  } else if (withShift && focusedItemIndex === 0) {
     focusableChildren[lastIndex].focus();
     event.preventDefault();
   } else if (!withShift && focusedItemIndex === lastIndex) {

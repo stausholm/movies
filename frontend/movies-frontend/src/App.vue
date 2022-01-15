@@ -6,10 +6,9 @@
   <!-- teleport targets -->
   <div id="teleporttarget"></div>
   <div id="modal"></div>
+  <div id="overlay"></div>
 
-  <transition name="fade">
-    <pwa-install-overlay v-if="showPwaOverlay" />
-  </transition>
+  <pwa-install-overlay v-if="showPwaOverlay" />
 
   <toast-container />
 
