@@ -40,7 +40,7 @@ export default defineComponent({
       required: true,
     },
     headingLevel: {
-      // define which level headings should have inside accordion headers, so they fir correctly within the outline of the page
+      // define which level headings should have inside accordion headers, so they fit correctly within the outline of the page
       type: String,
       default: 'h3',
     },

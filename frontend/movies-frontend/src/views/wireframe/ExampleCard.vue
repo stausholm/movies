@@ -1,0 +1,100 @@
+<template>
+  <div class="container">
+    <h2>Cards</h2>
+    <p>Cards should be rendered in lists when shown together</p>
+    <ul>
+      <li>Screen readers provide shortcuts to lists and between list items</li>
+      <li>Screen readers enumerate the items so users know how many are available</li>
+    </ul>
+
+    <ul class="row row--equal-height list-unstyled">
+      <li class="col-12 col-sm-4 col-xs-6">
+        <base-card title="Card title aaaasasdashdgasj">
+          <p>aaaaaakhasd kjashd kjashd ad</p>
+        </base-card>
+      </li>
+      <li class="col-12 col-sm-4 col-xs-6">
+        <base-card
+          title="Card title aaaasasdashdgasj"
+          imgUrl="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif"
+        >
+          <p>aaaaaakhasd kjashd kjashd ad</p>
+        </base-card>
+      </li>
+      <li class="col-12 col-sm-4 col-xs-6">
+        <base-card
+          title="Card title aaaasasdashdgasj"
+          ctaLabel="Read more"
+          tags="this is tags, neat"
+        >
+          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore, sed!</p>
+        </base-card>
+      </li>
+      <li class="col-12 col-sm-4 col-xs-6">
+        <base-card
+          title="Card title aaaasasdashdgasj"
+          :tags="['some tags', 'in an', 'array', 'asdjasdhkajshdaksjhd']"
+        >
+          aaaaa
+          <context-menu-button
+            :actions="contextMenuActions"
+            @share="handleShare"
+            @test="handleTest"
+            id="b"
+          />
+        </base-card>
+      </li>
+      <li class="col-12 col-sm-4 col-xs-6">
+        <base-card title="Card title aaaasasdashdgasj" :to="{ name: 'Library' }">
+          aaaaa
+          <template #footer>
+            card footer lorem
+            <a href="#card-footer">footer link</a>
+          </template>
+        </base-card>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import BaseCard from '@/components/base/BaseCard.vue';
+import ContextMenuButton from '@/components/ContextMenuButton.vue';
+
+export default defineComponent({
+  name: 'ExampleCard',
+  components: {
+    BaseCard,
+    ContextMenuButton,
+  },
+  data() {
+    return {
+      contextMenuActions: [
+        {
+          label: 'Share',
+          emit: 'share',
+          icon: 'Share',
+        },
+        {
+          label: 'Test',
+          emit: 'test',
+          icon: 'Filmstrip',
+        },
+        {
+          label: "a label that's a little longer longwordisverylongwithoutspacestesttesttesttest",
+          emit: 'test',
+        },
+      ],
+    };
+  },
+  methods: {
+    handleShare() {
+      console.log('SHARING CLICKED');
+    },
+    handleTest() {
+      console.log('TEST CLICKED');
+    },
+  },
+});
+</script>

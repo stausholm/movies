@@ -73,6 +73,16 @@
       flex: 1 0 0%;
     }
   }
+
+  // make everything on the same row take up the same height as the tallest item in the row
+  &.row--equal-height {
+    > [class*='col-'],
+    > .col {
+      > * {
+        height: 100%;
+      }
+    }
+  }
 }
 
 // this column will take up the available width.

@@ -125,6 +125,13 @@ const routes: Array<RouteRecordRaw> = [
           import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleSpoiler.vue'),
         meta: {},
       },
+      {
+        path: 'card',
+        name: 'ExampleCard',
+        component: () =>
+          import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleCard.vue'),
+        meta: {},
+      },
     ],
   },
 ];
