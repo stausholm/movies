@@ -41,12 +41,15 @@
         <div class="side-note__expanded" v-if="hasExpandedChildren">
           <div v-if="!showExpandedChildren">
             <button
-              @click="showExpandedChildren = true"
+              @click="handleShowMore"
               class="side-note__expanded-toggle btn--absolute-sized d-flex align-center fw-bold"
             >
               <span>Show more</span>
               <base-icon-async name="ChevronDown" />
             </button>
+          </div>
+          <div v-else>
+            <p class="fw-bold" tabindex="-1" ref="continueBelowLabel">Continued below...</p>
           </div>
           <transition name="slide-down">
             <div class="side-note__expanded-content" v-if="showExpandedChildren">
@@ -164,6 +167,13 @@ export default defineComponent({
         clearInterval(timerId);
         this.timerId = null;
       }
+    },
+    handleShowMore(): void {
+      this.showExpandedChildren = true;
+      this.$nextTick(() => {
+        // https://bbc.github.io/gel/components/pockets/#reference-implementation
+        (this.$refs.continueBelowLabel as HTMLElement).focus();
+      });
     },
   },
   watch: {
