@@ -1,12 +1,19 @@
 <template>
   <layout>
-    <hero title="Library" :actions="contextMenuActions" @share="handleShare">
+    <hero-app
+      title="Library lorem ipsum dolor sit amet asdkjahsdaksjdhaksjd kdjfhskdfj "
+      :actions="contextMenuActions"
+      @share="handleShare"
+      :showBackButton="true"
+      class="hero-class-test"
+    >
+      <!-- <h1>aaaaaaaaa</h1> -->
       <template v-slot:stickyContent>
         <div class="container">
           <p>sticky content</p>
         </div>
       </template>
-    </hero>
+    </hero-app>
     <div class="container d-flex justify-between">
       <base-button>
         <base-icon>
@@ -22,13 +29,15 @@
         </base-icon>
       </base-button>
     </div>
+
+    <div style="height: 150vh"></div>
   </layout>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Layout from '@/layouts/Main.vue';
-import Hero from '@/components/Hero.vue';
+import HeroApp from '@/components/HeroApp.vue';
 import BaseButton from '@/components/base/BaseButton.vue';
 import BaseIcon from '@/components/base/BaseIcon.vue';
 import IconSort from '@/components/icons/IconSort.vue';
@@ -39,7 +48,7 @@ export default defineComponent({
   name: 'Library',
   components: {
     Layout,
-    Hero,
+    HeroApp,
     BaseButton,
     BaseIcon,
     IconSort,
@@ -50,6 +59,11 @@ export default defineComponent({
     return {
       displayMode: 'grid',
       contextMenuActions: [
+        {
+          label: 'Share',
+          emit: 'share',
+          icon: 'Share',
+        },
         {
           label: 'Share',
           emit: 'share',

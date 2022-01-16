@@ -16,3 +16,16 @@
     }
   }
 }
+
+// generates styles used for container sizes and padding
+// @include makeContainer($container-width);
+@mixin makeContainer($size: null) {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $default-spacing;
+  padding-right: $default-spacing;
+
+  @if $size != null {
+    max-width: $size;
+  }
+}

@@ -38,6 +38,9 @@ const routes: Array<RouteRecordRaw> = [
     path: '/library',
     name: 'Library',
     component: Library,
+    meta: {
+      title: 'Library',
+    },
   },
   ...Find,
   ...Account,

@@ -1,7 +1,7 @@
 <template>
   <div class="context-menu-button d-inline-block position-relative" :class="className">
     <base-button
-      class="btn--rounded"
+      class="btn--rounded context-menu-button__btn"
       :id="idFormatted.button"
       aria-haspopup="true"
       :aria-controls="idFormatted.list"
@@ -15,6 +15,7 @@
       @keydown.up.prevent
       @keydown.home.prevent
       @keydown.end.prevent
+      data-pushtip="Actions"
     >
       <span class="visually-hidden">Actions</span>
       <base-icon>

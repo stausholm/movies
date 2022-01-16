@@ -6,9 +6,10 @@
     </div>
     <div class="bg-warning">
       <div class="container">
-        <h2 class="pt-1 pb-1">TODO: storybook instead of this wireframe stuff?</h2>
+        <h2 class="pt-2 pb-2 mb-0">TODO: storybook instead of this wireframe stuff?</h2>
       </div>
     </div>
+
     <div class="container">
       <nav class="block-link-wrapper mt-2">
         <block-link v-for="link in childRoutes" :key="link.path" :to="{ name: link.name }">{{
