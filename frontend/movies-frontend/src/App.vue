@@ -14,6 +14,7 @@
 
   <pwa-install-listeners />
   <announcer />
+  <offline-notice @offline="handleOffline" @online="handleOnline" />
 </template>
 
 <script lang="ts">
@@ -31,6 +32,10 @@ import PwaInstallListeners from '@/components/PwaInstallListeners.vue';
 import { setCssVariable } from '@/utils/setCssVariable';
 import SkipLinks from '@/components/SkipLinks.vue';
 import Announcer from '@/components/Announcer.vue';
+import OfflineNotice from '@/components/OfflineNotice.vue';
+import { ToastMutations } from '@/store/toast/mutations';
+import { Toast } from '@/store/toast/types';
+import { warnAboutMeteredConnection } from '@/utils/networkConnection';
 
 export default defineComponent({
   components: {
@@ -41,6 +46,7 @@ export default defineComponent({
     PwaInstallListeners,
     SkipLinks,
     Announcer,
+    OfflineNotice,
   },
   computed: {
     showPwaOverlay(): boolean {
@@ -57,6 +63,24 @@ export default defineComponent({
       if (this.$store.getters.layoutSize !== newSize) {
         this.$store.commit(AppMutations.SET_LAYOUT_WIDTH, newSize);
       }
+    },
+    handleOffline(): void {
+      this.$store.commit(ToastMutations.REMOVE_TOAST_BY_ID, 'appIsOnline');
+      this.$store.commit(ToastMutations.ADD_TOAST, {
+        id: 'appIsOffline',
+        content: "You're offline.",
+        theme: 'warning',
+        dismissable: false,
+        duration: 1000 * 60 * 15, // 15 minutes
+      } as Toast);
+    },
+    handleOnline(): void {
+      this.$store.commit(ToastMutations.REMOVE_TOAST_BY_ID, 'appIsOffline');
+      this.$store.commit(ToastMutations.ADD_TOAST, {
+        id: 'appIsOnline',
+        content: "You're back online!",
+        theme: 'success',
+      } as Toast);
     },
   },
   created() {
@@ -84,6 +108,17 @@ export default defineComponent({
       '--ui-saturation-percentage',
       this.$store.getters.getAppSettings.imageSaturation + '%'
     );
+
+    if (warnAboutMeteredConnection()) {
+      this.$store.commit(ToastMutations.ADD_TOAST, {
+        id: 'connectionMayBeMetered',
+        content:
+          'It seems like you might be on a slow / metered connection. Loading many posters can use a lot of data, so you may want to connect to WiFi before you do so',
+        theme: 'warning',
+        dismissable: true,
+        duration: 1000 * 20,
+      } as Toast);
+    }
   },
   beforeUnmount() {
     window.removeEventListener('resize', this.resizeWatcher);

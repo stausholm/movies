@@ -31,6 +31,12 @@
     </div>
 
     <div class="container mt-2">
+      <h2>check offline</h2>
+      <p>(see console)</p>
+      <button class="btn btn--primary" @click="checkOffline">trigger "checkoffline" event</button>
+    </div>
+
+    <div class="container mt-2">
       <h2>Grid</h2>
       <div class="row">
         <div class="col-2 col-sm-2 col-xs-6">
@@ -123,6 +129,7 @@ import { VIDEO_TYPES } from '@/constants/videoTypes';
 import { getAverageImageRatio } from '@/utils/imageRatio';
 
 import BlockLink from '@/components/BlockLink.vue';
+import { checkOffline } from '@/utils/networkConnection';
 
 export default defineComponent({
   name: 'Wireframe',
@@ -168,6 +175,9 @@ export default defineComponent({
     getAveragePosterRatio() {
       const ratio = getAverageImageRatio();
       this.imageRatioPercentage = ratio;
+    },
+    checkOffline(): void {
+      checkOffline();
     },
   },
   created() {

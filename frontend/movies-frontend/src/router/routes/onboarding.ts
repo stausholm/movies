@@ -9,7 +9,8 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       hideNavigation: true,
     },
-    beforeEnter(to, from, next) {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    beforeEnter(_to, _from, next) {
       if (store.getters.onboardingComplete) {
         next({ name: 'Home' });
       } else {
