@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/tos',
-    name: 'Tos',
+    name: 'TOS',
     component: () => import(/* webpackChunkName: "legal" */ '@/views/legal/Tos.vue'),
     meta: {},
   },

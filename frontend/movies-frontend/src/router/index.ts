@@ -1,6 +1,7 @@
 import {
   createRouter,
   createWebHistory,
+  NavigationGuardNext,
   RouteLocationNormalized,
   RouteRecordRaw,
 } from 'vue-router';
@@ -14,6 +15,7 @@ import Find from './routes/find';
 import Wireframe from './routes/wireframe';
 import handleMetaTags from './middleware/metaTags';
 import handlePageTitle from './middleware/pageTitle';
+import store from '@/store';
 
 export const TRIGGER_SCROLL_EVENT = new CustomEvent('triggerscroll');
 export const triggerScrollEvent = (): void => {
@@ -93,6 +95,24 @@ router.afterEach((to, from) => {
     handlePageTitle(to);
     handleMetaTags(to);
   }
+});
+
+const checkOnboarding = (to: RouteLocationNormalized, next: NavigationGuardNext): void => {
+  // always allow going to TOS and privacypolicy pages
+  if (to.name === 'TOS' || to.name === 'PrivacyPolicy') {
+    next();
+  }
+
+  // redirect everything else to onboarding
+  if (!store.getters.onboardingComplete && to.name !== 'Onboarding') {
+    next({ name: 'Onboarding', query: { step: 0 } });
+  } else {
+    next();
+  }
+};
+
+router.beforeEach((to, from, next) => {
+  checkOnboarding(to, next);
 });
 
 export default router;

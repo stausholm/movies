@@ -1,6 +1,6 @@
 <template>
-  <skip-links />
-  <navbar />
+  <skip-links v-show="!hideNavigation" />
+  <navbar v-show="!hideNavigation" />
   <primary-router-view />
 
   <!-- teleport targets -->
@@ -45,6 +45,10 @@ export default defineComponent({
   computed: {
     showPwaOverlay(): boolean {
       return this.$store.getters.showPWAOverlay;
+    },
+    hideNavigation(): boolean {
+      // TODO: if the router hasn't kicked in yet, this will flash for a short period. E.g. if the first loaded page is /onboarding
+      return !!this.$route.meta.hideNavigation;
     },
   },
   methods: {

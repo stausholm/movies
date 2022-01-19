@@ -9,4 +9,7 @@ export const getters: GetterTree<UserState, RootState> = {
   getAppSettings(state): AppSettings {
     return state.appSettings;
   },
+  onboardingComplete(state): boolean {
+    return !state.appSettings.showOnboarding;
+  },
 };

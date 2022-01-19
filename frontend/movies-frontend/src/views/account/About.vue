@@ -17,9 +17,9 @@
       <nav class="block-link-wrapper mb-2">
         <block-link :to="{ name: 'Permissions' }">Permissions</block-link>
         <block-link :to="{ name: 'Credits' }">Credits</block-link>
-        <block-link to="/licenses">Licenses</block-link>
-        <block-link to="/privacy-policy">Privacy Policy</block-link>
-        <block-link to="/tos">Terms of Service</block-link>
+        <block-link :to="{ name: 'Licenses' }">Licenses</block-link>
+        <block-link :to="{ name: 'PrivacyPolicy' }">Privacy Policy</block-link>
+        <block-link :to="{ name: 'TOS' }">Terms of Service</block-link>
       </nav>
       <button class="btn btn--responsive btn--primary" @click="refresh">Refresh app</button>
       <p class="text-small mt">Version: {{ appVersion }}</p>

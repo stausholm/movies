@@ -98,6 +98,7 @@ h6,
   font-weight: $font-weight-body;
   line-height: $line-height-body;
   margin-bottom: $paragraph-margin-bottom;
+  text-transform: none;
 }
 
 .text-small {
@@ -200,6 +201,14 @@ code {
   text-decoration: none;
   transition: color 200ms ease;
   display: inline-block;
+
+  // overrides for when applied to <button> elements
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
 
   &:after {
     content: '';

@@ -1,37 +1,21 @@
 import { RouteRecordRaw } from 'vue-router';
+import store from '@/store';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/onboarding',
-    name: 'OnboardingIndex',
+    name: 'Onboarding',
     component: () => import(/* webpackChunkName: "onboarding" */ '@/views/onboarding/Index.vue'),
-    meta: {},
-    children: [
-      {
-        path: '',
-        component: () =>
-          import(/* webpackChunkName: "onboarding" */ '@/views/onboarding/Step1.vue'),
-        meta: {},
-      },
-      {
-        path: 'step2',
-        component: () =>
-          import(/* webpackChunkName: "onboarding" */ '@/views/onboarding/Step2.vue'),
-        meta: {},
-      },
-      {
-        path: 'step3',
-        component: () =>
-          import(/* webpackChunkName: "onboarding" */ '@/views/onboarding/Step3.vue'),
-        meta: {},
-      },
-      {
-        path: 'step4',
-        component: () =>
-          import(/* webpackChunkName: "onboarding" */ '@/views/onboarding/Step4.vue'),
-        meta: {},
-      },
-    ],
+    meta: {
+      hideNavigation: true,
+    },
+    beforeEnter(to, from, next) {
+      if (store.getters.onboardingComplete) {
+        next({ name: 'Home' });
+      } else {
+        next();
+      }
+    },
   },
 ];
 

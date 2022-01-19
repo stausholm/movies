@@ -21,7 +21,7 @@ export const state: UserState = {
       showOnboarding: true,
       avatar: {
         name: 'user@user.com',
-        displayName: 'user',
+        displayName: 'Anon',
         colors: ['#A3A948', '#EDB92E', '#F85931', '#CE1836', '#009989'],
       },
     } as AppSettings,

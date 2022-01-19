@@ -5,5 +5,6 @@ declare module 'vue-router' {
     metaTags?: { name?: string; property?: string; content?: string; [key: string]: string }[];
     title?: string;
     announcer?: { message?: string; skip?: boolean };
+    hideNavigation?: boolean;
   }
 }
