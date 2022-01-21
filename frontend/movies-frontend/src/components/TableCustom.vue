@@ -8,8 +8,12 @@
         v-model="searchQuery"
         @input="movePages(0)"
         placeholder="Search..."
+        autocomplete="off"
       />
     </div>
+    <p class="table-pagination-showing-count mb mt ml" v-if="paginated">
+      {{ countMessage }}
+    </p>
     <div
       class="table-responsive table-wrapper"
       :class="{ overflowing: overflowingHorizontally.overflowing }"
@@ -18,31 +22,51 @@
       :aria-label="overflowingHorizontally.ariaLabel"
       ref="tablewrapper"
     >
-      <table class="table" :class="theme">
+      <table class="table" :class="[theme, { 'table--sortable': sortable }]">
         <thead class="table-header">
           <tr v-if="sortable">
             <th
               v-for="key in columns"
-              :class="{ active: true }"
-              :key="key"
+              :key="key.property"
               scope="col"
               role="columnheader"
-              aria-sort="none|ascending|descending. ascending=lowest value top"
+              :aria-sort="sortKey === key.property ? sortDirection : 'none'"
             >
-              {{ key }}
-              <button @click="sortBy(key)" class="table-sort-btn">
-                <span class="visually-hidden">Sort by {{ key }} in todo order</span>
-                <svg class="icon" viewBox="0 0 100 200" width="24" height="24">
-                  <polyline points="20 50, 50 20, 80 50"></polyline>
+              {{ key.label }}
+              <button @click="sortBy(key.property)" class="table-sort-btn btn--absolute-sized">
+                <span class="visually-hidden"
+                  >Sort by {{ key.label }} in
+                  {{
+                    sortKey !== key.property ||
+                    (sortKey === key.property && sortDirection !== 'ascending')
+                      ? 'ascending'
+                      : 'descending'
+                  }}
+                  order</span
+                >
+                <svg class="icon" viewBox="0 0 100 200" width="10" height="20">
+                  <polyline
+                    v-if="
+                      sortKey !== key.property ||
+                      (sortKey === key.property && sortDirection !== 'descending')
+                    "
+                    points="20 50, 50 20, 80 50"
+                  ></polyline>
                   <line x1="50" y1="20" x2="50" y2="180"></line>
-                  <polyline points="20 150, 50 180, 80 150"></polyline>
+                  <polyline
+                    v-if="
+                      sortKey !== key.property ||
+                      (sortKey === key.property && sortDirection !== 'ascending')
+                    "
+                    points="20 150, 50 180, 80 150"
+                  ></polyline>
                 </svg>
               </button>
             </th>
           </tr>
           <tr v-else>
-            <th v-for="key in columns" :key="key" scope="col">
-              {{ key }}
+            <th v-for="key in columns" :key="key.property" scope="col">
+              {{ key.label }}
             </th>
           </tr>
         </thead>
@@ -51,7 +75,10 @@
             <td
               v-html="
                 highlightmatch(
-                  entry[key] ? entry[key] : `<span class='no-val' aria-hidden='true'></span>`,
+                  Object.prototype.hasOwnProperty.call(entry, key.property) &&
+                    entry[key.property].toString()
+                    ? entry[key.property]
+                    : $options.emptyValue,
                   searchQuery
                 )
               "
@@ -66,29 +93,29 @@
       No data that matches your search!
     </div>
     <div class="table-pagination mt" v-if="paginated">
-      <p class="table-pagination__showing-count mb-0 d-none d-sm-block">{{ countMessage }}</p>
       <div class="d-flex align-center justify-between">
         <div class="table-pagination__pagesize d-flex align-center mr-1">
-          <span class="d-none d-sm-block" aria-hidden="true">Show</span>
+          <span class="d-none d-sm-block mr" aria-hidden="true">Show</span>
           <label for="" class="visually-hidden">Show {{ rowsPerPage }} rows per page</label>
           <select name="" id="" v-model="rowsPerPage" @input="movePages(0)">
             <option v-for="pageSize in pageSizeMenu" :value="pageSize" :key="'size' + pageSize">
               {{ pageSize }}
             </option>
           </select>
-          <span class="d-none d-sm-block" aria-hidden="true">rows per page</span>
+          <span class="d-none d-sm-block ml" aria-hidden="true">rows per page</span>
+          <span class="ml d-sm-none" aria-hidden="true">pr. page</span>
         </div>
         <div
           class="table-pagination__pageswitcher d-flex align-center justify-between"
           v-if="filteredData.length > rowsPerPage"
         >
-          <p class="mb-0 d-none d-sm-block">
+          <p class="mb-0 d-none d-sm-block mr">
             Page {{ startRow / rowsPerPage + 1 }} of
             {{ Math.ceil(filteredData.length / rowsPerPage) }}
           </p>
-          <p class="table-pagination__showing-count--mobile mb-0 d-sm-none">{{ countMessage }}</p>
+
           <div>
-            <button class="btn" @click="movePages(-1)" :aria-disabled="startRow === 0">
+            <button class="btn mr" @click="movePages(-1)" :aria-disabled="startRow === 0">
               <span class="visually-hidden">Previous page</span>
               <base-icon>
                 <icon-chevron-left />
@@ -101,21 +128,13 @@
                 startRow / rowsPerPage + 1 === Math.ceil(filteredData.length / rowsPerPage)
               "
             >
+              <span class="visually-hidden">Next page</span>
               <base-icon>
                 <icon-chevron-right />
               </base-icon>
             </button>
           </div>
         </div>
-        <p
-          class="table-pagination__showing-count--mobile mb-0 d-sm-none"
-          v-else-if="filteredData.length > 0"
-        >
-          {{ countMessage }}
-        </p>
-        <p class="table-pagination__showing-count--mobile mb-0 d-sm-none" v-else>
-          Nothing to show!
-        </p>
       </div>
     </div>
   </div>
@@ -129,11 +148,7 @@ import IconChevronLeft from '@/components/icons/IconChevronLeft.vue';
 
 // accessibility resources: https://inclusive-components.design/data-tables/
 
-// TODO:
-// sorting
-// wcag all of it
-// styles for pagination
-// no results styles
+// TODO: support different data syntax like on https://inclusive-components.design/data-tables/
 
 export default defineComponent({
   name: 'TableCustom',
@@ -142,6 +157,7 @@ export default defineComponent({
     IconChevronRight,
     IconChevronLeft,
   },
+  emptyValue: "<span class='no-val' aria-hidden='true'></span>",
   props: {
     data: {
       type: Array as PropType<Record<string, unknown>[]>,
@@ -149,6 +165,7 @@ export default defineComponent({
     },
     columns: {
       type: Array as PropType<string[]>,
+      required: true,
     },
     paginated: {
       type: Boolean,
@@ -171,7 +188,7 @@ export default defineComponent({
     return {
       searchQuery: '',
       sortKey: '',
-      sortOrders: {} as Record<string, number>,
+      sortDirection: '' as 'ascending' | 'descending',
       startRow: 0,
       rowsPerPage: 10,
       pageSizeMenu: [10, 20, 50, 100],
@@ -199,16 +216,28 @@ export default defineComponent({
       }
 
       // table header sorting
+      // ascending = lowest value top
       let sortKey = this.sortKey;
-      let order = this.sortOrders[sortKey] || 1;
-      // TODO
-      // if (sortKey) {
-      //   data = data.slice().sort(function (a, b) {
-      //     a = a[sortKey] ? a[sortKey].toString().toLowerCase() : '';
-      //     b = b[sortKey] ? b[sortKey].toString().toLowerCase() : '';
-      //     return (a === b ? 0 : a > b ? 1 : -1) * order;
-      //   });
-      // }
+      let order = this.sortDirection === 'ascending' ? 1 : -1;
+      if (sortKey) {
+        data = data.slice().sort(function (a, b) {
+          const aVal =
+            // TODO: sorting everything as strings means numbers wont get sorted properly. e.g. '11' comes before '2'
+            // you can call .toString() on everything supplied in this.data, so we don't care about the typecast to any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            Object.prototype.hasOwnProperty.call(a, sortKey) && (a[sortKey] as any).toString()
+              ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (a[sortKey] as any).toString().toLowerCase()
+              : '';
+          const bVal =
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            Object.prototype.hasOwnProperty.call(b, sortKey) && (b[sortKey] as any).toString()
+              ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (b[sortKey] as any).toString().toLowerCase()
+              : '';
+          return (aVal === bVal ? 0 : aVal > bVal ? 1 : -1) * order;
+        });
+      }
 
       return data;
     },
@@ -223,7 +252,7 @@ export default defineComponent({
       let startRow = this.startRow + 1;
       let endRow = startRow + this.dataPerPage.length - 1;
       let total = this.filteredData.length;
-      return `Showing ${startRow} - ${endRow} of ${total}`;
+      return total === 0 ? '' : `Showing ${startRow} - ${endRow} of ${total}`;
     },
   },
   methods: {
@@ -251,7 +280,7 @@ export default defineComponent({
       }
     },
     highlightmatch(wordsHtml: string, query: string) {
-      if (!query || wordsHtml === "<span class='no-val' aria-hidden='true'></span>") {
+      if (!query || wordsHtml === this.$options.emptyValue) {
         // if searchQuery is empty, then just return the word instead of applying filter to every single letter
         // also don't try to add highlights to <td> elements with no value in them
         return wordsHtml;
@@ -263,8 +292,13 @@ export default defineComponent({
       });
     },
     sortBy(key: string) {
-      this.sortKey = key;
-      this.sortOrders[key] = this.sortOrders[key] * -1; // switch between 1 and -1
+      if (this.sortKey === key) {
+        // clicked on the already active sortkey. Revert the sortDirection
+        this.sortDirection = this.sortDirection === 'ascending' ? 'descending' : 'ascending';
+      } else {
+        this.sortKey = key;
+        this.sortDirection = 'ascending';
+      }
     },
     movePages(amount: number) {
       if (amount === 0) {
@@ -272,19 +306,11 @@ export default defineComponent({
         return (this.startRow = 0);
       }
       let newStartRow = this.startRow + amount * this.rowsPerPage;
-      console.log(newStartRow);
+
       if (newStartRow >= 0 && newStartRow < this.filteredData.length) {
         this.startRow = newStartRow;
       }
     },
-  },
-  created() {
-    let sortOrders = {};
-    // TODO
-    // this.columns?.forEach(function (key) {
-    //   sortOrders[key] = 1;
-    // });
-    this.sortOrders = sortOrders;
   },
   mounted() {
     // TODO: resize listener / mutationobserver for checking horizontal overflow
@@ -348,7 +374,7 @@ export default defineComponent({
   vertical-align: top;
   //border-top: 1px solid $gray-300;
   white-space: nowrap;
-  // table-layout: fixed;
+  // table-layout: fixed; // Could be nice to prevent columnwidth jumps when sorting=true and paginated=true, but won't work with white-space:nowrap;
   // min-width: 600px;
 
   > thead {
@@ -385,6 +411,15 @@ export default defineComponent({
     }
   }
 
+  &--sortable {
+    thead {
+      th {
+        padding-top: math.div($default-spacing, 2);
+        padding-bottom: math.div($default-spacing, 2);
+      }
+    }
+  }
+
   // search specific
   .highlight {
     font-weight: bold;
@@ -398,12 +433,25 @@ export default defineComponent({
 }
 
 .table-pagination {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  &__pagesize {
+    select {
+      width: auto;
+    }
+  }
 }
 
 .table-sort-btn {
+  border: 0;
+  padding: math.div($default-spacing, 4);
+  margin-left: math.div($default-spacing, 4);
+  border-radius: $border-radius-small;
+  transition: background-color 0.125s ease-out;
+  color: currentColor;
+
+  @include hover() {
+    background-color: $gray-300;
+  }
+
   .icon {
     stroke: currentColor;
     stroke-width: 20;
@@ -411,5 +459,14 @@ export default defineComponent({
     stroke-linejoin: round;
     fill: none;
   }
+}
+
+.table-no-data {
+  margin-top: math.div($default-spacing, 2);
+  padding: $default-spacing;
+  background-color: $gray-100;
+  border-radius: $border-radius-base;
+  box-shadow: $box-shadow-sm;
+  border: 1px solid $gray-300;
 }
 </style>

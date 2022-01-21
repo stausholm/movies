@@ -27,9 +27,9 @@ export default defineComponent({
       gridData: [
         {
           name: 'American alligator',
-          location: 'Southeast United States',
+          // location: 'Southeast United States',
           letter: 'a',
-          number: '1',
+          number: '11',
           test: 10,
         },
         {
@@ -37,7 +37,11 @@ export default defineComponent({
           location: 'Eastern China',
           letter: 'b',
           number: '2',
-          test: 0, // TODO
+          test: 0,
+          test2: true,
+          test3: [1, 2, 3],
+          test4: { a: 1 },
+          test5: '<a href="#">html in a string</a>',
         },
         {
           name: 'Spectacled caiman',
@@ -361,7 +365,17 @@ export default defineComponent({
           number: '7',
         },
       ],
-      gridColumns: ['name', 'location', 'letter', 'number', 'test'],
+      gridColumns: [
+        { label: 'Name', property: 'name' },
+        { label: 'Location', property: 'location' },
+        { label: 'Letter label aaaaaaaaaaa', property: 'letter' },
+        { label: 'Number', property: 'number' },
+        { label: 'test', property: 'test' },
+        { label: 'test2', property: 'test2' },
+        { label: 'test3', property: 'test3' },
+        { label: 'test4', property: 'test4' },
+        { label: 'test5', property: 'test5' },
+      ],
     };
   },
 });
