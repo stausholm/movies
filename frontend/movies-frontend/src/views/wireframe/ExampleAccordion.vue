@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h2>Accordion</h2>
-    also supports opening by url hash. Try #__acc-h-aa-0
+    also supports opening by url hash. Try #__acc-h--aa-0
     <h3>Allow multiple open</h3>
     <accordion :allowMultiple="true" id="aa" :showControls="true">
       <accordion-item title="title lorem" icon="Filmstrip">

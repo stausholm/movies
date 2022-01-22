@@ -59,6 +59,10 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
 
+  // @include breakpoint-max($breakpoint-navigation-change) {
+  //   min-height: 200px;
+  // }
+
   &__bg {
     position: absolute;
     width: 100%;

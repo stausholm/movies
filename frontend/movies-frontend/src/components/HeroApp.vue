@@ -1,7 +1,14 @@
 <template>
   <div
     class="hero-wrapper"
-    :class="[className, { 'scrolled-top': scrolledToTheTop, 'scrolling-down': scrollingDown }]"
+    :class="[
+      className,
+      {
+        'scrolled-top': scrolledToTheTop,
+        'scrolling-down': scrollingDown,
+        'scrolled-to-hero-content-bottom': scrolledToHeroContentBottom,
+      },
+    ]"
   >
     <div class="sticky-top" ref="stickyTop">
       <div class="sticky-top__inner">
@@ -17,7 +24,9 @@
           </base-icon>
         </base-button>
 
-        <span class="fw-bold title text-truncate" aria-hidden="true">{{ titleComputed }}</span>
+        <span class="fw-bold title text-truncate" aria-hidden="true" ref="stickyTitle">{{
+          titleComputed
+        }}</span>
 
         <div class="sticky-actions">
           <base-button
@@ -38,10 +47,12 @@
       </div>
     </div>
     <hero :background="['primary', 'fade']">
-      <slot>
-        <span class="text-pre-head">lorem ipsum</span>
-        <h1 class="mb-0" ref="title">{{ titleComputed }}</h1>
-      </slot>
+      <div class="hero-content" ref="heroContent">
+        <slot>
+          <span class="text-pre-head">lorem ipsum</span>
+          <h1 class="mb-0" ref="title">{{ titleComputed }}</h1>
+        </slot>
+      </div>
     </hero>
   </div>
   <div class="sticky-content" v-if="$slots.stickyContent">
@@ -96,6 +107,7 @@ export default defineComponent({
       prevScrollPos: 0,
       scrolledToTheTop: true,
       ticking: false,
+      scrolledToHeroContentBottom: false,
     };
   },
   computed: {
@@ -138,18 +150,58 @@ export default defineComponent({
         : this.$router.push({ name: 'Home' });
     },
     handleScroll(prevScrollPos: number): void {
-      const headerHeight = (this.$refs.stickyTop as HTMLElement).offsetHeight;
+      const header = this.$refs.stickyTop as HTMLElement;
+      const headerHeight = header.offsetHeight;
 
       if (window.scrollY < headerHeight * 2) {
         this.scrolledToTheTop = true;
         this.scrollingDown = false;
-        return;
+      } else {
+        this.scrolledToTheTop = false;
+        this.scrollingDown = window.scrollY > prevScrollPos;
       }
 
-      this.scrolledToTheTop = false;
-      this.scrollingDown = window.scrollY > prevScrollPos;
+      const heroContent = this.$refs.heroContent as HTMLElement;
+      const stickyTitle = this.$refs.stickyTitle as HTMLElement;
+
+      // we can use offsetTop instead of getboundclientrect() because we know from the design that this hero will always be rendered at the top of the page
+      // how far down the bottom of the heroContent element is from the top of the entire page (not top of viewport)
+      const heroContentBottom = heroContent.offsetTop + heroContent.offsetHeight;
+      // when window is scrolled all the way to the top, we want opacity to be 100%.
+      // When the bottom of the heroContent is scrolled to the top of the viewport, opacity should be at 0%.
+      // detract the height of the sticky header, so we reach 100% a little before the heroContent has scrolled entirely out of view, for a better visual effect
+      const heroContentBottomOffset = heroContentBottom - headerHeight * 1.5;
+      const percentage = window.scrollY / heroContentBottomOffset; // e.g. scrolled 150px and heroContentBottom is 300px from top of page, 150/300 = 0.5 = 50%
+      const difference = 1 - percentage;
+      const opacity = difference.toString();
+
+      heroContent.style.opacity = opacity;
+      // as the heroContent fades out, we want to fade in the title in the stickyTop
+      stickyTitle.style.opacity = percentage.toString();
+
+      // TODO: hardcoded color
+      header.style.backgroundColor = `rgba(255,255,255,${percentage})`;
+
+      // heroContent.style.transform = 'scale(0.5) translateY(40px)';
+      // clamp(min:0, max:1, preffered: val)
+      if (this.isMobileLayout) {
+        heroContent.style.transform = `scale(${difference + percentage / 1.1}) translateY(-${
+          (percentage * 100) / 10
+        }px)`;
+      } else {
+        heroContent.style.transform = ``;
+      }
+
+      // TODO: calculate height for when scroll reaches stickyContent, so we can apply styles for when content sticks
+      if (window.scrollY >= heroContentBottomOffset) {
+        this.scrolledToHeroContentBottom = true;
+      } else {
+        this.scrolledToHeroContentBottom = false;
+      }
     },
     handleScrollTick(): void {
+      // https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event
+      // https://www.html5rocks.com/en/tutorials/speed/animations/
       if (!this.ticking) {
         requestAnimationFrame(() => {
           this.handleScroll(this.prevScrollPos);
@@ -183,12 +235,9 @@ $sticky-height: $min-touch-target-size + math.div($default-spacing, 2);
   top: 0;
   left: 0;
   right: 0;
-  // height: $nav-height;
-  background-color: $nav-bg;
+  //background-color: $nav-bg;
   @include z-index(nav);
-  box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.14), 0 0px 1px -2px rgba(0, 0, 0, 0.2),
-    0 0px 5px 0 rgba(0, 0, 0, 0.12);
-  transition: transform 0.3s, background-color 0.3s;
+  transition: transform 0.3s;
 
   &__inner {
     height: $sticky-height;
@@ -236,11 +285,31 @@ $sticky-height: $min-touch-target-size + math.div($default-spacing, 2);
   .sticky-top {
     background-color: transparent;
     box-shadow: none;
+
+    .title {
+      opacity: 0;
+    }
+  }
+}
+
+.hero-content {
+  transform-origin: bottom center;
+  // TODO: should this transition be here if we update based on scroll position every RAF?
+  // transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.scrolled-to-hero-content-bottom {
+  .sticky-top {
+    box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.14), 0 0px 1px -2px rgba(0, 0, 0, 0.2),
+      0 0px 5px 0 rgba(0, 0, 0, 0.12);
+  }
+  + .sticky-content {
+    background-color: $nav-bg;
   }
 }
 
 // TODO: should this be a prop?
-// .scrolling-down {
+// .scrolled-to-hero-content-bottom.scrolling-down {
 //   .sticky-top {
 //     transform: translateY(-100%);
 //   }
