@@ -4,13 +4,19 @@
     :title="revealed ? '' : 'Reveal Spoiler'"
     :aria-label="revealed ? null : 'Reveal Spoiler'"
     :class="{ spoiled: revealed, 'spoiler--image': isImage }"
-    tabindex="0"
+    :tabindex="revealed ? -1 : 0"
     role="button"
     @keyup.space.enter.stop="reveal"
     @keydown.space.enter.stop.prevent
     @click="reveal"
   >
-    <span class="spoiler-mask" :aria-hidden="!revealed" ref="content">
+    <span
+      class="spoiler-mask"
+      :aria-hidden="!revealed"
+      ref="content"
+      @keydown.space.enter.stop
+      @keyup.space.enter.stop
+    >
       <slot></slot>
     </span>
   </span>
