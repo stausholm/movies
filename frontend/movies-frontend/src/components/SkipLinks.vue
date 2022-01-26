@@ -4,11 +4,8 @@
       <li>
         <a href="#main" class="visually-hidden-focusable skip-link">Skip to main content</a>
       </li>
-      <li>
-        <router-link
-          :to="{ name: 'Find', query: { focusSearch: true } }"
-          class="visually-hidden-focusable skip-link"
-        >
+      <li v-if="$route.name !== 'Find'">
+        <router-link :to="{ name: 'Find' }" class="visually-hidden-focusable skip-link">
           Go to Search
         </router-link>
       </li>

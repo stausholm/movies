@@ -146,7 +146,8 @@ export default defineComponent({
 
     &.has-icon {
       input {
-        padding-left: (math.div($default-spacing, 2) + 2) + 24px + math.div($default-spacing, 2);
+        padding-left: (math.div($default-spacing, 2) + $border-width-forms * 2) + 24px +
+          math.div($default-spacing, 2);
       }
     }
   }

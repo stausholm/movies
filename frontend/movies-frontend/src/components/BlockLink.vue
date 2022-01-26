@@ -22,6 +22,7 @@
   >
     <span class="slot">
       <slot></slot>
+      <span class="visually-hidden">(opens in new window)</span>
     </span>
     <base-icon>
       <component :is="icon" />

@@ -27,6 +27,7 @@
               @keydown.home.prevent
               @keydown.end.prevent
               @keydown.tab="handleTab"
+              :data-pushtip="action.label"
             >
               <base-icon-async v-if="action.icon" :name="action.icon" width="18" height="18" />
               <span class="text-truncate">{{ action.label }}</span>
