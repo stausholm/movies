@@ -9,7 +9,7 @@
           <span class="nav-item__label text-small text-truncate">Home</span>
         </router-link>
 
-        <router-link :to="{ name: 'Find' }" class="nav-item">
+        <router-link :to="{ name: 'Find' }" class="nav-item" @click="handleSearchClick">
           <base-icon class="nav-item__icon">
             <icon-search />
           </base-icon>
@@ -120,6 +120,15 @@ export default defineComponent({
           this.onScreenKeyboardActive = true;
         } else {
           this.onScreenKeyboardActive = false;
+        }
+      }
+    },
+    handleSearchClick(): void {
+      if (this.$route.name === 'Find') {
+        // clicked search icon while already on the search page. Move focus into the textsearch input field
+        const input = document.querySelector('.js-search-input-field');
+        if (input && input.tagName === 'INPUT') {
+          (input as HTMLInputElement).focus();
         }
       }
     },

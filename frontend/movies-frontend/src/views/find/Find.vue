@@ -2,10 +2,12 @@
   <layout>
     <div class="container">
       <h1 class="visually-hidden">Search page</h1>
-      <input type="search" name="" id="" placeholder="Search actors or titles" />
-      <base-icon>
-        <icon-search />
-      </base-icon>
+      <search-bar
+        placeholder="Search actors or titles"
+        @error="handleSearchError"
+        @search="handleSearchString"
+        @suggestion="handleSuggestion"
+      />
 
       <h2 class="mt-2">Browse by</h2>
       <div class="row">
@@ -54,23 +56,24 @@
 import { defineComponent } from 'vue';
 import Layout from '@/layouts/Main.vue';
 import BaseIcon from '@/components/base/BaseIcon.vue';
-import IconSearch from '@/components/icons/IconSearch.vue';
 import IconTelevision from '@/components/icons/IconTelevision.vue';
 import IconFilmstrip from '@/components/icons/IconFilmstrip.vue';
 import IconActors from '@/components/icons/IconActors.vue';
 import BlockLink from '@/components/BlockLink.vue';
+import SearchBar from '@/components/SearchBar.vue';
 import { GENRES } from '@/constants/Genres';
+import { checkOffline } from '@/utils/networkConnection';
 
 export default defineComponent({
   name: 'Find',
   components: {
     Layout,
     BaseIcon,
-    IconSearch,
     IconTelevision,
     IconFilmstrip,
     IconActors,
     BlockLink,
+    SearchBar,
   },
   computed: {
     genresFormatted() {
@@ -90,10 +93,23 @@ export default defineComponent({
         .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())); // sort alphabetically
     },
   },
-  mounted() {
-    if (this.$route.query.focusSearch) {
-      // TODO: focus search input. This is e.g. called in skipLinks
-    }
+  methods: {
+    handleSearchError(err: unknown): void {
+      console.log('AN ERROR IN SEARCH', err);
+
+      // if we're not offline, something is wrong with the searchApi
+      checkOffline();
+    },
+    handleSearchString(query: string): void {
+      console.log('searched for string', query);
+
+      // a normal usecase for this is when the user does not click on a permalink suggestion but submits the searchform with whatever their searchquery is.
+      // in that case we would want to reroute the user to a searchresults page
+      // this.$router.push({ name: 'SearchResults', query: { q: query } });
+    },
+    handleSuggestion(suggestion: Record<string, unknown>): void {
+      console.log('clicked suggestion', suggestion);
+    },
   },
 });
 </script>
