@@ -7,9 +7,7 @@
         <base-icon-async v-if="icon" :name="icon" :class="{ error: hasErrors }" />
         <input
           :type="type"
-          :name="name"
           :id="idFormatted"
-          :placeholder="placeholder"
           :aria-describedby="helperIdFormatted"
           :aria-invalid="hasErrors"
           :value="modelValue"
@@ -56,14 +54,6 @@ export default defineComponent({
     type: {
       type: String,
       default: 'text',
-    },
-    placeholder: {
-      type: String,
-      default: null,
-    },
-    name: {
-      type: String,
-      default: null,
     },
     description: {
       type: String,

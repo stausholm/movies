@@ -34,7 +34,7 @@
     />
     <input type="color" class="rounded" :disabled="inputsDisabled" />
     <input type="file" class="rounded" :disabled="inputsDisabled" />
-    <select name="" id="" class="rounded" :disabled="inputsDisabled">
+    <select class="rounded" :disabled="inputsDisabled">
       <option value="val">val</option>
       <option value="val val">val val</option>
       <option value="val val val">val val val</option>
@@ -71,28 +71,43 @@
 
     <label for="">Other</label>
     <input type="file" placeholder="placeholder" :disabled="inputsDisabled" />
-    <input type="range" name="" id="" :disabled="inputsDisabled" />
-    <input type="color" name="" id="" :disabled="inputsDisabled" />
-    <select name="" id="" :disabled="inputsDisabled">
+    <input type="range" :disabled="inputsDisabled" />
+    <input type="color" :disabled="inputsDisabled" />
+    <select :disabled="inputsDisabled">
       <option value="val">val</option>
       <option value="val val">val val</option>
       <option value="val val val">val val val</option>
     </select>
-    <textarea name="" id="" :disabled="inputsDisabled"></textarea>
+    <textarea :disabled="inputsDisabled"></textarea>
     <div class="mt-1 mb-1">
-      <input type="color" value="#0000ff" name="" id="" class="mr color-dot" />
-      <input type="color" value="#00ff00" name="" id="" class="mr color-dot" />
-      <input type="color" value="#ff0000" name="" id="" class="mr color-dot" />
-      <input type="color" value="#0000ff" name="" id="" class="mr color-dot color-dot--round" />
-      <input type="color" value="#00ff00" name="" id="" class="mr color-dot color-dot--round" />
-      <input type="color" value="#ff0000" name="" id="" class="mr color-dot color-dot--round" />
+      <input type="color" value="#0000ff" class="mr color-dot" :disabled="inputsDisabled" />
+      <input type="color" value="#00ff00" class="mr color-dot" :disabled="inputsDisabled" />
+      <input type="color" value="#ff0000" class="mr color-dot" :disabled="inputsDisabled" />
+      <input
+        type="color"
+        value="#0000ff"
+        class="mr color-dot color-dot--round"
+        :disabled="inputsDisabled"
+      />
+      <input
+        type="color"
+        value="#00ff00"
+        class="mr color-dot color-dot--round"
+        :disabled="inputsDisabled"
+      />
+      <input
+        type="color"
+        value="#ff0000"
+        class="mr color-dot color-dot--round"
+        :disabled="inputsDisabled"
+      />
     </div>
 
     <label for="">Checkbox/radio/checkbox with role="switch"</label>
-    <input type="checkbox" name="" id="" :disabled="inputsDisabled" />
-    <input type="checkbox" name="" id="" :disabled="inputsDisabled" aria-invalid="true" />
-    <input type="checkbox" name="" id="" :disabled="inputsDisabled" aria-invalid="false" />
-    <input type="checkbox" name="" id="" :disabled="inputsDisabled" role="switch" />
+    <input type="checkbox" :disabled="inputsDisabled" />
+    <input type="checkbox" :disabled="inputsDisabled" aria-invalid="true" />
+    <input type="checkbox" :disabled="inputsDisabled" aria-invalid="false" />
+    <input type="checkbox" :disabled="inputsDisabled" role="switch" />
     <input
       type="checkbox"
       name=""
@@ -114,13 +129,13 @@
     <input type="radio" name="bob" id="" :disabled="inputsDisabled" aria-invalid="true" />
     <input type="radio" name="bob" id="" :disabled="inputsDisabled" aria-invalid="false" />
 
-    <label for="">Base input component</label>
+    <h2>Base input component</h2>
     <base-input
       id="testId"
       label="test label"
       type="email"
       description="this is a small helper text"
-      placeholder="placeholder lorem"
+      placeholder="placeholder loremasd"
       class="mb-2 mt-2"
       :hasErrors="true"
       errorMessage="Error message lorem"
@@ -131,23 +146,60 @@
       data-attribute-test="asdasd"
       :disabled="inputsDisabled"
     />
+
+    <base-input
+      id="testId2"
+      label="test label"
+      type="range"
+      description="this is a small helper text"
+      placeholder="placeholder loremasd"
+      class="mb-2 mt-2"
+      :hasErrors="true"
+      errorMessage="Error message lorem"
+      prefix="0"
+      suffix="10"
+      step="2"
+      min="0"
+      max="10"
+      v-model="inputs.range"
+      data-attribute-test="asdasd"
+      :disabled="inputsDisabled"
+    />
+
+    <h2>Textarea component</h2>
+    <textarea-custom
+      class="mb-2"
+      label="Textarea label"
+      id="textareaId"
+      placeholder="placeholder wow"
+      description="helper text lorem ipsum"
+      :hasErrors="true"
+      errorMessage="an error message is here"
+      v-model="inputs.textarea"
+      :disabled="inputsDisabled"
+      :autoGrow="true"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import BaseInput from '@/components/base/BaseInput.vue';
+import TextareaCustom from '@/components/TextareaCustom.vue';
 
 export default defineComponent({
   name: 'ExampleInputs',
   components: {
     BaseInput,
+    TextareaCustom,
   },
   data() {
     return {
       inputs: {
         text: '',
+        range: '4',
         number: undefined,
+        textarea: 'asd\nasd\nasdawd asd \nasd \n\nasd\na',
       },
       inputsDisabled: false,
     };
