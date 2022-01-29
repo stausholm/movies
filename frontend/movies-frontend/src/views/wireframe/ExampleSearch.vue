@@ -87,8 +87,12 @@ export default defineComponent({
           taste: 'bad',
         },
         {
-          title: 'Kiwi',
+          title: 'Cherries',
           taste: 'yum',
+        },
+        {
+          title: 'Lemon',
+          taste: 'sour',
         },
         {
           title: 'Pear',
@@ -96,14 +100,10 @@ export default defineComponent({
         },
         {
           title: 'Pineapple',
-          taste: 'sour',
-        },
-        {
-          title: 'Water melon',
           taste: 'sweet',
         },
         {
-          title: 'How to pineapple',
+          title: 'Tomato',
           taste: 'paper',
         },
       ],

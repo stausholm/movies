@@ -27,13 +27,13 @@
         </base-icon>
       </button>
       <transition name="button-transition">
-        <button type="reset" v-if="searchVal" @click="reset" @mousedown.prevent>
+        <button type="reset" v-if="oldVal" @click="reset" @mousedown.prevent>
           <span class="visually-hidden">Clear search</span>
           <base-icon>
             <icon-close />
           </base-icon>
         </button>
-        <button type="button" v-else-if="!searchVal">
+        <button type="button" v-else-if="!oldVal">
           <!-- TODO: implement -->
           <span class="visually-hidden">Search by voice</span>
           <base-icon>
@@ -50,11 +50,15 @@
       @mousedown.prevent
     >
       <div role="status" aria-live="polite">
+        <span class="visually-hidden" v-if="levenshteinUsed">
+          Nothing specific found. Did you mean one of the following?
+        </span>
         <span class="visually-hidden" v-if="showSuggestions">
           <span class="amount">{{ searchMatchesSliced.length }}</span>
           search suggestions of {{ totalResults }} for
           <span class="query">"{{ oldVal }}"</span>
-          shown below:
+          shown below. Use the up- and down-arrow keys to cycle through them, and the enter key to
+          select.
         </span>
         <span class="visually-hidden" v-if="showNoResults">No matches found</span>
       </div>
@@ -129,6 +133,7 @@ import IconClose from '@/components/icons/IconClose.vue';
 import IconClock from '@/components/icons/IconClock.vue';
 import { LATEST_SEARCHES_STORAGE_KEY } from '@/constants/SiteSettings.json';
 import Loader from '@/components/Loader.vue';
+import levenshtein from '@/utils/levenshteinDistance';
 
 // accessibility resources: https://bbc.github.io/gel/components/search/
 
@@ -194,6 +199,7 @@ export default defineComponent({
       showDropdown: false,
       updateSearchVal: true, // handles if searchVal should be updated, while navigating suggestions with keyboard
       typing: false, // is user actively typing
+      levenshteinUsed: false, // is levenshtein distance currently being used to add a typo tolerance for resultsSync?
     };
   },
   computed: {
@@ -446,13 +452,36 @@ export default defineComponent({
           const valToMatch = this.updateSearchVal ? this.searchVal : this.oldVal;
           // if oldVal, user is navigating the list, so don't update the results to match searchVal
 
-          // TODO: add typo tolerance
+          // default filtering
           this.results = this.resultsSync.filter((item) => {
             return (item[this.searchableProperty] as string | number)
               .toString()
               .toUpperCase()
               .match(valToMatch.toUpperCase().replace(/\s+/g, '.+'));
           });
+
+          // if nothing matches the default filtering, check for typos using levenshtein distance
+          if (this.results.length === 0) {
+            // 3 is usually a good minimum distance.
+            // However if the dataset contains strings shorter than 3 characters, it's possible these could appear too often.
+            // Best guess is tolerance should be a little smaller than the shortest string in the dataset
+            const MIN_DISTANCE = 3;
+
+            this.results = this.resultsSync.filter((item) => {
+              const itemVal = (item[this.searchableProperty] as string | number)
+                .toString()
+                .toUpperCase();
+              const distance = levenshtein(itemVal, valToMatch.toUpperCase());
+              if (distance === undefined) {
+                return false;
+              } else {
+                return distance <= MIN_DISTANCE;
+              }
+            });
+
+            this.levenshteinUsed = this.results.length > 0;
+          }
+
           this.totalResults = this.results.length;
         } else {
           this.results = this.resultsSync;
