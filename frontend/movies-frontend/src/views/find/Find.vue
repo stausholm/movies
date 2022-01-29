@@ -37,7 +37,7 @@
         </div>
       </div>
 
-      <h2 class="mt-2">Genres</h2>
+      <h2 class="mt-2" id="genrelist">Genres</h2>
       <!-- TODO: rendering this list makes route navigation to this route slower? -->
       <nav class="block-link-wrapper">
         <block-link
@@ -105,7 +105,7 @@ export default defineComponent({
 
       // a normal usecase for this is when the user does not click on a permalink suggestion but submits the searchform with whatever their searchquery is.
       // in that case we would want to reroute the user to a searchresults page
-      // this.$router.push({ name: 'SearchResults', query: { q: query } });
+      this.$router.push({ name: 'SearchResults', query: { q: query } });
     },
     handleSuggestion(suggestion: Record<string, unknown>): void {
       console.log('clicked suggestion', suggestion);

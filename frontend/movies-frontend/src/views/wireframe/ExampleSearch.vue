@@ -121,7 +121,7 @@ export default defineComponent({
 
       // a normal usecase for this is when the user does not click on a permalink suggestion but submits the searchform with whatever their searchquery is.
       // in that case we would want to reroute the user to a searchresults page
-      // this.$router.push({ name: 'SearchResults', query: { q: query } });
+      this.$router.push({ name: 'SearchResults', query: { q: query } });
     },
     handleSuggestion(suggestion: Record<string, unknown>): void {
       console.log('clicked suggestion', suggestion);
