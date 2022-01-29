@@ -62,6 +62,7 @@
         </span>
         <span class="visually-hidden" v-if="showNoResults">No matches found</span>
       </div>
+      <slot name="filters" />
       <loader v-if="showLoading" class="loader" />
       <div v-else-if="showNoResults" class="no-results">
         <p>No matches found</p>
@@ -373,7 +374,6 @@ export default defineComponent({
     highlightmatch(wordsHtml: string, query: string) {
       if (!query) {
         // if searchQuery is empty, then just return the word instead of applying filter to every single letter
-        // also don't try to add highlights to <td> elements with no value in them
         return wordsHtml;
       }
       const queryWords = `(${query.trim().split(' ').join('|')})`;
@@ -489,6 +489,12 @@ export default defineComponent({
         }
         this.loading = false;
       }
+    },
+    searchApi() {
+      // search api changed, call new endpoint
+      this.results = [];
+      this.totalResults = 0;
+      this.fetchSuggestions();
     },
   },
   created() {

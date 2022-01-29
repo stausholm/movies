@@ -58,6 +58,45 @@
       @search="handleSearchString"
       @suggestion="handleSuggestion"
     />
+
+    <h2 class="mt-2">Searchbar with changing searchApi (simple filters)</h2>
+    <search-bar
+      :searchableProperty="variableSearchableProperty"
+      :searchApi="variableApiEndpoint"
+      @error="handleSearchError"
+      @search="handleSearchString"
+      @suggestion="handleSuggestion"
+    >
+      <template #filters>
+        <button
+          @click="changeEndpoint('comments')"
+          :style="{ backgroundColor: activeFilter === 'comments' ? 'green' : null }"
+        >
+          comments
+        </button>
+        <button
+          @click="changeEndpoint('todos')"
+          :style="{ backgroundColor: activeFilter === 'todos' ? 'green' : null }"
+        >
+          todos
+        </button>
+        <button
+          @click="changeEndpoint('users')"
+          :style="{ backgroundColor: activeFilter === 'users' ? 'green' : null }"
+        >
+          users
+        </button>
+      </template>
+    </search-bar>
+
+    <h2 class="mt-2">Recorder</h2>
+    <recorder-button
+      @query="handleVoiceQuery"
+      @partialQuery="handlePartialVoiceQuery"
+      @permissionDenied="handleVoicePermissionDenied"
+      @unsupported="handleVoiceNotSupported"
+      @unsupportedCreated="handleVoiceNotSupportedCreated"
+    />
   </div>
 </template>
 
@@ -65,14 +104,19 @@
 import { defineComponent } from 'vue';
 import SearchBar from '@/components/SearchBar.vue';
 import { checkOffline } from '@/utils/networkConnection';
+import RecorderButton from '@/components/RecorderButton.vue';
 
 export default defineComponent({
   name: 'ExampleSearch',
   components: {
     SearchBar,
+    RecorderButton,
   },
   data() {
     return {
+      variableApiEndpoint: 'https://jsonplaceholder.typicode.com/comments?q=',
+      variableSearchableProperty: 'name',
+      activeFilter: 'comments',
       syncResults: [
         {
           title: 'Apple',
@@ -125,6 +169,38 @@ export default defineComponent({
     },
     handleSuggestion(suggestion: Record<string, unknown>): void {
       console.log('clicked suggestion', suggestion);
+    },
+    changeEndpoint(type: string): void {
+      if (type === 'todos') {
+        this.variableApiEndpoint = 'https://jsonplaceholder.typicode.com/todos?q=';
+        this.variableSearchableProperty = 'title';
+        this.activeFilter = 'todos';
+      }
+      if (type === 'comments') {
+        this.variableApiEndpoint = 'https://jsonplaceholder.typicode.com/comments?q=';
+        this.variableSearchableProperty = 'name';
+        this.activeFilter = 'comments';
+      }
+      if (type === 'users') {
+        this.variableApiEndpoint = 'https://jsonplaceholder.typicode.com/users?q=';
+        this.variableSearchableProperty = 'name';
+        this.activeFilter = 'users';
+      }
+    },
+    handleVoiceQuery(query: string) {
+      console.log('QUERY', query);
+    },
+    handlePartialVoiceQuery(query: string) {
+      console.log('PARTIAL QUERY', query);
+    },
+    handleVoicePermissionDenied() {
+      console.log('VOICE DENIED');
+    },
+    handleVoiceNotSupported() {
+      console.log('VOICE NOT SUPPORTED');
+    },
+    handleVoiceNotSupportedCreated() {
+      console.log('VOICE NOT SUPPORTED CREATED HOOK');
     },
   },
 });
