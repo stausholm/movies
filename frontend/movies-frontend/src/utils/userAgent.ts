@@ -32,3 +32,31 @@ export const getOSName = (): OS => {
   else if (navigator.userAgent.indexOf('Linux') != -1) OSName = 'linux';
   return OSName;
 };
+
+/**
+ * Determines whether the user is browsing on desktop, mobile, or tablet by parsing the useragent
+ * @returns "desktop", "tablet", or "mobile"
+ */
+export const getDeviceType = (): 'desktop' | 'tablet' | 'mobile' => {
+  const ua = navigator.userAgent;
+  if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua) && !/(Tablet PC 2.0)/i.test(ua)) {
+    return 'tablet';
+  }
+  if (
+    /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(
+      ua
+    )
+  ) {
+    return 'mobile';
+  }
+  return 'desktop';
+};
+
+/**
+ *
+ * @returns true if browser is Safari
+ */
+export const isBrowserSafari = (): boolean => {
+  const ua = navigator.userAgent;
+  return ua.indexOf('Safari') > -1 && !(ua.indexOf('Chrome') > -1);
+};
