@@ -10,6 +10,10 @@ export enum AppMutations {
   SET_ANNOUNCE_MESSAGE = 'SET_ANNOUNCE_MESSAGE',
   COMPARE_VERSION_NUMBER = 'COMPARE_VERSION_NUMBER',
   SET_USING_NEW_RELEASE = 'SET_USING_NEW_RELEASE',
+  INCREMENT_OVERLAY_COUNT = 'INCREMENT_OVERLAY_COUNT',
+  SUBTRACT_OVERLAY_COUNT = 'SUBTRACT_OVERLAY_COUNT',
+  DISABLE_NAVIGATION = 'DISABLE_NAVIGATION',
+  ENABLE_NAVIGATION = 'ENABLE_NAVIGATION',
 }
 
 export const mutations: MutationTree<AppState> = {
@@ -32,5 +36,17 @@ export const mutations: MutationTree<AppState> = {
   },
   [AppMutations.SET_USING_NEW_RELEASE](state, val: boolean) {
     state.usingNewRelease = val;
+  },
+  [AppMutations.INCREMENT_OVERLAY_COUNT](state) {
+    state.openOverlays += 1;
+  },
+  [AppMutations.SUBTRACT_OVERLAY_COUNT](state) {
+    state.openOverlays -= 1;
+  },
+  [AppMutations.DISABLE_NAVIGATION](state) {
+    state.navigationDisabled = true;
+  },
+  [AppMutations.ENABLE_NAVIGATION](state) {
+    state.navigationDisabled = false;
   },
 };

@@ -12,4 +12,10 @@ export const getters: GetterTree<AppState, RootState> = {
   showReleaseNotes(state): boolean {
     return state.usingNewRelease;
   },
+  navigationDisabled(state): boolean {
+    return state.navigationDisabled;
+  },
+  openOverlaysCount(state): number {
+    return state.openOverlays;
+  },
 };

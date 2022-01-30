@@ -9,6 +9,8 @@ export const state: AppState = {
   layoutSizeWidth: determineAppLayoutSizeWidth(),
   announceMessage: '',
   usingNewRelease: false,
+  openOverlays: 0,
+  navigationDisabled: false,
 };
 
 export const app: Module<AppState, RootState> = {

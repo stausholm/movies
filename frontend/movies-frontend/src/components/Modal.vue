@@ -59,6 +59,7 @@
 
 import { defineComponent } from 'vue';
 import { trapTabKey, getFocusableChildren } from '@/utils/focus-trap';
+import { AppMutations } from '@/store/app/mutations';
 
 export default defineComponent({
   name: 'Modal',
@@ -90,7 +91,7 @@ export default defineComponent({
     return {
       openInternal: true, // used to control transitions
       previouslyFocused: null as null | HTMLElement,
-      closeEventIsPopstate: false,
+      overlayNumber: 1,
     };
   },
   computed: {
@@ -102,12 +103,7 @@ export default defineComponent({
     closeModal(): void {
       this.$emit('close');
     },
-    handleClose(e?: Event): void {
-      if (e && e.type === 'popstate') {
-        this.closeEventIsPopstate = true;
-      } else {
-        this.closeEventIsPopstate = false;
-      }
+    handleClose(): void {
       this.openInternal = false;
     },
     handleConfirm(): void {
@@ -139,24 +135,34 @@ export default defineComponent({
 
       if (target) (target as HTMLElement).focus();
     },
+    handlePopstate() {
+      if (this.overlayNumber === this.$store.getters.openOverlaysCount) {
+        this.handleClose();
+      }
+    },
   },
   created() {
     document.body.addEventListener('focus', this.maintainFocus, true);
 
     // Close modal in case user presses browser back button
-    // TODO: move modal popstate logic into vuex modalOpen boolean, and global vuerouter beforeEach check using next(false)
-    window.addEventListener('popstate', this.handleClose);
-    this.$router.push({ ...this.$route, query: { ...this.$route.query, modal: 1 } });
+    window.addEventListener('popstate', this.handlePopstate);
+
+    this.$store.commit(AppMutations.INCREMENT_OVERLAY_COUNT);
+    this.overlayNumber = this.$store.getters.openOverlaysCount;
   },
   mounted() {
-    document.body.classList.add('modal-open');
+    document.body.classList.add('overlay-open');
     // store reference to el that opened modal
     this.previouslyFocused = document.activeElement as HTMLElement;
     //move focus into modal
     this.moveFocusIn();
   },
   beforeUnmount() {
-    document.body.classList.remove('modal-open');
+    if (this.overlayNumber === 1) {
+      // no more overlays behind this one, so remove overflow:hidden on body
+      document.body.classList.remove('overlay-open');
+    }
+    this.$store.commit(AppMutations.SUBTRACT_OVERLAY_COUNT);
     document.body.removeEventListener('focus', this.maintainFocus, true);
 
     // restore focus back to element that opened modal
@@ -164,13 +170,8 @@ export default defineComponent({
       this.previouslyFocused.focus();
     }
 
-    // if user closes modal by clicking on the overlay behind, or the close button inside the modal,
-    // we make sure to manually remove the extra route we pushed in this.created() to handle popstate navigation
-    if (!this.closeEventIsPopstate) {
-      this.$router.go(-1);
-    }
     // Close modal in case user presses browser back button
-    window.removeEventListener('popstate', this.handleClose);
+    window.removeEventListener('popstate', this.handlePopstate);
   },
 });
 </script>
@@ -180,7 +181,7 @@ export default defineComponent({
 @import '@/design/variables/index.scss';
 @import '@/design/mixins/index.scss';
 
-body.modal-open {
+body.overlay-open {
   overflow: hidden;
 }
 

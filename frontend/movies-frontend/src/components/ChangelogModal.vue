@@ -10,8 +10,17 @@
     <p>Changelog TODO</p>
     <p>
       You can always return to these releasenotes under the
-      <!-- TODO: this link doesn't work because the modal handles popstate and goes back -1 -->
-      <router-link :to="{ name: 'Changelog' }" class="link" @click="close">"Changelog"</router-link>
+      <!-- Using a button as a router-link doesn't work because the router prevents navigation while a modal is open -->
+      <button
+        class="link"
+        role="link"
+        @click="
+          close();
+          redirect = true;
+        "
+      >
+        "Changelog"
+      </button>
       section of the settings page.
     </p>
   </modal>
@@ -32,6 +41,7 @@ export default defineComponent({
     return {
       appName: APP_NAME,
       appVersion: APP_VERSION,
+      redirect: false,
     };
   },
   computed: {
@@ -42,6 +52,9 @@ export default defineComponent({
   methods: {
     closeReleaseNotes(): void {
       this.$store.commit(AppMutations.SET_USING_NEW_RELEASE, false);
+      if (this.redirect) {
+        this.$router.push({ name: 'Changelog' });
+      }
     },
   },
   created() {

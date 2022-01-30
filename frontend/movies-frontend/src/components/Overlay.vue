@@ -27,6 +27,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { trapTabKey, getFocusableChildren } from '@/utils/focus-trap';
+import { AppMutations } from '@/store/app/mutations';
 
 export default defineComponent({
   name: 'Overlay',
@@ -47,20 +48,14 @@ export default defineComponent({
     return {
       openInternal: true, // used to control transitions
       previouslyFocused: null as null | HTMLElement,
-      closeEventIsPopstate: false,
+      overlayNumber: 1,
     };
   },
   methods: {
     closeOverlay(): void {
       this.$emit('close');
     },
-    handleClose(e?: Event): void {
-      console.log('handleClose');
-      if (e && e.type === 'popstate') {
-        this.closeEventIsPopstate = true;
-      } else {
-        this.closeEventIsPopstate = false;
-      }
+    handleClose(): void {
       this.openInternal = false;
     },
     handleEsc(): void {
@@ -88,14 +83,25 @@ export default defineComponent({
 
       if (target) (target as HTMLElement).focus();
     },
+    handlePopstate() {
+      if (this.overlayNumber === this.$store.getters.openOverlaysCount) {
+        this.handleClose();
+      }
+    },
   },
   created() {
     document.body.addEventListener('focus', this.maintainFocus, true);
 
     if (this.dismissible) {
       // Close overlay in case user presses browser back button
-      window.addEventListener('popstate', this.handleClose);
-      this.$router.push({ ...this.$route, query: { ...this.$route.query, overlay: 1 } });
+      window.addEventListener('popstate', this.handlePopstate);
+
+      this.$store.commit(AppMutations.INCREMENT_OVERLAY_COUNT);
+      this.overlayNumber = this.$store.getters.openOverlaysCount;
+    } else {
+      // NOTE: navigation is NOT reenabled on @close.
+      // If navigation should be reenabled on @close, it should be handled in the component that renders the overlay
+      this.$store.commit(AppMutations.DISABLE_NAVIGATION);
     }
   },
   mounted() {
@@ -106,7 +112,11 @@ export default defineComponent({
     this.moveFocusIn();
   },
   beforeUnmount() {
-    document.body.classList.remove('overlay-open');
+    if (this.overlayNumber === 1) {
+      // no more overlays behind this one, so remove overflow:hidden on body
+      document.body.classList.remove('overlay-open');
+    }
+    this.$store.commit(AppMutations.SUBTRACT_OVERLAY_COUNT);
     document.body.removeEventListener('focus', this.maintainFocus, true);
 
     // restore focus back to element that opened overlay
@@ -115,13 +125,8 @@ export default defineComponent({
     }
 
     if (this.dismissible) {
-      // if user closes overlay by clicking escape key,
-      // we make sure to manually remove the extra route we pushed in this.created() to handle popstate navigation
-      if (!this.closeEventIsPopstate) {
-        this.$router.go(-1);
-      }
       // Close overlay in case user presses browser back button
-      window.removeEventListener('popstate', this.handleClose);
+      window.removeEventListener('popstate', this.handlePopstate);
     }
   },
 });

@@ -112,6 +112,18 @@ const checkOnboarding = (to: RouteLocationNormalized, next: NavigationGuardNext)
 };
 
 router.beforeEach((to, from, next) => {
+  if (store.getters.navigationDisabled) {
+    console.log('Preventing navigation. Navigation is disabled');
+    next(false);
+    return;
+  }
+  if (store.getters.openOverlaysCount > 0 && !store.getters.showReleaseNotes) {
+    // we also check for showReleaseNotes, as that component is initialized before the router kicks in,
+    // so the releasenote modal appears and would otherwise prevent the initial routing to a page
+    console.log('Preventing navigation, overlay is open');
+    next(false);
+    return;
+  }
   checkOnboarding(to, next);
 });
 
