@@ -39,7 +39,7 @@
         <div class="loading-content mt-2">
           <transition name="slide-up" mode="out-in">
             <strong class="text-big text-center d-block mb-1 title" v-if="!dataDeleted">
-              Deleting data...
+              {{ deletingMessage }}
               <br />
               <span class="text-normal">please wait.</span>
             </strong>
@@ -62,6 +62,7 @@ import Layout from '@/layouts/Main.vue';
 import Modal from '@/components/Modal.vue';
 import Overlay from '@/components/Overlay.vue';
 import Loader from '@/components/Loader.vue';
+import promiseDelay from '@/utils/promiseDelay';
 
 export default defineComponent({
   name: 'Delete',
@@ -78,17 +79,25 @@ export default defineComponent({
       showModal: false,
       deletingData: false,
       dataDeleted: false,
+      deletingMessage: 'Deleting data...',
     };
   },
   methods: {
-    handleConfirm() {
+    async handleConfirm() {
       this.deletingData = true;
 
       // TODO: this is TEMP
-      setTimeout(() => {
-        // localStorage.clear();
-        this.dataDeleted = true;
-      }, 4000);
+      this.deletingMessage = 'Deleting data... 1/4';
+      await promiseDelay(2000);
+      this.deletingMessage = 'Deleting data... 2/4';
+      await promiseDelay(500);
+      this.deletingMessage = 'Deleting data... 3/4';
+      await promiseDelay(1000);
+      this.deletingMessage = 'Deleting data... 4/4';
+      await promiseDelay(500);
+
+      // localStorage.clear();
+      this.dataDeleted = true;
 
       // 1: show loader overlay with spinner and text 'Deleting data... please wait'.
       // 2: disable navigation
