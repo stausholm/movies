@@ -167,6 +167,13 @@ const routes: Array<RouteRecordRaw> = [
           import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleAccessibility.vue'),
         meta: {},
       },
+      {
+        path: 'bottomsheet',
+        name: 'ExampleBottomSheet',
+        component: () =>
+          import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleBottomSheet.vue'),
+        meta: {},
+      },
     ],
   },
 ];
