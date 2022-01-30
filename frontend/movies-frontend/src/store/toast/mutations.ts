@@ -18,6 +18,8 @@ export const mutations: MutationTree<ToastState> = {
       duration: changes.duration || 5000,
       theme: changes.theme || 'default',
       dismissable: changes.dismissable !== undefined ? changes.dismissable : true,
+      action: changes.action || null,
+      actionLabel: changes.actionLabel || '',
     };
   },
   [ToastMutations.ADD_TOAST](state, toast: Toast) {
@@ -27,6 +29,8 @@ export const mutations: MutationTree<ToastState> = {
       duration: toast.duration || 5000,
       theme: toast.theme || 'default',
       dismissable: toast.dismissable !== undefined ? toast.dismissable : true,
+      action: toast.action || null,
+      actionLabel: toast.actionLabel || '',
     });
   },
   [ToastMutations.REMOVE_TOAST](state, toast: Toast) {

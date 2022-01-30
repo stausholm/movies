@@ -7,6 +7,13 @@
     <br />
     <button @click="toggle1" class="btn btn--primary mb-2 mr">Replace success with warning</button>
     <button @click="toggle2" class="btn btn--primary mb-2">Replace warning with success</button>
+
+    <h2 class="mt-2">Toasts with action</h2>
+    <p>
+      NB: for accecssibility reasons these should have a sufficiently long enough timeout to be
+      interacted with.
+    </p>
+    <button @click="toggle3" class="btn btn--primary">Toast with action</button>
   </div>
 </template>
 
@@ -52,6 +59,21 @@ export default defineComponent({
       this.$store.commit(ToastMutations.ADD_TOAST, {
         id: 'appIsOnline',
         content: "You're back online!",
+        theme: 'success',
+      } as Toast);
+    },
+    toggle3(): void {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
+      const that = this;
+      this.$store.commit(ToastMutations.ADD_TOAST, {
+        id: 'withAction',
+        content: 'A new version of the app is available, refresh to start using the newest verison',
+        action() {
+          alert('Refresh');
+          that.$store.commit(ToastMutations.REMOVE_TOAST_BY_ID, 'withAction');
+        },
+        actionLabel: 'Refresh',
+        duration: 10000000,
         theme: 'success',
       } as Toast);
     },

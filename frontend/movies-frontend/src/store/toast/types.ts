@@ -6,6 +6,8 @@ export interface Toast {
   theme?: ToastTheme;
   dismissable?: boolean;
   id?: string; // optional id to easily find and remove specific toasts again
+  action?: null | undefined | (() => void);
+  actionLabel?: string;
 }
 
 export interface ToastState {

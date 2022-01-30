@@ -4,6 +4,13 @@
       <div class="toast__content">
         <span>{{ notification.content }}</span>
       </div>
+      <button
+        class="toast__label btn mt btn--uppercase"
+        v-if="notification.actionLabel && notification.action"
+        @click.stop="handleAction"
+      >
+        {{ notification.actionLabel }}
+      </button>
     </div>
   </output>
 </template>
@@ -53,6 +60,11 @@ export default defineComponent({
         this.showing = false;
         clearTimeout(this.timer as number);
         this.$emit('done');
+      }
+    },
+    handleAction() {
+      if (this.notification.action) {
+        this.notification.action();
       }
     },
   },
@@ -116,6 +128,15 @@ export default defineComponent({
 
       &:hover {
         background-color: darken($bg-color, 5);
+      }
+
+      .toast__label {
+        background-color: rgba($color, 0.87);
+        color: $bg-color;
+
+        &:hover {
+          background-color: $color;
+        }
       }
     }
   }
