@@ -9,4 +9,7 @@ export const getters: GetterTree<AppState, RootState> = {
   announceMessage(state): string {
     return state.announceMessage;
   },
+  showReleaseNotes(state): boolean {
+    return state.usingNewRelease;
+  },
 };

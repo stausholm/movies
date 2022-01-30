@@ -1,0 +1,1 @@
+export const APP_SETTINGS_VERSION_KEY = 'APP_VERSION';

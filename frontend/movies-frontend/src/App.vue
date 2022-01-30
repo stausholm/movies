@@ -10,6 +10,8 @@
 
   <pwa-install-overlay v-if="showPwaOverlay" />
 
+  <changelog-modal />
+
   <toast-container />
 
   <pwa-install-listeners />
@@ -36,6 +38,7 @@ import OfflineNotice from '@/components/OfflineNotice.vue';
 import { ToastMutations } from '@/store/toast/mutations';
 import { Toast } from '@/store/toast/types';
 import { warnAboutMeteredConnection } from '@/utils/networkConnection';
+import ChangelogModal from '@/components/ChangelogModal.vue';
 
 export default defineComponent({
   components: {
@@ -47,6 +50,7 @@ export default defineComponent({
     SkipLinks,
     Announcer,
     OfflineNotice,
+    ChangelogModal,
   },
   computed: {
     showPwaOverlay(): boolean {

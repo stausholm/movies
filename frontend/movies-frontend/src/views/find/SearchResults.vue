@@ -45,6 +45,7 @@
         <p>
           Can't find what you're looking for? Try adjusting your search, or explore the extensive
           list of
+          <!-- TODO: hash doesn't scroll to it -->
           <router-link :to="{ name: 'Find', hash: '#genrelist' }" class="link">
             Genres
           </router-link>

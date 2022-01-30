@@ -16,7 +16,7 @@
             <strong
               v-if="title"
               id="modaltitle"
-              class="h4 mb-0 mr"
+              class="h4 mb-0 mr modal__title"
               ref="modaltitle"
               tabindex="-1"
               >{{ title }}</strong
@@ -27,7 +27,7 @@
           </header>
           <p v-else-if="!title" id="modaltitle" class="visually-hidden">Modal</p>
           <div class="modal__body" ref="modalbody" tabindex="-1">
-            <slot></slot>
+            <slot :close="handleClose"></slot>
           </div>
           <div class="modal__footer" :class="{ 'actions-stack-mobile': stackActions }">
             <button @click="handleClose" class="cancel btn btn--text" ref="modalcancel">
@@ -144,6 +144,7 @@ export default defineComponent({
     document.body.addEventListener('focus', this.maintainFocus, true);
 
     // Close modal in case user presses browser back button
+    // TODO: move modal popstate logic into vuex modalOpen boolean, and global vuerouter beforeEach check using next(false)
     window.addEventListener('popstate', this.handleClose);
     this.$router.push({ ...this.$route, query: { ...this.$route.query, modal: 1 } });
   },
@@ -236,6 +237,10 @@ body.modal-open {
           color: $link-hover-color;
         }
       }
+    }
+
+    &__title {
+      outline: 0;
     }
 
     &__body {

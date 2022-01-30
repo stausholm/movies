@@ -8,6 +8,7 @@ import { determineAppLayoutSizeWidth } from '@/utils/determineAppLayoutSize';
 export const state: AppState = {
   layoutSizeWidth: determineAppLayoutSizeWidth(),
   announceMessage: '',
+  usingNewRelease: false,
 };
 
 export const app: Module<AppState, RootState> = {

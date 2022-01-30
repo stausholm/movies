@@ -134,6 +134,7 @@
     outline: none;
   }
 
+  // https://css-tricks.com/making-disabled-buttons-more-inclusive/
   &:disabled,
   &[aria-disabled='true'] {
     pointer-events: none;
