@@ -130,7 +130,7 @@
     <input type="radio" name="bob" id="" :disabled="inputsDisabled" aria-invalid="false" />
 
     <h2>Base input component</h2>
-    <base-input
+    <input-extended
       id="testId"
       label="test label"
       type="email"
@@ -145,9 +145,10 @@
       v-model="inputs.text"
       data-attribute-test="asdasd"
       :disabled="inputsDisabled"
+      enterkeyhint="search"
     />
 
-    <base-input
+    <input-extended
       id="testId2"
       label="test label"
       type="range"
@@ -155,7 +156,7 @@
       placeholder="placeholder loremasd"
       class="mb-2 mt-2"
       :hasErrors="true"
-      errorMessage="Error message lorem"
+      errorMessage="Error message lorem asd"
       prefix="0"
       suffix="10"
       step="2"
@@ -167,7 +168,7 @@
     />
 
     <h2>Textarea component</h2>
-    <textarea-custom
+    <textarea-extended
       class="mb-2"
       label="Textarea label"
       id="textareaId"
@@ -178,20 +179,21 @@
       v-model="inputs.textarea"
       :disabled="inputsDisabled"
       :autoGrow="true"
+      @blur="handleEvent"
     />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import BaseInput from '@/components/base/BaseInput.vue';
-import TextareaCustom from '@/components/TextareaCustom.vue';
+import InputExtended from '@/components/forms/InputExtended.vue';
+import TextareaExtended from '@/components/forms/TextareaExtended.vue';
 
 export default defineComponent({
   name: 'ExampleInputs',
   components: {
-    BaseInput,
-    TextareaCustom,
+    InputExtended,
+    TextareaExtended,
   },
   data() {
     return {
@@ -203,6 +205,11 @@ export default defineComponent({
       },
       inputsDisabled: false,
     };
+  },
+  methods: {
+    handleEvent() {
+      console.log('event!');
+    },
   },
 });
 </script>

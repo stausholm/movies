@@ -1,6 +1,13 @@
 <template>
-  <div class="form-group" :class="attributes.classes">
-    <label :for="idFormatted" :class="{ 'visually-hidden': hideLabel }">{{ label }}</label>
+  <input-wrapper
+    :class="attributes.classes"
+    :id="id"
+    :description="description"
+    :hasErrors="hasErrors"
+    :errorMessage="errorMessage"
+    :hideLabel="hideLabel"
+    :label="label"
+  >
     <textarea
       :id="idFormatted"
       :aria-describedby="helperIdFormatted"
@@ -10,49 +17,24 @@
       v-bind="attributes.rest"
       ref="textarea"
     ></textarea>
-    <span class="text-small d-block text-danger fw-bold" v-if="hasErrors && errorMessage">{{
-      errorMessage
-    }}</span>
-    <span :id="helperIdFormatted" v-if="description" class="text-small d-block">{{
-      description
-    }}</span>
-  </div>
+  </input-wrapper>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import InputWrapper from '@/components/forms/InputWrapper.vue';
 
 export default defineComponent({
-  name: 'TextareaCustom',
+  name: 'TextareaExtended',
   inheritAttrs: false,
+  components: {
+    InputWrapper,
+  },
   props: {
+    ...InputWrapper.props,
     modelValue: {
       type: String,
       required: true,
-    },
-    hideLabel: {
-      type: Boolean,
-      default: false,
-    },
-    label: {
-      type: String,
-      required: true,
-    },
-    id: {
-      type: [String, Number],
-      required: true,
-    },
-    description: {
-      type: String,
-      default: null,
-    },
-    hasErrors: {
-      type: Boolean,
-      default: null,
-    },
-    errorMessage: {
-      type: String,
-      default: null,
     },
     autoGrow: {
       type: Boolean,
@@ -60,15 +42,7 @@ export default defineComponent({
     },
   },
   computed: {
-    idFormatted(): string {
-      return 'base-input--' + this.id;
-    },
-    helperIdFormatted(): string | null {
-      if (this.description) {
-        return 'base-input-helper--' + this.id;
-      }
-      return null;
-    },
+    ...InputWrapper.computed,
     attributes() {
       return { classes: this.$attrs.class, rest: { ...this.$attrs, class: '' } };
     },
@@ -131,15 +105,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-@use 'sass:math';
-@import '@/design/variables/index.scss';
-@import '@/design/mixins/index.scss';
-
-.form-group {
-  .text-small:first-of-type {
-    margin-top: math.div($default-spacing, 4);
-  }
-}
-</style>
