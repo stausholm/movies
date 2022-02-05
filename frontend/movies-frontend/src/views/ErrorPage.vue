@@ -5,7 +5,18 @@
         <h1>404</h1>
         <h2>Woah.. that wasn't supposed to happen</h2>
         <p>Looks like you requested a page that doesn't exists</p>
-        <router-link :to="{ name: 'Home' }" class="btn btn--primary" replace>Go home!</router-link>
+        <div>
+          <button
+            class="btn btn--outline btn--primary mr"
+            @click="$router.go(-1)"
+            v-if="showGoBack"
+          >
+            Go back
+          </button>
+          <router-link :to="{ name: 'Home' }" class="btn btn--primary" replace
+            >Go home!</router-link
+          >
+        </div>
       </div>
     </div>
   </layout>
@@ -19,6 +30,11 @@ export default defineComponent({
   name: 'ErrorPage',
   components: {
     Layout,
+  },
+  computed: {
+    showGoBack(): boolean {
+      return window.history.length > 1 && window.history.state.back;
+    },
   },
 });
 </script>
