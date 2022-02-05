@@ -1,5 +1,56 @@
 <template>
   <div
+    class="sticky-top"
+    ref="stickyTop"
+    :class="{
+      'scrolled-top': scrolledToTheTop,
+      'scrolling-down': scrollingDown,
+      'scrolled-to-hero-content-bottom': scrolledToHeroContentBottom,
+      'scrolled-to-sticky-content': scrolledToStickycontent,
+    }"
+  >
+    <div class="sticky-top-background" aria-hidden="true" ref="stickyTopBackground"></div>
+    <div class="sticky-top__inner">
+      <base-button
+        class="btn--rounded sticky-back"
+        @click="goBack"
+        v-if="isMobileLayout && showBackButton"
+        data-pushtip="Go back"
+      >
+        <span class="visually-hidden">Go back</span>
+        <base-icon>
+          <icon-arrow-left />
+        </base-icon>
+      </base-button>
+
+      <span class="fw-bold title text-truncate" aria-hidden="true" ref="stickyTitle">{{
+        titleComputed
+      }}</span>
+
+      <transition name="fade">
+        <div
+          class="sticky-actions"
+          v-if="isMobileLayout || (!isMobileLayout && scrolledToHeroContentBottom)"
+        >
+          <base-button
+            v-if="actions && actions.length === 1 && actions[0].icon"
+            class="btn--rounded hero-action"
+            :data-pushtip="actions[0].label"
+          >
+            <base-icon-async :name="actions[0].icon" />
+          </base-button>
+          <context-menu-button
+            v-else-if="actions && actions.length"
+            :actions="actions"
+            id="hero-actions"
+            class="hero-actions"
+            v-bind="$attrs"
+          />
+        </div>
+      </transition>
+    </div>
+  </div>
+  <div
     ref="heroWrapper"
     class="hero-wrapper app-hero"
     :class="[
@@ -12,48 +63,6 @@
       },
     ]"
   >
-    <div class="sticky-top" ref="stickyTop">
-      <div class="sticky-top-background" aria-hidden="true" ref="stickyTopBackground"></div>
-      <div class="sticky-top__inner">
-        <base-button
-          class="btn--rounded sticky-back"
-          @click="goBack"
-          v-if="isMobileLayout && showBackButton"
-          data-pushtip="Go back"
-        >
-          <span class="visually-hidden">Go back</span>
-          <base-icon>
-            <icon-arrow-left />
-          </base-icon>
-        </base-button>
-
-        <span class="fw-bold title text-truncate" aria-hidden="true" ref="stickyTitle">{{
-          titleComputed
-        }}</span>
-
-        <transition name="fade">
-          <div
-            class="sticky-actions"
-            v-if="isMobileLayout || (!isMobileLayout && scrolledToHeroContentBottom)"
-          >
-            <base-button
-              v-if="actions && actions.length === 1 && actions[0].icon"
-              class="btn--rounded hero-action"
-              :data-pushtip="actions[0].label"
-            >
-              <base-icon-async :name="actions[0].icon" />
-            </base-button>
-            <context-menu-button
-              v-else-if="actions && actions.length"
-              :actions="actions"
-              id="hero-actions"
-              class="hero-actions"
-              v-bind="$attrs"
-            />
-          </div>
-        </transition>
-      </div>
-    </div>
     <hero :background="background" :bgImage="bgImage" :slim="slim" ref="hero">
       <div class="hero-content-wrapper">
         <div class="hero-content" ref="heroContent">
@@ -264,7 +273,7 @@ export default defineComponent({
 $sticky-height: $min-touch-target-size + math.div($default-spacing, 2);
 
 .sticky-top {
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
@@ -331,19 +340,17 @@ $sticky-height: $min-touch-target-size + math.div($default-spacing, 2);
   z-index: 1;
 }
 
-.scrolled-top {
-  .sticky-top {
-    background-color: transparent;
-    box-shadow: none;
+.sticky-top.scrolled-top {
+  background-color: transparent;
+  box-shadow: none;
 
-    @include breakpoint($breakpoint-navigation-change) {
-      user-select: none;
-      pointer-events: none;
-    }
+  @include breakpoint($breakpoint-navigation-change) {
+    user-select: none;
+    pointer-events: none;
+  }
 
-    .title {
-      opacity: 0;
-    }
+  .title {
+    opacity: 0;
   }
 }
 
@@ -363,14 +370,17 @@ $sticky-height: $min-touch-target-size + math.div($default-spacing, 2);
   }
 }
 
-.scrolled-to-hero-content-bottom.scrolling-down {
-  .sticky-top {
+.sticky-top {
+  &.scrolled-to-hero-content-bottom.scrolling-down {
     transform: translateY(-100%);
 
     &-background {
       box-shadow: none;
     }
   }
+}
+
+.scrolled-to-hero-content-bottom.scrolling-down {
   + .sticky-content {
     top: 0;
   }

@@ -15,6 +15,12 @@
       <p>test</p>
       <button @keyup.esc.stop="testkeyup" autofocus>test</button>
       <p>test</p>
+      <p>This is a context-menu-button that also works inside here</p>
+      <context-menu-button
+        :actions="[{ label: 'label', emit: 'emit' }]"
+        id="a"
+        buttonClass="btn--primary"
+      />
       <p>test</p>
       <button class="btn btn--primary" @click="trapTest = true">
         this is a button in modal. It will open another modal
@@ -71,7 +77,15 @@
       </overlay> -->
     <overlay label="overlay label" v-if="trapTest2" @close="trapTest2 = false" v-slot="{ close }">
       <p>this is overlay opened from inside overlay 1</p>
-      <button class="btn btn--primary" @click="close">this is a button in overlay</button>
+      <button class="btn btn--primary" @click="close">
+        this is a button in overlay. It will close the overlay using v-slot
+      </button>
+      <p>This is a context-menu-button that also works inside here</p>
+      <context-menu-button
+        :actions="[{ label: 'label', emit: 'emit' }]"
+        id="a"
+        buttonClass="btn--primary"
+      />
     </overlay>
   </div>
 </template>
@@ -80,12 +94,14 @@
 import { defineComponent } from 'vue';
 import Modal from '@/components/Modal.vue';
 import Overlay from '@/components/Overlay.vue';
+import ContextMenuButton from '@/components/ContextMenuButton.vue';
 
 export default defineComponent({
   name: 'ExampleModal',
   components: {
     Modal,
     Overlay,
+    ContextMenuButton,
   },
   data() {
     return {

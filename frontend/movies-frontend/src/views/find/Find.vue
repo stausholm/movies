@@ -2,7 +2,7 @@
   <layout>
     <base-spacer size="4" />
     <h1 class="visually-hidden">Search page</h1>
-    <div class="container position-sticky top-0 pt sticky-search">
+    <div class="container position-sticky top-0 pt pb sticky-search">
       <search-bar
         placeholder="Search actors or titles"
         @error="handleSearchError"
@@ -125,5 +125,6 @@ export default defineComponent({
 
 .sticky-search {
   z-index: 1;
+  background-color: $body-bg;
 }
 </style>

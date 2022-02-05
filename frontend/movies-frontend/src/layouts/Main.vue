@@ -17,6 +17,10 @@ main {
     padding-bottom: $nav-height;
   }
 
+  .sticky-top {
+    // app hero is supposed to lay behind the nav, so we pull it up behind it like so
+    margin-top: -$nav-height;
+  }
   @include breakpoint($breakpoint-navigation-change) {
     .app-hero {
       // app hero is supposed to lay behind the nav, so we pull it up behind it like so
