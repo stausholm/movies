@@ -266,6 +266,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+// TODO: clean up styles
 @use 'sass:math';
 @import '@/design/variables/index.scss';
 @import '@/design/mixins/index.scss';
@@ -336,7 +337,7 @@ $sticky-height: $min-touch-target-size + math.div($default-spacing, 2);
   position: -webkit-sticky;
   position: sticky;
   top: $sticky-height;
-  transition: top 0.3s, background-color 0.125s ease-out;
+  transition: top 0.3s, background-color 0.125s ease-out, box-shadow 0.125s ease-out;
   z-index: 1;
 }
 
@@ -363,6 +364,8 @@ $sticky-height: $min-touch-target-size + math.div($default-spacing, 2);
 .scrolled-to-sticky-content {
   + .sticky-content {
     background-color: $nav-bg;
+    box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.14), 0 0px 1px -2px rgba(0, 0, 0, 0.2),
+      0 0px 5px 0 rgba(0, 0, 0, 0.12);
   }
 
   .sticky-top-background {
@@ -374,7 +377,7 @@ $sticky-height: $min-touch-target-size + math.div($default-spacing, 2);
   &.scrolled-to-hero-content-bottom.scrolling-down {
     transform: translateY(-100%);
 
-    &-background {
+    .sticky-top-background {
       box-shadow: none;
     }
   }
