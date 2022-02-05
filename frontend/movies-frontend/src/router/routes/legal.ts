@@ -5,19 +5,25 @@ const routes: Array<RouteRecordRaw> = [
     path: '/licenses',
     name: 'Licenses',
     component: () => import(/* webpackChunkName: "legal" */ '@/views/legal/Licenses.vue'),
-    meta: {},
+    meta: {
+      title: 'Licenses',
+    },
   },
   {
     path: '/privacy-policy',
     name: 'PrivacyPolicy',
     component: () => import(/* webpackChunkName: "legal" */ '@/views/legal/PrivacyPolicy.vue'),
-    meta: {},
+    meta: {
+      title: 'Privacy Policy',
+    },
   },
   {
     path: '/tos',
     name: 'TOS',
     component: () => import(/* webpackChunkName: "legal" */ '@/views/legal/Tos.vue'),
-    meta: {},
+    meta: {
+      title: 'Terms of Service',
+    },
   },
 ];
 

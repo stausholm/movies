@@ -44,6 +44,7 @@
 import { defineComponent } from 'vue';
 import { clickRegionElement } from '@/utils/clickRegion';
 import BaseIconAsync from '@/components/base/BaseIconAsync.vue';
+import { AppMutations } from '@/store/app/mutations';
 
 export default defineComponent({
   components: { BaseIconAsync },
@@ -72,6 +73,7 @@ export default defineComponent({
       showInternal: true,
       previouslyFocused: null as null | HTMLElement,
       buttonRefs: [] as HTMLButtonElement[],
+      overlayNumber: 1,
     };
   },
   methods: {
@@ -122,8 +124,21 @@ export default defineComponent({
         this.buttonRefs.push(el);
       }
     },
+    handlePopstate() {
+      if (this.overlayNumber === this.$store.getters.openOverlaysCount) {
+        this.handleClose();
+      }
+    },
+  },
+  created() {
+    // Close menu in case user presses browser back button
+    window.addEventListener('popstate', this.handlePopstate);
+
+    this.$store.commit(AppMutations.INCREMENT_OVERLAY_COUNT);
+    this.overlayNumber = this.$store.getters.openOverlaysCount;
   },
   mounted() {
+    document.body.classList.add('overlay-open');
     // store reference to el that opened menu
     this.previouslyFocused = document.activeElement as HTMLElement;
 
@@ -136,10 +151,19 @@ export default defineComponent({
     }
   },
   beforeUnmount() {
+    if (this.overlayNumber === 1) {
+      // no more overlays behind this one, so remove overflow:hidden on body
+      document.body.classList.remove('overlay-open');
+    }
+    this.$store.commit(AppMutations.SUBTRACT_OVERLAY_COUNT);
+
     // restore focus back to element that opened menu
     if (this.previouslyFocused && this.previouslyFocused.focus) {
       this.previouslyFocused.focus();
     }
+
+    // Close menu in case user presses browser back button
+    window.removeEventListener('popstate', this.handlePopstate);
   },
 });
 </script>

@@ -27,20 +27,26 @@ const routes: Array<RouteRecordRaw> = [
         path: 'about',
         name: 'About',
         component: () => import(/* webpackChunkName: "account" */ '@/views/account/About.vue'),
-        meta: {},
+        meta: {
+          title: 'About',
+        },
       },
       {
         path: 'about/credits',
         name: 'Credits',
         component: () => import(/* webpackChunkName: "account" */ '@/views/account/Credits.vue'),
-        meta: {},
+        meta: {
+          title: 'Credits',
+        },
       },
       {
         path: 'about/permissions',
         name: 'Permissions',
         component: () =>
           import(/* webpackChunkName: "account" */ '@/views/account/Permissions.vue'),
-        meta: {},
+        meta: {
+          title: 'Permissions',
+        },
       },
       {
         path: 'delete',
@@ -52,13 +58,17 @@ const routes: Array<RouteRecordRaw> = [
         path: 'feedback',
         name: 'Feedback',
         component: () => import(/* webpackChunkName: "account" */ '@/views/account/Feedback.vue'),
-        meta: {},
+        meta: {
+          title: 'Feedback',
+        },
       },
       {
         path: 'changelog',
         name: 'Changelog',
         component: () => import(/* webpackChunkName: "account" */ '@/views/account/Changelog.vue'),
-        meta: {},
+        meta: {
+          title: 'Changelog',
+        },
       },
       {
         path: 'button',
@@ -70,7 +80,9 @@ const routes: Array<RouteRecordRaw> = [
         path: 'tips',
         name: 'Tips',
         component: () => import(/* webpackChunkName: "account" */ '@/views/account/Tips.vue'),
-        meta: {},
+        meta: {
+          title: 'Tips',
+        },
       },
     ],
   },

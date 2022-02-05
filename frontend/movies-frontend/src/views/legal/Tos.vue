@@ -1,7 +1,7 @@
 <template>
   <layout>
+    <hero-app :showBackButton="true" :slim="true" />
     <div class="container">
-      <h1>Terms of Service</h1>
       <p class="text-mono">¯\_(ツ)_/¯ Have fun!</p>
     </div>
   </layout>
@@ -10,11 +10,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Layout from '@/layouts/Main.vue';
+import HeroApp from '@/components/HeroApp.vue';
 
 export default defineComponent({
   name: 'TOS',
   components: {
     Layout,
+    HeroApp,
   },
 });
 </script>

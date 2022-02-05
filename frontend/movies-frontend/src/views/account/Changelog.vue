@@ -1,7 +1,7 @@
 <template>
   <layout>
+    <hero-app :showBackButton="true" :slim="true" />
     <div class="container">
-      <h1>Changelog</h1>
       <p>All notable changes to {{ appName }} are documented here.</p>
       <p>Eventually.</p>
       <p>Until then enjoy the latest 30 commits to the main branch</p>
@@ -18,11 +18,13 @@
 import { defineComponent } from 'vue';
 import { APP_NAME } from '@/constants/SiteSettings.json';
 import Layout from '@/layouts/Main.vue';
+import HeroApp from '@/components/HeroApp.vue';
 
 export default defineComponent({
   name: 'Changelog',
   components: {
     Layout,
+    HeroApp,
   },
   data() {
     return {

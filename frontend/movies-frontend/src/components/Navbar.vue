@@ -220,6 +220,7 @@ export default defineComponent({
       z-index: -1;
       border-radius: $border-radius-small;
       background-color: $gray-200;
+      // background-color: rgba($gray-400, 0.4);
     }
   }
 

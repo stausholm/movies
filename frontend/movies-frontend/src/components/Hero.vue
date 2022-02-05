@@ -1,5 +1,5 @@
 <template>
-  <div class="hero">
+  <div class="hero" :class="{ 'hero--slim': slim }">
     <div class="hero__backgrounds" v-if="backgrounds.length > 0">
       <div
         class="hero__bg"
@@ -18,6 +18,8 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 
+type background = '' | 'image' | 'gray' | 'primary' | 'gradient' | 'fade';
+
 export default defineComponent({
   name: 'Hero',
   props: {
@@ -27,8 +29,13 @@ export default defineComponent({
       default: 'https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif',
     },
     background: {
-      type: [String, Array] as PropType<string | string[]>,
+      type: [String, Array] as PropType<background | background[]>,
       default: '',
+    },
+    slim: {
+      // if true, there's a smaller min-height on .hero
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -55,13 +62,20 @@ export default defineComponent({
 .hero {
   position: relative;
   min-height: 400px;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
 
-  // @include breakpoint-max($breakpoint-navigation-change) {
-  //   min-height: 200px;
-  // }
+  @include breakpoint-max($breakpoint-navigation-change) {
+    min-height: 150px;
+  }
+
+  &--slim {
+    min-height: 200px;
+
+    @include breakpoint-max($breakpoint-navigation-change) {
+      min-height: 0;
+    }
+  }
 
   &__bg {
     position: absolute;
@@ -135,6 +149,15 @@ export default defineComponent({
     }
   }
 
+  &__backgrounds {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
   &__content {
     padding-top: $default-spacing * 4;
     padding-bottom: $default-spacing * 2;

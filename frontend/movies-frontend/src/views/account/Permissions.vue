@@ -1,7 +1,7 @@
 <template>
   <layout>
+    <hero-app :showBackButton="true" :slim="true" />
     <div class="container">
-      <h1>Permissions</h1>
       <p>
         The following permissions are optional. You can use {{ appName }} without them, but some
         funcitons may be limited.
@@ -26,11 +26,13 @@
 import { defineComponent } from 'vue';
 import Layout from '@/layouts/Main.vue';
 import { APP_NAME } from '@/constants/SiteSettings.json';
+import HeroApp from '@/components/HeroApp.vue';
 
 export default defineComponent({
   name: 'Permissions',
   components: {
     Layout,
+    HeroApp,
   },
   data() {
     return {

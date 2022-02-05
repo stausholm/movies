@@ -1,7 +1,7 @@
 <template>
   <layout>
+    <hero-app :showBackButton="true" :slim="true" />
     <div class="container">
-      <h1>Starred</h1>
       <div v-if="loading">loading</div>
       <div v-else-if="starredContent.length > 0" class="row">
         <div class="col-6" v-for="content in starredContent" :key="content.imdbId">
@@ -32,6 +32,7 @@ import Series from '@/types/Series';
 import Movie from '@/types/Movie';
 import BaseIcon from '@/components/base/BaseIcon.vue';
 import IconStar from '@/components/icons/IconStar.vue';
+import HeroApp from '@/components/HeroApp.vue';
 
 export default defineComponent({
   name: 'Starred',
@@ -39,6 +40,7 @@ export default defineComponent({
     Layout,
     BaseIcon,
     IconStar,
+    HeroApp,
   },
   computed: {
     starredContent(): (Episode | Series | Movie)[] {

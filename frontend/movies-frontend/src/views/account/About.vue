@@ -1,7 +1,7 @@
 <template>
   <layout>
+    <hero-app :showBackButton="true" :slim="true" />
     <div class="container">
-      <h1>About</h1>
       <p>
         <b>{{ appName }}</b> is all about Lorem ipsum dolor sit amet consectetur adipisicing elit.
         Eius enim asperiores omnis nemo laborum cupiditate sunt ducimus, vero dignissimos porro. Id
@@ -32,12 +32,14 @@ import { defineComponent } from 'vue';
 import { APP_NAME, APP_VERSION, APP_CODE_URL } from '@/constants/SiteSettings.json';
 import Layout from '@/layouts/Main.vue';
 import BlockLink from '@/components/BlockLink.vue';
+import HeroApp from '@/components/HeroApp.vue';
 
 export default defineComponent({
   name: 'About',
   components: {
     Layout,
     BlockLink,
+    HeroApp,
   },
   data() {
     return {

@@ -1,16 +1,19 @@
 <template>
   <div
-    class="hero-wrapper"
+    ref="heroWrapper"
+    class="hero-wrapper app-hero"
     :class="[
       className,
       {
         'scrolled-top': scrolledToTheTop,
         'scrolling-down': scrollingDown,
         'scrolled-to-hero-content-bottom': scrolledToHeroContentBottom,
+        'scrolled-to-sticky-content': scrolledToStickycontent,
       },
     ]"
   >
     <div class="sticky-top" ref="stickyTop">
+      <div class="sticky-top-background" aria-hidden="true" ref="stickyTopBackground"></div>
       <div class="sticky-top__inner">
         <base-button
           class="btn--rounded sticky-back"
@@ -28,10 +31,40 @@
           titleComputed
         }}</span>
 
-        <div class="sticky-actions">
+        <transition name="fade">
+          <div
+            class="sticky-actions"
+            v-if="isMobileLayout || (!isMobileLayout && scrolledToHeroContentBottom)"
+          >
+            <base-button
+              v-if="actions && actions.length === 1 && actions[0].icon"
+              class="btn--rounded hero-action"
+              :data-pushtip="actions[0].label"
+            >
+              <base-icon-async :name="actions[0].icon" />
+            </base-button>
+            <context-menu-button
+              v-else-if="actions && actions.length"
+              :actions="actions"
+              id="hero-actions"
+              class="hero-actions"
+              v-bind="$attrs"
+            />
+          </div>
+        </transition>
+      </div>
+    </div>
+    <hero :background="background" :bgImage="bgImage" :slim="slim" ref="hero">
+      <div class="hero-content-wrapper">
+        <div class="hero-content" ref="heroContent">
+          <slot :title="titleComputed">
+            <h1 class="mb-0">{{ titleComputed }}</h1>
+          </slot>
+        </div>
+        <div class="desktop-actions" v-if="!isMobileLayout && actions && actions.length > 0">
           <base-button
             v-if="actions && actions.length === 1 && actions[0].icon"
-            class="btn--rounded hero-action"
+            class="btn--rounded hero-action ml-1"
             :data-pushtip="actions[0].label"
           >
             <base-icon-async :name="actions[0].icon" />
@@ -39,23 +72,16 @@
           <context-menu-button
             v-else-if="actions && actions.length"
             :actions="actions"
-            id="hero-actions"
-            class="hero-actions"
+            id="hero-actions-desktop"
+            class="hero-actions ml-1"
+            buttonClass="btn--text"
             v-bind="$attrs"
           />
         </div>
       </div>
-    </div>
-    <hero :background="['primary', 'fade']">
-      <div class="hero-content" ref="heroContent">
-        <slot>
-          <span class="text-pre-head">lorem ipsum</span>
-          <h1 class="mb-0" ref="title">{{ titleComputed }}</h1>
-        </slot>
-      </div>
     </hero>
   </div>
-  <div class="sticky-content" v-if="$slots.stickyContent">
+  <div class="sticky-content" v-if="$slots.stickyContent" ref="stickyContent">
     <slot name="stickyContent"></slot>
   </div>
 </template>
@@ -69,6 +95,7 @@ import IconArrowLeft from '@/components/icons/IconArrowLeft.vue';
 import ContextMenuButton from '@/components/ContextMenuButton.vue';
 import { AppLayoutSizeWidth } from '@/store/app/types';
 import Hero from '@/components/Hero.vue';
+import { clamp } from '@/utils/generic';
 
 export default defineComponent({
   inheritAttrs: false,
@@ -82,6 +109,7 @@ export default defineComponent({
   },
   name: 'HeroApp',
   props: {
+    ...Hero.props,
     showBackButton: {
       type: Boolean,
       default: false,
@@ -108,6 +136,7 @@ export default defineComponent({
       scrolledToTheTop: true,
       ticking: false,
       scrolledToHeroContentBottom: false,
+      scrolledToStickycontent: false,
     };
   },
   computed: {
@@ -123,13 +152,13 @@ export default defineComponent({
       }
 
       const r = this.$route;
-      if (r.meta && r.meta.title) {
+      if (r.meta && r.meta.title && r.matched[r.matched.length - 1].meta.title) {
         //fallback to title defined on the route
         return r.meta.title;
-      } else if (r.matched && r.matched.length > 1) {
+      } else if (r.matched.length > 1) {
         // multiple matches, so there might be a parentpage that we can use the title from
         const match = r.matched.filter((x) => x.meta && x.meta.title).slice(-1); // get last match in list
-        if (match.length > 0) {
+        if (match.length > 0 && match[0].path !== r.path) {
           console.warn(
             '[Hero Title]: title is using a fallback from a parent page. You should probably set a specific title for this page '
           );
@@ -163,13 +192,14 @@ export default defineComponent({
 
       const heroContent = this.$refs.heroContent as HTMLElement;
       const stickyTitle = this.$refs.stickyTitle as HTMLElement;
+      const stickyTopBackground = this.$refs.stickyTopBackground as HTMLElement;
 
       // we can use offsetTop instead of getboundclientrect() because we know from the design that this hero will always be rendered at the top of the page
       // how far down the bottom of the heroContent element is from the top of the entire page (not top of viewport)
       const heroContentBottom = heroContent.offsetTop + heroContent.offsetHeight;
-      // when window is scrolled all the way to the top, we want opacity to be 100%.
-      // When the bottom of the heroContent is scrolled to the top of the viewport, opacity should be at 0%.
-      // detract the height of the sticky header, so we reach 100% a little before the heroContent has scrolled entirely out of view, for a better visual effect
+      // when window is scrolled all the way to the top, we want heroContent opacity to be 100%.
+      // When the bottom of the heroContent is scrolled to the top of the viewport, heroContent opacity should be at 0%.
+      // detract the height of the sticky header*1.5, so we reach 100% a little before the heroContent has scrolled entirely out of view, for a better visual effect
       const heroContentBottomOffset = heroContentBottom - headerHeight * 1.5;
       const percentage = window.scrollY / heroContentBottomOffset; // e.g. scrolled 150px and heroContentBottom is 300px from top of page, 150/300 = 0.5 = 50%
       const difference = 1 - percentage;
@@ -178,22 +208,25 @@ export default defineComponent({
       heroContent.style.opacity = opacity;
       // as the heroContent fades out, we want to fade in the title in the stickyTop
       stickyTitle.style.opacity = percentage.toString();
+      stickyTopBackground.style.opacity = percentage.toString();
 
-      // TODO: hardcoded color
-      header.style.backgroundColor = `rgba(255,255,255,${percentage})`;
-
-      // heroContent.style.transform = 'scale(0.5) translateY(40px)';
-      // clamp(min:0, max:1, preffered: val)
       if (this.isMobileLayout) {
-        heroContent.style.transform = `scale(${difference + percentage / 1.1}) translateY(-${
-          (percentage * 100) / 10
-        }px)`;
+        const scale = clamp(difference + percentage / 1.1, 0, 1);
+        heroContent.style.transform = `scale(${scale}) translateY(-${(percentage * 100) / 10}px)`;
       } else {
         heroContent.style.transform = ``;
       }
 
-      // TODO: calculate height for when scroll reaches stickyContent, so we can apply styles for when content sticks
-      if (window.scrollY >= heroContentBottomOffset) {
+      const heroWrapper = this.$refs.heroWrapper as HTMLElement;
+      const heroWrapperBottom = heroWrapper.offsetTop + heroWrapper.offsetHeight;
+      // calculate height for when scroll reaches stickyContent, so we can apply styles for when content sticks
+      if (this.$refs.stickyContent && window.scrollY >= heroWrapperBottom - headerHeight) {
+        this.scrolledToStickycontent = true;
+      } else {
+        this.scrolledToStickycontent = false;
+      }
+      // calculate height for when scroll reaches bottom of hero, so we can scroll sticky-top out of view
+      if (window.scrollY >= heroWrapperBottom) {
         this.scrolledToHeroContentBottom = true;
       } else {
         this.scrolledToHeroContentBottom = false;
@@ -235,9 +268,22 @@ $sticky-height: $min-touch-target-size + math.div($default-spacing, 2);
   top: 0;
   left: 0;
   right: 0;
-  //background-color: $nav-bg;
   @include z-index(nav);
   transition: transform 0.3s;
+
+  &-background {
+    background-color: $nav-bg;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.14), 0 0px 1px -2px rgba(0, 0, 0, 0.2),
+      0 0px 5px 0 rgba(0, 0, 0, 0.12);
+    opacity: 0;
+    z-index: -1;
+    transition: box-shadow 0.125s ease-out;
+  }
 
   &__inner {
     height: $sticky-height;
@@ -252,6 +298,10 @@ $sticky-height: $min-touch-target-size + math.div($default-spacing, 2);
 
   .title {
     flex: 1;
+
+    &:first-child {
+      padding-left: $default-spacing * 0.75;
+    }
   }
 
   .sticky-back,
@@ -277,7 +327,7 @@ $sticky-height: $min-touch-target-size + math.div($default-spacing, 2);
   position: -webkit-sticky;
   position: sticky;
   top: $sticky-height;
-  transition: top 0.3s;
+  transition: top 0.3s, background-color 0.125s ease-out;
   z-index: 1;
 }
 
@@ -285,6 +335,11 @@ $sticky-height: $min-touch-target-size + math.div($default-spacing, 2);
   .sticky-top {
     background-color: transparent;
     box-shadow: none;
+
+    @include breakpoint($breakpoint-navigation-change) {
+      user-select: none;
+      pointer-events: none;
+    }
 
     .title {
       opacity: 0;
@@ -294,27 +349,72 @@ $sticky-height: $min-touch-target-size + math.div($default-spacing, 2);
 
 .hero-content {
   transform-origin: bottom center;
-  // TODO: should this transition be here if we update based on scroll position every RAF?
-  // transition: transform 0.2s ease, opacity 0.2s ease;
+  // this transition is specifically set to none as we update styles based on scroll position every RAF
+  transition: none;
 }
 
-.scrolled-to-hero-content-bottom {
-  .sticky-top {
-    box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.14), 0 0px 1px -2px rgba(0, 0, 0, 0.2),
-      0 0px 5px 0 rgba(0, 0, 0, 0.12);
-  }
+.scrolled-to-sticky-content {
   + .sticky-content {
     background-color: $nav-bg;
   }
+
+  .sticky-top-background {
+    box-shadow: none;
+  }
 }
 
-// TODO: should this be a prop?
-// .scrolled-to-hero-content-bottom.scrolling-down {
-//   .sticky-top {
-//     transform: translateY(-100%);
-//   }
-//   + .sticky-content {
-//     top: 0;
-//   }
-// }
+.scrolled-to-hero-content-bottom.scrolling-down {
+  .sticky-top {
+    transform: translateY(-100%);
+
+    &-background {
+      box-shadow: none;
+    }
+  }
+  + .sticky-content {
+    top: 0;
+  }
+}
+
+.hero-wrapper {
+  .hero {
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 170px;
+      z-index: -1;
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0.03) 15%,
+        rgba(0, 0, 0, 0.125) 30%,
+        rgba(0, 0, 0, 0.25) 46%,
+        rgba(0, 0, 0, 0.4) 61%,
+        rgba(0, 0, 0, 0.553) 75%,
+        rgba(0, 0, 0, 0.694) 88%,
+        rgba(0, 0, 0, 0.8)
+      );
+      background: linear-gradient(
+        to top,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0.03) 15%,
+        rgba(255, 255, 255, 0.125) 30%,
+        rgba(255, 255, 255, 0.25) 46%,
+        rgba(255, 255, 255, 0.4) 61%,
+        rgba(255, 255, 255, 0.553) 75%,
+        rgba(255, 255, 255, 0.694) 88%,
+        rgba(255, 255, 255, 0.8)
+      );
+    }
+  }
+}
+
+.hero-content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
 </style>

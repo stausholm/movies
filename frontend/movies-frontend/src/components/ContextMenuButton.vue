@@ -2,6 +2,7 @@
   <div class="context-menu-button d-inline-block position-relative" :class="className">
     <base-button
       class="btn--rounded context-menu-button__btn"
+      :class="buttonClass"
       :id="idFormatted.button"
       aria-haspopup="true"
       :aria-controls="idFormatted.list"
@@ -64,6 +65,10 @@ export default defineComponent({
     class: {
       // since $attrs is bound to the <context-menu /> component we want to make sure if any class is set when importing this component,
       // that classes are applied the correct place and not on <context-menu />
+      type: String,
+      default: '',
+    },
+    buttonClass: {
       type: String,
       default: '',
     },

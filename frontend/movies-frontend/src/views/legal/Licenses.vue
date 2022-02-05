@@ -1,7 +1,7 @@
 <template>
   <layout>
+    <hero-app :showBackButton="true" :slim="true" />
     <div class="container">
-      <h1>Licenses</h1>
       <hr />
       <p class="text-mono">The MIT Licence (MIT)</p>
       <p class="text-mono">Copyright 2021</p>
@@ -32,11 +32,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Layout from '@/layouts/Main.vue';
+import HeroApp from '@/components/HeroApp.vue';
 
 export default defineComponent({
   name: 'Licenses',
   components: {
     Layout,
+    HeroApp,
   },
 });
 </script>

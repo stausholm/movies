@@ -1,14 +1,16 @@
 <template>
   <layout>
-    <div class="container">
-      <h1 class="visually-hidden">Search page</h1>
+    <base-spacer size="4" />
+    <h1 class="visually-hidden">Search page</h1>
+    <div class="container position-sticky top-0 pt sticky-search">
       <search-bar
         placeholder="Search actors or titles"
         @error="handleSearchError"
         @search="handleSearchString"
         @suggestion="handleSuggestion"
       />
-
+    </div>
+    <div class="container">
       <h2 class="mt-2">Browse by</h2>
       <div class="row">
         <div class="col-6 col-sm-4">
@@ -63,6 +65,7 @@ import BlockLink from '@/components/BlockLink.vue';
 import SearchBar from '@/components/SearchBar.vue';
 import { GENRES } from '@/constants/Genres';
 import { checkOffline } from '@/utils/networkConnection';
+import BaseSpacer from '@/components/base/BaseSpacer.vue';
 
 export default defineComponent({
   name: 'Find',
@@ -74,6 +77,7 @@ export default defineComponent({
     IconActors,
     BlockLink,
     SearchBar,
+    BaseSpacer,
   },
   computed: {
     genresFormatted() {
@@ -113,3 +117,13 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+@use 'sass:math';
+@import '@/design/variables/index.scss';
+@import '@/design/mixins/index.scss';
+
+.sticky-search {
+  z-index: 1;
+}
+</style>

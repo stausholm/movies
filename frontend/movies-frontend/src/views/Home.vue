@@ -1,9 +1,10 @@
 <template>
   <layout>
     <div class="container">
+      <base-spacer size="1" class="d-xs-none" />
       <!-- TODO: motd should only animate the very first time the user lands on the homepage after opening the app, not on consecutive navigations to the homepage during the same session -->
       <div>
-        <motd class="h2 fw-normal mb-0" :animate="true" />
+        <motd class="h2 fw-normal mb-1" :animate="true" />
       </div>
       <base-card class="todo mb-2">
         <p class="text-pre-head mb-1">Did you know?</p>
@@ -58,6 +59,7 @@ import PwaInstallButtonInFeed from '@/components/PwaInstallButtonInFeed.vue';
 import Motd from '@/components/Motd.vue';
 import BaseCard from '@/components/base/BaseCard.vue';
 import { APP_NAME } from '@/constants/SiteSettings.json';
+import BaseSpacer from '@/components/base/BaseSpacer.vue';
 
 export default defineComponent({
   name: 'Home',
@@ -66,6 +68,7 @@ export default defineComponent({
     PwaInstallButtonInFeed,
     Motd,
     BaseCard,
+    BaseSpacer,
   },
   data() {
     return {

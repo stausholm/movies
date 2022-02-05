@@ -1,7 +1,7 @@
 <template>
   <layout>
+    <hero-app :showBackButton="true" :slim="true" />
     <div class="container">
-      <h1>Tips</h1>
       <ul>
         <li>Pressing the search icon twice will focus the search input</li>
         <li>pressing ctrl+k will open a quick access menu</li>
@@ -20,11 +20,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Layout from '@/layouts/Main.vue';
+import HeroApp from '@/components/HeroApp.vue';
 
 export default defineComponent({
   name: 'Tips',
   components: {
     Layout,
+    HeroApp,
   },
 });
 </script>

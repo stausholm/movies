@@ -21,6 +21,7 @@
           @share="handleShare"
           @test="handleTest"
           id="b"
+          buttonClass="btn--primary btn--outline"
         />
       </div>
       <div class="demo-card p-1 shadow rounded bg-white">

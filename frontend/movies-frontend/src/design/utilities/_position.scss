@@ -1,47 +1,48 @@
 @import '../mixins/utilities';
 
 $utilities: (
-  "position": (
-    "prefix": "position",
-    "values": (
-      "static": static,
-      "relative": relative,
-      "absolute": absolute,
-      "fixed": fixed
-    )
+  'position': (
+    'prefix': 'position',
+    'values': (
+      'static': static,
+      'relative': relative,
+      'absolute': absolute,
+      'fixed': fixed,
+      'sticky': sticky,
+    ),
   ),
-  "top": (
-    "prefix": "top",
-    "values": (
-      "0": 0,
-      "50": 50%,
-      "100": 100%
-    )
+  'top': (
+    'prefix': 'top',
+    'values': (
+      '0': 0,
+      '50': 50%,
+      '100': 100%,
+    ),
   ),
-  "bottom": (
-    "prefix": "bottom",
-    "values": (
-      "0": 0,
-      "50": 50%,
-      "100": 100%
-    )
+  'bottom': (
+    'prefix': 'bottom',
+    'values': (
+      '0': 0,
+      '50': 50%,
+      '100': 100%,
+    ),
   ),
-  "left": (
-    "prefix": "left",
-    "values": (
-      "0": 0,
-      "50": 50%,
-      "100": 100%
-    )
+  'left': (
+    'prefix': 'left',
+    'values': (
+      '0': 0,
+      '50': 50%,
+      '100': 100%,
+    ),
   ),
-  "right": (
-    "prefix": "right",
-    "values": (
-      "0": 0,
-      "50": 50%,
-      "100": 100%
-    )
-  )
+  'right': (
+    'prefix': 'right',
+    'values': (
+      '0': 0,
+      '50': 50%,
+      '100': 100%,
+    ),
+  ),
 );
 
 @include generate-utilities($utilities);

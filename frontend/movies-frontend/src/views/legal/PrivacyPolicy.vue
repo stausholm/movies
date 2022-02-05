@@ -1,7 +1,7 @@
 <template>
   <layout>
+    <hero-app :showBackButton="true" :slim="true" />
     <div class="container">
-      <h1>Privacy Policy</h1>
       <hr />
       <p class="text-small">Last updated: {{ updateDateTimeLocalized }}</p>
       <p>
@@ -31,11 +31,13 @@ import {
   APP_PRIVACY_POLICY_LAST_UPDATED,
 } from '@/constants/SiteSettings.json';
 import Layout from '@/layouts/Main.vue';
+import HeroApp from '@/components/HeroApp.vue';
 
 export default defineComponent({
   name: 'PrivacyPolicy',
   components: {
     Layout,
+    HeroApp,
   },
   data() {
     return {

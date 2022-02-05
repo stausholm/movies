@@ -1,7 +1,7 @@
 <template>
   <layout>
+    <hero-app :showBackButton="true" :slim="true" title="Danger Zone" />
     <div class="container">
-      <h1>Danger Zone</h1>
       <p>
         Delete all locally stored application data. Deleting your data is a
         <strong>permanent and irreversible action.</strong> Please be sure before proceeding.
@@ -63,6 +63,7 @@ import Modal from '@/components/Modal.vue';
 import Overlay from '@/components/Overlay.vue';
 import Loader from '@/components/Loader.vue';
 import promiseDelay from '@/utils/promiseDelay';
+import HeroApp from '@/components/HeroApp.vue';
 
 export default defineComponent({
   name: 'Delete',
@@ -73,6 +74,7 @@ export default defineComponent({
     Modal,
     Overlay,
     Loader,
+    HeroApp,
   },
   data() {
     return {

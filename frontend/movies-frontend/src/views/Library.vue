@@ -1,13 +1,16 @@
 <template>
   <layout>
     <hero-app
-      title="Library lorem ipsum dolor sit amet asdkjahsdaksjdhaksjd kdjfhskdfj "
+      title="Library"
       :actions="contextMenuActions"
       @share="handleShare"
-      :showBackButton="true"
       class="hero-class-test"
+      :background="['primary', 'fade']"
     >
-      <!-- <h1>aaaaaaaaa</h1> -->
+      <template v-slot="{ title }">
+        <span class="text-pre-head">lorem ipsum</span>
+        <h1 class="mb-0">{{ title }}</h1>
+      </template>
       <template v-slot:stickyContent>
         <div class="container">
           <p>sticky content</p>

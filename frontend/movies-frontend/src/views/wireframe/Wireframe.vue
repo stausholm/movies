@@ -1,7 +1,7 @@
 <template>
   <div class="">
+    <hero-app title="Wireframe" :slim="true" />
     <div class="container">
-      <h1>Wireframe</h1>
       <p>A demo of boilerplate</p>
     </div>
     <div class="bg-warning">
@@ -130,11 +130,13 @@ import { getAverageImageRatio } from '@/utils/imageRatio';
 
 import BlockLink from '@/components/BlockLink.vue';
 import { checkOffline } from '@/utils/networkConnection';
+import HeroApp from '@/components/HeroApp.vue';
 
 export default defineComponent({
   name: 'Wireframe',
   components: {
     BlockLink,
+    HeroApp,
   },
   props: {
     dummy: {
