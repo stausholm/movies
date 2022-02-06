@@ -23,6 +23,9 @@
           <icon-sort />
         </base-icon>
         <span>Alphabetical</span>
+        <!-- <span>Year</span>
+        <span>Rating</span>
+        <span>Runtime</span> -->
       </base-button>
       <base-button @click="changeDisplayMode">
         <span class="visually-hidden">Change grid/list display mode</span>

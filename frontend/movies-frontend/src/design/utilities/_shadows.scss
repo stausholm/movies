@@ -2,16 +2,16 @@
 @import '../mixins/utilities';
 
 $utilities: (
-  "box-shadow": (
-    "prefix": "shadow",
-    "values": (
-      "none": none,
+  'box-shadow': (
+    'prefix': 'shadow',
+    'values': (
+      'none': none,
       null: $box-shadow,
-      "sm": $box-shadow-sm,
-      "lg": $box-shadow-lg,
-      "inset": $box-shadow-inset
-    )
-  )
+      'sm': $box-shadow-sm,
+      'lg': $box-shadow-lg,
+      'inset': $box-shadow-inset,
+    ),
+  ),
 );
 
 @include generate-utilities($utilities);

@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 // button colors
 .btn {
   @include createCssvars(
@@ -92,7 +94,7 @@
   user-select: none;
   cursor: pointer;
   text-decoration: none;
-  padding: 1em 1.2em;
+  padding: $default-spacing * 0.75 $default-spacing;
   display: inline-flex;
   position: relative;
   align-items: center;
@@ -146,26 +148,30 @@
   // icons
   .icon {
     // assume icon on the left of the text
-    margin-right: 0.5em;
-    margin-left: -0.5em; // icon is more visually heavy, so we make the button padding visually smaller on the icon side
-    margin-top: -1em;
-    margin-bottom: -1em;
+    margin-right: math.div($default-spacing, 2);
+    margin-left: math.div(
+      -$default-spacing,
+      2
+    ); // icon is more visually heavy, so we make the button padding visually smaller on the icon side
+    margin-top: -$default-spacing * 0.75;
+    margin-bottom: -$default-spacing * 0.75;
+    min-width: $icon-size-default;
 
     // icon shown to the right of the text
     &:last-child {
-      margin-right: -0.5em;
-      margin-left: 0.5em;
+      margin-right: math.div(-$default-spacing, 2);
+      margin-left: math.div($default-spacing, 2);
     }
 
     // icon only button
     &:only-child {
-      margin-right: -1.2em;
-      margin-left: -1.2em;
+      margin-right: -$default-spacing;
+      margin-left: -$default-spacing;
     }
   }
   // remove icon margin if the text in the button is not shown
   .visually-hidden + .icon {
-    margin-left: -0.5em;
+    margin-left: math.div(-$default-spacing, 2);
   }
 
   &--link {
@@ -227,7 +233,7 @@
     flex-direction: column;
 
     .icon {
-      margin: 0 0 0.5em;
+      margin: 0 0 math.div($default-spacing, 2);
     }
   }
 
@@ -284,7 +290,7 @@
     border-radius: $border-radius-base;
 
     // same padding as .btn
-    width: calc(100% + 1.2em);
-    height: calc(100% + 1em);
+    width: calc(100% + #{$default-spacing});
+    height: calc(100% + #{$default-spacing * 0.75});
   }
 }

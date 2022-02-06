@@ -6,20 +6,22 @@
       <div>
         <motd class="h2 fw-normal mb-1" :animate="true" />
       </div>
-      <base-card class="todo mb-2">
-        <p class="text-pre-head mb-1">Did you know?</p>
-        <strong class="h2">Customize what you see in {{ appName }}</strong>
+      <base-card
+        class="mb-2"
+        :title="`Customize what you see in ${appName}`"
+        headingLevel="h2"
+        tags="Did you know?"
+        type="tip"
+      >
         <p>Add or remove favourites, adjust app colors, animations, images & more</p>
-        <router-link
-          class="btn btn--text-primary btn--absolute-sized mr-1"
-          :to="{ name: 'Account' }"
-        >
-          Go to Settings
-        </router-link>
-        <button class="btn btn--text">Got it</button>
+        <template #footer>
+          <router-link class="btn btn--text-primary" :to="{ name: 'Account' }">
+            Go to Settings
+          </router-link>
+          <button class="btn btn--text">Got it</button>
+        </template>
       </base-card>
-      <base-card class="todo bg-white shadow-sm rounded p-2 mb-2">
-        <p class="text-pre-head mb-1">Did you know?</p>
+      <base-card class="mb-2" title="Quick Access" type="tip" tags="Did you know?">
         <p>Use Quick Access to get around {{ appName }} quickly. Just press:</p>
         <!-- Button will open quick access menu -->
         <button class="btn btn--primary btn--uppercase">CTRL + K</button>

@@ -1,0 +1,89 @@
+// TYPE: tip
+@use 'sass:math';
+
+.card--tip.card {
+  flex-direction: row;
+  flex-flow: row wrap;
+
+  &:hover {
+  }
+
+  .card__header {
+    width: 100%;
+    order: 2;
+  }
+
+  .card__img {
+    order: 4;
+    width: 40%;
+    padding: $default-spacing;
+    height: auto;
+    display: flex;
+    align-items: flex-start;
+    img {
+      position: static;
+      max-height: 10ch;
+      width: auto;
+      height: auto;
+      margin-left: auto;
+    }
+  }
+
+  .card__body {
+    width: 60%;
+    order: 3;
+  }
+
+  .card__cta {
+    width: 100%;
+    order: 5;
+  }
+
+  .card__footer {
+    width: 100%;
+    order: 6;
+  }
+
+  .card__tags {
+    order: 1;
+  }
+  .tag {
+    @extend .text-pre-head;
+  }
+
+  .card__body,
+  .card__footer {
+    button,
+    a {
+    }
+
+    [class*='btn--text'] {
+      // make sure buttons without a border or background visually vertically aligns with the surrounding text.
+      padding-left: math.div($default-spacing, 2);
+      padding-right: math.div($default-spacing, 2);
+      margin-left: math.div(-$default-spacing, 2);
+      margin-right: math.div(-$default-spacing, 2);
+      margin-bottom: math.div(-$default-spacing, 2);
+
+      + [class*='btn--text'] {
+        margin-left: $default-spacing;
+      }
+    }
+  }
+
+  .card__header,
+  .card__body,
+  .card__footer,
+  .card__cta,
+  .card__tags,
+  .card__img {
+    padding-bottom: 0;
+    padding-top: 0;
+    @include breakpoint($breakpoint-font-size-change) {
+      padding-left: $default-spacing * 2;
+      padding-right: $default-spacing * 2;
+      // padding-top: $default-spacing * 2;
+      // padding-bottom: $default-spacing * 2;
+    }
+  }
+}

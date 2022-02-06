@@ -1,5 +1,9 @@
+$aspect-ratio-1x1: 100%;
+$aspect-ratio-4x3: calc(3 / 4 * 100%);
+$aspect-ratio-16x9: calc(9 / 16 * 100%);
+
 $aspect-ratios: (
-  "1x1": 100%,
-  "4x3": calc(3 / 4 * 100%),
-  "16x9": calc(9 / 16 * 100%)
+  '1x1': $aspect-ratio-1x1,
+  '4x3': $aspect-ratio-4x3,
+  '16x9': $aspect-ratio-16x9,
 );

@@ -103,7 +103,7 @@ export default defineComponent({
 
   &.has-icon {
     input {
-      padding-left: (math.div($default-spacing, 2) + $border-width-forms * 2) + 24px +
+      padding-left: (math.div($default-spacing, 2) + $border-width-forms * 2) + $icon-size-default +
         math.div($default-spacing, 2);
     }
   }

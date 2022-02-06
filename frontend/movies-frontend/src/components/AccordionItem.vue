@@ -205,7 +205,7 @@ export default defineComponent({
     }
 
     .icon {
-      min-width: 24px;
+      min-width: $icon-size-default;
       user-select: none;
       pointer-events: none;
     }
