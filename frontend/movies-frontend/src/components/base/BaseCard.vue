@@ -73,6 +73,9 @@ export default defineComponent({
     type: {
       type: String,
       default: 'standard',
+      validator(val: string) {
+        return ['standard', 'tip'].includes(val);
+      },
     },
   },
   computed: {

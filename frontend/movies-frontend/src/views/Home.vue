@@ -21,18 +21,28 @@
           <button class="btn btn--text">Got it</button>
         </template>
       </base-card>
-      <base-card class="mb-2" title="Quick Access" type="tip" tags="Did you know?">
+      <base-card
+        class="mb-2"
+        title="Quick Access"
+        headingLevel="h2"
+        tags="Did you know?"
+        type="tip"
+      >
         <p>Use Quick Access to get around {{ appName }} quickly. Just press:</p>
         <!-- Button will open quick access menu -->
         <button class="btn btn--primary btn--uppercase">CTRL + K</button>
       </base-card>
+
       <h1><router-link to="/wireframe">Wireframe</router-link></h1>
+
       <pwa-install-button-in-feed />
+
       <p class="mt">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat voluptatem perspiciatis
         consequatur ex non accusamus illo voluptatibus? Laborum natus distinctio, earum corrupti
         blanditiis sapiente. Autem impedit officia voluptatum. In, magni?
       </p>
+
       <div v-if="hasStarredContent">
         <div>
           <h2>Recommended for you</h2>

@@ -32,6 +32,9 @@
   flex-flow: row wrap;
   margin-left: -(math.div($grid-gutter, 2));
   margin-right: -(math.div($grid-gutter, 2));
+  // often it makes sense to use .row on a list element, so we want to remove default their list styles
+  padding: 0;
+  list-style-type: none;
 
   @include breakpoint(xs) {
     margin-left: -(math.div($grid-xs-gutter, 2));

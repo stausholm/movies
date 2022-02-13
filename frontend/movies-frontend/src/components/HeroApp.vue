@@ -310,7 +310,9 @@ $sticky-height: $min-touch-target-size + math.div($default-spacing, 2);
     flex: 1;
 
     &:first-child {
-      padding-left: $default-spacing * 0.75;
+      @include breakpoint-max($breakpoint-navigation-change) {
+        padding-left: $default-spacing * 0.75;
+      }
     }
   }
 

@@ -7,7 +7,7 @@
       <li>Screen readers enumerate the items so users know how many are available</li>
     </ul>
     <h3>Default cards</h3>
-    <ul class="row row--equal-height list-unstyled">
+    <ul class="row row--equal-height">
       <li class="col-12 col-sm-4 col-xs-6">
         <base-card title="Card title aaaasasdashdgasssdfsdfsdfsdfj">
           <p>aaaaaakhasd kjashd kjashd ad</p>
@@ -17,6 +17,7 @@
         <base-card
           title="Card title aaaasasdashdgasj"
           imgUrl="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif"
+          to="/library"
         >
           <p>aaaaaakhasd kjashd kjashd ad</p>
         </base-card>

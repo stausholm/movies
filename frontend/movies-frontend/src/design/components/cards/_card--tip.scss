@@ -5,12 +5,23 @@
   flex-direction: row;
   flex-flow: row wrap;
 
+  padding-top: $default-spacing;
+  padding-bottom: $default-spacing;
+  @include breakpoint($breakpoint-font-size-change) {
+    padding-top: $default-spacing * 2;
+    padding-bottom: $default-spacing * 2;
+  }
+
   &:hover {
   }
 
   .card__header {
     width: 100%;
     order: 2;
+
+    > * {
+      @extend .h3;
+    }
   }
 
   .card__img {
@@ -20,12 +31,14 @@
     height: auto;
     display: flex;
     align-items: flex-start;
+
     img {
       position: static;
       max-height: 10ch;
       width: auto;
       height: auto;
       margin-left: auto;
+      border-radius: $border-radius-base;
     }
   }
 
@@ -37,6 +50,7 @@
   .card__cta {
     width: 100%;
     order: 5;
+    margin-top: $default-spacing;
   }
 
   .card__footer {
@@ -46,6 +60,7 @@
 
   .card__tags {
     order: 1;
+    margin-bottom: $default-spacing * 1.5;
   }
   .tag {
     @extend .text-pre-head;
@@ -55,6 +70,10 @@
   .card__footer {
     button,
     a {
+    }
+
+    .btn {
+      margin-top: math.div($default-spacing, 2);
     }
 
     [class*='btn--text'] {
@@ -82,8 +101,6 @@
     @include breakpoint($breakpoint-font-size-change) {
       padding-left: $default-spacing * 2;
       padding-right: $default-spacing * 2;
-      // padding-top: $default-spacing * 2;
-      // padding-bottom: $default-spacing * 2;
     }
   }
 }

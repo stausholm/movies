@@ -1,4 +1,5 @@
 import IconMoreVert from '@/components/icons/IconMoreVert.vue';
+import IconMoreHoriz from '@/components/icons/IconMoreHoriz.vue';
 import IconInstall from '@/components/icons/IconInstall.vue';
 import IconAccountCircle from '@/components/icons/IconAccountCircle.vue';
 import IconActors from '@/components/icons/IconActors.vue';
@@ -45,6 +46,7 @@ import IconMicrophone from '@/components/icons/IconMicrophone.vue';
 
 export default {
   IconMoreVert,
+  IconMoreHoriz,
   IconInstall,
   IconAccountCircle,
   IconActors,
