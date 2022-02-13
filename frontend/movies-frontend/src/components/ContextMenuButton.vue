@@ -2,7 +2,7 @@
   <div class="context-menu-button d-inline-block position-relative" :class="className">
     <base-button
       class="btn--rounded context-menu-button__btn"
-      :class="buttonClass"
+      :class="[buttonClass, { 'context-menu-button__btn--small': smallButton }]"
       :id="idFormatted.button"
       aria-haspopup="true"
       :aria-controls="idFormatted.list"
@@ -19,8 +19,9 @@
       data-pushtip="Actions"
     >
       <span class="visually-hidden">Actions</span>
-      <base-icon>
-        <icon-more-vert />
+      <base-icon :width="smallButton ? 18 : 24" :height="smallButton ? 18 : 24">
+        <icon-more-horiz v-if="horizontalIcon" />
+        <icon-more-vert v-else />
       </base-icon>
     </base-button>
     <context-menu
@@ -40,6 +41,7 @@ import { defineComponent } from 'vue';
 import BaseButton from '@/components/base/BaseButton.vue';
 import BaseIcon from '@/components/base/BaseIcon.vue';
 import IconMoreVert from '@/components/icons/IconMoreVert.vue';
+import IconMoreHoriz from '@/components/icons/IconMoreHoriz.vue';
 import ContextMenu from '@/components/ContextMenu.vue';
 
 // accessibility reference: https://www.w3.org/TR/wai-aria-practices/examples/menu-button/menu-button-actions.html
@@ -51,6 +53,7 @@ export default defineComponent({
     BaseButton,
     BaseIcon,
     IconMoreVert,
+    IconMoreHoriz,
     ContextMenu,
   },
   props: {
@@ -71,6 +74,14 @@ export default defineComponent({
     buttonClass: {
       type: String,
       default: '',
+    },
+    horizontalIcon: {
+      type: Boolean,
+      default: false,
+    },
+    smallButton: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -107,3 +118,31 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+@use 'sass:math';
+@import '@/design/variables/index.scss';
+@import '@/design/mixins/index.scss';
+
+.context-menu-button__btn {
+  &--small {
+    min-width: 32px;
+    min-height: 32px;
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+
+    // it's important that the touchtarget is still big enough to be easy to hit, so we make sure it's at least always the minimum required size
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-height: $min-touch-target-size;
+      min-width: $min-touch-target-size;
+      transform: translateY(-50%) translateX(-50%);
+      z-index: -1;
+    }
+  }
+}
+</style>

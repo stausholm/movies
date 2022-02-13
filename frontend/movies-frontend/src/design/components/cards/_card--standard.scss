@@ -1,3 +1,6 @@
+// TYPE: standard
+@use 'sass:math';
+
 .card--standard.card {
   &:hover {
     .card__img img {
@@ -12,6 +15,37 @@
   }
 
   .card__img img {
+    transform: translateZ(0); // removes small jump in transition
     transition: transform 0.8s cubic-bezier(0.35, 0, 0, 1) 0s;
+  }
+
+  .card__tags {
+    display: flex;
+    flex-flow: row wrap;
+
+    .tag {
+      margin-right: math.div($default-spacing, 4);
+      margin-bottom: math.div($default-spacing, 4);
+      padding: math.div($default-spacing, 4) math.div($default-spacing, 2);
+      border-radius: $border-radius-small;
+      border: 1px solid $gray-400;
+      white-space: nowrap;
+      display: inline-block;
+      color: $text-color-secondary-dark;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      overflow: hidden;
+      @extend .text-small;
+    }
+  }
+
+  .card__body,
+  .card__tags,
+  .card__cta {
+    padding-top: 0;
+  }
+
+  .card__body {
+    color: $text-color-secondary-dark;
   }
 }

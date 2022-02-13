@@ -17,6 +17,11 @@
   }
 
   &__header {
+    // flex needed for headerAction
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
     a {
       // The link is located around the header instead of around the entire card, so that this text forms the accessible label for the card.
       // If the link wrapped the entire card, screen readers would read all text inside the card as the link label.
@@ -44,6 +49,10 @@
     &:focus-within ~ .card__cta .btn {
       background-color: $brand-primary-dark;
     }
+  }
+
+  &__title {
+    color: inherit;
   }
 
   &__img {
@@ -85,6 +94,7 @@
     }
   }
 
+  &__header-action,
   &__body,
   &__footer {
     button,
@@ -92,6 +102,12 @@
       // make sure any potential links / actions in the footer are clickable, by layering them above the header link's ::after
       position: relative;
       z-index: 1;
+    }
+  }
+
+  &__cta {
+    .btn {
+      border-radius: $border-radius-small;
     }
   }
 

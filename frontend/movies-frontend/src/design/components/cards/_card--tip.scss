@@ -18,10 +18,9 @@
   .card__header {
     width: 100%;
     order: 2;
-
-    > * {
-      @extend .h3;
-    }
+  }
+  .card__title {
+    @extend .h3;
   }
 
   .card__img {
@@ -45,6 +44,7 @@
   .card__body {
     width: 60%;
     order: 3;
+    color: $text-color-secondary-dark;
   }
 
   .card__cta {

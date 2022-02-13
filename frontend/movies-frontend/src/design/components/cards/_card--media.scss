@@ -1,0 +1,295 @@
+// TYPE: media
+@use 'sass:math';
+
+.card--media.card {
+  // TODO: aspect ratio
+  min-height: 400px;
+
+  z-index: 1;
+  color: $white;
+  background-color: transparent;
+
+  .card__title {
+    font-size: $font-size-h2-responsive;
+
+    @include breakpoint($breakpoint-font-size-change) {
+      font-size: $font-size-h3;
+    }
+    margin-bottom: 0;
+  }
+
+  &:not(.card--has-image) {
+    // media card is dependant on media. So this is just a fallback in case no media is added
+    background-color: $gray-600;
+  }
+
+  .card__cta {
+    text-align: right;
+
+    .btn {
+      @extend .btn--rounded;
+      @extend .btn--uppercase;
+      width: auto;
+      background-color: $white;
+      color: $brand-primary;
+      padding-top: math.div($default-spacing, 2);
+      padding-bottom: math.div($default-spacing, 2);
+      min-height: 1em;
+      font-size: 0.75em;
+    }
+  }
+
+  .card__img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 0;
+    height: 100%;
+    border-radius: $border-radius-base;
+    background-color: $gray-500;
+    z-index: -2;
+
+    &::before {
+      content: '';
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0) 0px,
+        rgba(0, 1, 1, 0.007872) 19.98px,
+        rgba(0, 2, 5, 0.029628) 38.14px,
+        rgba(0, 5, 9, 0.0625) 54.88px,
+        rgba(0, 7, 13, 0.103704) 70.52px,
+        rgba(0, 9, 18, 0.150464) 85.44px,
+        rgba(0, 11, 21, 0.2) 100px,
+        rgba(0, 12, 24, 0.249536) 114.56px,
+        rgba(0, 13, 26, 0.296296) 129.48px,
+        rgba(0, 14, 28, 0.3375) 145.12px,
+        rgba(0, 15, 29, 0.370372) 161.86px,
+        rgba(0, 15, 30, 0.392128) 180.02px,
+        rgba(0, 15, 30, 0.4) 200px,
+        rgba(0, 15, 30, 0.8) 100%
+      );
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      top: 80px; // extra 80px that's used by the ::after element to provide a greater area with great opacity overlay, before the gradient begins
+      width: 100%;
+      display: block;
+
+      z-index: 1;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 80px;
+      width: 100%;
+      display: block;
+      background: rgba(0, 15, 30, 0.8);
+      z-index: 1;
+    }
+  }
+
+  &:hover {
+    .card__img img {
+      transform: scale(1.05);
+    }
+  }
+
+  .card__header {
+    &:focus-within ~ .card__img img {
+      transform: scale(1.05);
+    }
+  }
+
+  .card__img img {
+    transform: translateZ(0); // removes small jump in transition
+    transition: transform 0.8s cubic-bezier(0.35, 0, 0, 1) 0s;
+  }
+
+  // In case too much of the media is cut off with object-fit: cover; The background image would need some blurring though
+  // .card__img {
+  //   img {
+  //     background-image: url(/img/posters/tt0085959_SX600.jpg);
+  //     background-size: cover;
+  //     background-position: center center;
+  //     object-fit: contain;
+  //     backdrop-filter: blur(5px);
+  //   }
+  // }
+
+  .card__tags {
+    order: -1;
+
+    .tag {
+      @extend .btn--uppercase;
+
+      &:nth-child(2) {
+        // style first tag as a preheading
+        display: block;
+        @extend .text-pre-head;
+
+        + .tag {
+          margin-top: $default-spacing * 3;
+        }
+      }
+      &:nth-child(1n + 3) {
+        // ignore the first tag as a preheading, and style the rest of the tags as tags
+        background-color: $brand-primary;
+        color: $brand-primary-bg__text-color;
+        display: inline-block;
+        border-radius: 50px;
+        padding: math.div($default-spacing, 4) $default-spacing * 0.75;
+        margin-bottom: math.div($default-spacing, 4);
+        font-size: 0.75em;
+        font-weight: bold;
+
+        &:not(:last-child) {
+          margin-right: math.div($default-spacing, 4);
+        }
+      }
+    }
+  }
+
+  // spacings
+  .card__tags {
+    padding-bottom: 0;
+  }
+  .card__header {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .card__cta,
+  .card__body,
+  .card__footer {
+    padding-top: 0;
+  }
+}
+
+// special styles for when card has headerAction
+.card--media.card--has-header-action {
+  .card__title {
+    @extend .h4;
+  }
+
+  .card__header {
+    padding-top: $default-spacing;
+  }
+
+  .card__header-action {
+    margin-left: $default-spacing;
+    margin-bottom: -$default-spacing;
+    .context-menu-button__btn {
+      background-color: rgba(0, 15, 30, 0.6);
+      color: inherit;
+
+      @include hover() {
+        background-color: rgba(0, 15, 30, 0.8);
+      }
+    }
+  }
+
+  .card__tags {
+    display: none;
+  }
+}
+
+// extra overwrites for media cards
+// if card leads to a video, add .card--media-video
+.card--media.card--media-video {
+  // show play button in center of card
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    z-index: -1;
+  }
+
+  &::before {
+    background-color: rgba(0, 15, 30, 0.6);
+    backdrop-filter: blur(5px);
+    border-radius: 50%;
+    height: 72px;
+    width: 72px;
+    transition: background-color 0.2s ease-out;
+  }
+
+  &:hover {
+    &::before {
+      background-color: rgba(0, 15, 30, 0.8);
+    }
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  &::after {
+    width: 0;
+    height: 24px;
+    border-color: transparent transparent transparent $white;
+    border-style: solid;
+    border-width: 12px 0 12px 20px;
+    margin-left: 3px;
+    opacity: 0.7;
+    transition: opacity 0.2s ease-out;
+  }
+}
+
+// place text at the bottom with .card--media-reverse
+.card--media.card--media-reverse {
+  justify-content: flex-end;
+
+  .card__img {
+    &::before {
+      transform: rotate(180deg);
+      bottom: 80px;
+      top: 0;
+    }
+    &::after {
+      top: auto;
+      bottom: 0;
+    }
+  }
+
+  .card__body {
+    flex-grow: 0;
+  }
+}
+
+// make image overlay cover entire bg with .card--media-cover
+.card--media.card--media-cover {
+  .card__img {
+    &::before {
+      background: rgba(0, 15, 30, 0.8);
+    }
+  }
+}
+
+// move text to the bottom and make the tags the flex grow area with .card--media-tagged
+.card--media.card--media-tagged {
+  .card__body {
+    flex-grow: 0;
+  }
+  .card__tags {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: row wrap;
+    align-content: flex-end;
+
+    .tag {
+      &:nth-child(2) {
+        position: absolute;
+        top: $default-spacing;
+        left: $default-spacing;
+      }
+      &:nth-child(1n + 3) {
+        margin-top: auto;
+      }
+    }
+  }
+}
