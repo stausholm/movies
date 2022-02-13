@@ -170,7 +170,11 @@
 // special styles for when card has headerAction
 .card--media.card--has-header-action {
   .card__title {
-    @extend .h4;
+    font-size: $font-size-h4-responsive;
+
+    @include breakpoint($breakpoint-font-size-change) {
+      font-size: $font-size-h4;
+    }
   }
 
   .card__header {
