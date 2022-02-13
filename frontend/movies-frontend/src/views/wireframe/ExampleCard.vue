@@ -92,6 +92,36 @@
     </base-card>
 
     <h3 class="mt-2">Type: media</h3>
+    <div class="mb-1 p-2 theme-primary rounded shadow" style="position: relative; z-index: 1">
+      <h4>Works on solid backgrounds with a z-index defined</h4>
+      <base-card
+        class="card--media-video card--media-cover p-1"
+        title="Large title in two or more lines"
+        headingLevel="h2"
+        type="media"
+        :tags="['Section', 'New']"
+        to="/library"
+        :imgUrl="imgUrl"
+      >
+        <template #headerAction>
+          <context-menu-button
+            :actions="contextMenuActions"
+            :horizontalIcon="true"
+            @share="handleShare"
+            @test="handleTest"
+            id="ddddd"
+            :smallButton="true"
+          />
+        </template>
+        <p>Subtitle</p>
+        <template #footer>
+          <p class="mb-0 text-small">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, rerum in tenetur sint
+            quisquam repellat!
+          </p>
+        </template>
+      </base-card>
+    </div>
     <ul class="row row--equal-height">
       <li class="col-12 col-sm-4 col-xs-6">
         <base-card title="Short title" type="media" tags="Section" :imgUrl="imgUrl"></base-card>
