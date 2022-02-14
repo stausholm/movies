@@ -4,6 +4,7 @@
     <div class="container">
       <p>A demo of boilerplate</p>
     </div>
+
     <div class="bg-warning">
       <div class="container">
         <h2 class="pt-2 pb-2 mb-0">TODO: storybook instead of this wireframe stuff?</h2>
@@ -36,29 +37,31 @@
       <button class="btn btn--primary" @click="checkOffline">trigger "checkoffline" event</button>
     </div>
 
-    <div class="container mt-2">
-      <h2>Grid</h2>
-      <div class="row">
-        <div class="col-2 col-sm-2 col-xs-6">
-          <span class="theme-dark d-block" style="height: 200px"></span>
-        </div>
-        <div class="col-2 col-sm-2 col-xs-6">
-          <span class="theme-dark d-block" style="height: 200px"></span>
-        </div>
-        <div class="col-2 col-sm-2 col-xs-6">
-          <span class="theme-dark d-block" style="height: 200px"></span>
-        </div>
-        <div class="col-2 col-sm-2 col-xs-6">
-          <span class="theme-dark d-block" style="height: 200px"></span>
-        </div>
-        <div class="col-2 col-sm-2 col-xs-6">
-          <span class="theme-dark d-block" style="height: 200px"></span>
-        </div>
-        <div class="col-2 col-sm-2 col-xs-6">
-          <span class="theme-dark d-block" style="height: 200px"></span>
+    <zone theme="secondary" class="mt-2">
+      <div class="container mt-2 mb-2">
+        <h2>Grid</h2>
+        <div class="row">
+          <div class="col-2 col-sm-2 col-xs-6">
+            <span class="theme-dark d-block" style="height: 200px"></span>
+          </div>
+          <div class="col-2 col-sm-2 col-xs-6">
+            <span class="theme-dark d-block" style="height: 200px"></span>
+          </div>
+          <div class="col-2 col-sm-2 col-xs-6">
+            <span class="theme-dark d-block" style="height: 200px"></span>
+          </div>
+          <div class="col-2 col-sm-2 col-xs-6">
+            <span class="theme-dark d-block" style="height: 200px"></span>
+          </div>
+          <div class="col-2 col-sm-2 col-xs-6">
+            <span class="theme-dark d-block" style="height: 200px"></span>
+          </div>
+          <div class="col-2 col-sm-2 col-xs-6">
+            <span class="theme-dark d-block" style="height: 200px"></span>
+          </div>
         </div>
       </div>
-    </div>
+    </zone>
 
     <div class="container mt-2">
       <h2>ratio</h2>
@@ -131,12 +134,14 @@ import { getAverageImageRatio } from '@/utils/imageRatio';
 import BlockLink from '@/components/BlockLink.vue';
 import { checkOffline } from '@/utils/networkConnection';
 import HeroApp from '@/components/HeroApp.vue';
+import Zone from '@/components/Zone.vue';
 
 export default defineComponent({
   name: 'Wireframe',
   components: {
     BlockLink,
     HeroApp,
+    Zone,
   },
   props: {
     dummy: {
