@@ -1,10 +1,14 @@
 <template>
   <layout>
     <div class="container">
-      <base-spacer size="1" class="d-xs-none" />
-      <!-- TODO: motd should only animate the very first time the user lands on the homepage after opening the app, not on consecutive navigations to the homepage during the same session -->
-      <div>
-        <motd class="h2 fw-normal mb-1" :animate="true" />
+      <div class="d-flex align-start justify-between mb-1 mt-1">
+        <!-- TODO: motd should only animate the very first time the user lands on the homepage after opening the app, not on consecutive navigations to the homepage during the same session -->
+        <motd class="h2 fw-normal" :animate="true" />
+        <pwa-install-button
+          class="btn btn--text btn--rounded ml-1 pwa-button"
+          :hideText="true"
+          v-if="showPWAInstallButton"
+        />
       </div>
       <base-card
         class="mb-2"
@@ -68,19 +72,20 @@
 import { defineComponent } from 'vue';
 import Layout from '@/layouts/Main.vue';
 import PwaInstallButtonInFeed from '@/components/PwaInstallButtonInFeed.vue';
+import PwaInstallButton from '@/components/PwaInstallButton.vue';
 import Motd from '@/components/Motd.vue';
 import BaseCard from '@/components/base/BaseCard.vue';
 import { APP_NAME } from '@/constants/SiteSettings.json';
-import BaseSpacer from '@/components/base/BaseSpacer.vue';
+import { AppLayoutSizeWidth } from '@/store/app/types';
 
 export default defineComponent({
   name: 'Home',
   components: {
     Layout,
     PwaInstallButtonInFeed,
+    PwaInstallButton,
     Motd,
     BaseCard,
-    BaseSpacer,
   },
   data() {
     return {
@@ -92,6 +97,21 @@ export default defineComponent({
       const starredIds = this.$store.getters.getStarredIds as string[];
       return starredIds.length > 0;
     },
+    showPWAInstallButton(): boolean {
+      return (
+        this.$store.getters.showPWAInstallButton &&
+        this.$store.getters.layoutSizeWidth !== ('desktop' as AppLayoutSizeWidth)
+      );
+    },
   },
 });
 </script>
+
+<style lang="scss" scoped>
+@use 'sass:math';
+@import '@/design/variables/index.scss';
+.pwa-button {
+  margin-right: math.div(-$default-spacing, 2);
+  margin-top: math.div(-$default-spacing, 2);
+}
+</style>

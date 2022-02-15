@@ -173,6 +173,11 @@ blockquote {
       font-size: $quote-icon-size;
     }
   }
+
+  footer {
+    color: $text-color-secondary-dark;
+    @extend .text-normal;
+  }
 }
 
 code {

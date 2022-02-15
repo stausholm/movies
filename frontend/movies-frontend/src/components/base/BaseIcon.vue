@@ -4,12 +4,12 @@
     :width="width"
     :height="height"
     viewBox="0 0 24 24"
-    :aria-label="label"
+    :aria-label="label || null"
     role="presentation"
     focusable="false"
     class="icon"
   >
-    <title lang="en">{{ label }} icon</title>
+    <title lang="en" v-if="label">{{ label }} icon</title>
     <g :fill="color">
       <transition :name="transitionNameFormatted" :css="!!transitionNameFormatted">
         <slot>

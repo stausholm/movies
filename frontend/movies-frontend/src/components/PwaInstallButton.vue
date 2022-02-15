@@ -6,12 +6,14 @@
     tabindex="0"
     class="pwa-install-button"
     role="button"
+    data-pushtip="Add to home screen"
   >
     <slot>
-      <base-icon iconName="add to home screen">
+      <span class="visually-hidden" v-if="hideText"> Add to home screen</span>
+      <base-icon>
         <icon-install />
       </base-icon>
-      <span class="pwa-install-button__label">Add to home screen</span>
+      <span class="pwa-install-button__label" v-if="!hideText"> Add to home screen </span>
     </slot>
   </component>
 </template>
@@ -26,6 +28,8 @@ import BaseIcon from '@/components/base/BaseIcon.vue';
 import IconInstall from '@/components/icons/IconInstall.vue';
 import { PWAMutations } from '@/store/PWA/mutations';
 import BeforeInstallPromptEvent from '@/types/BeforeInstallPromptEvent';
+import { ToastMutations } from '@/store/toast/mutations';
+import { Toast } from '@/store/toast/types';
 
 export default defineComponent({
   name: 'PwaInstallButton',
@@ -37,6 +41,10 @@ export default defineComponent({
     tag: {
       type: String,
       default: 'button',
+    },
+    hideText: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {
@@ -53,6 +61,10 @@ export default defineComponent({
           console.log(choice.outcome);
           if (choice.outcome === 'dismissed') {
             console.log('user cancelled installation');
+            this.$store.commit(ToastMutations.ADD_TOAST, {
+              content:
+                'Should you change your mind, you can still install the application from the settings page.',
+            } as Toast);
           } else {
             console.log('user added to home screen');
           }

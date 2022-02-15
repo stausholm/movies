@@ -56,7 +56,11 @@
       </sparkles>
     </li>
     <li>
-      <settings-item @click="$router.push({ name: 'Feedback' })" title="Send Feedback" />
+      <settings-item
+        @click="$router.push({ name: 'Feedback' })"
+        title="Give Feedback"
+        :subtitle="`Let us know how we can improve ${appName}`"
+      />
     </li>
     <li>
       <settings-item @click="$router.push({ name: 'About' })" title="About" />
@@ -77,6 +81,7 @@ import { AppSettingPayload } from '@/store/user/types';
 import { UserMutations } from '@/store/user/mutations';
 import Modal from '@/components/Modal.vue';
 import SettingsItemImageSaturation from '@/components/account/SettingsItemImageSaturation.vue';
+import { APP_NAME } from '@/constants/SiteSettings.json';
 
 export default defineComponent({
   name: 'SettingsGrouApplication',
@@ -90,6 +95,7 @@ export default defineComponent({
   },
   data() {
     return {
+      appName: APP_NAME,
       showThemeModal: false,
     };
   },

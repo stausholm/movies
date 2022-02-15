@@ -43,6 +43,7 @@ import IconDocument from '@/components/icons/IconDocument.vue';
 import IconImage from '@/components/icons/IconImage.vue';
 import IconIosShare from '@/components/icons/IconIosShare.vue';
 import IconMicrophone from '@/components/icons/IconMicrophone.vue';
+import IconHeart from '@/components/icons/IconHeart.vue';
 
 export default {
   IconMoreVert,
@@ -90,4 +91,5 @@ export default {
   IconImage,
   IconIosShare,
   IconMicrophone,
+  IconHeart,
 };

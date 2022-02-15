@@ -217,6 +217,8 @@ export default defineComponent({
       heroContent.style.opacity = opacity;
       // as the heroContent fades out, we want to fade in the title in the stickyTop
       stickyTitle.style.opacity = percentage.toString();
+      const stickyTitleTransform = clamp((100 - percentage * 100) / 20, 0, 6);
+      stickyTitle.style.transform = `translateY(${stickyTitleTransform}px)`;
       stickyTopBackground.style.opacity = percentage.toString();
 
       if (this.isMobileLayout) {
@@ -292,7 +294,7 @@ $sticky-height: $min-touch-target-size + math.div($default-spacing, 2);
       0 0px 5px 0 rgba(0, 0, 0, 0.12);
     opacity: 0;
     z-index: -1;
-    transition: box-shadow 0.125s ease-out;
+    transition: box-shadow 0.125s;
   }
 
   &__inner {
@@ -308,6 +310,7 @@ $sticky-height: $min-touch-target-size + math.div($default-spacing, 2);
 
   .title {
     flex: 1;
+    //transition: transform 0.125s ease-out;
 
     &:first-child {
       @include breakpoint-max($breakpoint-navigation-change) {

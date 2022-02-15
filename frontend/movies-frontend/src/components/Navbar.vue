@@ -2,28 +2,38 @@
   <header class="navbar" :class="{ 'navbar--hide': hide }">
     <div class="container">
       <nav class="primary-nav">
-        <router-link :to="{ name: 'Home' }" class="nav-item nav-item--home">
+        <router-link :to="{ name: 'Home' }" class="nav-item nav-item--home" data-pushtip="Home">
           <base-icon class="nav-item__icon">
             <icon-home />
           </base-icon>
           <span class="nav-item__label text-small text-truncate">Home</span>
         </router-link>
 
-        <router-link :to="{ name: 'Find' }" class="nav-item" @click="handleSearchClick">
+        <router-link
+          :to="{ name: 'Find' }"
+          class="nav-item"
+          @click="handleSearchClick"
+          data-pushtip="Find"
+        >
           <base-icon class="nav-item__icon">
             <icon-search />
           </base-icon>
           <span class="nav-item__label text-small text-truncate">Find</span>
         </router-link>
 
-        <router-link :to="{ name: 'Library' }" class="nav-item">
+        <router-link :to="{ name: 'Library' }" class="nav-item" data-pushtip="Library">
           <base-icon class="nav-item__icon">
             <icon-video-library />
           </base-icon>
           <span class="nav-item__label text-small text-truncate">Library</span>
         </router-link>
 
-        <router-link v-if="useSmallLayout" :to="{ name: 'Account' }" class="nav-item">
+        <router-link
+          v-if="useSmallLayout"
+          :to="{ name: 'Account' }"
+          class="nav-item"
+          data-pushtip="My Stuff"
+        >
           <base-icon class="nav-item__icon">
             <icon-account-circle />
           </base-icon>
@@ -203,14 +213,15 @@ export default defineComponent({
   padding: 0;
   font-weight: bold;
   margin-left: $default-spacing;
+  transition: color 0.2s ease-out;
 
-  &::after {
+  &::before {
     content: '';
     transition: background-color 0.125s ease-out;
   }
 
   @include hover() {
-    &::after {
+    &::before {
       // hover background color is added like this to make sure link/button labels are still visually aligned with the grid
       position: absolute;
       top: 0;
@@ -222,6 +233,10 @@ export default defineComponent({
       background-color: $gray-200;
       // background-color: rgba($gray-400, 0.4);
     }
+  }
+
+  &:active {
+    color: $nav-link-color-active;
   }
 
   &.router-link-active {

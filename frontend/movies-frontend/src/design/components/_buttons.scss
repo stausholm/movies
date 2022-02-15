@@ -245,10 +245,18 @@
     .icon {
       border-radius: 50%;
       animation: btn-pulse-ripple 0.8s linear infinite;
+      padding: 3px; // make 24px icons looks like 18px icons
+      box-shadow: 0 0 0 20px rgba($white, 0.1), 0 0 0 40px rgba($white, 0.1),
+        0 0 0 60px rgba($white, 0.1), 0 0 0 80px rgba($white, 0.05);
 
       @include prefers-reduced-motion() {
-        box-shadow: 0 0 0 20px rgba($white, 0.1), 0 0 0 40px rgba($white, 0.1),
-          0 0 0 60px rgba($white, 0.1), 0 0 0 80px rgba($white, 0.05);
+        animation: none;
+      }
+
+      [class*='router-fade'] &,
+      [class*='router-slide'] & {
+        // Fixes a weird bug where an animating box-shadow would cause a horizontal scrollbar
+        // to appear when transitioning pages on mobile, inside a childRouterView
         animation: none;
       }
     }
