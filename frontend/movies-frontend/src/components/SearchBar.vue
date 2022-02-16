@@ -65,6 +65,7 @@
       <slot name="filters" />
       <loader v-if="showLoading" class="loader" />
       <div v-else-if="showNoResults" class="no-results">
+        <img src="../assets/no-results.svg" alt="" />
         <p>No matches found</p>
       </div>
       <div v-else-if="showSuggestions" class="suggestions">

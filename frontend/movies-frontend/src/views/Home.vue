@@ -1,14 +1,19 @@
 <template>
   <layout>
     <div class="container">
-      <div class="d-flex align-start justify-between mb-1 mt-1">
-        <!-- TODO: motd should only animate the very first time the user lands on the homepage after opening the app, not on consecutive navigations to the homepage during the same session -->
-        <motd class="h2 fw-normal" :animate="true" />
-        <pwa-install-button
-          class="btn btn--text btn--rounded ml-1 pwa-button"
-          :hideText="true"
-          v-if="showPWAInstallButton"
-        />
+      <div class="home-top mb-2 mt-1">
+        <div class="home-top__content d-flex align-start justify-between">
+          <!-- TODO: motd should only animate the very first time the user lands on the homepage after opening the app, not on consecutive navigations to the homepage during the same session -->
+          <motd class="h2 fw-normal" :animate="false" />
+          <pwa-install-button
+            class="btn btn--text btn--rounded ml-1 pwa-button"
+            :hideText="true"
+            v-if="showPWAInstallButton"
+          />
+        </div>
+        <div class="home-top__logo">
+          <img src="../assets/logo-big.svg" alt="" />
+        </div>
       </div>
       <base-card
         class="mb-2"
@@ -59,12 +64,14 @@
         <h2>What are you in the mood for?</h2>
         <p>lorem ipsum</p>
       </div>
-      <div v-if="!hasStarredContent">
-        <img src="stars.png" alt="" />
-        <h2>Star something</h2>
+    </div>
+    <zone theme="dark" v-if="!hasStarredContent">
+      <div class="container container--xxs text-center mt-2 mb-2">
+        <img src="../assets/star-graphic.svg" alt="" />
+        <h2 class="mt-2">Star something</h2>
         <p>To get recommendations right here on your homescreen</p>
       </div>
-    </div>
+    </zone>
   </layout>
 </template>
 
@@ -77,6 +84,7 @@ import Motd from '@/components/Motd.vue';
 import BaseCard from '@/components/base/BaseCard.vue';
 import { APP_NAME } from '@/constants/SiteSettings.json';
 import { AppLayoutSizeWidth } from '@/store/app/types';
+import Zone from '@/components/Zone.vue';
 
 export default defineComponent({
   name: 'Home',
@@ -86,6 +94,7 @@ export default defineComponent({
     PwaInstallButton,
     Motd,
     BaseCard,
+    Zone,
   },
   data() {
     return {
@@ -113,5 +122,53 @@ export default defineComponent({
 .pwa-button {
   margin-right: math.div(-$default-spacing, 2);
   margin-top: math.div(-$default-spacing, 2);
+}
+
+.home-top {
+  position: relative;
+  min-height: 80px;
+  &__content {
+    opacity: 0;
+    animation: move-up 1.2s forwards;
+    animation-delay: 1.2s;
+    animation-timing-function: $ease-out-quint-ish;
+    transform: translateY(40px);
+  }
+  &__logo {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: math.div($default-spacing, 2);
+    animation: move-out 1.2s forwards;
+    animation-delay: 1.2s;
+    animation-timing-function: $ease-out-quint-ish;
+
+    img {
+      height: 100%;
+      max-height: 30px;
+    }
+  }
+
+  @keyframes move-up {
+    100% {
+      transform: translateY(0%);
+      opacity: 1;
+    }
+  }
+  @keyframes move-out {
+    50% {
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(-30px);
+      opacity: 0;
+    }
+  }
 }
 </style>

@@ -2,7 +2,9 @@
   <div class="pwa-install-content-banner" v-if="showPWAInstallButton && showBanner !== false">
     <div class="text">
       <slot>
-        <img src="../assets/logo.png" alt="" />
+        <div class="pwa-install-content-banner__logo">
+          <img src="../assets/logo-color.svg" alt="" />
+        </div>
         <div>
           <strong class="text-big">Install {{ appName }}</strong>
           <p>Our app is fast, small, and works offline.</p>
@@ -54,17 +56,29 @@ export default defineComponent({
     display: flex;
 
     img {
-      height: 80px;
-      width: 80px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-right: $default-spacing;
-      border: $border-width-large solid $white;
+      object-fit: contain;
     }
   }
+
+  &__logo {
+    height: 80px;
+    width: 80px;
+    min-width: 80px;
+    min-height: 80px;
+    border-radius: 50%;
+
+    margin-right: $default-spacing;
+    border: $border-width-large solid $white;
+    padding: $default-spacing * 0.5;
+    background-color: $white;
+  }
+
   .buttons {
     display: flex;
     justify-content: flex-end;
+  }
+  .btn--text {
+    color: inherit;
   }
 }
 </style>

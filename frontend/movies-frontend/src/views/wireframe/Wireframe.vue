@@ -62,6 +62,63 @@
         </div>
       </div>
     </zone>
+    <zone class="mt-2">
+      <div class="container mt-2 mb-2">
+        <h2>Graphics</h2>
+        <div class="row row--equal-height">
+          <div class="col-6 col-sm-2 col-xs-6">
+            <div class="theme-tertiary p-1 d-flex align-center">
+              <img src="../../assets/logo-badge-overflowing.svg" alt="" />
+            </div>
+          </div>
+          <div class="col-6 col-sm-2 col-xs-6">
+            <div class="theme-tertiary p-1 d-flex align-center">
+              <img src="../../assets/logo-badge.svg" alt="" />
+            </div>
+          </div>
+          <div class="col-6 col-sm-2 col-xs-6">
+            <div class="theme-tertiary p-1 d-flex align-center">
+              <img src="../../assets/logo-big.svg" alt="" />
+            </div>
+          </div>
+          <div class="col-6 col-sm-2 col-xs-6">
+            <div class="theme-tertiary p-1 d-flex align-center">
+              <img src="../../assets/logo-color.svg" alt="" />
+            </div>
+          </div>
+          <div class="col-6 col-sm-2 col-xs-6">
+            <div class="theme-tertiary p-1 d-flex align-center">
+              <img src="../../assets/logo.svg" alt="" />
+            </div>
+          </div>
+          <div class="col-6 col-sm-2 col-xs-6">
+            <div class="theme-tertiary p-1 d-flex align-center">
+              <img src="../../assets/missing-poster.svg" alt="" />
+            </div>
+          </div>
+          <div class="col-6 col-sm-2 col-xs-6">
+            <div class="theme-tertiary p-1 d-flex align-center">
+              <img src="../../assets/no-results.svg" alt="" />
+            </div>
+          </div>
+          <div class="col-6 col-sm-2 col-xs-6">
+            <div class="theme-tertiary p-1 d-flex align-center">
+              <img src="../../assets/quick-read-upper.svg" alt="" />
+            </div>
+          </div>
+          <div class="col-6 col-sm-2 col-xs-6">
+            <div class="theme-tertiary p-1 d-flex align-center">
+              <img src="../../assets/quick-read.svg" alt="" />
+            </div>
+          </div>
+          <div class="col-6 col-sm-2 col-xs-6">
+            <div class="theme-tertiary p-1 d-flex align-center">
+              <img src="../../assets/star-graphic.svg" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </zone>
 
     <div class="container mt-2">
       <h2>ratio</h2>

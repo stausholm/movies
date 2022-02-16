@@ -1,16 +1,24 @@
 <template>
   <layout>
     <hero-app :showBackButton="true" :slim="true" />
-    <div class="container">
-      <div v-if="loading">loading</div>
-      <div v-else-if="starredContent.length > 0" class="row">
-        <div class="col-6" v-for="content in starredContent" :key="content.imdbId">
-          {{ content.title }}
+    <div v-if="loading">
+      <div class="container">
+        <p>loading</p>
+      </div>
+    </div>
+    <div v-else-if="starredContent.length > 0">
+      <div class="container">
+        <div class="row">
+          <div class="col-6" v-for="content in starredContent" :key="content.imdbId">
+            {{ content.title }}
+          </div>
         </div>
       </div>
-      <div v-else>
-        <img src="star.png" alt="" />
-        <h2>Add your favourites</h2>
+    </div>
+    <div v-else>
+      <div class="container container--xxs text-center">
+        <img src="../../assets/star-graphic.svg" alt="" />
+        <h2 class="mt-2">Add your favourites</h2>
         <p>
           Tap the <span class="visually-hidden">star</span>
           <base-icon width="18" height="18">

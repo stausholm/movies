@@ -1,7 +1,7 @@
 <template>
   <div class="">
-    <img src="logo" :alt="appName + ' logo'" class="fade-up" />
-    <h1 class="text-center mt">Welcome to {{ appName }}!</h1>
+    <img src="../../assets/logo-badge-overflowing.svg" :alt="appName + ' logo'" class="fade-up" />
+    <h1 class="text-center mt-2">Welcome to {{ appName }}!</h1>
     <p>Your goto place for browsing your movies and series.</p>
 
     <label for="languagepicker">Language</label>

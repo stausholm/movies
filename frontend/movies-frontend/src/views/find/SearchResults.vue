@@ -56,12 +56,7 @@
           Sorry, we couldn't find any results matching
           <span class="text-primary">"{{ searchVal }}"</span>
         </h2>
-        <p>
-          You can also explore the extensive list of
-          <router-link :to="{ name: 'Find', hash: '#genrelist' }" class="link">
-            Genres
-          </router-link>
-        </p>
+
         <p>Try adjusting your search using these suggestions:</p>
         <ul>
           <li>Make sure that all words are spelled correctly.</li>
@@ -69,6 +64,15 @@
           <li>Try more general keywords.</li>
           <li>Try fewer keywords.</li>
         </ul>
+        <p>
+          You can also explore the extensive list of
+          <router-link :to="{ name: 'Find', hash: '#genrelist' }" class="link">
+            Genres
+          </router-link>
+        </p>
+        <div class="container container--xxs mt-2 mb-2">
+          <img src="../../assets/no-results.svg" alt="" />
+        </div>
       </div>
       <div v-else-if="!typing">
         <h2 class="h3 mt-2">Search results will appear here</h2>
