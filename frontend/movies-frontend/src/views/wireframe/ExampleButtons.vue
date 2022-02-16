@@ -45,6 +45,18 @@
     <base-button class="btn--outline btn--warning">outline</base-button>
     <base-button class="btn--warning">warning</base-button>
     <base-button class="btn--text-primary">text-primary</base-button>
+
+    <h2 class="mt-2">Quick read button</h2>
+    <quick-read-button @click="quickReadClick"></quick-read-button>
+    <quick-read-button
+      :includeText="false"
+      imageSrc="/img/posters/tt0085959_SX600.jpg"
+      class="mt-2"
+      @click="quickReadClick"
+    ></quick-read-button>
+    <quick-read-button @click="quickReadClick">
+      <p class="mt-2 text-center h3">Some custom content</p>
+    </quick-read-button>
   </div>
 </template>
 
@@ -52,12 +64,14 @@
 import { defineComponent } from 'vue';
 import BaseButton from '@/components/base/BaseButton.vue';
 import BaseIcon from '@/components/base/BaseIcon.vue';
+import QuickReadButton from '@/components/QuickReadButton.vue';
 
 export default defineComponent({
   name: 'ExampleButtons',
   components: {
     BaseButton,
     BaseIcon,
+    QuickReadButton,
   },
   data() {
     return {};
@@ -65,6 +79,9 @@ export default defineComponent({
   methods: {
     alert() {
       alert('test');
+    },
+    quickReadClick(ev: Event) {
+      console.log('clicked', ev);
     },
   },
 });

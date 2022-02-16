@@ -24,7 +24,8 @@
           <base-icon width="18" height="18">
             <icon-star />
           </base-icon>
-          icon on any content to add them here. You'll see all your favourited content in one place.
+          icon on any content and it'll appear here. You'll see all your favourited content in one
+          place.
         </p>
         <router-link :to="{ name: 'Find' }" replace class="btn btn--primary">Explore</router-link>
       </div>
