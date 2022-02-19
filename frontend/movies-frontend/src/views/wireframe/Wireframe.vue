@@ -68,52 +68,57 @@
         <div class="row row--equal-height">
           <div class="col-6 col-sm-2 col-xs-6">
             <div class="theme-tertiary p-1 d-flex align-center">
-              <img src="../../assets/logo-badge-overflowing.svg" alt="" />
+              <img src="@/assets/logo-badge-overflowing.svg" alt="" />
             </div>
           </div>
           <div class="col-6 col-sm-2 col-xs-6">
             <div class="theme-tertiary p-1 d-flex align-center">
-              <img src="../../assets/logo-badge.svg" alt="" />
+              <img src="@/assets/logo-badge.svg" alt="" />
             </div>
           </div>
           <div class="col-6 col-sm-2 col-xs-6">
             <div class="theme-tertiary p-1 d-flex align-center">
-              <img src="../../assets/logo-big.svg" alt="" />
+              <img src="@/assets/logo-big.svg" alt="" />
             </div>
           </div>
           <div class="col-6 col-sm-2 col-xs-6">
             <div class="theme-tertiary p-1 d-flex align-center">
-              <img src="../../assets/logo-color.svg" alt="" />
+              <img src="@/assets/logo-color.svg" alt="" />
             </div>
           </div>
           <div class="col-6 col-sm-2 col-xs-6">
             <div class="theme-tertiary p-1 d-flex align-center">
-              <img src="../../assets/logo.svg" alt="" />
+              <img src="@/assets/logo.svg" alt="" />
             </div>
           </div>
           <div class="col-6 col-sm-2 col-xs-6">
             <div class="theme-tertiary p-1 d-flex align-center">
-              <img src="../../assets/missing-poster.svg" alt="" />
+              <img src="@/assets/logo-white.svg" alt="" />
             </div>
           </div>
           <div class="col-6 col-sm-2 col-xs-6">
             <div class="theme-tertiary p-1 d-flex align-center">
-              <img src="../../assets/no-results.svg" alt="" />
+              <img src="@/assets/missing-poster.svg" alt="" />
             </div>
           </div>
           <div class="col-6 col-sm-2 col-xs-6">
             <div class="theme-tertiary p-1 d-flex align-center">
-              <img src="../../assets/quick-read-upper.svg" alt="" />
+              <img src="@/assets/no-results.svg" alt="" />
             </div>
           </div>
           <div class="col-6 col-sm-2 col-xs-6">
             <div class="theme-tertiary p-1 d-flex align-center">
-              <img src="../../assets/quick-read.svg" alt="" />
+              <img src="@/assets/quick-read-upper.svg" alt="" />
             </div>
           </div>
           <div class="col-6 col-sm-2 col-xs-6">
             <div class="theme-tertiary p-1 d-flex align-center">
-              <img src="../../assets/star-graphic.svg" alt="" />
+              <img src="@/assets/quick-read.svg" alt="" />
+            </div>
+          </div>
+          <div class="col-6 col-sm-2 col-xs-6">
+            <div class="theme-tertiary p-1 d-flex align-center">
+              <img src="@/assets/star-graphic.svg" alt="" />
             </div>
           </div>
         </div>

@@ -188,6 +188,22 @@ const routes: Array<RouteRecordRaw> = [
           import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleChips.vue'),
         meta: {},
       },
+      {
+        path: 'horizontalscroller',
+        name: 'ExampleHorizontalScroller',
+        component: () =>
+          import(
+            /* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleHorizontalScroller.vue'
+          ),
+        meta: {},
+      },
+      {
+        path: 'loader',
+        name: 'ExampleLoader',
+        component: () =>
+          import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleLoader.vue'),
+        meta: {},
+      },
     ],
   },
 ];
