@@ -130,7 +130,7 @@ export default defineComponent({
   &__content {
     opacity: 0;
     animation: move-up 1.2s forwards;
-    animation-delay: 1.2s;
+    animation-delay: 1.8s;
     animation-timing-function: $ease-out-quint-ish;
     transform: translateY(40px);
   }
@@ -146,7 +146,7 @@ export default defineComponent({
     justify-content: center;
     padding: math.div($default-spacing, 2);
     animation: move-out 1.2s forwards;
-    animation-delay: 1.2s;
+    animation-delay: 1.8s;
     animation-timing-function: $ease-out-quint-ish;
 
     img {

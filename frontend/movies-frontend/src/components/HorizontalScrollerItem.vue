@@ -19,7 +19,6 @@ export default {
 @import '@/design/functions/index.scss';
 
 .hs-item {
-  scroll-snap-align: start;
   transform: translateZ(0); // prevent repainting entire component // TODO: check if necessary
 
   width: 200px;
@@ -28,7 +27,8 @@ export default {
   // gutter-gap * 2, divided by 3 columns
   width: calc((cssvar(container-size) - $default-spacing * 2) / 3 - ($default-spacing * 2 / 3));
 
-  &__scroller {
+  &__inner {
+    height: 100%;
   }
 }
 </style>

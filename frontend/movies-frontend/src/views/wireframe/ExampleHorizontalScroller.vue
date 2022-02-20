@@ -12,6 +12,7 @@
       @intersect="loadMore"
       intersectionMargin="100px"
       :showScrollbar="true"
+      :scrollSnap="false"
     >
       <horizontal-scroller-item v-for="item in items" :key="item.id">
         <div class="card">
@@ -30,7 +31,7 @@
     </horizontal-scroller>
 
     <horizontal-scroller containerSize="small" class="mt-2">
-      <horizontal-scroller-item v-for="item in 4" :key="item">
+      <horizontal-scroller-item v-for="item in 3" :key="item">
         <base-card
           :title="`Title ${item}`"
           to="/library"
@@ -41,6 +42,14 @@
           <!-- <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae, reiciendis?</p> -->
         </base-card>
       </horizontal-scroller-item>
+      <horizontal-scroller-item>
+        <div class="d-flex align-center justify-center flex-column card" style="height: 100%">
+          <span class="btn btn--rounded btn--primary">
+            <base-icon-async name="ArrowRight" />
+          </span>
+          <span class="text-big fw-bold">See all</span>
+        </div>
+      </horizontal-scroller-item>
     </horizontal-scroller>
   </div>
 </template>
@@ -50,6 +59,7 @@ import { defineComponent } from 'vue';
 import HorizontalScroller from '@/components/HorizontalScroller.vue';
 import HorizontalScrollerItem from '@/components/HorizontalScrollerItem.vue';
 import BaseCard from '@/components/base/BaseCard.vue';
+import BaseIconAsync from '@/components/base/BaseIconAsync.vue';
 
 export default defineComponent({
   name: 'ExampleHorizontalScroller',
@@ -57,6 +67,7 @@ export default defineComponent({
     HorizontalScroller,
     HorizontalScrollerItem,
     BaseCard,
+    BaseIconAsync,
   },
   data() {
     return {

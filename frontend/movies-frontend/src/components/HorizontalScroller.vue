@@ -1,32 +1,36 @@
 <template>
-  <div class="horizontal-scroller" role="group">
+  <div class="horizontal-scroller" :class="containerSize" role="group">
     <div class="horizontal-scroller__buttons">
-      <button
-        class="hs-button hs button--prev"
-        type="button"
-        @click="back"
-        :disabled="buttonsDisabled.prev"
-      >
-        <span class="visually-hidden">Previous</span>
-        <base-icon>
-          <icon-chevron-left />
-        </base-icon>
-      </button>
-      <button
-        class="hs-button hs button--next"
-        type="button"
-        @click="forwards"
-        :disabled="buttonsDisabled.next"
-      >
-        <span class="visually-hidden">Next</span>
-        <base-icon>
-          <icon-chevron-right />
-        </base-icon>
-      </button>
+      <div class="">
+        <button
+          class="hs-button hs-button--prev btn btn--rounded"
+          type="button"
+          @click="back"
+          :disabled="buttonsDisabled.prev"
+          :class="{ 'scrollbar-adjusted': showScrollbar }"
+        >
+          <span class="visually-hidden">Previous carousel page</span>
+          <base-icon>
+            <icon-chevron-left />
+          </base-icon>
+        </button>
+        <button
+          class="hs-button hs-button--next btn btn--rounded"
+          type="button"
+          @click="forwards"
+          :disabled="buttonsDisabled.next"
+          :class="{ 'scrollbar-adjusted': showScrollbar }"
+        >
+          <span class="visually-hidden">Next carousel page</span>
+          <base-icon>
+            <icon-chevron-right />
+          </base-icon>
+        </button>
+      </div>
     </div>
     <div
       class="horizontal-scroller__scroller"
-      :class="[containerSize, { 'hide-scrollbars': !showScrollbar }]"
+      :class="{ 'hide-scrollbars': !showScrollbar, 'scroll-snap': scrollSnap }"
       ref="scroller"
     >
       <div class="container-spacer" aria-hidden="true"></div>
@@ -68,11 +72,15 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    scrollSnap: {
+      type: Boolean,
+      default: true,
+    },
     containerSize: {
       type: String,
       default: '',
       validator(val: string) {
-        return ['', 'xxs', 'small', 'big', 'fluid'].includes(val);
+        return ['', 'xxs', 'small', 'big'].includes(val);
       },
     },
   },
@@ -125,14 +133,59 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @use 'sass:math';
 @import '@/design/variables/index.scss';
 @import '@/design/mixins/index.scss';
 
-$scroll-gap: $default-spacing;
+@function containerSize() {
+  @return max(calc((100% - cssvar(container-size)) / 2 + $default-spacing), $default-spacing);
+}
 
 .horizontal-scroller {
+  position: relative;
+
+  @include setCssvar(container-size, $container-width);
+  &.xxs {
+    @include setCssvar(container-size, $container-width-xxs);
+  }
+  &.small {
+    @include setCssvar(container-size, $container-width-small);
+  }
+  &.big {
+    @include setCssvar(container-size, $container-width-big);
+  }
+
+  &__buttons {
+    @include breakpoint-max($breakpoint-navigation-change) {
+      display: none;
+    }
+    .hs-button {
+      box-shadow: $box-shadow, inset 0 0 0 1px $gray-400;
+      position: absolute;
+      z-index: 1;
+      top: 50%;
+
+      &.scrollbar-adjusted {
+        top: calc(50% - 15px); // scrollbar-height / 2
+      }
+
+      &:disabled {
+        opacity: 0;
+        transform: scale(0);
+      }
+
+      &--next {
+        right: containerSize();
+        transform: translateX($default-spacing * 0.75) translateY(-50%);
+      }
+      &--prev {
+        left: containerSize();
+        transform: translateX(-$default-spacing * 0.75) translateY(-50%);
+      }
+    }
+  }
+
   &__scroller {
     scroll-behavior: smooth;
 
@@ -146,64 +199,29 @@ $scroll-gap: $default-spacing;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
 
-    //scroll-padding-left: $scroll-gap;
-    //scroll-padding-right: $scroll-gap;
-    //padding-left: $scroll-gap;
-    //padding-right: $scroll-gap;
-
-    // margin-left: calc(-50vw);
-    // margin-right: calc(-50vw);
-    // width: calc(100vw);
-    // position: relative;
-    // left: 50%;
-    // right: 50%;
-    // background: yellow;
-    // padding-left: max(calc((100vw - 1000px) / 2 + 16px), 16px);
-    // padding-right: max(calc((100vw - 1000px) / 2 + 16px), 16px);
-    // scroll-padding-left: max(calc((100vw - 1000px) / 2 + 16px), 16px);
-    // scroll-padding-right: max(calc((100vw - 1000px) / 2 + 16px), 16px);
-
-    // TODO: scroll gap between items should be half of gap out to edge of screen
-    // This could also be solved by having a padding-left and padding right of $default-spacing/2 on .hs-item
-    @include setCssvar(container-size, $container-width);
-    &.xxs {
-      @include setCssvar(container-size, $container-width-xxs);
-    }
-    &.small {
-      @include setCssvar(container-size, $container-width-small);
-    }
-    &.big {
-      @include setCssvar(container-size, $container-width-big);
-    }
-    &.fluid {
-      @include setCssvar(container-size, 100%);
-    }
-    // scroll-padding-left: $scroll-gap;
-    // scroll-padding-right: $scroll-gap;
-    scroll-padding-left: max(
-      calc((100% - cssvar(container-size)) / 2 + $default-spacing),
-      $default-spacing
-    );
-    scroll-padding-right: max(
-      calc((100% - cssvar(container-size)) / 2 + $default-spacing),
-      $default-spacing
-    );
+    scroll-padding-left: containerSize();
+    scroll-padding-right: containerSize();
     .container-spacer {
-      scroll-snap-align: start;
-      min-width: max(
-        calc((100% - cssvar(container-size)) / 2 + $default-spacing),
-        $default-spacing
-      );
+      min-width: containerSize();
+    }
+
+    &.scroll-snap {
+      .container-spacer,
+      .hs-item {
+        scroll-snap-align: start;
+      }
     }
 
     &-inner {
       display: grid;
       grid-auto-flow: column;
-      gap: $scroll-gap;
 
-      // TODO: scroll gap between items is half of gap out to edge of screen on mobile only
-      @media (max-width: $container-width-small) {
-        gap: math.div($scroll-gap, 2);
+      gap: $grid-gutter;
+      @include breakpoint(xs) {
+        gap: $grid-xs-gutter;
+      }
+      @include breakpoint(sm) {
+        gap: $grid-sm-gutter;
       }
 
       list-style-type: none;
