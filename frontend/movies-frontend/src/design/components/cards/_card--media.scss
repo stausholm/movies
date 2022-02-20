@@ -108,7 +108,8 @@
     transition: transform 0.8s cubic-bezier(0.35, 0, 0, 1) 0s;
   }
 
-  // In case too much of the media is cut off with object-fit: cover; The background image would need some blurring though
+  // In case too much of the media is cut off with object-fit: cover;
+  // The background image would need some blurring though
   // .card__img {
   //   img {
   //     background-image: url(/img/posters/tt0085959_SX600.jpg);

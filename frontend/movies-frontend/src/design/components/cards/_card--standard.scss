@@ -29,12 +29,8 @@
       padding: math.div($default-spacing, 4) math.div($default-spacing, 2);
       border-radius: $border-radius-small;
       border: 1px solid $gray-400;
-      white-space: nowrap;
       display: inline-block;
       color: $text-color-secondary-dark;
-      text-overflow: ellipsis;
-      max-width: 100%;
-      overflow: hidden;
       @extend .text-small;
     }
   }

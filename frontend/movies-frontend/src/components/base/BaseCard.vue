@@ -83,7 +83,7 @@ export default defineComponent({
       type: String,
       default: 'standard',
       validator(val: string) {
-        return ['standard', 'tip', 'media'].includes(val);
+        return ['standard', 'tip', 'media', 'image'].includes(val);
       },
     },
   },

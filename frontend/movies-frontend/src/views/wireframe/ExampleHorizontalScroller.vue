@@ -31,12 +31,15 @@
 
     <horizontal-scroller containerSize="small" class="mt-2">
       <horizontal-scroller-item v-for="item in 4" :key="item">
-        <div class="card">
-          <a href="#">
-            <h2>{{ item }}</h2>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae, reiciendis?</p>
-          </a>
-        </div>
+        <base-card
+          :title="`Title ${item}`"
+          to="/library"
+          type="image"
+          imgUrl="todo"
+          class="card--image-1x1 card--image-hide-title"
+        >
+          <!-- <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae, reiciendis?</p> -->
+        </base-card>
       </horizontal-scroller-item>
     </horizontal-scroller>
   </div>
@@ -46,12 +49,14 @@
 import { defineComponent } from 'vue';
 import HorizontalScroller from '@/components/HorizontalScroller.vue';
 import HorizontalScrollerItem from '@/components/HorizontalScrollerItem.vue';
+import BaseCard from '@/components/base/BaseCard.vue';
 
 export default defineComponent({
   name: 'ExampleHorizontalScroller',
   components: {
     HorizontalScroller,
     HorizontalScrollerItem,
+    BaseCard,
   },
   data() {
     return {
