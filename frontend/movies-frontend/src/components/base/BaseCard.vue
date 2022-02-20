@@ -9,7 +9,7 @@
     <header class="card__header">
       <component :is="headingLevel" class="mb-0 card__title">
         <!-- This span is here for better styling abilities -->
-        <span :aria-hidden="!!to">{{ title }}</span>
+        <span :aria-hidden="!!to" class="title">{{ title }}</span>
         <router-link v-if="to" :to="to" :aria-describedby="ctaId">{{ title }}</router-link>
       </component>
       <div class="card__header-action" v-if="$slots.headerAction">
