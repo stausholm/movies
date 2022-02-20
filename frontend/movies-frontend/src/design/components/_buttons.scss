@@ -252,13 +252,6 @@
       @include prefers-reduced-motion() {
         animation: none;
       }
-
-      [class*='router-fade'] &,
-      [class*='router-slide'] & {
-        // Fixes a weird bug where an animating box-shadow would cause a horizontal scrollbar
-        // to appear when transitioning pages on mobile, inside a childRouterView
-        animation: none;
-      }
     }
 
     @keyframes btn-pulse-ripple {

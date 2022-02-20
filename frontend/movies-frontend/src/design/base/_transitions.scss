@@ -57,6 +57,22 @@
 }
 
 // route transitions
+[class*='router-fade'],
+[class*='router-slide'],
+[class*='route-primary'] {
+  > * {
+    *,
+    *::before,
+    *::after {
+      // pause any in-page animations while the page is transitioning to another page.
+      // This helps fixing a weird bug where an animating box-shadow would cause a horizontal scrollbar
+      // to appear when transitioning pages on mobile, inside a childRouterView.
+      // It also helps performance
+      animation-play-state: paused !important;
+    }
+  }
+}
+
 .route-primary {
   &-enter-from {
     opacity: 0;
