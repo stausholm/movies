@@ -34,7 +34,7 @@
       ref="scroller"
     >
       <div class="container-spacer" aria-hidden="true"></div>
-      <ul class="horizontal-scroller__scroller-inner">
+      <ul class="horizontal-scroller__scroller-inner" ref="scrollerContent">
         <slot />
       </ul>
       <observer
@@ -53,6 +53,9 @@ import Observer from '@/components/Observer.vue';
 import BaseIcon from '@/components/base/BaseIcon.vue';
 import IconChevronRight from '@/components/icons/IconChevronRight.vue';
 import IconChevronLeft from '@/components/icons/IconChevronLeft.vue';
+import { getFocusableChildren } from '@/utils/focus-trap';
+
+// https://bbc.github.io/gel/components/carousels/
 
 export default defineComponent({
   name: 'HorizontalScroller',
@@ -100,6 +103,59 @@ export default defineComponent({
 
     scroller.addEventListener('scroll', this.handleScroll);
     // TODO: handle page resize and cases where there are not enough list items to be scrollable and when list items gets added/removed
+
+    // TESTING STUFF
+    // ✅ set up intersection oberserver that observes all children and sees if they're intersecting.
+    // ✅ It also updates the tabindex of all tabable content inside each scrollerItem, so that everything not visible gets tabindex -1
+    // there is also a mutation observer that listens for additions/deletions of scrollerItems. If a change occurs, make sure to intersectionObserve newly added
+    // ✅ Mutation observer should NOT trigger when updating the already existing scrollerItems (attributes: false)
+    // remember to clean up observers beforeUnmount()
+
+    const scrollerContent = this.$refs.scrollerContent as HTMLElement;
+    const items = scrollerContent.children;
+
+    const mutationCallback = (mutations: MutationRecord[], observer: MutationObserver) => {
+      console.log(mutations);
+    };
+
+    const mutationObserver = new MutationObserver(mutationCallback);
+    mutationObserver.observe(scrollerContent, {
+      childList: true,
+      subtree: true,
+    });
+
+    const observerSettings = {
+      root: this.intersectionRoot,
+      threshold: 0.5,
+    };
+
+    const callback = (items: IntersectionObserverEntry[]) => {
+      Array.prototype.forEach.call(items, (item) => {
+        const el = item.target as HTMLElement;
+        const focusableChildren = el.querySelectorAll('[data-scroller-focusable]');
+        if (item.isIntersecting) {
+          el.removeAttribute('inert');
+          focusableChildren.forEach((child) => {
+            (child as HTMLElement).tabIndex = 0;
+          });
+        } else {
+          // Makes items unfocusable and unavailable to assistive technologies
+          el.setAttribute('inert', 'inert');
+          focusableChildren.forEach((child) => {
+            (child as HTMLElement).tabIndex = -1;
+          });
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(callback, observerSettings);
+    Array.prototype.forEach.call(items, (item) => {
+      observer.observe(item);
+      const focusableChildren = getFocusableChildren(item);
+      focusableChildren.forEach((child) => {
+        child.setAttribute('data-scroller-focusable', '1');
+      });
+    });
   },
   beforeUnmount() {
     const scroller = this.$refs.scroller as HTMLElement;
@@ -137,6 +193,16 @@ export default defineComponent({
 @use 'sass:math';
 @import '@/design/variables/index.scss';
 @import '@/design/mixins/index.scss';
+
+[inert] {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.3;
+}
+[inert],
+[inert] * {
+  user-select: none;
+}
 
 @function containerSize() {
   @return max(calc((100% - cssvar(container-size)) / 2 + $default-spacing), $default-spacing);
@@ -192,6 +258,13 @@ export default defineComponent({
     @include prefers-reduced-motion() {
       scroll-behavior: auto;
     }
+
+    // add extra padding so scroller doesn't cut of styles like a box-shadow on a .card,
+    // and then subtract that extra padding so the scroller doesn't take up the extra space
+    padding-top: $default-spacing;
+    padding-bottom: $default-spacing;
+    margin-top: -$default-spacing;
+    margin-bottom: -$default-spacing;
 
     display: flex;
     overflow-x: auto;

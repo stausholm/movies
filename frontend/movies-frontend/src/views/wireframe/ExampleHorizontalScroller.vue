@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="container container--small">
-      <div class="theme-tertiary p-1 rounded shadow-sm">
+      <div class="theme-tertiary p-1 rounded shadow-sm mb-1">
         <h2>HorizontalScroller</h2>
         <button class="btn btn--primary mr" @click="addItem">add item</button>
         <button class="btn btn--primary" @click="removeItem">remove item</button>
@@ -15,11 +15,15 @@
       :scrollSnap="false"
     >
       <horizontal-scroller-item v-for="item in items" :key="item.id">
-        <div class="card">
+        <div class="card p-1">
           <a href="#">
             <h2>{{ item.id }}</h2>
             <p>{{ item.title }}</p>
           </a>
+          <div>
+            <button class="btn btn--primary mr">Button 1</button>
+            <button class="btn btn--primary">Button 2</button>
+          </div>
         </div>
       </horizontal-scroller-item>
       <horizontal-scroller-item v-if="loading">
@@ -51,6 +55,9 @@
         </div>
       </horizontal-scroller-item>
     </horizontal-scroller>
+    <div class="container container--small">
+      <h2>content below scroller</h2>
+    </div>
   </div>
 </template>
 
