@@ -11,7 +11,7 @@
       />
     </div>
     <div class="container">
-      <h2 class="mt-2">Browse by</h2>
+      <section-header title="Browse by" class="mt-2 mb" />
       <div class="row">
         <div class="col-6 col-sm-4">
           <router-link :to="{ name: 'Movies' }" class="btn btn--icon btn--block text-small">
@@ -39,7 +39,7 @@
         </div>
       </div>
 
-      <h2 class="mt-2" id="genrelist">Genres</h2>
+      <section-header title="Genres" class="mt-2 mb" id="genrelist" />
       <!-- TODO: rendering this list makes route navigation to this route slower? -->
       <nav class="block-link-wrapper">
         <block-link
@@ -63,6 +63,7 @@ import IconFilmstrip from '@/components/icons/IconFilmstrip.vue';
 import IconActors from '@/components/icons/IconActors.vue';
 import BlockLink from '@/components/BlockLink.vue';
 import SearchBar from '@/components/SearchBar.vue';
+import SectionHeader from '@/components/SectionHeader.vue';
 import { GENRES } from '@/constants/Genres';
 import { checkOffline } from '@/utils/networkConnection';
 import BaseSpacer from '@/components/base/BaseSpacer.vue';
@@ -78,6 +79,7 @@ export default defineComponent({
     BlockLink,
     SearchBar,
     BaseSpacer,
+    SectionHeader,
   },
   computed: {
     genresFormatted() {

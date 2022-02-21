@@ -261,10 +261,11 @@ export default defineComponent({
 
     // add extra padding so scroller doesn't cut of styles like a box-shadow on a .card,
     // and then subtract that extra padding so the scroller doesn't take up the extra space
-    padding-top: $default-spacing;
-    padding-bottom: $default-spacing;
-    margin-top: -$default-spacing;
-    margin-bottom: -$default-spacing;
+    // TODO
+    // padding-top: $default-spacing;
+    // padding-bottom: $default-spacing;
+    // margin-top: -$default-spacing;
+    // margin-bottom: -$default-spacing;
 
     display: flex;
     overflow-x: auto;

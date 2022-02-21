@@ -3,7 +3,7 @@
     <div class="text">
       <slot>
         <div class="pwa-install-content-banner__logo">
-          <img src="../assets/logo-color.svg" alt="" />
+          <img src="@/assets/logo-color.svg" alt="" />
         </div>
         <div>
           <strong class="text-big">Install {{ appName }}</strong>
@@ -12,7 +12,7 @@
       </slot>
     </div>
     <div class="buttons">
-      <button class="btn btn--text mr" @click.stop="showBanner = false">Not now</button>
+      <button class="btn btn--text mr" @click.stop="decline">Not now</button>
       <pwa-install-button class="btn">Install</pwa-install-button>
     </div>
   </div>
@@ -25,6 +25,7 @@ import PwaInstallButton from '@/components/PwaInstallButton.vue';
 import { APP_NAME } from '@/constants/SiteSettings.json';
 
 export default defineComponent({
+  emits: ['decline'],
   components: {
     PwaInstallButton,
   },
@@ -37,6 +38,12 @@ export default defineComponent({
   computed: {
     showPWAInstallButton(): boolean {
       return this.$store.getters.showPWAInstallButton;
+    },
+  },
+  methods: {
+    decline() {
+      this.showBanner = false;
+      this.$emit('decline');
     },
   },
 });

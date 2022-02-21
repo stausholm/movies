@@ -67,6 +67,10 @@
     padding-top: math.div($default-spacing, 2);
     padding-left: 0;
     padding-right: 0;
+
+    &:empty {
+      padding-top: 0;
+    }
   }
 }
 
@@ -87,10 +91,26 @@
     padding-top: $aspect-ratio-16x9;
   }
 }
+// ratios has been calculated based on an average of all posters for each media type
+.card--image.card--image-movie {
+  .card__img {
+    padding-top: 148%;
+  }
+}
+.card--image.card--image-series {
+  .card__img {
+    padding-top: 141.75%;
+  }
+}
+.card--image.card--image-episode {
+  .card__img {
+    padding-top: 78.1%;
+  }
+}
 // add this for visually hiding the mandatory title
 .card--image.card--image-hide-title {
   .card__header {
-    margin-bottom: -$default-spacing;
+    padding-top: 0;
     .title {
       @extend .visually-hidden;
     }

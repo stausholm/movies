@@ -22,6 +22,8 @@
         tags="Did you know?"
         type="tip"
       >
+        <!-- TODO: this should only be shown after used has launched app atleast once, and haven't already interacted with the card. 
+      We need to store if the user has clicked on the card buttons or not -->
         <p>Add or remove favourites, adjust app colors, animations, images & more</p>
         <template #footer>
           <router-link class="btn btn--text-primary" :to="{ name: 'Account' }">
@@ -30,6 +32,19 @@
           <button class="btn btn--text">Got it</button>
         </template>
       </base-card>
+
+      <base-card
+        class="mb-2"
+        title="Browse all tips"
+        headingLevel="h2"
+        tags="Did you know?"
+        type="tip"
+      >
+        <!-- TODO: this should not be shown if another TIP card is showing.  -->
+        <p>See all the hot tips for using {{ appName }}, through the settings page</p>
+        <router-link class="btn btn--primary" :to="{ name: 'Tips' }"> Show me tips </router-link>
+      </base-card>
+
       <base-card
         class="mb-2"
         title="Quick Access"
@@ -37,41 +52,88 @@
         tags="Did you know?"
         type="tip"
       >
+        <!-- TODO: this should not be shown if another TIP card is showing.  -->
         <p>Use Quick Access to get around {{ appName }} quickly. Just press:</p>
         <!-- Button will open quick access menu -->
         <button class="btn btn--primary btn--uppercase">CTRL + K</button>
       </base-card>
-
-      <h1><router-link to="/wireframe">Wireframe</router-link></h1>
-
-      <pwa-install-button-in-feed />
-
-      <p class="mt">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat voluptatem perspiciatis
-        consequatur ex non accusamus illo voluptatibus? Laborum natus distinctio, earum corrupti
-        blanditiis sapiente. Autem impedit officia voluptatum. In, magni?
-      </p>
-
-      <div v-if="hasStarredContent">
-        <div>
-          <h2>Recommended for you</h2>
-        </div>
-        <div>
-          <h2><router-link :to="{ name: 'Starred' }">Starred</router-link></h2>
-        </div>
-      </div>
-      <div>
-        <h2>What are you in the mood for?</h2>
-        <p>lorem ipsum</p>
-      </div>
     </div>
-    <zone theme="dark" v-if="!hasStarredContent">
+
+    <div class="container" v-if="hasStarredContent">
+      <section-header title="Your starred content" class="mb" :to="{ name: 'Starred' }" />
+      <p class="mb-2">TODO SCROLLER</p>
+
+      <section-header title="Recommended for you" class="mb" />
+      <p class="mb-2">TODO SCROLLER</p>
+    </div>
+
+    <div class="container">
+      <section-header
+        title="What are you in the mood for?"
+        subtitle="Action, Adventure, Action-adventure.."
+        class="mb"
+      />
+    </div>
+    <horizontal-scroller :scrollSnap="false">
+      <horizontal-scroller-item>
+        <span>TODO chip filters</span>
+      </horizontal-scroller-item>
+    </horizontal-scroller>
+    <horizontal-scroller class="mb-2">
+      <horizontal-scroller-item>
+        <base-card
+          type="image"
+          title="TODO"
+          imgUrl="todo"
+          class="card--image-hide-title card--image-movie"
+        ></base-card>
+      </horizontal-scroller-item>
+      <horizontal-scroller-item>
+        <div>
+          <button class="btn btn--primary btn--rounded">Show all -></button>
+        </div>
+      </horizontal-scroller-item>
+    </horizontal-scroller>
+
+    <div class="container">
+      <pwa-install-button-in-feed @decline="pwaDeclined" class="mb-2" />
+    </div>
+
+    <zone theme="dark" v-if="!hasStarredContent" class="mb-2">
       <div class="container container--xxs text-center mt-2 mb-2">
         <img src="../assets/star-graphic.svg" alt="" />
         <h2 class="mt-2">Star something</h2>
         <p>To get recommendations right here on your homescreen</p>
       </div>
     </zone>
+
+    <div class="container">
+      <section-header title="Popular movies" class="mb" to="TODO list page" />
+    </div>
+    <horizontal-scroller class="mb-2">
+      <horizontal-scroller-item>
+        <base-card
+          type="image"
+          title="TODO"
+          imgUrl="todo"
+          class="card--image-hide-title card--image-movie"
+        ></base-card>
+      </horizontal-scroller-item>
+    </horizontal-scroller>
+
+    <div class="container">
+      <section-header title="Popular shows" class="mb" to="TODO list page" />
+    </div>
+    <horizontal-scroller class="mb-2">
+      <horizontal-scroller-item>
+        <base-card
+          type="image"
+          title="TODO"
+          imgUrl="todo"
+          class="card--image-hide-title card--image-movie"
+        ></base-card>
+      </horizontal-scroller-item>
+    </horizontal-scroller>
   </layout>
 </template>
 
@@ -85,6 +147,11 @@ import BaseCard from '@/components/base/BaseCard.vue';
 import { APP_NAME } from '@/constants/SiteSettings.json';
 import { AppLayoutSizeWidth } from '@/store/app/types';
 import Zone from '@/components/Zone.vue';
+import { Toast } from '@/store/toast/types';
+import { ToastMutations } from '@/store/toast/mutations';
+import SectionHeader from '@/components/SectionHeader.vue';
+import HorizontalScroller from '@/components/HorizontalScroller.vue';
+import HorizontalScrollerItem from '@/components/HorizontalScrollerItem.vue';
 
 export default defineComponent({
   name: 'Home',
@@ -95,6 +162,9 @@ export default defineComponent({
     Motd,
     BaseCard,
     Zone,
+    SectionHeader,
+    HorizontalScroller,
+    HorizontalScrollerItem,
   },
   data() {
     return {
@@ -111,6 +181,14 @@ export default defineComponent({
         this.$store.getters.showPWAInstallButton &&
         this.$store.getters.layoutSizeWidth !== ('desktop' as AppLayoutSizeWidth)
       );
+    },
+  },
+  methods: {
+    pwaDeclined() {
+      this.$store.commit(ToastMutations.ADD_TOAST, {
+        content:
+          'Should you change your mind, you can always install the application from the settings page.',
+      } as Toast);
     },
   },
 });

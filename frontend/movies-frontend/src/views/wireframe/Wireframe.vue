@@ -158,7 +158,7 @@
 
     <ul>
       <li v-for="video in episodes" :key="video.imdbId">
-        <img :src="'/img/posters/' + video.imdbId + '_SX600.jpg'" alt="" />
+        <img :src="'/img/posters/' + video.imdbId + '_SX100.jpg'" alt="" />
         <br />
         <br />
       </li>
@@ -170,19 +170,22 @@
 // eslint-disable-next-line
 const ratios = {
   movie: {
-    thumbnail: 67.64734196768504,
-    medium: 67.60758715673957,
-    large: 67.61918247371314,
+    // 148%
+    thumbnail: 147.96691176470614,
+    medium: 148.0551470588237,
+    large: 148.02947046395445,
   },
   series: {
-    thumbnail: 70.84101871820573,
-    medium: 70.74502823443541,
-    large: 70.74013393835907,
+    // 141.75%
+    thumbnail: 141.57142857142858,
+    medium: 141.76190476190473,
+    large: 141.7703855085414,
   },
   episode: {
-    thumbnail: 139.10163228061094,
-    medium: 139.04155065082693,
-    large: 139.02263494536936,
+    // 78.1%
+    thumbnail: 78.10317460317464,
+    medium: 78.1164021164021,
+    large: 78.12799395250143,
   },
 };
 

@@ -12,7 +12,7 @@
       </div>
       <base-spacer size="2" />
       <div class="container pl-0 pr-0 pl-sm-1 pr-sm-1">
-        <h2 class="h6 mt-2 pl-1 pr-1">Settings</h2>
+        <section-header title="Settings" class="pl-1 mt-2 mb" />
         <ul class="settings-list" role="menu">
           <settings-group name="Account">
             <li>
@@ -25,6 +25,16 @@
           </settings-group>
           <settings-group-data />
           <settings-group-application />
+          <settings-group name="Developer">
+            <!-- TODO: only show if developer mode has been toggled on by clicking the version number on /account/about -->
+            <li>
+              <settings-item
+                title="Enable wireframe"
+                subtitle="Show link to wireframe page"
+                type="switch"
+              />
+            </li>
+          </settings-group>
         </ul>
       </div>
     </div>
@@ -42,6 +52,7 @@ import SettingsGroupData from '@/components/account/SettingsGroupData.vue';
 import SettingsGroup from '@/components/account/SettingsGroup.vue';
 import SettingsGroupApplication from '@/components/account/SettingsGroupApplication.vue';
 import PwaInstallButton from '@/components/PwaInstallButton.vue';
+import SectionHeader from '@/components/SectionHeader.vue';
 
 export default defineComponent({
   name: 'Account',
@@ -54,6 +65,7 @@ export default defineComponent({
     SettingsGroupApplication,
     PwaInstallButton,
     SettingsGroup,
+    SectionHeader,
   },
   computed: {
     showPWAInstallButton(): boolean {

@@ -9,7 +9,7 @@ export function getAverageImageRatio(cssSelector = 'li img'): number {
     return {
       width: x.width,
       height: x.height,
-      ratio: x.width / x.height,
+      ratio: x.height / x.width,
     };
   });
   const averageImageRatio = imageSizes.reduce((acc, curr) => acc + curr.ratio, 0) / images.length;

@@ -28,6 +28,12 @@
           <span class="nav-item__label text-small text-truncate">Library</span>
         </router-link>
 
+        <router-link :to="{ name: 'Wireframe' }" class="nav-item" data-pushtip="Wireframe">
+          <!-- TODO: make it a feature that can be toggled from devsettings page -->
+          <base-icon class="nav-item__icon"></base-icon>
+          <span class="nav-item__label text-small text-truncate">Wireframe</span>
+        </router-link>
+
         <router-link
           v-if="useSmallLayout"
           :to="{ name: 'Account' }"
