@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <h2>BottomSheet</h2>
+    TODO
     <button class="btn btn--primary" @click="sheetOpen = true">Open BottomSheet</button>
     <bottom-sheet v-if="sheetOpen" @close="sheetOpen = false">
       <p>wow</p>

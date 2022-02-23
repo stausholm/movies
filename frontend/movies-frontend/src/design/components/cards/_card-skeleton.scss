@@ -1,0 +1,83 @@
+// skeleton loaders
+.card.card--is-loading {
+  background-color: $white;
+  border-radius: $border-radius-base;
+  color: $text-color-dark;
+  box-shadow: $box-shadow-sm;
+  pointer-events: none;
+  user-select: none;
+
+  * {
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .card__header {
+    &-link {
+      display: none;
+    }
+  }
+
+  .card__header-action,
+  .card__body,
+  .card__footer {
+    button,
+    a {
+      display: none;
+    }
+  }
+
+  .card__header *,
+  .card__body *,
+  .card__footer *,
+  .card__cta .btn,
+  .card__tags .tag {
+    border-color: transparent;
+    color: transparent;
+    background-color: transparent;
+  }
+}
+
+.card.card--is-loading {
+  .card__skeleton {
+    background-color: $white;
+    border-radius: $border-radius-base;
+    overflow: hidden;
+    cursor: progress;
+    pointer-events: all;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-repeat: no-repeat;
+
+    // skeleton animation
+    &::after {
+      content: '';
+      animation: card-loading-skeleton 1.5s infinite;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: linear-gradient(to right, transparent, $white, transparent);
+      background-position: -900px 0;
+      background-repeat: no-repeat;
+    }
+    @keyframes card-loading-skeleton {
+      to {
+        background-position: 900px 0;
+      }
+    }
+
+    // actual skeleton styles
+    background-image: linear-gradient($loading-skeleton-color, $loading-skeleton-color),
+      linear-gradient($loading-skeleton-color, $loading-skeleton-color),
+      linear-gradient($loading-skeleton-color, $loading-skeleton-color),
+      linear-gradient($loading-skeleton-color, $loading-skeleton-color);
+    background-size: 100% 65%, 71% 2em, 45% 1em, 50% 1em;
+    background-position: 0 0, $default-spacing calc(65% + 2em), $default-spacing 85%,
+      $default-spacing calc(85% + 1.5em);
+  }
+}

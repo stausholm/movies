@@ -23,7 +23,7 @@
     align-items: flex-start;
     justify-content: space-between;
 
-    a {
+    &-link {
       // The link is located around the header instead of around the entire card, so that this text forms the accessible label for the card.
       // If the link wrapped the entire card, screen readers would read all text inside the card as the link label.
       // styling the link makes the entire card clickable, to get the best of both worlds.

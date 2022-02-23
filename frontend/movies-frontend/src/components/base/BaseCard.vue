@@ -3,14 +3,20 @@
     class="card"
     :class="[
       `card--${type}`,
-      { 'card--has-header-action': $slots.headerAction, 'card--has-image': imgUrl },
+      {
+        'card--has-header-action': $slots.headerAction,
+        'card--has-image': imgUrl,
+        'card--is-loading': isLoading,
+      },
     ]"
   >
     <header class="card__header">
       <component :is="headingLevel" class="mb-0 card__title">
         <!-- This span is here for better styling abilities -->
         <span :aria-hidden="!!to" class="title">{{ title }}</span>
-        <router-link v-if="to" :to="to" :aria-describedby="ctaId">{{ title }}</router-link>
+        <router-link v-if="to" :to="to" :aria-describedby="ctaId" class="card__header-link">{{
+          title
+        }}</router-link>
       </component>
       <div class="card__header-action" v-if="$slots.headerAction">
         <slot name="headerAction" />
@@ -35,6 +41,9 @@
     <footer class="card__footer" v-if="$slots.footer">
       <slot name="footer" />
     </footer>
+    <transition name="fade">
+      <div class="card__skeleton" aria-hidden="true" v-if="isLoading"></div>
+    </transition>
   </article>
 </template>
 
@@ -85,6 +94,11 @@ export default defineComponent({
       validator(val: string) {
         return ['standard', 'tip', 'media', 'image'].includes(val);
       },
+    },
+    isLoading: {
+      // show card as a loader/skeleton instead
+      type: Boolean,
+      default: false,
     },
   },
   computed: {

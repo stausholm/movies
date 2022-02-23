@@ -52,9 +52,13 @@
         <button @click="cardType = 'image'" :class="{ active: cardType === 'image' }">image</button>
       </li>
     </ul>
+    <button class="btn btn--primary mt mb" @click="isLoading = !isLoading">
+      Show loaders: {{ isLoading }}
+    </button>
     <div class="mb-1 p-2 theme-primary rounded shadow" style="position: relative; z-index: 1">
       <h4>Works on solid backgrounds with a z-index defined</h4>
       <base-card
+        :isLoading="isLoading"
         class="card--media-video card--media-cover p-1 card--image-hide-title card--image-4x3"
         title="Large title in two or more lines"
         headingLevel="h2"
@@ -84,10 +88,17 @@
     </div>
     <ul class="row row--equal-height">
       <li class="col-12 col-sm-4 col-xs-6">
-        <base-card title="Short title" :type="cardType" tags="Section" :imgUrl="imgUrl"></base-card>
+        <base-card
+          :isLoading="isLoading"
+          title="Short title"
+          :type="cardType"
+          tags="Section"
+          :imgUrl="imgUrl"
+        ></base-card>
       </li>
       <li class="col-12 col-sm-4 col-xs-6">
         <base-card
+          :isLoading="isLoading"
           class="card--media-reverse"
           title="Short title"
           :type="cardType"
@@ -99,6 +110,7 @@
       </li>
       <li class="col-12 col-sm-4 col-xs-6">
         <base-card
+          :isLoading="isLoading"
           class="card--media-reverse card--media-tagged"
           title="Short title"
           :type="cardType"
@@ -110,6 +122,7 @@
       </li>
       <li class="col-12 col-sm-4 col-xs-6">
         <base-card
+          :isLoading="isLoading"
           class="card--media-cover"
           title="Large title in two or more lines"
           :type="cardType"
@@ -126,6 +139,7 @@
       </li>
       <li class="col-12 col-sm-4 col-xs-6">
         <base-card
+          :isLoading="isLoading"
           class="card--media-cover"
           title="Large title in two or more lines"
           :type="cardType"
@@ -138,6 +152,7 @@
       </li>
       <li class="col-12 col-sm-4 col-xs-6">
         <base-card
+          :isLoading="isLoading"
           class="card--media-cover card--media-tagged"
           title="Large title in two or more lines"
           :type="cardType"
@@ -158,7 +173,12 @@
         </base-card>
       </li>
       <li class="col-12 col-sm-4 col-xs-6">
-        <base-card title="Large title in two or more lines" :type="cardType" :imgUrl="imgUrl">
+        <base-card
+          :isLoading="isLoading"
+          title="Large title in two or more lines"
+          :type="cardType"
+          :imgUrl="imgUrl"
+        >
           <template #headerAction>
             <context-menu-button
               :actions="contextMenuActions"
@@ -174,6 +194,7 @@
       </li>
       <li class="col-12 col-sm-4 col-xs-6">
         <base-card
+          :isLoading="isLoading"
           class="card--media-video"
           title="Large title in two or more lines"
           :type="cardType"
@@ -195,6 +216,7 @@
       </li>
       <li class="col-12 col-sm-4 col-xs-6">
         <base-card
+          :isLoading="isLoading"
           class="card--media-video card--media-cover"
           title="Large title in two or more lines"
           :type="cardType"
@@ -222,6 +244,7 @@
       </li>
       <li class="col-12 col-sm-4 col-xs-6">
         <base-card
+          :isLoading="isLoading"
           class="card--media-tagged"
           title="Large title in two or more lines"
           :type="cardType"
@@ -237,6 +260,7 @@
       </li>
       <li class="col-12 col-sm-8">
         <base-card
+          :isLoading="isLoading"
           class="card--media-video card--media-cover p-1"
           title="Large title in two or more lines"
           headingLevel="h2"
@@ -285,6 +309,7 @@ export default defineComponent({
   data() {
     return {
       appName: APP_NAME,
+      isLoading: false,
       cardType: 'media',
       imgUrl: '/img/posters/tt0085959_SX600.jpg',
       contextMenuActions: [

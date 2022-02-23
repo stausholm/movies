@@ -12,9 +12,6 @@
     padding-bottom: $default-spacing * 2;
   }
 
-  &:hover {
-  }
-
   .card__header {
     width: 100%;
     order: 2;
@@ -64,14 +61,11 @@
   }
   .tag {
     @extend .text-pre-head;
+    white-space: normal;
   }
 
   .card__body,
   .card__footer {
-    button,
-    a {
-    }
-
     .btn {
       margin-top: math.div($default-spacing, 2);
     }
@@ -101,6 +95,24 @@
     @include breakpoint($breakpoint-font-size-change) {
       padding-left: $default-spacing * 2;
       padding-right: $default-spacing * 2;
+    }
+  }
+
+  &.card--is-loading {
+    .card__skeleton {
+      background-image: linear-gradient($loading-skeleton-color, $loading-skeleton-color),
+        linear-gradient($loading-skeleton-color, $loading-skeleton-color),
+        linear-gradient($loading-skeleton-color, $loading-skeleton-color),
+        linear-gradient($loading-skeleton-color, $loading-skeleton-color);
+      background-size: 15% 1em, 71% 2em, 45% 1em, 50% 1em;
+      background-position: $default-spacing $default-spacing,
+        $default-spacing calc($default-spacing + 1em + $default-spacing),
+        $default-spacing calc($default-spacing + 1em + $default-spacing + 2em + $default-spacing),
+        $default-spacing
+          calc(
+            $default-spacing + 1em + $default-spacing + 2em + $default-spacing + 1em +
+              $default-spacing
+          );
     }
   }
 }
