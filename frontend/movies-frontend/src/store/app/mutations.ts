@@ -14,6 +14,7 @@ export enum AppMutations {
   SUBTRACT_OVERLAY_COUNT = 'SUBTRACT_OVERLAY_COUNT',
   DISABLE_NAVIGATION = 'DISABLE_NAVIGATION',
   ENABLE_NAVIGATION = 'ENABLE_NAVIGATION',
+  SET_ROUTE_LOADING = 'SET_ROUTE_LOADING',
 }
 
 export const mutations: MutationTree<AppState> = {
@@ -48,5 +49,8 @@ export const mutations: MutationTree<AppState> = {
   },
   [AppMutations.ENABLE_NAVIGATION](state) {
     state.navigationDisabled = false;
+  },
+  [AppMutations.SET_ROUTE_LOADING](state, val: boolean) {
+    state.routeLoading = val;
   },
 };

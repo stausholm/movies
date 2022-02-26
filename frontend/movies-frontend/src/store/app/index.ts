@@ -11,6 +11,7 @@ export const state: AppState = {
   usingNewRelease: false,
   openOverlays: 0,
   navigationDisabled: false,
+  routeLoading: false,
 };
 
 export const app: Module<AppState, RootState> = {

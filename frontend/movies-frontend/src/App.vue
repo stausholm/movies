@@ -1,4 +1,5 @@
 <template>
+  <loader-global />
   <skip-links v-show="!hideNavigation" />
   <navbar v-show="!hideNavigation" />
   <primary-router-view />
@@ -34,6 +35,7 @@ import PwaInstallListeners from '@/components/PwaInstallListeners.vue';
 import { setCssVariable } from '@/utils/setCssVariable';
 import SkipLinks from '@/components/SkipLinks.vue';
 import Announcer from '@/components/Announcer.vue';
+import LoaderGlobal from '@/components/LoaderGlobal.vue';
 import OfflineNotice from '@/components/OfflineNotice.vue';
 import { ToastMutations } from '@/store/toast/mutations';
 import { Toast } from '@/store/toast/types';
@@ -51,6 +53,7 @@ export default defineComponent({
     Announcer,
     OfflineNotice,
     ChangelogModal,
+    LoaderGlobal,
   },
   computed: {
     showPwaOverlay(): boolean {

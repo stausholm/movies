@@ -85,6 +85,9 @@ router.afterEach((to, from) => {
   if (navigatedToNewPage(to, from)) {
     handlePageTitle(to);
     handleMetaTags(to);
+
+    // Complete the animation of the route progress bar.
+    store.commit(AppMutations.SET_ROUTE_LOADING, false);
   }
 });
 
@@ -116,6 +119,13 @@ router.beforeEach((to, from, next) => {
     return;
   }
   checkOnboarding(to, next);
+  // TODO: return if checkOnboarding wants to redirect
+
+  // If this isn't an initial page load...
+  if (from.name !== null) {
+    // Start the route progress bar.
+    store.commit(AppMutations.SET_ROUTE_LOADING, true);
+  }
 });
 
 export default router;
