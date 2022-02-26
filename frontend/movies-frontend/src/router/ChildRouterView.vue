@@ -18,7 +18,7 @@ for some odd reason also be applied to this child router-view -->
 <script lang="ts">
 import { AppLayoutSizeWidth } from '@/store/app/types';
 import { defineComponent } from 'vue';
-import { triggerScrollEvent } from '@/router/index';
+import { triggerScrollEvent } from '@/router/utils';
 
 export default defineComponent({
   name: 'ChildRouterView',

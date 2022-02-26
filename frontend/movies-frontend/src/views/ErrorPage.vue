@@ -2,9 +2,21 @@
   <layout>
     <div class="container">
       <div class="error-notice">
-        <h1>404</h1>
-        <h2>Woah.. that wasn't supposed to happen</h2>
-        <p>Looks like you requested a page that doesn't exists</p>
+        <template v-if="type === 'notFound'">
+          <h1>404</h1>
+          <h2>Woah.. that wasn't supposed to happen</h2>
+          <p>Looks like you requested a {{ resource }} that doesn't exists</p>
+        </template>
+        <template v-else-if="type === 'networkIssue'">
+          <h1>Uh-Oh!</h1>
+          <h2>It looks like you're experiencing some network issues.</h2>
+          <p>Please click the back button and try again, or return to the homepage.</p>
+        </template>
+        <template v-else>
+          <h1>:(</h1>
+          <h2>Something went wrong</h2>
+          <p>We're not entirely sure what though.</p>
+        </template>
         <div>
           <button
             class="btn btn--outline btn--primary mr"
@@ -23,11 +35,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import Layout from '@/layouts/Main.vue';
+import { ErrorPageResource, ErrorPageType } from '@/router/utils';
 
 export default defineComponent({
   name: 'ErrorPage',
+  props: {
+    resource: {
+      // type of resource that could not be found. Used with 404 errors
+      type: String as PropType<ErrorPageResource>,
+      default: 'page',
+    },
+    type: {
+      type: String as PropType<ErrorPageType>,
+      required: true,
+      validator(val: string) {
+        return ['notFound', 'networkIssue'].includes(val);
+      },
+    },
+  },
   components: {
     Layout,
   },

@@ -14,9 +14,10 @@
 </template>
 
 <script lang="ts">
-import { navigatedToNewPage } from '@/router';
+import { navigatedToNewPage } from '@/router/utils';
 import { defineComponent } from 'vue';
 import { RouteLocationNormalized } from 'vue-router';
+import { TRIGGER_SCROLL_EVENT_NAME } from '@/router/utils';
 
 export default defineComponent({
   name: 'SkipLinks',
@@ -25,7 +26,7 @@ export default defineComponent({
       if (navigatedToNewPage(to, from)) {
         const $el = this.$el;
         // wait for route transition to finish
-        document.addEventListener('triggerscroll', function handler(e) {
+        document.addEventListener(TRIGGER_SCROLL_EVENT_NAME, function handler(e) {
           e.currentTarget?.removeEventListener(e.type, handler);
 
           $el.focus();

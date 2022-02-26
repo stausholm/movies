@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { triggerScrollEvent } from '@/router/index';
+import { triggerScrollEvent } from '@/router/utils';
 
 export default defineComponent({
   data() {

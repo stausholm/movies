@@ -1,4 +1,6 @@
 import { RouteRecordRaw } from 'vue-router';
+import promiseDelay from '@/utils/promiseDelay';
+import { goToErrorPage } from '@/router/utils';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -30,6 +32,26 @@ const routes: Array<RouteRecordRaw> = [
         name: 'MovieItem',
         component: () => import(/* webpackChunkName: "find" */ '@/views/find/MovieItem.vue'),
         meta: {},
+        props: true,
+        beforeEnter(routeTo, routeFrom, next): void {
+          promiseDelay(2000).then(() => {
+            return goToErrorPage(routeTo, next, 'notFound');
+          });
+          // TODO: make service
+          // store
+          // .dispatch('movie/fetchMovie', routeTo.params.imdbIDorTitleSlug)
+          // .then(movie => {
+          //   routeTo.params.movie = movie
+          //   next()
+          // })
+          // .catch(error => {
+          //   if (error.response && error.response.status == 404) {
+          //     next({ name: '404', params: { resource: 'movie' } })
+          //   } else {
+          //     next({ name: 'network-issue' })
+          //   }
+          // })
+        },
       },
       {
         path: 'series',

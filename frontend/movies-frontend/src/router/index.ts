@@ -16,19 +16,9 @@ import Wireframe from './routes/wireframe';
 import handleMetaTags from './middleware/metaTags';
 import handlePageTitle from './middleware/pageTitle';
 import store from '@/store';
-
-export const TRIGGER_SCROLL_EVENT = new CustomEvent('triggerscroll');
-export const triggerScrollEvent = (): void => {
-  document.dispatchEvent(TRIGGER_SCROLL_EVENT);
-};
-
-// This only includes changes to actual new pages, and not changes to hash or queryparams
-export const navigatedToNewPage = (
-  to: RouteLocationNormalized,
-  from: RouteLocationNormalized
-): boolean => {
-  return to.path !== from.path;
-};
+import { TRIGGER_SCROLL_EVENT_NAME } from '@/router/utils';
+import { navigatedToNewPage } from '@/router/utils';
+import { AppMutations } from '@/store/app/mutations';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -52,6 +42,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/:pathMatch(.*)*',
     name: 'ErrorPage',
+    props: true,
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -73,7 +64,7 @@ const router = createRouter({
       // triggerscroll event is emitted from primary- and childRouterView once navigation transition is done
       // wait for the out transition to complete (if necessary)
       // TODO: handler function is on rare occasions triggered twice. Not perfect, but also doesn't break anything
-      document.addEventListener('triggerscroll', function handler(e) {
+      document.addEventListener(TRIGGER_SCROLL_EVENT_NAME, function handler(e) {
         e.currentTarget?.removeEventListener(e.type, handler);
 
         // if the resolved position is falsy or an empty object,

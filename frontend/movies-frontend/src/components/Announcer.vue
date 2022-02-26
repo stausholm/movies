@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { navigatedToNewPage } from '@/router';
+import { navigatedToNewPage } from '@/router/utils';
 import { AppMutations } from '@/store/app/mutations';
 import { defineComponent } from 'vue';
 import { RouteLocationNormalized } from 'vue-router';
