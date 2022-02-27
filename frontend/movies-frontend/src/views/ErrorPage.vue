@@ -5,7 +5,9 @@
         <template v-if="type === 'notFound'">
           <h1>404</h1>
           <h2>Woah.. that wasn't supposed to happen</h2>
-          <p>Looks like you requested a {{ resource }} that doesn't exists</p>
+          <p>
+            Looks like you requested a <strong>{{ resource }}</strong> that doesn't exists
+          </p>
         </template>
         <template v-else-if="type === 'networkIssue'">
           <h1>Uh-Oh!</h1>
@@ -49,7 +51,7 @@ export default defineComponent({
     },
     type: {
       type: String as PropType<ErrorPageType>,
-      required: true,
+      default: 'notFound',
       validator(val: string) {
         return ['notFound', 'networkIssue'].includes(val);
       },

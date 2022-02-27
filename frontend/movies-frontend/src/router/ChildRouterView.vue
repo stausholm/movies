@@ -4,12 +4,12 @@ and the route transitions from that router-view would
 for some odd reason also be applied to this child router-view -->
 <template>
   <div class="child-router-view">
-    <router-view v-slot="{ Component }">
+    <router-view v-slot="{ Component, route }">
       <transition :name="transitionName" :mode="transitionMode" @after-leave="afterLeave">
         <keep-alive v-if="keepAlive">
-          <component :is="Component" />
+          <component :is="Component" :key="route.path" />
         </keep-alive>
-        <component v-else :is="Component" />
+        <component v-else :is="Component" :key="route.path" />
       </transition>
     </router-view>
   </div>

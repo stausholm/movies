@@ -12,7 +12,7 @@
           />
         </div>
         <div class="home-top__logo">
-          <img src="../assets/logo-big.svg" alt="" />
+          <img src="@/assets/logo-big.svg" alt="" />
         </div>
       </div>
       <base-card
@@ -101,7 +101,7 @@
 
     <zone theme="dark" v-if="!hasStarredContent" class="mb-2">
       <div class="container container--xxs text-center mt-2 mb-2">
-        <img src="../assets/star-graphic.svg" alt="" />
+        <img src="@/assets/star-graphic.svg" alt="" />
         <h2 class="mt-2">Star something</h2>
         <p>To get recommendations right here on your homescreen</p>
       </div>

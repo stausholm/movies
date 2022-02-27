@@ -1,6 +1,6 @@
 import { RouteRecordRaw } from 'vue-router';
-import promiseDelay from '@/utils/promiseDelay';
 import { goToErrorPage } from '@/router/utils';
+import { contentService } from '@/services/contentService';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -32,26 +32,24 @@ const routes: Array<RouteRecordRaw> = [
         name: 'MovieItem',
         component: () => import(/* webpackChunkName: "find" */ '@/views/find/MovieItem.vue'),
         meta: {},
-        props: true,
-        beforeEnter(routeTo, routeFrom, next): void {
-          promiseDelay(2000).then(() => {
-            return goToErrorPage(routeTo, next, 'notFound');
-          });
-          // TODO: make service
-          // store
-          // .dispatch('movie/fetchMovie', routeTo.params.imdbIDorTitleSlug)
-          // .then(movie => {
-          //   routeTo.params.movie = movie
-          //   next()
-          // })
-          // .catch(error => {
-          //   if (error.response && error.response.status == 404) {
-          //     next({ name: '404', params: { resource: 'movie' } })
-          //   } else {
-          //     next({ name: 'network-issue' })
-          //   }
-          // })
-        },
+        // props: true,
+        // beforeEnter(routeTo, routeFrom, next): void {
+        //   contentService
+        //     .getMoviePageContent(routeTo.params.imdbIDorTitleSlug as string)
+        //     .then((data) => {
+        //       // TODO: fix
+        //       routeTo.params.content = { a: routeTo.params.imdbIDorTitleSlug } as unknown as string;
+        //       return next();
+        //     })
+        //     .catch((error) => {
+        //       // TODO: implement this check
+        //       if (error.response && error.response.status == 404) {
+        //         return goToErrorPage(routeTo, next, 'notFound', 'movie');
+        //       } else {
+        //         return goToErrorPage(routeTo, next, 'networkIssue');
+        //       }
+        //     });
+        // },
       },
       {
         path: 'series',
