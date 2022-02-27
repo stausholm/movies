@@ -1,6 +1,4 @@
 import { RouteRecordRaw } from 'vue-router';
-import { goToErrorPage } from '@/router/utils';
-import { contentService } from '@/services/contentService';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -32,24 +30,6 @@ const routes: Array<RouteRecordRaw> = [
         name: 'MovieItem',
         component: () => import(/* webpackChunkName: "find" */ '@/views/find/MovieItem.vue'),
         meta: {},
-        // props: true,
-        // beforeEnter(routeTo, routeFrom, next): void {
-        //   contentService
-        //     .getMoviePageContent(routeTo.params.imdbIDorTitleSlug as string)
-        //     .then((data) => {
-        //       // TODO: fix
-        //       routeTo.params.content = { a: routeTo.params.imdbIDorTitleSlug } as unknown as string;
-        //       return next();
-        //     })
-        //     .catch((error) => {
-        //       // TODO: implement this check
-        //       if (error.response && error.response.status == 404) {
-        //         return goToErrorPage(routeTo, next, 'notFound', 'movie');
-        //       } else {
-        //         return goToErrorPage(routeTo, next, 'networkIssue');
-        //       }
-        //     });
-        // },
       },
       {
         path: 'series',
@@ -64,7 +44,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: {},
       },
       {
-        path: 'series/:imdbIDorTitleSlug/:imdbIDorEpisodeNumber',
+        path: 'series/:imdbIDorTitleSlug/:imdbID',
         name: 'EpisodeItem',
         component: () => import(/* webpackChunkName: "find" */ '@/views/find/EpisodeItem.vue'),
         meta: {},

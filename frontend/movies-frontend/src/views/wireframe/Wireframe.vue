@@ -3,7 +3,6 @@
     <hero-app title="Wireframe" :slim="true" />
     <div class="container">
       <p>A demo of boilerplate</p>
-      <router-link to="/find/movies/asd123">movie test</router-link>
     </div>
 
     <div class="bg-warning">

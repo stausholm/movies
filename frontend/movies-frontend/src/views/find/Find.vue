@@ -86,13 +86,12 @@ export default defineComponent({
       return Object.keys(GENRES)
         .map((x) => {
           return {
-            name: GENRES[x] as string, // TODO translation
+            name: GENRES[x], // TODO translation
             to: {
               name: 'GenreList',
               params: {
-                genre: 'TODO',
+                genre: GENRES[x],
               },
-              // TODO: genre as route param / prop. figure out how to and best practice
             },
           };
         })

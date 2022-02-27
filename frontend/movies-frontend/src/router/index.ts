@@ -86,7 +86,6 @@ router.afterEach((to, from) => {
     handlePageTitle(to);
     handleMetaTags(to);
 
-    console.log('afterEach', to, from);
     // Complete the animation of the route progress bar.
     store.commit(AppMutations.SET_ROUTE_LOADING, false);
   }
@@ -121,9 +120,9 @@ router.beforeEach((to, from, next) => {
   }
   checkOnboarding(to, next);
   // TODO: return if checkOnboarding wants to redirect
-  console.log('beforeEach', to, from);
-  // If this isn't an initial page load...
-  if (from.name !== null && from.name !== undefined) {
+
+  // If this isn't an initial page load and not an in-page navigation to e.g. a hash
+  if (from.name !== null && from.name !== undefined && navigatedToNewPage(to, from)) {
     // Start the route progress bar.
     store.commit(AppMutations.SET_ROUTE_LOADING, true);
   }

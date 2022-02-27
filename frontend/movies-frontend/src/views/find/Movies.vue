@@ -16,6 +16,12 @@
       </horizontal-scroller-item>
     </horizontal-scroller>
 
+    <div class="container mt-2">
+      <router-link to="/find/movies/asd123">movie test</router-link><br />
+      <router-link to="/find/movies/iron-man">movie iron man test</router-link><br />
+      <router-link to="/find/movies/tt3542188">movie tt3542188 test</router-link>
+    </div>
+
     <!-- TODO: a horizontal scroller for each genre. The section header should lead to a list page -->
   </layout>
 </template>

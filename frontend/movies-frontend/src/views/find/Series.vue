@@ -2,6 +2,8 @@
   <layout>
     <div class="container">
       <h1>Series</h1>
+      <router-link to="/find/series/tt0185906">tt0185906</router-link>
+      <router-link to="/find/series/tt1697033">tt1697033</router-link>
     </div>
   </layout>
 </template>

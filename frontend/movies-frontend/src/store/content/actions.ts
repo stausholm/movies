@@ -8,10 +8,10 @@ export enum ContentActions {
 }
 
 export const actions: ActionTree<ContentState, RootState> = {
-  [ContentActions.LOAD_VIDEOS]({ commit }): void {
+  [ContentActions.LOAD_VIDEOS]({ commit }): Promise<void> {
     commit(ContentMutations.SET_LOADING, true);
     commit(ContentMutations.SET_LOADING_FAILED, false);
-    fetch('/db.json')
+    return fetch('/db.json')
       .then((res) => res.json())
       .then((data) => {
         commit(ContentMutations.SET_VIDEOS, data);

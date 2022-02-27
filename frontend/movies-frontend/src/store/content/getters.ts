@@ -16,4 +16,13 @@ export const getters: GetterTree<ContentState, RootState> = {
   series(state): Series[] {
     return state.videos.filter((x): x is Series => x.type === VIDEO_TYPES.SERIES);
   },
+  videos(state): (Episode | Series | Movie)[] {
+    return state.videos;
+  },
+  contentLoaded(state): boolean {
+    return state.videos.length > 0 && !state.loading;
+  },
+  contentLoading(state): boolean {
+    return state.loading;
+  },
 };

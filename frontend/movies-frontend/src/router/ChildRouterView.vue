@@ -6,7 +6,7 @@ for some odd reason also be applied to this child router-view -->
   <div class="child-router-view">
     <router-view v-slot="{ Component, route }">
       <transition :name="transitionName" :mode="transitionMode" @after-leave="afterLeave">
-        <keep-alive v-if="keepAlive">
+        <keep-alive v-if="keepAlive" :max="maxCachedInstances">
           <component :is="Component" :key="route.path" />
         </keep-alive>
         <component v-else :is="Component" :key="route.path" />
@@ -30,6 +30,10 @@ export default defineComponent({
     keepAlive: {
       type: Boolean,
       default: false,
+    },
+    maxCachedInstances: {
+      type: Number,
+      default: 10,
     },
   },
   data() {
