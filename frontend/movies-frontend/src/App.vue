@@ -1,5 +1,5 @@
 <template>
-  <loader-global />
+  <loader-global :spinner="false" />
   <skip-links v-show="!hideNavigation" />
   <navbar v-show="!hideNavigation" />
   <primary-router-view />

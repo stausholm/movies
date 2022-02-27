@@ -122,7 +122,7 @@ router.beforeEach((to, from, next) => {
   // TODO: return if checkOnboarding wants to redirect
 
   // If this isn't an initial page load...
-  if (from.name !== null) {
+  if (from.name !== null && from.name !== undefined) {
     // Start the route progress bar.
     store.commit(AppMutations.SET_ROUTE_LOADING, true);
   }

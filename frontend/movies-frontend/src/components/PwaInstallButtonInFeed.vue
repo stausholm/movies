@@ -1,5 +1,8 @@
 <template>
-  <div class="pwa-install-content-banner" v-if="showPWAInstallButton && showBanner !== false">
+  <div
+    class="pwa-install-content-banner shadow-sm"
+    v-if="showPWAInstallButton && showBanner !== false"
+  >
     <div class="text">
       <slot>
         <div class="pwa-install-content-banner__logo">

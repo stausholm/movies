@@ -1,12 +1,7 @@
 <template>
   <transition name="fade">
     <div class="global-loader" v-if="loading" aria-hidden="true">
-      <div
-        class="global-loader__bar"
-        v-if="bar"
-        :class="{ loaded: barLoadedFlag }"
-        @transitionend="transitionend"
-      >
+      <div class="global-loader__bar" v-if="bar" :class="{ loaded: !loading }">
         <div class="peg"></div>
       </div>
       <div class="global-loader__spinner" v-if="spinner">
@@ -34,7 +29,6 @@ export default defineComponent({
   data() {
     return {
       loading: false,
-      barLoadedFlag: false,
     };
   },
   computed: {
@@ -42,26 +36,12 @@ export default defineComponent({
       return this.$store.state.app.routeLoading;
     },
   },
-  methods: {
-    transitionend() {
-      if (!this.routeLoading && this.barLoadedFlag) {
-        this.loading = false;
-        this.barLoadedFlag = false;
-      }
-    },
-  },
   watch: {
     routeLoading(isLoading: boolean) {
       if (isLoading) {
         this.loading = true;
-        // TODO: make trickle animation
       } else {
-        if (this.bar) {
-          // wait for bar to animate to 100% and then fade it out
-          this.barLoadedFlag = true;
-        } else {
-          this.loading = false;
-        }
+        this.loading = false;
       }
     },
   },
@@ -76,9 +56,10 @@ export default defineComponent({
 
 .global-loader {
   pointer-events: none;
+  $loader-color: $brand-primary-light;
 
   &__bar {
-    background-color: $brand-primary;
+    background-color: $loader-color;
     position: fixed;
     @include z-index(globalloader);
     top: 0;
@@ -87,6 +68,31 @@ export default defineComponent({
     height: 2px;
     transition: transform 200ms ease 0s;
     transform: translateX(-101%); // 101% to avoid showing boxshadow from .peg
+    animation: loader-bar-fill 4s $ease-in-out-cubic forwards;
+
+    @keyframes loader-bar-fill {
+      0%,
+      10% {
+        transform: translateX(-101%);
+      }
+      19%,
+      25% {
+        transform: translateX(-90%);
+      }
+      33% {
+        transform: translateX(-83%);
+      }
+      41%,
+      66% {
+        transform: translateX(-33%);
+      }
+      87% {
+        transform: translateX(-17%);
+      }
+      100% {
+        transform: translateX(-10%);
+      }
+    }
 
     &.loaded {
       transform: translateX(0);
@@ -98,7 +104,7 @@ export default defineComponent({
       right: 0px;
       width: 100px;
       height: 100%;
-      box-shadow: 0 0 10px $brand-primary, 0 0 5px $brand-primary;
+      box-shadow: 0 0 10px $loader-color, 0 0 5px $loader-color;
       opacity: 1;
       transform: rotate(3deg) translate(0px, -4px);
     }
@@ -115,8 +121,8 @@ export default defineComponent({
       width: $icon-size-small;
       height: $icon-size-small;
       border: solid 2px transparent;
-      border-top-color: $brand-primary;
-      border-left-color: $brand-primary;
+      border-top-color: $loader-color;
+      border-left-color: $loader-color;
       border-radius: 50%;
 
       animation: loader-spinner-rotate 400ms linear infinite;
