@@ -15,7 +15,7 @@ export const navigatedToNewPage = (
 };
 
 export type ErrorPageType = 'networkIssue' | 'notFound';
-export type ErrorPageResource = undefined | 'page' | 'movie' | 'series';
+export type ErrorPageResource = undefined | 'page' | 'movie' | 'series' | 'episode';
 // if a specific route's beforeEnter method fails, it can call this function to redirect
 export const goToErrorPage = (
   routeTo: RouteLocationNormalized,

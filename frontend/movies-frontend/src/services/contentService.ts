@@ -84,9 +84,28 @@ const contentService = {
       });
     });
   },
-  getEpisodePageContent(imdbID: string): Promise<Episode> {
-    // returnerer den enkelte episode og intet andet
-    throw new Error('TODO: NOT IMPLEMENTED YET');
+  getEpisodePageContent(
+    imdbID: string
+  ): Promise<{ content: Episode; series: { title: string; imdbTitle: string; imdbId: string } }> {
+    // returns the specific episode + some info about the series
+    return new Promise((resolve, reject) => {
+      return getContent().then(async (content) => {
+        const episode = content.find((x) => x.imdbId === imdbID && x.type === 'episode');
+        if (episode) {
+          const series = content.find((x) => x.imdbId === (episode as Episode).seriesId) as Series;
+          return resolve({
+            content: episode as Episode,
+            series: {
+              title: series.title,
+              imdbId: series.imdbId,
+              imdbTitle: series.imdbTitle,
+            },
+          });
+        } else {
+          return reject({ response: { status: 404 } });
+        }
+      });
+    });
   },
   getSeasonsForSeries(seriesImdbID: string): Promise<SeasonsForSeries> {
     // returns array with every season number avaiable, and how many episodes from each of those seasons is available

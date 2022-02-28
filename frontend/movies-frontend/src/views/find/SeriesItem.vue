@@ -5,6 +5,9 @@
       <h1 v-if="loading">LOADING</h1>
       <div v-else>
         <h2>{{ content.title }}</h2>
+        <pre>{{ content }}</pre>
+
+        <h2>Seasons</h2>
         <pre>{{ seasons }}</pre>
 
         <h3>Episodes</h3>
