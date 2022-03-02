@@ -40,7 +40,7 @@
           :title="`Title ${item}`"
           to="/library"
           type="image"
-          imgUrl="todo"
+          imgUrl="/img/posters/tt0066765_SX600.jpg"
           class="card--image-1x1 card--image-hide-title"
         >
           <!-- <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae, reiciendis?</p> -->
@@ -49,7 +49,9 @@
       <horizontal-scroller-item>
         <div class="d-flex align-center justify-center flex-column card" style="height: 100%">
           <span class="btn btn--rounded btn--primary">
-            <base-icon-async name="ArrowRight" />
+            <base-icon>
+              <icon-arrow-right />
+            </base-icon>
           </span>
           <span class="text-big fw-bold">See all</span>
         </div>
@@ -66,7 +68,8 @@ import { defineComponent } from 'vue';
 import HorizontalScroller from '@/components/HorizontalScroller.vue';
 import HorizontalScrollerItem from '@/components/HorizontalScrollerItem.vue';
 import BaseCard from '@/components/base/BaseCard.vue';
-import BaseIconAsync from '@/components/base/BaseIconAsync.vue';
+import BaseIcon from '@/components/base/BaseIcon.vue';
+import IconArrowRight from '@/components/icons/IconArrowRight.vue';
 
 export default defineComponent({
   name: 'ExampleHorizontalScroller',
@@ -74,7 +77,8 @@ export default defineComponent({
     HorizontalScroller,
     HorizontalScrollerItem,
     BaseCard,
-    BaseIconAsync,
+    BaseIcon,
+    IconArrowRight,
   },
   data() {
     return {
