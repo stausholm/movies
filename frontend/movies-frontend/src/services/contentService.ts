@@ -169,10 +169,13 @@ const contentService = {
             ? x.type !== 'episode'
             : x.type === type;
         }) as (Movie | Series)[];
+        const sorted = filtered.sort(
+          (a, b) => a.imdbTitle.toLowerCase().localeCompare(b.imdbTitle.toLowerCase()) // sort alphabetically
+        );
         if (take) {
-          return resolve({ content: filtered.slice(0, take), totalResults: filtered.length });
+          return resolve({ content: sorted.slice(0, take), totalResults: sorted.length });
         }
-        return resolve({ content: filtered, totalResults: filtered.length });
+        return resolve({ content: sorted, totalResults: sorted.length });
       });
     });
   },
