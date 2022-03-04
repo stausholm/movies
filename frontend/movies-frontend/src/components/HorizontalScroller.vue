@@ -99,7 +99,8 @@ export default defineComponent({
       },
       debounceFunc: undefined as number | undefined,
       horizontalScroller: {
-        count: 0, // amount of scroller items in this component
+        counter: 0, // handling unique keys for each scroller item
+        items: [] as number[], // all scroller items in this component
         active: 0, // the scroller item's index that is currently active
       },
     };
