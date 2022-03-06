@@ -26,7 +26,10 @@ export const configureLogger = (app: App): void => {
       `Hello there 👋\nInterested in how this app is built? It's open source! Check it out on ${APP_CODE_URL}`
     );
     // allow for easy debugging with a debug=true queryparam
-    if (window.location.href.includes('debug=true')) {
+    if (
+      window.location.href.includes('debug=true') ||
+      store.getters.getAppSettings._devmodeEnableLogs
+    ) {
       console.warn(
         '%c [WARNING] console logs are enabled in production mode',
         'color:Orange;font-weight:bold;font-size:1.1em'

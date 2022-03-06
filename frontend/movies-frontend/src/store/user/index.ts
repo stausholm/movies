@@ -24,6 +24,9 @@ export const state: UserState = {
         displayName: 'Anon',
         colors: ['#A3A948', '#EDB92E', '#F85931', '#CE1836', '#009989'],
       },
+      devmode: false,
+      _devmodeShowWireframe: false,
+      _devmodeEnableLogs: false,
     } as AppSettings,
     true
   ),

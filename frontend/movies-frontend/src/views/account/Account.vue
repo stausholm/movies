@@ -25,13 +25,21 @@
           </settings-group>
           <settings-group-data />
           <settings-group-application />
-          <settings-group name="Developer">
-            <!-- TODO: only show if developer mode has been toggled on by clicking the version number on /account/about -->
+          <settings-group name="Developer settings" v-if="devmodeEnabled">
             <li>
               <settings-item
                 title="Enable wireframe"
                 subtitle="Show link to wireframe page"
                 type="switch"
+                v-model="_devmodeShowWireframe"
+              />
+            </li>
+            <li>
+              <settings-item
+                title="Enable console logs"
+                subtitle="App reload required for change to take effect"
+                type="switch"
+                v-model="_devmodeEnableLogs"
               />
             </li>
           </settings-group>
@@ -53,6 +61,8 @@ import SettingsGroup from '@/components/account/SettingsGroup.vue';
 import SettingsGroupApplication from '@/components/account/SettingsGroupApplication.vue';
 import PwaInstallButton from '@/components/PwaInstallButton.vue';
 import SectionHeader from '@/components/SectionHeader.vue';
+import { UserMutations } from '@/store/user/mutations';
+import { AppSettingPayload } from '@/store/user/types';
 
 export default defineComponent({
   name: 'Account',
@@ -74,10 +84,30 @@ export default defineComponent({
     starredCount(): number {
       return this.$store.getters.getStarredIds.length;
     },
-  },
-  methods: {
-    test() {
-      alert('test');
+    devmodeEnabled(): boolean {
+      return this.$store.getters.devmodeEnabled;
+    },
+    _devmodeShowWireframe: {
+      get(): boolean {
+        return this.$store.getters.getAppSettings._devmodeShowWireframe;
+      },
+      set(value: boolean): void {
+        this.$store.commit(UserMutations.SET_APPSETTING, {
+          key: '_devmodeShowWireframe',
+          val: value,
+        } as AppSettingPayload);
+      },
+    },
+    _devmodeEnableLogs: {
+      get(): boolean {
+        return this.$store.getters.getAppSettings._devmodeEnableLogs;
+      },
+      set(value: boolean): void {
+        this.$store.commit(UserMutations.SET_APPSETTING, {
+          key: '_devmodeEnableLogs',
+          val: value,
+        } as AppSettingPayload);
+      },
     },
   },
 });

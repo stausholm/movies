@@ -28,8 +28,12 @@
           <span class="nav-item__label text-small text-truncate">Library</span>
         </router-link>
 
-        <router-link :to="{ name: 'Wireframe' }" class="nav-item" data-pushtip="Wireframe">
-          <!-- TODO: make it a feature that can be toggled from devsettings page -->
+        <router-link
+          :to="{ name: 'Wireframe' }"
+          class="nav-item"
+          data-pushtip="Wireframe"
+          v-if="showWireframePage"
+        >
           <base-icon class="nav-item__icon"></base-icon>
           <span class="nav-item__label text-small text-truncate">Wireframe</span>
         </router-link>
@@ -116,6 +120,9 @@ export default defineComponent({
         document.body.classList.remove('mobile-hide-bottom-nav');
       }
       return isTouchOnlyDevice() && isMobile && shouldHideOnMobile;
+    },
+    showWireframePage(): boolean {
+      return this.$store.getters.getAppSettings._devmodeShowWireframe;
     },
   },
   methods: {

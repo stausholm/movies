@@ -22,7 +22,9 @@
         <block-link :to="{ name: 'TOS' }">Terms of Service</block-link>
       </nav>
       <button class="btn btn--responsive btn--primary" @click="refresh">Refresh app</button>
-      <p class="text-small mt">Version: {{ appVersion }}</p>
+      <p class="text-small mt user-select-none" @click="toggleDevMode">
+        Version: {{ appVersion }} - {{ env }}
+      </p>
     </div>
   </layout>
 </template>
@@ -33,6 +35,10 @@ import { APP_NAME, APP_VERSION, APP_CODE_URL } from '@/constants/SiteSettings.js
 import Layout from '@/layouts/Main.vue';
 import BlockLink from '@/components/BlockLink.vue';
 import HeroApp from '@/components/HeroApp.vue';
+import { ToastMutations } from '@/store/toast/mutations';
+import { Toast } from '@/store/toast/types';
+import { UserMutations } from '@/store/user/mutations';
+import { AppSettingPayload } from '@/store/user/types';
 
 export default defineComponent({
   name: 'About',
@@ -46,11 +52,49 @@ export default defineComponent({
       appName: APP_NAME,
       appVersion: APP_VERSION,
       appCodeUrl: APP_CODE_URL,
+      devModeCounter: 0,
+      devmodeToastDisplayed: false,
     };
+  },
+  computed: {
+    devmodeEnabled(): boolean {
+      return this.$store.getters.devmodeEnabled;
+    },
+    env(): string {
+      return process.env.NODE_ENV;
+    },
   },
   methods: {
     refresh(): void {
       window.location.reload();
+    },
+    toggleDevMode() {
+      if (this.devmodeToastDisplayed) {
+        return;
+      }
+
+      this.devModeCounter += 1;
+      if (this.devModeCounter >= 5) {
+        this.devmodeToastDisplayed = true;
+
+        if (this.devmodeEnabled) {
+          this.$store.commit(UserMutations.SET_APPSETTING, {
+            key: 'devmode',
+            val: false,
+          } as AppSettingPayload);
+          this.$store.commit(ToastMutations.ADD_TOAST, {
+            content: 'Bye bye',
+          } as Toast);
+        } else {
+          this.$store.commit(UserMutations.SET_APPSETTING, {
+            key: 'devmode',
+            val: true,
+          } as AppSettingPayload);
+          this.$store.commit(ToastMutations.ADD_TOAST, {
+            content: '¯\\_(ツ)_/¯',
+          } as Toast);
+        }
+      }
     },
   },
 });

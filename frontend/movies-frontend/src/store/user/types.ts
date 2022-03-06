@@ -7,7 +7,10 @@ export type AppSettingPropertyKey =
   | 'imageSaturation'
   | 'language'
   | 'showOnboarding'
-  | 'avatar';
+  | 'avatar'
+  | 'devmode'
+  | '_devmodeShowWireframe'
+  | '_devmodeEnableLogs';
 
 export interface Avatar {
   name: string;
@@ -23,6 +26,9 @@ export interface AppSettings {
   language: Language;
   showOnboarding: boolean; // has the user seen the onboarding screens or chosen to dismiss them, then this is false
   avatar: Avatar;
+  devmode: boolean; // is devmode enabled
+  _devmodeShowWireframe: boolean;
+  _devmodeEnableLogs: boolean;
 }
 
 export interface UserState {
