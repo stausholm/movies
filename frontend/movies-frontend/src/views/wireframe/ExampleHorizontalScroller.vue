@@ -13,6 +13,7 @@
       intersectionMargin="100px"
       :showScrollbar="true"
       :scrollSnap="false"
+      :buttonsRounded="true"
     >
       <horizontal-scroller-item v-for="item in items" :key="item.id" class="col-6 col-sm-4">
         <div class="card p-1">

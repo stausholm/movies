@@ -1,7 +1,7 @@
 <template>
   <div class="horizontal-scroller" :class="containerSize" role="group">
     <div class="horizontal-scroller__buttons">
-      <div class="">
+      <div :class="{ 'buttons-rounded': buttonsRounded, 'buttons-faded': !buttonsRounded }">
         <!-- NOTE: We handle keyboard navigation with arrowkeys, so we prevent these from being navigatable via tabing -->
         <button
           class="hs-button hs-button--prev btn btn--rounded"
@@ -99,6 +99,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    buttonsRounded: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -180,32 +184,84 @@ export default defineComponent({
     @include setCssvar(container-size, $container-width-big);
   }
 
+  @include hover() {
+    .buttons-faded .hs-button {
+      opacity: 1;
+    }
+  }
   &__buttons {
     @include breakpoint-max($breakpoint-navigation-change) {
       display: none;
     }
-    .hs-button {
-      box-shadow: $box-shadow, inset 0 0 0 1px $gray-400;
-      position: absolute;
-      z-index: 1;
-      top: 50%;
+    .buttons-rounded {
+      .hs-button {
+        box-shadow: $box-shadow, inset 0 0 0 1px $gray-400;
+        position: absolute;
+        z-index: 1;
+        top: 50%;
 
-      &.scrollbar-adjusted {
-        top: calc(50% - 15px); // scrollbar-height / 2
+        &.scrollbar-adjusted {
+          top: calc(50% - 15px); // scrollbar-height / 2
+        }
+
+        &:disabled {
+          opacity: 0;
+          transform: scale(0);
+        }
+
+        &--next {
+          right: containerSize();
+          transform: translateX($default-spacing * 0.75) translateY(-50%);
+        }
+        &--prev {
+          left: containerSize();
+          transform: translateX(-$default-spacing * 0.75) translateY(-50%);
+        }
       }
+    }
 
-      &:disabled {
+    .buttons-faded {
+      .hs-button {
         opacity: 0;
-        transform: scale(0);
-      }
+        position: absolute;
+        z-index: 1;
+        top: $default-spacing;
+        bottom: $default-spacing;
+        border-radius: 0;
+        width: 64px;
+        background: linear-gradient(
+          to right,
+          rgba($gray-400, 0) 0%,
+          rgba($gray-400, 0.11) 11%,
+          rgba($gray-400, 0.22) 22%,
+          rgba($gray-400, 0.33) 33%,
+          rgba($gray-400, 0.44) 44%,
+          rgba($gray-400, 0.56) 56%,
+          rgba($gray-400, 0.67) 67%,
+          rgba($gray-400, 0.78) 78%,
+          rgba($gray-400, 0.89) 89%,
+          rgba($gray-400, 1) 100%
+        );
 
-      &--next {
-        right: containerSize();
-        transform: translateX($default-spacing * 0.75) translateY(-50%);
-      }
-      &--prev {
-        left: containerSize();
-        transform: translateX(-$default-spacing * 0.75) translateY(-50%);
+        svg {
+          width: 32px;
+          height: 32px;
+        }
+        &:disabled {
+          opacity: 0;
+        }
+
+        &--next {
+          right: 0;
+        }
+        &--prev {
+          left: 0;
+          transform: rotate(180deg);
+
+          svg {
+            transform: rotate(180deg);
+          }
+        }
       }
     }
   }
@@ -220,6 +276,13 @@ export default defineComponent({
     @include prefers-reduced-motion() {
       scroll-behavior: auto;
     }
+
+    // add extra padding so scroller doesn't cut of styles like a box-shadow on a .card,
+    // and then subtract that extra padding so the scroller doesn't take up the extra space
+    padding-top: $default-spacing;
+    padding-bottom: $default-spacing;
+    margin-top: -$default-spacing;
+    margin-bottom: -$default-spacing;
 
     display: flex;
     overflow-x: auto;
@@ -254,6 +317,7 @@ export default defineComponent({
         }
 
         .hs-item {
+          padding-bottom: 0;
           width: min(
             calc(
               (cssvar(container-size) - ($default-spacing * 2) + cssvar(grid-gutter)) /

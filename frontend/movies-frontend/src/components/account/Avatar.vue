@@ -7,10 +7,10 @@
     role="presentation"
     fill="none"
   >
-    <mask id="mask__beam" maskUnits="userSpaceOnUse" x="0" y="0" :width="SIZE" :height="SIZE">
+    <mask :id="maskId" maskUnits="userSpaceOnUse" x="0" y="0" :width="SIZE" :height="SIZE">
       <rect :width="SIZE" :height="SIZE" :rx="square ? undefined : SIZE * 2" fill="white" />
     </mask>
-    <g mask="url(#mask__beam)">
+    <g :mask="'url(#' + maskId + ')'">
       <rect :width="SIZE" :height="SIZE" :fill="data.backgroundColor" />
       <rect
         x="0"
@@ -88,6 +88,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { generateData, SIZE } from '@/components/account/avatarUtils';
+import { slugify } from '@/utils/stringToSlug';
 export default defineComponent({
   data() {
     return {
@@ -115,6 +116,9 @@ export default defineComponent({
   computed: {
     data() {
       return generateData(this.name, this.colors);
+    },
+    maskId() {
+      return `avatar-mask--${slugify(this.name)}`;
     },
   },
 });
