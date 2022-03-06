@@ -14,7 +14,7 @@
       :showScrollbar="true"
       :scrollSnap="false"
     >
-      <horizontal-scroller-item v-for="item in items" :key="item.id">
+      <horizontal-scroller-item v-for="item in items" :key="item.id" class="col-6 col-sm-4">
         <div class="card p-1">
           <a href="#">
             <h2>{{ item.id }}</h2>
@@ -26,16 +26,21 @@
           </div>
         </div>
       </horizontal-scroller-item>
-      <horizontal-scroller-item v-if="loading">
+      <horizontal-scroller-item v-if="loading" class="col-6">
         <h2>Loading more</h2>
       </horizontal-scroller-item>
-      <horizontal-scroller-item v-if="allDataLoaded">
+      <horizontal-scroller-item v-if="allDataLoaded" class="col-6">
         <h2>All items has been loaded</h2>
       </horizontal-scroller-item>
     </horizontal-scroller>
 
+    <div class="container container--small mt-2">
+      <div class="theme-tertiary p-1 rounded shadow-sm mb-1">
+        <h2 class="mb-0">HorizontalScroller</h2>
+      </div>
+    </div>
     <horizontal-scroller containerSize="small" class="mt-2">
-      <horizontal-scroller-item v-for="item in 3" :key="item">
+      <horizontal-scroller-item v-for="item in 3" :key="item" class="col-4">
         <base-card
           :title="`Title ${item}`"
           to="/library"
@@ -46,7 +51,7 @@
           <!-- <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae, reiciendis?</p> -->
         </base-card>
       </horizontal-scroller-item>
-      <horizontal-scroller-item>
+      <horizontal-scroller-item class="col-4">
         <div class="d-flex align-center justify-center flex-column card" style="height: 100%">
           <span class="btn btn--rounded btn--primary">
             <base-icon>

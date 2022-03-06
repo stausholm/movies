@@ -2,12 +2,15 @@
   <div class="horizontal-scroller" :class="containerSize" role="group">
     <div class="horizontal-scroller__buttons">
       <div class="">
+        <!-- NOTE: We handle keyboard navigation with arrowkeys, so we prevent these from being navigatable via tabing -->
         <button
           class="hs-button hs-button--prev btn btn--rounded"
           type="button"
           @click="back"
           :disabled="buttonsDisabled.prev"
           :class="{ 'scrollbar-adjusted': showScrollbar }"
+          aria-hidden="true"
+          tabindex="-1"
         >
           <span class="visually-hidden">Previous carousel page</span>
           <base-icon>
@@ -20,6 +23,8 @@
           @click="forwards"
           :disabled="buttonsDisabled.next"
           :class="{ 'scrollbar-adjusted': showScrollbar }"
+          aria-hidden="true"
+          tabindex="-1"
         >
           <span class="visually-hidden">Next carousel page</span>
           <base-icon>
@@ -28,9 +33,10 @@
         </button>
       </div>
     </div>
-    <span class="visually-hidden">
+    <span class="visually-hidden-focusable mb-1 d-flex" tabindex="0">
+      <div class="container-spacer" aria-hidden="true"></div>
       Use left- and right- arrow keys to navigate between items in the list
-      <!-- TODO: use this with aria to describe how to use the slider -->
+      <div class="container-spacer" aria-hidden="true"></div>
     </span>
     <div
       class="horizontal-scroller__scroller"
@@ -38,7 +44,7 @@
       ref="scroller"
     >
       <div class="container-spacer" aria-hidden="true"></div>
-      <ul class="horizontal-scroller__scroller-inner" ref="scrollerContent">
+      <ul class="horizontal-scroller__scroller-inner" :class="{ 'use-css-gap': useCssGap }">
         <slot />
       </ul>
       <observer
@@ -88,6 +94,10 @@ export default defineComponent({
       validator(val: string) {
         return ['', 'xxs', 'small', 'big'].includes(val);
       },
+    },
+    useCssGap: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -200,20 +210,16 @@ export default defineComponent({
     }
   }
 
+  .container-spacer {
+    min-width: containerSize();
+  }
+
   &__scroller {
     scroll-behavior: smooth;
 
     @include prefers-reduced-motion() {
       scroll-behavior: auto;
     }
-
-    // add extra padding so scroller doesn't cut of styles like a box-shadow on a .card,
-    // and then subtract that extra padding so the scroller doesn't take up the extra space
-    // TODO
-    // padding-top: $default-spacing;
-    // padding-bottom: $default-spacing;
-    // margin-top: -$default-spacing;
-    // margin-bottom: -$default-spacing;
 
     display: flex;
     overflow-x: auto;
@@ -223,13 +229,10 @@ export default defineComponent({
 
     scroll-padding-left: containerSize();
     scroll-padding-right: containerSize();
-    .container-spacer {
-      min-width: containerSize();
-    }
 
     &.scroll-snap {
       .container-spacer,
-      .hs-item {
+      .hs-item__inner {
         scroll-snap-align: start;
       }
     }
@@ -238,16 +241,46 @@ export default defineComponent({
       display: grid;
       grid-auto-flow: column;
 
-      gap: $grid-gutter;
-      @include breakpoint(xs) {
-        gap: $grid-xs-gutter;
+      // use our default flexbox grid column classes sizes
+      &:not(.use-css-gap) {
+        @include setCssvar(grid-gutter, $grid-gutter);
+        margin-left: calc(0px - cssvar(grid-gutter) / 2);
+        margin-right: calc(0px - cssvar(grid-gutter) / 2);
+        @include breakpoint(xs) {
+          @include setCssvar(grid-gutter, $grid-xs-gutter);
+        }
+        @include breakpoint(sm) {
+          @include setCssvar(grid-gutter, $grid-sm-gutter);
+        }
+
+        .hs-item {
+          width: min(
+            calc(
+              (cssvar(container-size) - ($default-spacing * 2) + cssvar(grid-gutter)) /
+                $grid-columns * cssvar(col-size)
+            ),
+            calc(
+              (100vw - ($default-spacing * 2) + cssvar(grid-gutter)) / $grid-columns *
+                cssvar(col-size)
+            )
+          );
+        }
       }
-      @include breakpoint(sm) {
-        gap: $grid-sm-gutter;
+
+      // don't use our flexbox grid column classes but handle column sizes manually
+      &.use-css-gap {
+        gap: $grid-gutter;
+        @include breakpoint(xs) {
+          gap: $grid-xs-gutter;
+        }
+        @include breakpoint(sm) {
+          gap: $grid-sm-gutter;
+        }
       }
 
       list-style-type: none;
-      margin: 0;
+      margin-top: 0;
+      margin-bottom: 0;
       padding: 0;
     }
   }

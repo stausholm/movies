@@ -4,7 +4,7 @@
     :tabindex="active ? 0 : -1"
     @keydown.left="left"
     @keydown.right="right"
-    :class="[colClasses, { active: active }]"
+    :class="{ active: active }"
   >
     <div class="hs-item__inner">
       <slot></slot>
@@ -42,18 +42,6 @@ export default defineComponent({
   computed: {
     active(): boolean {
       return this.indexKey === this.HorizontalScroller.active;
-    },
-    colClasses(): string {
-      if (this.colWidth) {
-        if (Array.isArray(this.colWidth)) {
-          // colWidth is a list of widths representing the col's width at each of our scss min-width breakpoints
-          return 'todo';
-        } else {
-          return 'todo';
-        }
-      }
-      // No colWidth defined so don't use a fixed width, and instead let the content dictate the width
-      return '';
     },
     indexInList(): number {
       return this.HorizontalScroller.items.indexOf(this.indexKey);
@@ -149,22 +137,12 @@ export default defineComponent({
 .hs-item {
   transform: translateZ(0); // prevent repainting entire component // TODO: check if necessary
 
-  //width: 200px;
-  // containersize minus left+right padding on .container
-  // divided by 3 to get 3 column layout
-  // gutter-gap * 2, divided by 3 columns
-  //width: calc((cssvar(container-size) - $default-spacing * 2) / 3 - ($default-spacing * 2 / 3));
-  // width: min(
-  //   calc(100vw - 2 * $default-spacing),
-  //   calc(cssvar(container-size) - 2 * $default-spacing)
-  // );
-
   &__inner {
     height: 100%;
   }
 
   &.active {
-    border: 4px solid red;
+    //border: 4px solid red;
   }
 }
 </style>
