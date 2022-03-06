@@ -11,7 +11,7 @@
       <section-header title="Your starred movies" class="mb" />
     </div>
     <horizontal-scroller>
-      <horizontal-scroller-item>
+      <horizontal-scroller-item class="col-4">
         <div class="card">a movie</div>
       </horizontal-scroller-item>
     </horizontal-scroller>
@@ -32,10 +32,10 @@
         />
       </div>
       <horizontal-scroller>
-        <horizontal-scroller-item v-for="item in genre.preview" :key="item.imdbId">
+        <horizontal-scroller-item v-for="item in genre.preview" :key="item.imdbId" class="col-4">
           <div class="card">{{ item.imdbTitle }}</div>
         </horizontal-scroller-item>
-        <horizontal-scroller-item v-if="genre.preview.length < genre.totalResults">
+        <horizontal-scroller-item v-if="genre.preview.length < genre.totalResults" class="col-4">
           <router-link :to="genre.to" class="card">see all</router-link>
         </horizontal-scroller-item>
       </horizontal-scroller>

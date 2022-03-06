@@ -30,7 +30,11 @@
           <section-header class="mt-1 mb" :title="`Popular results for &quot;${searchVal}&quot;`" />
 
           <horizontal-scroller>
-            <horizontal-scroller-item v-for="(result, index) in highlightedResults" :key="index">
+            <horizontal-scroller-item
+              v-for="(result, index) in highlightedResults"
+              :key="index"
+              class="col-4"
+            >
               <div class="card p-1">
                 <p>{{ result.title }}</p>
               </div>

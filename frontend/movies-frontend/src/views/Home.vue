@@ -80,7 +80,7 @@
       </horizontal-scroller-item>
     </horizontal-scroller>
     <horizontal-scroller class="mb-2">
-      <horizontal-scroller-item>
+      <horizontal-scroller-item class="col-4 col-sm-3">
         <base-card
           type="image"
           title="TODO"
@@ -88,7 +88,7 @@
           class="card--image-hide-title card--image-movie"
         ></base-card>
       </horizontal-scroller-item>
-      <horizontal-scroller-item>
+      <horizontal-scroller-item class="col-4 col-sm-3">
         <div>
           <button class="btn btn--primary btn--rounded">Show all -></button>
         </div>
@@ -111,7 +111,7 @@
       <section-header title="Popular movies" class="mb" to="TODO list page" />
     </div>
     <horizontal-scroller class="mb-2">
-      <horizontal-scroller-item>
+      <horizontal-scroller-item class="col-4 col-sm-3">
         <base-card
           type="image"
           title="TODO"
@@ -125,7 +125,7 @@
       <section-header title="Popular shows" class="mb" to="TODO list page" />
     </div>
     <horizontal-scroller class="mb-2">
-      <horizontal-scroller-item>
+      <horizontal-scroller-item class="col-4 col-sm-3">
         <base-card
           type="image"
           title="TODO"
