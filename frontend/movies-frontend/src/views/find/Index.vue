@@ -1,5 +1,5 @@
 <template>
-  <child-router-view :keepAlive="true" />
+  <child-router-view />
 </template>
 
 <script lang="ts">

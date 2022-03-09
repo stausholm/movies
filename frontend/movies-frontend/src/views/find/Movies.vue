@@ -23,7 +23,7 @@
     </div>
 
     <!-- TODO: a horizontal scroller for each genre. The section header should lead to a list page -->
-    <div v-for="genre in genres" :key="genre.name">
+    <div v-for="genre in genres" :key="genre.name" class="mb-2">
       <div class="container">
         <section-header
           :title="genre.name"
@@ -33,7 +33,18 @@
       </div>
       <horizontal-scroller>
         <horizontal-scroller-item v-for="item in genre.preview" :key="item.imdbId" class="col-4">
-          <div class="card">{{ item.imdbTitle }}</div>
+          <div class="card p-1">
+            <router-link
+              :to="{
+                name: 'MovieItem',
+                params: {
+                  imdbIDorTitleSlug: item.imdbId,
+                },
+              }"
+            >
+              <h3>{{ item.imdbTitle }}</h3>
+            </router-link>
+          </div>
         </horizontal-scroller-item>
         <horizontal-scroller-item v-if="genre.preview.length < genre.totalResults" class="col-4">
           <router-link :to="genre.to" class="card">see all</router-link>
@@ -53,6 +64,7 @@ import HorizontalScrollerItem from '@/components/HorizontalScrollerItem.vue';
 import { GENRES } from '@/constants/Genres';
 import { RouteLocationRaw } from 'vue-router';
 import Movie from '@/types/Movie';
+import { GenreType, contentService } from '@/services/contentService';
 
 export default defineComponent({
   name: 'Movies',
@@ -73,9 +85,13 @@ export default defineComponent({
       }[],
     };
   },
-  created() {
-    const genres = Object.keys(GENRES)
-      .map((x) => {
+  async created() {
+    const genres = Object.keys(GENRES);
+    const genrePreviews = await Promise.all(
+      genres.map((x) => contentService.getContentByGenre(GENRES[x], 'movie', 5))
+    );
+    const genresFormatted = genres
+      .map((x, index) => {
         return {
           name: GENRES[x], // TODO translation
           to: {
@@ -83,17 +99,19 @@ export default defineComponent({
             params: {
               genre: GENRES[x],
             },
-            // TODO: queryparam for only showing movies on GenreList page
+            query: {
+              ...this.$route.query,
+              type: 'movie' as GenreType,
+            },
           } as RouteLocationRaw,
-          // TODO: call getContentByGenre
-          // TODO: filter out the genres where no movies exist under
-          preview: [],
-          totalResults: 100,
+          preview: genrePreviews[index].content as Movie[],
+          totalResults: genrePreviews[index].totalResults,
         };
       })
+      .filter((x) => x.preview.length > 0) // filter out the genres where no movies exist under
       .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())); // sort alphabetically
 
-    this.genres = genres;
+    this.genres = genresFormatted;
   },
 });
 </script>

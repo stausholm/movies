@@ -9,17 +9,18 @@
         tabindex="0"
         aria-selected="todo"
         aria-disabled="todo"
-        @click="checked = !checked"
+        @click="handleClick"
       >
         <span class="chip__graphic">
           <span class="chip__checkmark">
-            <base-icon :width="18" :height="18">
+            <base-icon-async v-if="icon" :name="icon" :width="18" :height="18" />
+            <base-icon v-else :width="18" :height="18">
               <icon-check />
             </base-icon>
           </span>
         </span>
         <span class="chip__text">lorem ipsum dolor sit amet</span>
-        <span class="chip__graphic">
+        <span class="chip__graphic chip__graphic--close" v-if="closable">
           <span class="chip__close">
             <base-icon :width="18" :height="18">
               <icon-close />
@@ -27,9 +28,9 @@
           </span>
         </span>
       </button>
-      <button class="chip__button">
+      <!-- <button class="chip__button">
         <span class="chip__text">extra button</span>
-      </button>
+      </button> -->
     </span>
   </span>
 </template>
@@ -37,20 +38,65 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import BaseIcon from '@/components/base/BaseIcon.vue';
+import BaseIconAsync from '@/components/base/BaseIconAsync.vue';
 import IconCheck from '@/components/icons/IconCheck.vue';
 import IconClose from '@/components/icons/IconClose.vue';
+
+/**
+ * TODO:
+ * make it work as a simple non-interactve chip with option to add custom icon where there is currently a checkmark
+ * radio button (no icon, only bg, color, and border change)
+ * removable chip with close button
+ * checkbox (use checkmark icon)
+ * filter (multiple buttons in a single chip)
+ *
+ * should work with v-model
+ *
+ * should emit close and click events
+ */
 
 export default defineComponent({
   name: 'Chip',
   components: {
     BaseIcon,
+    BaseIconAsync,
     IconCheck,
     IconClose,
+  },
+  emits: ['close', 'update:modelValue'],
+  props: {
+    type: {
+      type: String,
+      // validator(val: string) {
+      //   return ['presentation', 'radio', 'checkbox', 'filter'].includes(val);
+      // },
+    },
+    icon: {
+      type: String,
+    },
+    closable: {
+      type: Boolean,
+      default: false,
+    },
+    modelValue: {
+      type: Boolean,
+    },
   },
   data() {
     return {
       checked: false,
     };
+  },
+  methods: {
+    handleClick(): void {
+      if (this.closable) {
+        this.$emit('close');
+      }
+      if (this.modelValue !== undefined) {
+        this.$emit('update:modelValue', !this.modelValue);
+      }
+      this.checked = !this.checked;
+    },
   },
 });
 </script>
@@ -113,21 +159,21 @@ export default defineComponent({
       border-radius: 20px;
     }
 
-    + .chip__button {
-      position: relative;
-      &::before {
-        border-color: transparent;
-      }
-      &::after {
-        content: '';
-        position: absolute;
-        left: -12px;
-        top: 8px;
-        bottom: 8px;
-        width: 1px;
-        background-color: currentColor;
-      }
-    }
+    // + .chip__button {
+    //   position: relative;
+    //   &::before {
+    //     //border-color: transparent;
+    //   }
+    //   &::after {
+    //     content: '';
+    //     position: absolute;
+    //     left: -12px;
+    //     top: 8px;
+    //     bottom: 8px;
+    //     width: 1px;
+    //     background-color: currentColor;
+    //   }
+    // }
   }
 
   &__graphic {
@@ -144,11 +190,27 @@ export default defineComponent({
     flex: 1 0 auto;
     box-sizing: content-box;
     transition: width 100ms 0ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    &--close {
+      width: 18px;
+      margin-right: -12px;
+    }
+  }
+
+  &__close {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    svg {
+      display: block;
+    }
   }
 
   &__checkmark {
-    height: 20px;
-    width: 20px;
+    // height: 20px;
+    // width: 20px;
     transition: opacity 50ms 0ms linear, transform 100ms 0ms cubic-bezier(0.4, 0, 0.2, 1);
     transform: translate(-75%, -50%);
     position: absolute;

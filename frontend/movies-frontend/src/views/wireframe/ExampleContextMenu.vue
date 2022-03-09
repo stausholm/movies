@@ -22,6 +22,8 @@
           @test="handleTest"
           id="b"
           buttonClass="btn--primary btn--outline"
+          :horizontalIcon="true"
+          :smallButton="true"
         />
       </div>
       <div class="demo-card p-1 shadow rounded bg-white">

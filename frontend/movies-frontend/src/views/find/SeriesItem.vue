@@ -62,8 +62,6 @@ export default defineComponent({
     },
   },
   created() {
-    // child-router-view is using keepAlive:true,
-    // so this won't get called again for the previous 10 pages if user is navigation back and forwards
     this.getContent();
   },
 });

@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <h2>Chips</h2>
-    <chip></chip>
-    <chip></chip>
-    <chip></chip>
-    <chip></chip>
+    <chip icon="Filmstrip"></chip>
+    <chip :closable="true"></chip>
+    <chip v-model="checkboxVal"></chip>
+    <chip v-model="checkboxGroup" value="test"></chip>
     <chip></chip>
     <chip></chip>
     <chip></chip>
@@ -37,6 +37,21 @@ export default defineComponent({
   components: {
     Chip,
     ChipGroup,
+  },
+  data() {
+    return {
+      checkboxVal: false,
+      checkboxGroup: ['test', 'test2', 'test3'],
+      checkboxGroup2: [
+        { label: 'label', value: 123 },
+        { label: 'label2', value: 321 },
+      ],
+      radioGroup: ['a', 'b', 'c'],
+      radioGroup2: [
+        { label: 'label', value: 123 },
+        { label: 'label2', value: 321 },
+      ],
+    };
   },
 });
 </script>

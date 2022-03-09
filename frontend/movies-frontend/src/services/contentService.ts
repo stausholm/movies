@@ -1,5 +1,4 @@
 import VideoType from '@/types/VideoType';
-// NOTE: to keep it as simple as possible, all the data filtering is done here in the frontend, instead of having a backend handling it.
 import store from '@/store';
 import { ContentActions } from '@/store/content/actions';
 import Movie from '@/types/Movie';
@@ -8,8 +7,8 @@ import Episode from '@/types/Episode';
 import { slugify } from '@/utils/stringToSlug';
 import Genre from '@/types/Genre';
 
-type ContentType = VideoType | 'all';
-
+// NOTE: to keep it as simple as possible, all the data filtering is done here in the frontend, instead of having a backend handling it.
+// using promises to emulate api calls
 const getContent = (): Promise<(Episode | Series | Movie)[]> => {
   return new Promise((resolve) => {
     if (store.getters.contentLoaded) {
@@ -22,8 +21,10 @@ const getContent = (): Promise<(Episode | Series | Movie)[]> => {
   });
 };
 
+type ContentType = VideoType | 'all';
 type SeasonsForSeries = { season: number; episodes: number }[];
 type SeriesEpisodes = { season: number; episodes: Episode[] }[];
+export type GenreType = 'movie' | 'series' | 'all';
 
 const contentService = {
   getMoviePageContent(
@@ -158,16 +159,17 @@ const contentService = {
   },
   getContentByGenre(
     genreName: string,
-    type: 'movie' | 'series' | 'all' = 'all',
+    type: GenreType = 'all',
     take: number | null = null
   ): Promise<{ content: (Series | Movie)[]; totalResults: number }> {
     // returns array of content containing genreName + totalResults
     return new Promise((resolve) => {
       return getContent().then((content) => {
         const filtered = content.filter((x) => {
-          return x.genres.indexOf(genreName as Genre) !== -1 && type === 'all'
-            ? x.type !== 'episode'
-            : x.type === type;
+          return (
+            x.genres.indexOf(genreName as Genre) !== -1 &&
+            (type === 'all' ? x.type !== 'episode' : x.type === type)
+          );
         }) as (Movie | Series)[];
         const sorted = filtered.sort(
           (a, b) => a.imdbTitle.toLowerCase().localeCompare(b.imdbTitle.toLowerCase()) // sort alphabetically

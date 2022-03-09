@@ -5,7 +5,17 @@
       <h2 v-if="loading">LOADING</h2>
       <ul v-else>
         <li v-for="item in content" :key="item.imdbID">
-          <p>{{ item.imdbTitle }}</p>
+          <!-- TODO: make "CardVideo" component that renders a BaseCard and makes sure correct poster css class is added, and correct url is created -->
+          <router-link
+            :to="{
+              name: item.type === 'movie' ? 'MovieItem' : 'SeriesItem',
+              params: {
+                imdbIDorTitleSlug: slugify(item.imdbTitle),
+              },
+            }"
+          >
+            {{ item.imdbTitle }}
+          </router-link>
         </li>
       </ul>
     </div>
@@ -15,10 +25,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Layout from '@/layouts/Main.vue';
-import { contentService } from '@/services/contentService';
+import { contentService, GenreType } from '@/services/contentService';
 import { getErrorPageRouteObj } from '@/router/utils';
 import Movie from '@/types/Movie';
 import Series from '@/types/Series';
+import { slugify } from '@/utils/stringToSlug';
 
 export default defineComponent({
   name: 'GenreList',
@@ -29,16 +40,20 @@ export default defineComponent({
     return {
       loading: true,
       genre: '',
+      contentType: 'all' as GenreType,
       content: [] as (Series | Movie)[],
       totalResults: 0,
     };
   },
   methods: {
+    slugify(val: string) {
+      return slugify(val);
+    },
     getContent() {
       this.loading = true;
 
       contentService
-        .getContentByGenre(this.genre)
+        .getContentByGenre(this.genre, this.contentType)
         .then((data) => {
           this.content = data.content;
           this.totalResults = data.totalResults;
@@ -51,6 +66,9 @@ export default defineComponent({
   },
   created() {
     this.genre = this.$route.params.genre as string;
+    if (this.$route.query.type) {
+      this.contentType = this.$route.query.type as GenreType;
+    }
     this.getContent();
   },
 });
