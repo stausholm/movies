@@ -4,8 +4,9 @@
       <h1>ActorList</h1>
       <h2 v-if="loading">LOADING</h2>
       <ul v-else>
-        <li v-for="item in content" :key="item.imdbID">
-          <p>{{ item.imdbTitle }}</p>
+        <li v-for="item in content" :key="item.imdbID" style="max-width: 200px">
+          <p>{{ item.type }}: {{ item.imdbTitle }}</p>
+          <video-card :video="item" />
         </li>
       </ul>
     </div>
@@ -20,11 +21,13 @@ import { getErrorPageRouteObj } from '@/router/utils';
 import Movie from '@/types/Movie';
 import Series from '@/types/Series';
 import Episode from '@/types/Episode';
+import VideoCard from '@/components/VideoCard.vue';
 
 export default defineComponent({
   name: 'ActorList',
   components: {
     Layout,
+    VideoCard,
   },
   data() {
     return {

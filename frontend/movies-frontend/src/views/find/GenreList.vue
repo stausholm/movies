@@ -4,18 +4,9 @@
       <h1>GenreList {{ genre }}</h1>
       <h2 v-if="loading">LOADING</h2>
       <ul v-else>
-        <li v-for="item in content" :key="item.imdbID">
-          <!-- TODO: make "CardVideo" component that renders a BaseCard and makes sure correct poster css class is added, and correct url is created -->
-          <router-link
-            :to="{
-              name: item.type === 'movie' ? 'MovieItem' : 'SeriesItem',
-              params: {
-                imdbIDorTitleSlug: slugify(item.imdbTitle),
-              },
-            }"
-          >
-            {{ item.imdbTitle }}
-          </router-link>
+        <li v-for="item in content" :key="item.imdbID" style="max-width: 200px">
+          {{ item.imdbTitle }}
+          <video-card :video="item" />
         </li>
       </ul>
     </div>
@@ -29,12 +20,13 @@ import { contentService, GenreType } from '@/services/contentService';
 import { getErrorPageRouteObj } from '@/router/utils';
 import Movie from '@/types/Movie';
 import Series from '@/types/Series';
-import { slugify } from '@/utils/stringToSlug';
+import VideoCard from '@/components/VideoCard.vue';
 
 export default defineComponent({
   name: 'GenreList',
   components: {
     Layout,
+    VideoCard,
   },
   data() {
     return {
@@ -46,9 +38,6 @@ export default defineComponent({
     };
   },
   methods: {
-    slugify(val: string) {
-      return slugify(val);
-    },
     getContent() {
       this.loading = true;
 

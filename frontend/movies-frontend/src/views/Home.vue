@@ -81,12 +81,7 @@
     </horizontal-scroller>
     <horizontal-scroller class="mb-2">
       <horizontal-scroller-item class="col-4 col-sm-3">
-        <base-card
-          type="image"
-          title="TODO"
-          imgUrl="todo"
-          class="card--image-hide-title card--image-movie"
-        ></base-card>
+        <video-card :video="{ type: 'TODO' }" />
       </horizontal-scroller-item>
       <horizontal-scroller-item class="col-4 col-sm-3">
         <div>
@@ -112,12 +107,7 @@
     </div>
     <horizontal-scroller class="mb-2">
       <horizontal-scroller-item class="col-4 col-sm-3">
-        <base-card
-          type="image"
-          title="TODO"
-          imgUrl="todo"
-          class="card--image-hide-title card--image-movie"
-        ></base-card>
+        <video-card :video="{ type: 'TODO' }" />
       </horizontal-scroller-item>
     </horizontal-scroller>
 
@@ -126,12 +116,7 @@
     </div>
     <horizontal-scroller class="mb-2">
       <horizontal-scroller-item class="col-4 col-sm-3">
-        <base-card
-          type="image"
-          title="TODO"
-          imgUrl="todo"
-          class="card--image-hide-title card--image-movie"
-        ></base-card>
+        <video-card :video="{ type: 'TODO' }" />
       </horizontal-scroller-item>
     </horizontal-scroller>
   </layout>
@@ -152,6 +137,7 @@ import { ToastMutations } from '@/store/toast/mutations';
 import SectionHeader from '@/components/SectionHeader.vue';
 import HorizontalScroller from '@/components/HorizontalScroller.vue';
 import HorizontalScrollerItem from '@/components/HorizontalScrollerItem.vue';
+import VideoCard from '@/components/VideoCard.vue';
 
 export default defineComponent({
   name: 'Home',
@@ -165,6 +151,7 @@ export default defineComponent({
     SectionHeader,
     HorizontalScroller,
     HorizontalScrollerItem,
+    VideoCard,
   },
   data() {
     return {

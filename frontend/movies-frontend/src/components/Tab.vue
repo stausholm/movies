@@ -20,6 +20,7 @@ import { TabsType } from '@/types/Tabs';
 
 export default defineComponent({
   name: 'Tab',
+  emits: ['active', 'unactive'],
   setup() {
     const Tabs = inject('Tabs') as TabsType;
 
@@ -60,6 +61,15 @@ export default defineComponent({
       headerId: this.headerId,
       contentId: this.contentId,
     });
+  },
+  watch: {
+    active(isActive) {
+      if (isActive) {
+        this.$emit('active');
+      } else {
+        this.$emit('unactive');
+      }
+    },
   },
 });
 </script>

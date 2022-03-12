@@ -77,6 +77,10 @@ export default defineComponent({
       type: Number,
       default: 0,
     },
+    modelValue: {
+      // use with v-model
+      type: Number,
+    },
     transition: {
       // optional transition to use when transition between tabpanels
       type: String,
@@ -98,6 +102,7 @@ export default defineComponent({
   methods: {
     openTab(index: number, contentId: string): void {
       this.Tabs.active = index;
+      this.$emit('update:modelValue', index);
       // move focus into the now activated tab
       this.$nextTick(() => {
         this.$el.querySelector('#' + contentId).focus();

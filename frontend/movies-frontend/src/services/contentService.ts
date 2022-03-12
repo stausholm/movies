@@ -14,9 +14,19 @@ const getContent = (): Promise<(Episode | Series | Movie)[]> => {
     if (store.getters.contentLoaded) {
       return resolve(store.getters.videos);
     } else {
-      return store.dispatch(ContentActions.LOAD_VIDEOS).then(() => {
-        return resolve(store.getters.videos);
-      });
+      if (store.getters.contentLoading) {
+        // content already loading, check periodically if it's been loaded instead of trying to fetch it again
+        const t = setInterval(() => {
+          if (store.getters.contentLoaded) {
+            clearInterval(t);
+            return resolve(store.getters.videos);
+          }
+        }, 100);
+      } else {
+        return store.dispatch(ContentActions.LOAD_VIDEOS).then(() => {
+          return resolve(store.getters.videos);
+        });
+      }
     }
   });
 };
@@ -215,6 +225,28 @@ const contentService = {
           return acc.concat(curr.actors);
         }, [] as string[]);
         const uniques = Array.from(new Set(reduced));
+        // const starringInTypes = uniques.map((actor) => {
+        //   const contentTypes = content
+        //     .filter((x) => x.actors.includes(actor))
+        //     .reduce((acc, curr) => {
+        //       acc.push(curr.type);
+        //       return acc;
+        //     }, [] as string[]);
+
+        //   return {
+        //     actor: actor,
+        //     types: Array.from(new Set(contentTypes)),
+        //     typesCount: contentTypes.reduce((allTypes, type) => {
+        //       if (type in allTypes) {
+        //         allTypes[type]++;
+        //       } else {
+        //         allTypes[type] = 1;
+        //       }
+        //       return allTypes;
+        //     }, {} as Record<string, number>),
+        //   };
+        // });
+        // console.log(starringInTypes.filter((x) => x.types.length > 1));
         return resolve(uniques.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))); // sort alphabetically
       });
     });
@@ -228,6 +260,19 @@ const contentService = {
         }, [] as string[]);
         const uniques = Array.from(new Set(reduced));
         return resolve(uniques.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))); // sort alphabetically
+      });
+    });
+  },
+  getSeries(): Promise<Series[]> {
+    // returns Series[] of all series
+    return new Promise((resolve) => {
+      return getContent().then((content) => {
+        const filtered = content.filter((x) => x.type === 'series') as Series[];
+        return resolve(
+          filtered.sort(
+            (a, b) => a.imdbTitle.toLowerCase().localeCompare(b.imdbTitle.toLowerCase()) // sort alphabetically
+          )
+        );
       });
     });
   },

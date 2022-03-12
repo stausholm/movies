@@ -7,7 +7,7 @@ import { actions } from './actions';
 
 export const state: ContentState = {
   videos: [],
-  loading: true,
+  loading: false,
   loadingFailed: false,
 };
 

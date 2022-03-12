@@ -1,12 +1,18 @@
 <template>
   <div class="container">
     <h2>Tabs</h2>
-    <tabs id="aa" :activeOnCreated="2" transition="router-fade-right">
-      <tab title="tab 1 title" icon="Filmstrip">
+    <p>Active tab index is {{ activeTab }}</p>
+    <tabs id="aa" :activeOnCreated="activeTab" v-model="activeTab" transition="router-fade-right">
+      <tab
+        title="tab 1 title"
+        icon="Filmstrip"
+        @active="handleActive(0)"
+        @unactive="handleUnactive(0)"
+      >
         <p>tab 1 ajsdl skdjfh</p>
         <button class="btn btn--primary">content in tab 1</button>
       </tab>
-      <tab title="tab 2 title" icon="Star">
+      <tab title="tab 2 title" icon="Star" @active="handleActive(1)" @unactive="handleUnactive(1)">
         <p>tab 2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, enim.</p>
         <button class="btn btn--primary">content in tab 2</button>
         <p>tab 2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, enim.</p>
@@ -18,7 +24,7 @@
         <p>tab 2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, enim.</p>
         <p>tab 2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, enim.</p>
       </tab>
-      <tab title="tab 3 title">
+      <tab title="tab 3 title" @active="handleActive(2)" @unactive="handleUnactive(2)">
         <p>tab 3 ajsdl skdjfh</p>
         <button class="btn btn--primary">content in tab 3</button>
       </tab>
@@ -56,6 +62,19 @@ export default defineComponent({
   components: {
     Tabs,
     Tab,
+  },
+  data() {
+    return {
+      activeTab: 2,
+    };
+  },
+  methods: {
+    handleActive(tab: number) {
+      console.log('tab became active', tab);
+    },
+    handleUnactive(tab: number) {
+      console.log('tab became UNactive', tab);
+    },
   },
 });
 </script>
