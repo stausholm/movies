@@ -4,16 +4,9 @@
       <h1>Series</h1>
       <h1 v-if="loading">LOADING</h1>
       <div v-else>
-        <ol>
-          <li v-for="series in seriesList" :key="series.imdbId">
-            <router-link
-              :to="{
-                name: 'SeriesItem',
-                params: { imdbIDorTitleSlug: slugify(series.imdbTitle) },
-              }"
-            >
-              {{ series.imdbTitle }}
-            </router-link>
+        <ol class="row">
+          <li v-for="series in seriesList" :key="series.imdbId" class="col-4 col-sm-3">
+            <video-card :video="series" />
           </li>
         </ol>
       </div>
@@ -29,12 +22,13 @@ import Layout from '@/layouts/Main.vue';
 import Series from '@/types/Series';
 import { contentService } from '@/services/contentService';
 import { getErrorPageRouteObj } from '@/router/utils';
-import { slugify } from '@/utils/stringToSlug';
+import VideoCard from '@/components/VideoCard.vue';
 
 export default defineComponent({
   name: 'Series',
   components: {
     Layout,
+    VideoCard,
   },
   data() {
     return {
@@ -43,9 +37,6 @@ export default defineComponent({
     };
   },
   methods: {
-    slugify(val: string) {
-      return slugify(val);
-    },
     getContent() {
       this.loading = true;
       contentService

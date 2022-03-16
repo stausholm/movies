@@ -155,12 +155,17 @@ const contentService = {
     imdbID: string,
     actors = true,
     directors = true,
-    genres = true
+    genres = true,
+    rating = true
   ): Promise<(Series | Movie)[]> {
     // modtager et imdbID, returnerer array med andre imdb video objekter
     // mulighed for at angive om der skal returneres relateret indhold baseret på actors, directors, og/eller genres.
-    // Hvis både actors og directors, skal der kun returneres videoer hvor der er overlap mellem actors og directors
+    // Måske: Hvis både actors og directors, skal der kun returneres videoer hvor der er overlap mellem actors og directors
     // returnerer tomt array hvis intet relateret indhold findes
+    // Assign hvert overlap mellem alt content og det video object der kommer fra imdbID prop en score. Nogle scores vægter højere end andre
+    // f.eks. er et overlap mellem genre vigtigere end et overlap mellem director
+    // sorter response efter den højeste score
+    // send scoren med i response?
     return new Promise((resolve, reject) => {
       // TODO
       return resolve([]);

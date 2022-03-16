@@ -32,21 +32,17 @@
         />
       </div>
       <horizontal-scroller>
-        <horizontal-scroller-item v-for="item in genre.preview" :key="item.imdbId" class="col-4">
-          <div class="card p-1">
-            <router-link
-              :to="{
-                name: 'MovieItem',
-                params: {
-                  imdbIDorTitleSlug: item.imdbId,
-                },
-              }"
-            >
-              <h3>{{ item.imdbTitle }}</h3>
-            </router-link>
-          </div>
+        <horizontal-scroller-item
+          v-for="item in genre.preview"
+          :key="item.imdbId"
+          class="col-4 col-sm-3"
+        >
+          <video-card :video="item" />
         </horizontal-scroller-item>
-        <horizontal-scroller-item v-if="genre.preview.length < genre.totalResults" class="col-4">
+        <horizontal-scroller-item
+          v-if="genre.preview.length < genre.totalResults"
+          class="col-4 col-sm-3"
+        >
           <router-link :to="genre.to" class="card">see all</router-link>
         </horizontal-scroller-item>
       </horizontal-scroller>
@@ -65,6 +61,7 @@ import { GENRES } from '@/constants/Genres';
 import { RouteLocationRaw } from 'vue-router';
 import Movie from '@/types/Movie';
 import { GenreType, contentService } from '@/services/contentService';
+import VideoCard from '@/components/VideoCard.vue';
 
 export default defineComponent({
   name: 'Movies',
@@ -74,6 +71,7 @@ export default defineComponent({
     SectionHeader,
     HorizontalScroller,
     HorizontalScrollerItem,
+    VideoCard,
   },
   data() {
     return {
@@ -88,7 +86,7 @@ export default defineComponent({
   async created() {
     const genres = Object.keys(GENRES);
     const genrePreviews = await Promise.all(
-      genres.map((x) => contentService.getContentByGenre(GENRES[x], 'movie', 5))
+      genres.map((x) => contentService.getContentByGenre(GENRES[x], 'movie', 7))
     );
     const genresFormatted = genres
       .map((x, index) => {
