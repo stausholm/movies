@@ -4,10 +4,10 @@ import { AppSettings, UserState } from './types';
 import { getters } from './getters';
 import { mutations } from './mutations';
 import { getLocalStorageValue } from '@/utils/localStorage';
-import { APP_SETTINGS_STORAGE_KEY } from './constants';
+import { APP_SETTINGS_STORAGE_KEY, STARRED_IDS_STORAGE_KEY } from './constants';
 
 export const state: UserState = {
-  starredIds: [],
+  starredIds: getLocalStorageValue(STARRED_IDS_STORAGE_KEY, []),
   appSettings: getLocalStorageValue(
     APP_SETTINGS_STORAGE_KEY,
     {

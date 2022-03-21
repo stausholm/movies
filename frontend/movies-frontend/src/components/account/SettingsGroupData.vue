@@ -1,6 +1,10 @@
 <template>
   <settings-group name="Data">
     <li>
+      TODO: show size of data stored in localstorage/indexedDB/cached content from SW
+      {{ usedStorage }}
+    </li>
+    <li>
       <settings-item
         @click="$router.push({ name: 'Delete' })"
         title="Delete my data"
@@ -44,12 +48,18 @@
 import { defineComponent } from 'vue';
 import SettingsItem from '@/components/account/SettingsItem.vue';
 import SettingsGroup from '@/components/account/SettingsGroup.vue';
+import bytesToSize from '@/utils/BytesToSize';
 
 export default defineComponent({
   name: 'SettingsGroupData',
   components: {
     SettingsItem,
     SettingsGroup,
+  },
+  computed: {
+    usedStorage() {
+      return bytesToSize(1234567);
+    },
   },
   methods: {
     test() {

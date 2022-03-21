@@ -9,7 +9,7 @@
     <div v-else-if="starredContent.length > 0">
       <div class="container">
         <div class="row">
-          <div class="col-6" v-for="content in starredContent" :key="content.imdbId">
+          <div class="col-12" v-for="content in starredContent" :key="content.imdbId">
             {{ content.title }}
           </div>
         </div>

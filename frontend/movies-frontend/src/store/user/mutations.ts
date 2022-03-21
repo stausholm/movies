@@ -1,6 +1,6 @@
 import { setLocalStorageValue } from '@/utils/localStorage';
 import { MutationTree } from 'vuex';
-import { APP_SETTINGS_STORAGE_KEY } from './constants';
+import { APP_SETTINGS_STORAGE_KEY, STARRED_IDS_STORAGE_KEY } from './constants';
 import { AppSettingPayload, UserState } from './types';
 
 export enum UserMutations {
@@ -18,8 +18,12 @@ export const mutations: MutationTree<UserState> = {
   },
   [UserMutations.ADD_STARRED](state, imdbId: string) {
     state.starredIds.push(imdbId);
+
+    setLocalStorageValue(STARRED_IDS_STORAGE_KEY, state.starredIds);
   },
   [UserMutations.REMOVE_STARRED](state, imdbId: string) {
     state.starredIds.splice(state.starredIds.indexOf(imdbId), 1);
+
+    setLocalStorageValue(STARRED_IDS_STORAGE_KEY, state.starredIds);
   },
 };

@@ -414,6 +414,20 @@ export default defineComponent({
         rgba(0, 0, 0, 0) 100%
       );
   }
+
+  // style the invisible scrollbar buttons to take up same width as container-spacers so scrollbar doesn't go to the edge of the screen
+  &::-webkit-scrollbar-button {
+    width: containerSize();
+  }
+
+  // disable double scrollbar buttons https://stackoverflow.com/a/67476494
+  &::-webkit-scrollbar-button:vertical:start:increment,
+  &::-webkit-scrollbar-button:vertical:end:decrement,
+  &::-webkit-scrollbar-button:horizontal:start:increment,
+  &::-webkit-scrollbar-button:horizontal:end:decrement {
+    display: none;
+  }
+
   // For Internet Explorer
   scrollbar-face-color: $foreground-color;
   scrollbar-track-color: $background-color;

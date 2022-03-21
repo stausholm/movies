@@ -36,6 +36,7 @@
             v-if="actions && actions.length === 1 && actions[0].icon"
             class="btn--rounded hero-action"
             :data-pushtip="actions[0].label"
+            @click="$emit(actions[0].emit)"
           >
             <base-icon-async :name="actions[0].icon" />
           </base-button>
@@ -75,6 +76,7 @@
             v-if="actions && actions.length === 1 && actions[0].icon"
             class="btn--rounded hero-action ml-1"
             :data-pushtip="actions[0].label"
+            @click="$emit(actions[0].emit)"
           >
             <base-icon-async :name="actions[0].icon" />
           </base-button>
