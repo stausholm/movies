@@ -211,6 +211,13 @@ const routes: Array<RouteRecordRaw> = [
           import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleImages.vue'),
         meta: {},
       },
+      {
+        path: 'resizewatcher',
+        name: 'ExampleResizeWatcher',
+        component: () =>
+          import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleResizeWatcher.vue'),
+        meta: {},
+      },
     ],
   },
 ];
