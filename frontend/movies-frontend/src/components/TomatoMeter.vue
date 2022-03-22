@@ -1,6 +1,6 @@
 <template>
   <div v-if="tomatoRating" class="tomato-meter">
-    <base-icon>
+    <base-icon class="tomato-meter__icon">
       <icon-tomato-splat v-if="showSplat" />
       <icon-tomato-fresh v-else />
     </base-icon>
@@ -35,7 +35,7 @@ export default defineComponent({
       return this.video.ratings.find((x) => x.source === 'Rotten Tomatoes');
     },
     showSplat() {
-      return parseInt(this.tomatoRating?.value) < 60;
+      return this.tomatoRating && parseInt(this.tomatoRating.value) < 60;
     },
   },
 });
@@ -50,9 +50,13 @@ export default defineComponent({
   display: flex;
   align-items: center;
 
+  &__icon {
+    margin-top: -2px;
+  }
+
   &__label {
     margin-left: math.div($default-spacing, 4);
-    line-height: 1;
+    //line-height: 1;
   }
 }
 </style>

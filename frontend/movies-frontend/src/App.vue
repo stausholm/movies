@@ -91,7 +91,7 @@ export default defineComponent({
     },
   },
   created() {
-    // this.$store.dispatch(ContentActions.LOAD_VIDEOS);
+    this.$store.dispatch(ContentActions.LOAD_VIDEOS);
 
     window.addEventListener('resize', this.resizeWatcher);
 
