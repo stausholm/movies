@@ -105,20 +105,9 @@
 
   .card__img img {
     transform: translateZ(0); // removes small jump in transition
-    transition: transform 0.8s cubic-bezier(0.35, 0, 0, 1) 0s;
+    transition: transform 0.8s cubic-bezier(0.35, 0, 0, 1) 0s, opacity 0.2s ease-out,
+      filter 0.2s ease-out;
   }
-
-  // In case too much of the media is cut off with object-fit: cover;
-  // The background image would need some blurring though
-  // .card__img {
-  //   img {
-  //     background-image: url(/img/posters/tt0085959_SX600.jpg);
-  //     background-size: cover;
-  //     background-position: center center;
-  //     object-fit: contain;
-  //     backdrop-filter: blur(5px);
-  //   }
-  // }
 
   .card__tags {
     order: -1;

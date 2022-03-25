@@ -79,6 +79,11 @@
       left: 0;
       background-color: $gray-100;
     }
+
+    .lazy-image {
+      // when using the lazy-image component inside a card, we want it's insides to be relative to the .card__img
+      position: static;
+    }
   }
 
   &__tags {

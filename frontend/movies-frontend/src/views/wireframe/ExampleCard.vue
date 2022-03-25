@@ -14,7 +14,7 @@
       headingLevel="h2"
       tags="Did you know?"
       type="tip"
-      imgUrl="asd"
+      :imgUrl="imgUrl + 'asd'"
     >
       <template #headerAction>
         <button>Header action</button>

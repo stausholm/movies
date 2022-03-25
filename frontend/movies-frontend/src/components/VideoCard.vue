@@ -3,7 +3,7 @@
     :to="url"
     type="image"
     :title="video.imdbTitle"
-    :imgUrl="`/img/posters/${video.imdbId}_SX600.jpg`"
+    :imgSources="imageSources"
     :class="['card--image-hide-title', videoClass]"
   ></base-card>
 </template>
@@ -26,8 +26,36 @@ export default defineComponent({
       type: Object as PropType<Video>,
       required: true,
     },
+    sizes: {
+      // maps to the sources prop for lazy-image component
+      type: Array as PropType<(number | null)[]>,
+    },
   },
   computed: {
+    imageSources() {
+      if (!this.video.posterUrl) {
+        return;
+      }
+
+      const id = this.video.imdbId;
+
+      if (this.sizes) {
+        const validSizes = [100, 300, 600];
+        return this.sizes.map((size) => {
+          if (size) {
+            if (validSizes.includes(size)) {
+              return `/img/posters/${id}_SX${size}.jpg`;
+            }
+            console.warn(`Invalid poster size provided: ${size}. Using fallback: ${validSizes[0]}`);
+            return `/img/posters/${id}_SX${validSizes[0]}.jpg`;
+          }
+          return size;
+        });
+      }
+
+      // fallback if no sizes prop has been defined
+      return [`/img/posters/${id}_SX600.jpg`];
+    },
     url() {
       let url = {} as RouteLocationRaw;
       switch (this.video.type) {

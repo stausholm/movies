@@ -176,7 +176,6 @@ export default defineComponent({
     height: 100%;
     // prevent bg from sometimes showing up when browsers try to render images that are not pixel perfect. e.g. 15.7px instead of 15px
     width: calc(100% - 1px);
-    z-index: -1;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -210,7 +209,6 @@ export default defineComponent({
     width: 100%;
     height: 100%;
     line-height: 0;
-    font-size: 0;
 
     img {
       display: inline-block;
@@ -238,6 +236,7 @@ export default defineComponent({
   &:not(.lazy-image--use-ratio) {
     .lazy-image__ratio-container {
       height: auto;
+      position: static;
     }
     .lazy-image__ratio-el {
       position: static;

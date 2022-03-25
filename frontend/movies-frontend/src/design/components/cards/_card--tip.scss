@@ -27,6 +27,7 @@
     height: auto;
     display: flex;
     align-items: flex-start;
+    justify-content: flex-end;
 
     img {
       position: static;
@@ -34,6 +35,11 @@
       width: auto;
       height: auto;
       margin-left: auto;
+      border-radius: $border-radius-base;
+    }
+
+    .lazy-image {
+      position: relative;
       border-radius: $border-radius-base;
     }
   }

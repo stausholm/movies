@@ -16,7 +16,8 @@
 
   .card__img img {
     transform: translateZ(0); // removes small jump in transition
-    transition: transform 0.8s cubic-bezier(0.35, 0, 0, 1) 0s;
+    transition: transform 0.8s cubic-bezier(0.35, 0, 0, 1) 0s, opacity 0.2s ease-out,
+      filter 0.2s ease-out;
   }
 
   .card__tags {

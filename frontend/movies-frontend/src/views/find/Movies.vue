@@ -22,7 +22,7 @@
       <router-link to="/find/movies/tt3542188">movie tt3542188 test</router-link>
     </div>
 
-    <!-- TODO: a horizontal scroller for each genre. The section header should lead to a list page -->
+    <!-- TODO: Figure out why this page freezes the page for multiple seconds when trying to load it -->
     <div v-for="genre in genres" :key="genre.name" class="mb-2">
       <div class="container">
         <section-header
@@ -37,7 +37,7 @@
           :key="item.imdbId"
           class="col-4 col-sm-3"
         >
-          <video-card :video="item" />
+          <video-card :video="item" :sizes="[300]" />
         </horizontal-scroller-item>
         <horizontal-scroller-item
           v-if="genre.preview.length < genre.totalResults"

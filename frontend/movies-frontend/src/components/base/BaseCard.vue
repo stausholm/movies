@@ -5,7 +5,7 @@
       `card--${type}`,
       {
         'card--has-header-action': $slots.headerAction,
-        'card--has-image': imgUrl,
+        'card--has-image': imgUrl || imgSources,
         'card--is-loading': isLoading,
       },
     ]"
@@ -22,8 +22,8 @@
         <slot name="headerAction" />
       </div>
     </header>
-    <div class="card__img" v-if="imgUrl">
-      <img :src="imgUrl" :alt="imgAlt" />
+    <div class="card__img" v-if="imgUrl || imgSources">
+      <lazy-image :src="imgUrl" :alt="imgAlt" :sources="imgSources" />
     </div>
     <div class="card__tags" v-if="tags">
       <span class="visually-hidden">Tagged: </span>
@@ -50,6 +50,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { slugify } from '@/utils/stringToSlug';
+import LazyImage from '@/components/LazyImage.vue';
 
 /**
  * accessibility sources:
@@ -60,6 +61,7 @@ import { slugify } from '@/utils/stringToSlug';
  */
 
 export default defineComponent({
+  components: { LazyImage },
   name: 'BaseCard',
   props: {
     title: {
@@ -87,6 +89,9 @@ export default defineComponent({
     imgAlt: {
       type: String,
       default: '',
+    },
+    imgSources: {
+      type: Array as PropType<(string | null)[]>,
     },
     type: {
       type: String,

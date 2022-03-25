@@ -6,7 +6,7 @@
     <div class="text">
       <slot>
         <div class="pwa-install-content-banner__logo">
-          <img src="@/assets/logo-color.svg" alt="" />
+          <img src="@/assets/logo-color.svg" alt="" loading="lazy" />
         </div>
         <div>
           <strong class="text-big">Install {{ appName }}</strong>
