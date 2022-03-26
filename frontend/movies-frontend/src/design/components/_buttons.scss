@@ -110,6 +110,7 @@
   font-weight: bold;
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
+  word-break: break-word;
 
   @include prefers-reduced-motion() {
     transition-property: opacity, color, background-color, box-shadow;
