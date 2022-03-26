@@ -1,6 +1,13 @@
 <template>
   <div class="hero-delight">
-    <div class="hero-delight__bg" :style="{ 'background-image': `url('${bgImage}')` }">
+    <div class="hero-delight__bg">
+      <lazy-image
+        v-if="bgImage || bgImageSources"
+        :src="bgImage"
+        :sources="bgImageSources"
+        :showPlaceholder="false"
+        class="hero-delight__bg-image"
+      />
       <div class="hero-delight__bg-content" aria-hidden="true" role="presentation">
         <div
           class="slam-icon-wrapper"
@@ -15,6 +22,7 @@
             class="slam-icon"
             aria-hidden="true"
             role="presentation"
+            loading="lazy"
           />
         </div>
       </div>
@@ -26,13 +34,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
+import LazyImage from '@/components/LazyImage.vue';
 
 export default defineComponent({
   name: 'HeroDelightful',
+  components: {
+    LazyImage,
+  },
   props: {
     bgImage: {
       type: String,
+    },
+    bgImageSources: {
+      type: Array as PropType<(string | null)[]>,
     },
     slamIcons: {
       type: Array,
@@ -143,6 +158,14 @@ export default defineComponent({
     background-position: 50% 50%;
     background-repeat: no-repeat;
     background-size: cover;
+  }
+
+  &__bg-image {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &__bg-content {

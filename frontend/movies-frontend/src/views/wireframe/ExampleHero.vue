@@ -14,7 +14,7 @@
       <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
       <button class="btn">A button</button>
     </hero>
-    <hero :background="['primary', 'image', 'fade']">
+    <hero :background="['primary', 'image', 'fade']" bgImage="/img/posters/tt0085959_SX600.jpg">
       <h2>hero content</h2>
       <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
       <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>

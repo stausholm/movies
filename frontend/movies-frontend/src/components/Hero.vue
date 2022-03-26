@@ -1,13 +1,15 @@
 <template>
-  <div class="hero" :class="{ 'hero--slim': slim }">
+  <div class="hero" :class="{ 'hero--slim': slim, 'hero--tall': tall }">
     <div class="hero__backgrounds" v-if="backgrounds.length > 0">
-      <div
-        class="hero__bg"
-        v-for="bg in backgrounds"
-        :key="bg"
-        :class="'hero__bg--' + bg"
-        :style="{ 'background-image': bg === 'image' ? `url('${bgImage}')` : '' }"
-      ></div>
+      <div class="hero__bg" v-for="bg in backgrounds" :key="bg" :class="'hero__bg--' + bg">
+        <lazy-image
+          v-if="bg === 'image'"
+          :src="bgImage"
+          :sources="bgImageSources"
+          :showPlaceholder="false"
+          class="hero__bg-image"
+        />
+      </div>
     </div>
     <div class="hero__content container">
       <slot />
@@ -17,16 +19,21 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
+import LazyImage from '@/components/LazyImage.vue';
 
 type background = '' | 'image' | 'gray' | 'primary' | 'gradient' | 'fade';
 
 export default defineComponent({
   name: 'Hero',
+  components: {
+    LazyImage,
+  },
   props: {
     bgImage: {
-      // TODO: lazyload image
       type: String,
-      default: 'https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif',
+    },
+    bgImageSources: {
+      type: Array as PropType<(string | null)[]>,
     },
     background: {
       type: [String, Array] as PropType<background | background[]>,
@@ -34,6 +41,11 @@ export default defineComponent({
     },
     slim: {
       // if true, there's a smaller min-height on .hero
+      type: Boolean,
+      default: false,
+    },
+    tall: {
+      // if true, there's a bigger min-height on .hero. Does not work with slim prop
       type: Boolean,
       default: false,
     },
@@ -76,6 +88,13 @@ export default defineComponent({
       min-height: 0;
     }
   }
+  &--tall {
+    min-height: 600px;
+
+    @include breakpoint-max($breakpoint-navigation-change) {
+      min-height: 400px;
+    }
+  }
 
   &__bg {
     position: absolute;
@@ -86,13 +105,8 @@ export default defineComponent({
     z-index: -1;
 
     &--image {
-      background-position: 50% 50%;
-      background-repeat: no-repeat;
-      background-size: cover;
-      animation: zoom-image 0.4s ease;
-
-      // TODO: calculate optimal overlay color for WCAG contrast
-      // &::before {
+      // TODO: calculate optimal overlay color for WCAG contrast https://codepen.io/yaphi1/pen/oNbEqGV?editors=1010
+      // &::after {
       //   content: '';
       //   position: absolute;
       //   width: 100%;
@@ -101,6 +115,18 @@ export default defineComponent({
       //   left: 0;
       //   background-color: rgba(0, 0, 0, 0.3);
       // }
+
+      .hero__bg-image {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &.loaded {
+          animation: zoom-image 0.4s ease;
+        }
+      }
     }
 
     &--gray {

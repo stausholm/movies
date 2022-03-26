@@ -6,6 +6,7 @@
         :title="content.imdbTitle"
         :background="['primary', 'image', 'fade']"
         :showBackButton="true"
+        :tall="true"
         :actions="[
           {
             label: 'Share',

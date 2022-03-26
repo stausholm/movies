@@ -68,11 +68,9 @@
         class="quick-read-button__btn text-big text-uppercase fw-bold"
         @click="$emit('click', $event)"
       >
-        <div
-          class="quick-read-button__btn-img"
-          v-if="imageSrc"
-          :style="{ backgroundImage: `url(${imageSrc})` }"
-        ></div>
+        <div class="quick-read-button__btn-img" v-if="imageSrc">
+          <img :src="imageSrc" alt="" loading="lazy" />
+        </div>
         <div class="quick-read-button__btn-text">
           <span>Start now</span>
           <div class="quick-read-button__btn-arrow d-flex">
@@ -196,14 +194,18 @@ export default defineComponent({
       opacity: 0.85;
 
       .quick-read-button__btn-img {
-        background-size: 105%;
+        img {
+          transform: scale(1.05);
+        }
       }
     }
     &:active {
       opacity: 0.85;
 
       .quick-read-button__btn-img {
-        background-size: 105%;
+        img {
+          transform: scale(1.05);
+        }
       }
     }
 
@@ -212,9 +214,14 @@ export default defineComponent({
       height: 100%;
       width: 64px;
       background-color: rgba($black, 0.15);
-      background-size: 100%;
-      background-position: center;
-      transition: background-size 0.8s cubic-bezier(0.35, 0, 0, 1) 0s;
+      overflow: hidden;
+
+      img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.8s cubic-bezier(0.35, 0, 0, 1) 0s;
+      }
 
       @include breakpoint(xs) {
         width: 120px;

@@ -1,13 +1,13 @@
 <template>
   <div class="lazy-image" :class="{ 'lazy-image--use-ratio': ratio, loaded: loaded }">
-    <div class="lazy-image__bg" aria-hidden="true">
+    <div class="lazy-image__bg" aria-hidden="true" v-if="showPlaceholder">
       <svg viewBox="0 0 24 24" v-if="error">
         <path d="M0 0h24v24H0V0z" fill="none" />
         <path
           d="M21 5v6.59l-2.29-2.3c-.39-.39-1.03-.39-1.42 0L14 12.59 10.71 9.3c-.39-.39-1.02-.39-1.41 0L6 12.59 3 9.58V5c0-1.1.9-2 2-2h14c1.1 0 2 .9 2 2zm-3 6.42l3 3.01V19c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-6.58l2.29 2.29c.39.39 1.02.39 1.41 0l3.3-3.3 3.29 3.29c.39.39 1.02.39 1.41 0l3.3-3.28z"
         />
       </svg>
-      <svg viewBox="0 0 24 24" v-else class="lazy-image__graphic-loader">
+      <svg viewBox="0 0 24 24" v-else-if="!loaded" class="lazy-image__graphic-loader">
         <path d="M0 0h24v24H0V0z" fill="none" />
         <path
           d="M13.2 7.07L10.25 11l2.25 3c.33.44.24 1.07-.2 1.4-.44.33-1.07.25-1.4-.2-1.05-1.4-2.31-3.07-3.1-4.14-.4-.53-1.2-.53-1.6 0l-4 5.33c-.49.67-.02 1.61.8 1.61h18c.82 0 1.29-.94.8-1.6l-7-9.33c-.4-.54-1.2-.54-1.6 0z"
@@ -67,6 +67,10 @@ export default defineComponent({
       // Supports formats like 16x9, 16X9, 16/9, 16:9
       // If only one of the ratio values is provided, the unprovided one will fallback to 1. e.g. passing "16" as a prop would result in the ratio 16:1
       type: String,
+    },
+    showPlaceholder: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {

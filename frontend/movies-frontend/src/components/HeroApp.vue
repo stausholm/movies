@@ -64,7 +64,14 @@
       },
     ]"
   >
-    <hero :background="background" :bgImage="bgImage" :slim="slim" ref="hero">
+    <hero
+      :background="background"
+      :bgImage="bgImage"
+      :slim="slim"
+      :tall="tall"
+      :bgImageSources="bgImageSources"
+      ref="hero"
+    >
       <div class="hero-content-wrapper">
         <div class="hero-content" ref="heroContent">
           <slot :title="titleComputed">
