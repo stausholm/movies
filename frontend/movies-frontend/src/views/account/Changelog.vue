@@ -10,6 +10,8 @@
           {{ commit.commit.message }} @ {{ commit.commit.committer.date }}
         </li>
       </ul>
+
+      <div class="md" v-html="md"></div>
     </div>
   </layout>
 </template>
@@ -19,6 +21,7 @@ import { defineComponent } from 'vue';
 import { APP_NAME } from '@/constants/SiteSettings.json';
 import Layout from '@/layouts/Main.vue';
 import HeroApp from '@/components/HeroApp.vue';
+import { changelog } from '@/changelog';
 
 export default defineComponent({
   name: 'Changelog',
@@ -31,6 +34,7 @@ export default defineComponent({
       appName: APP_NAME,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       commits: [] as any[],
+      md: changelog,
     };
   },
   created() {

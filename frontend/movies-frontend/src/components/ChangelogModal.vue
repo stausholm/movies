@@ -7,7 +7,7 @@
     v-slot="{ close }"
   >
     <h2 class="h4">{{ appName }} {{ appVersion }} introduces the following updates:</h2>
-    <p>Changelog TODO</p>
+    <div class="md" v-html="latestLogEntry"></div>
     <p>
       You can always return to these releasenotes under the
       <!-- Using a button as a router-link doesn't work because the router prevents navigation while a modal is open -->
@@ -31,6 +31,7 @@ import { defineComponent } from 'vue';
 import Modal from '@/components/Modal.vue';
 import { APP_NAME, APP_VERSION } from '@/constants/SiteSettings.json';
 import { AppMutations } from '@/store/app/mutations';
+import { latestLogEntry } from '@/changelog';
 
 export default defineComponent({
   name: 'ChangelogModal',
@@ -42,6 +43,7 @@ export default defineComponent({
       appName: APP_NAME,
       appVersion: APP_VERSION,
       redirect: false,
+      latestLogEntry: latestLogEntry,
     };
   },
   computed: {

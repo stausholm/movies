@@ -19,6 +19,27 @@ module.exports = {
       return args;
     });
   },
+  configureWebpack: {
+    module: {
+      rules: [
+        {
+          test: /\.md$/i,
+          use: [
+            {
+              loader: 'html-loader',
+            },
+            {
+              loader: 'markdown-loader',
+              options: {
+                // Pass options to marked
+                // See https://marked.js.org/using_advanced#options
+              },
+            },
+          ],
+        },
+      ],
+    },
+  },
   pwa: {
     // https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
     name: APP_NAME,
