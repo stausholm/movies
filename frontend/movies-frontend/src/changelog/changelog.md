@@ -1,32 +1,38 @@
-## 1.0.0-RC-1
-This is the first release candidate for v1!
+## [0.0.28] *2022-03-27*
+This release adds a better breakdown of changes happening to the app, with examples shown below. 
+This is a small summary text that can come before the lists of changes in this version
 
-### New Features:
+### Added
 - wow
+- **A Label here.** Some text lorem ipsum dolor sit amet. Here's a link [with some link text](asda)
 - more wow
 - wowwow
   - indent item!
   - more indent!
 
-
-### Bugfixes:
+### Changed
 - all the `wow`
 - no more wow
 
+### Deprecated
+- asdkj dfkjh sdf
+- dkfkd
 
-some code highlighted
-`nice and good`
+### Removed
+- asdasd
+- fggghh dhdyr fhdhe g
 
-```
-code block
-```
+### Fixed
+- dhkjdh kgur 
+- dfgjdf
 
-___
+### Security
+- fjfdguri kfgd 
+- kfgjhkru dfgkjh
 
-someone once said
-> if something is cool and good, it is cool and good
-## 0.0.9
-some stuff was done
+
+## [0.0.22] *2022-03-27*
+And just like that, there was markdown. This release adds markdown. Down below are examples of it used.
 
 lorem **ipsum dolor** sit amet
 lorem *ipsum dolor* sit amet
@@ -35,10 +41,35 @@ lorem *ipsum dolor* sit amet
 
 
 Inline-style: 
-![alt text](/github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+
+![alt text](/broken "Logo Title Text 1")
 ![alt text](/img/posters/tt0085959_SX300.jpg "Logo Title Text 1")
 
 Reference-style: 
 ![alt text][logo]
 
-[logo]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png 
+[logo]: /img/posters/tt0085959_SX300.jpg 
+
+some code highlighted
+`nice and good`
+
+```
+code block
+{
+  someObj: [
+    {
+      a: 1,
+      b: 2,
+      c: [1,2,3,4,5,6,7,8],
+      d: {
+        text: 'Lorem ipsum dolor sit amet lorem ipsum dolor sit amet.'
+      }
+    }
+  ]
+}
+```
+
+___
+
+someone once said
+> if something is cool and good, it is cool and good

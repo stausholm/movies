@@ -7,7 +7,7 @@
     v-slot="{ close }"
   >
     <h2 class="h4">{{ appName }} {{ appVersion }} introduces the following updates:</h2>
-    <div class="md" v-html="latestLogEntry"></div>
+    <div class="changelog-md changelog-md--modal" v-html="latestLogEntry"></div>
     <p>
       You can always return to these releasenotes under the
       <!-- Using a button as a router-link doesn't work because the router prevents navigation while a modal is open -->
@@ -64,3 +64,15 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss">
+.changelog-md--modal {
+  h2 {
+    // margin: 0;
+    // padding: 0;
+    // background-color: transparent;
+    // color: currentColor;
+    display: none;
+  }
+}
+</style>

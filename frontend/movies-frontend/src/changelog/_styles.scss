@@ -1,0 +1,145 @@
+@use 'sass:math';
+@import '../design/variables/index.scss';
+@import '../design/mixins/index.scss';
+
+.changelog-md {
+  pre {
+    code {
+      // full code block
+      min-width: calc(100% - 1px);
+      padding: 6px 12px;
+    }
+  }
+
+  h2 {
+    // version
+    font-size: $font-size-h3-responsive;
+    @include breakpoint($breakpoint-font-size-change) {
+      font-size: $font-size-h3;
+    }
+    background-color: $gray-200;
+    padding: $default-spacing;
+    padding-top: $default-spacing * 0.75;
+    padding-bottom: $default-spacing * 0.75;
+    margin-left: -$default-spacing;
+    margin-right: -$default-spacing;
+
+    &::before {
+      content: 'Release ';
+    }
+
+    em {
+      // version date
+      display: block;
+      font-style: normal;
+      font-weight: normal;
+      font-size: $font-size-small-responsive;
+      color: $text-color-secondary-dark;
+      line-height: 1;
+      margin-top: math.div($default-spacing, 4);
+      @include breakpoint($breakpoint-font-size-change) {
+        font-size: $font-size-small;
+      }
+    }
+
+    + p {
+      // release summary
+      margin-top: $default-spacing;
+      margin-bottom: $default-spacing * 2;
+    }
+
+    &:first-of-type {
+      // latest version
+      background-color: $brand-primary;
+      color: $__brand-primary-bg__text-color;
+      em {
+        color: inherit;
+      }
+    }
+
+    &:not(:first-of-type) {
+      margin-top: $default-spacing * 3;
+    }
+  }
+
+  h3 {
+    // type of change headline
+    &.added,
+    &.changed,
+    &.deprecated,
+    &.removed,
+    &.fixed,
+    &.security {
+      margin-top: $default-spacing * 2;
+      margin-bottom: math.div($default-spacing, 2);
+      font-weight: $font-weight-headings;
+      line-height: $line-height-body;
+      font-size: $font-size-body-responsive;
+      @include breakpoint($breakpoint-font-size-change) {
+        font-size: $font-size-body;
+      }
+
+      display: flex;
+      align-items: center;
+      text-transform: uppercase;
+
+      &::after {
+        content: '';
+        height: 1px;
+        flex: 1 1 auto;
+        margin-left: math.div($default-spacing, 2);
+        opacity: 0.6;
+        background-color: currentColor;
+      }
+    }
+    &.added {
+      color: $brand-success;
+    }
+    &.changed {
+      color: $brand-warning;
+    }
+    &.deprecated {
+      color: $brand-warning;
+    }
+    &.removed {
+      color: $brand-danger;
+    }
+    &.fixed {
+      color: $brand-info;
+    }
+    &.security {
+      color: $brand-info;
+    }
+  }
+
+  ul {
+    // list of changes
+    margin: 0;
+    margin-left: $default-spacing;
+    padding: 0;
+    list-style-type: none;
+
+    li {
+      position: relative;
+      margin-bottom: math.div($default-spacing, 2);
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 1em;
+        left: -$default-spacing;
+        margin-top: -0.4em;
+        margin-left: 0;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        opacity: 0.3;
+        background-color: $gray-700;
+      }
+    }
+
+    ul li {
+      margin-bottom: 0;
+    }
+  }
+}

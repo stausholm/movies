@@ -1,3 +1,4 @@
+import './_styles.scss';
 import log from './changelog.md';
 
 export const changelog = log;
