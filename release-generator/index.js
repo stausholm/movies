@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 const log = console.log;
-const inquirer = require("inquirer");
 const chalk = require("chalk");
-const { getReleaseAnswers, getNextSemanticVersion } = require("./resources/releaseQuestions");
+const { getReleaseAnswers } = require("./resources/releaseQuestions");
 const { getChangelogAnswers } = require("./resources/changelogQuestions");
 const { getSummaryAnswers } = require("./resources/summaryQuestions");
 const { SaveToFileSync, SAVE_MODES, updateJSONValue } = require("./resources/saveToFile");
+const { getOutputAnswers, concatenateOutputToMarkdown } = require("./resources/outputQuestions");
 
 /* ################################################################### */
 // FILES TO WRITE TO (relative path from this file - index.js):
@@ -24,68 +24,20 @@ log("It only covers the most common features. For more control, manual edits to 
 log("Press ^C at any time to quit");
 
 getReleaseAnswers(currentVersion).then((releaseAnswers) => {
-  //log(JSON.stringify(releaseAnswers, null, "  "));
+  // log(JSON.stringify(releaseAnswers, null, "  "));
   getChangelogAnswers().then((changelogAnswers) => {
     getSummaryAnswers().then((summaryAnswers) => {
       const output = {
-        version: getNextSemanticVersion(currentVersion, releaseAnswers.releaseType).full,
-        releaseType: releaseAnswers.releaseType,
+        version: releaseAnswers.releaseType.version,
+        releaseType: releaseAnswers.releaseType.type,
         releaseDate: releaseAnswers.releaseDate,
         changes: changelogAnswers,
         summary: summaryAnswers.summary || null,
         releaseNotesMarkdownString: null,
       };
+      output.releaseNotesMarkdownString = concatenateOutputToMarkdown(output);
 
-      const writeChangeToMarkdown = (changeType, changeTypeLabel) => {
-        if (output.changes[changeType]) {
-          const list = output.changes[changeType].map((x) => `- ${x}`).join("\n");
-          const label = "### " + changeTypeLabel + "\n";
-          return label + list + "\n";
-        }
-        return "";
-      };
-      const writeChangeToConsole = (changeType, changeTypeLabel) => {
-        if (output.changes[changeType]) {
-          const list = output.changes[changeType].map((x) => `${chalk.blue("-")} ${x}`).join("\n");
-          const label = chalk.blue("### " + changeTypeLabel) + "\n";
-          return label + list + "\n";
-        }
-        return "";
-      };
-      const concatenateOutputToMarkdown = () => {
-        return (
-          `## [${output.version}] *${output.releaseDate}* \n` +
-          `${output.summary ? output.summary + "\n\n" : "\n"}` +
-          `${output.changes.added ? writeChangeToMarkdown("added", "Added") + "\n" : ""}` +
-          `${output.changes.changed ? writeChangeToMarkdown("changed", "Changed") + "\n" : ""}` +
-          `${output.changes.deprecated ? writeChangeToMarkdown("deprecated", "Deprecated") + "\n" : ""}` +
-          `${output.changes.removed ? writeChangeToMarkdown("removed", "Removed") + "\n" : ""}` +
-          `${output.changes.fixed ? writeChangeToMarkdown("fixed", "Fixed") + "\n" : ""}` +
-          `${output.changes.security ? writeChangeToMarkdown("security", "Security") + "\n" : ""}`
-        );
-      };
-
-      const confirmQuestion = {
-        type: "confirm",
-        name: "confirmRelease",
-        message:
-          chalk.bold(`Confirm release ${output.version}? \n`) +
-          chalk.bgGreen("                          RELEASE NOTES                          \n\n") +
-          chalk.blue(`## [${chalk.yellow(output.version)}] *${chalk.italic(output.releaseDate)}* \n`) +
-          `${output.summary ? output.summary + "\n\n" : "\n"}` +
-          `${output.changes.added ? writeChangeToConsole("added", "Added") + "\n" : ""}` +
-          `${output.changes.changed ? writeChangeToConsole("changed", "Changed") + "\n" : ""}` +
-          `${output.changes.deprecated ? writeChangeToConsole("deprecated", "Deprecated") + "\n" : ""}` +
-          `${output.changes.removed ? writeChangeToConsole("removed", "Removed") + "\n" : ""}` +
-          `${output.changes.fixed ? writeChangeToConsole("fixed", "Fixed") + "\n" : ""}` +
-          `${output.changes.security ? writeChangeToConsole("security", "Security") + "\n" : ""}` +
-          chalk.bgGreen("                                                                 \n") +
-          chalk.bold(`Confirm release ${output.version}?`),
-      };
-
-      output.releaseNotesMarkdownString = concatenateOutputToMarkdown();
-
-      inquirer.prompt(confirmQuestion).then((confirmAnswer) => {
+      getOutputAnswers(output).then((confirmAnswer) => {
         if (confirmAnswer.confirmRelease) {
           log(chalk.bgGreen(`  Updating files to release ${output.version}:  `));
           SaveToFileSync(RELEASE_LOG_PATH, JSON.stringify(output), SAVE_MODES.WRITE);
@@ -99,7 +51,33 @@ getReleaseAnswers(currentVersion).then((releaseAnswers) => {
         } else {
           log(chalk.bgCyan.black("  Release aborted  "));
         }
-        return;
+        return; // TODO: why doesn't the node process close if a summary has been added to the release?
+        /* 
+a
+summary
+
+
+lorem ipsum dolor sit amet lorem ipsum
+
+
+### a heading
+> a quote
+
+"something in quotation marks"
+*something in asterixes*
+[special chars](https://google.com)
+
+```
+block code
+```
+
+text `inline code` more text
+
+1. list
+2. more list
+
+bla bla bla
+        */
       });
     });
   });

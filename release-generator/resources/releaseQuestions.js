@@ -86,6 +86,12 @@ const getReleaseQuestions = (currentVersion) => {
           short: `PATCH ${chalk.gray("(" + getNextSemanticVersion(currentVersion, RELEASE_TYPES.PATCH).full + ")")}`,
         },
       ],
+      filter(val) {
+        return {
+          type: val,
+          version: getNextSemanticVersion(currentVersion, val).full,
+        };
+      },
     },
   ];
 };
