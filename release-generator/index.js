@@ -46,33 +46,6 @@ getReleaseAnswers(currentVersion).then((releaseAnswers) => {
         } else {
           log(chalk.bgCyan.black("  Release aborted  "));
         }
-        return; // TODO: why doesn't the node process close if a summary has been added to the release?
-        /* 
-a
-summary
-
-
-lorem ipsum dolor sit amet lorem ipsum
-
-
-### a heading
-> a quote
-
-"something in quotation marks"
-*something in asterixes*
-[special chars](https://google.com)
-
-```
-block code
-```
-
-text `inline code` more text
-
-1. list
-2. more list
-
-bla bla bla
-        */
       });
     });
   });

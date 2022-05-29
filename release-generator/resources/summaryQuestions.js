@@ -22,6 +22,19 @@ const summaryQuestions = [
       return answers["includeSummary"];
     },
   },
+  {
+    // BUG
+    // https://github.com/SBoudrias/Inquirer.js/issues/1070
+    // This dummy question needs to be here, since a question of type "editor", causes the following questions to hang, and prevents the node process from exiting,
+    // if the "editor" question is the last object in a questions array.
+    type: "confirm",
+    name: "continueBug",
+    message: "Press enter to continue",
+    default: true,
+    when(answers) {
+      return answers["summary"];
+    },
+  },
 ];
 
 const getSummaryAnswers = () => {
