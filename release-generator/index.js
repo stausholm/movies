@@ -42,12 +42,7 @@ getReleaseAnswers(currentVersion).then((releaseAnswers) => {
           log(chalk.bgGreen(`  Updating files to release ${output.version}:  `));
           SaveToFileSync(RELEASE_LOG_PATH, JSON.stringify(output), SAVE_MODES.WRITE);
           SaveToFileSync(CHANGELOG_PATH, output.releaseNotesMarkdownString, SAVE_MODES.PREPEND);
-          SaveToFileSync(
-            SITE_SETTINGS_PATH,
-            JSON.stringify(Object.assign(siteSettingsImport, { APP_VERSION: output.version })), // replace entire file with the same content, except with the  APP_VERSION property updated
-            SAVE_MODES.WRITE
-          );
-          // updateJSONValue(SITE_SETTINGS_PATH, "APP_VERSION", output.version); // TODO: replace SITE_SETTINGS_PATH saveToFileSync above with this
+          updateJSONValue(SITE_SETTINGS_PATH, "APP_VERSION", output.version);
         } else {
           log(chalk.bgCyan.black("  Release aborted  "));
         }

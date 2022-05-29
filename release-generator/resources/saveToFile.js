@@ -53,7 +53,33 @@ const SaveToFileSync = (relativeFilePath, newData, saveMode, errorCallback, succ
 
 const updateJSONValue = (relativeFilePath, property, newValue, errorCallback, successCallback) => {
   const file = path.join(__dirname, "../", relativeFilePath);
-  // TODO
+
+  let rawData;
+  try {
+    rawData = fs.readFileSync(file);
+  } catch (error) {
+    rawData = Buffer.from("{}");
+    log(`No such file exists at ${error.path}. Creating file.`);
+  }
+
+  const dataParsed = JSON.parse(rawData);
+
+  // replace entire file with the same content, except with the [property] updated.
+  // "null, 2" parameters is to make the outputted JSON human-readable
+  const dataUpdated = JSON.stringify(Object.assign(dataParsed, { [property]: newValue }), null, 2);
+  fs.writeFile(file, dataUpdated, (err) => {
+    if (err) {
+      log(chalk.bgRed(`Error saving to ${file}`));
+      if (errorCallback) {
+        errorCallback();
+      }
+      throw err;
+    }
+    log(chalk.green(`JSON saved to ${file}`));
+    if (successCallback) {
+      successCallback();
+    }
+  });
 };
 
 module.exports = {
