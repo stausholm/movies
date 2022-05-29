@@ -1,3 +1,9 @@
+## [0.1.28] *2022-05-29* 
+This is the first release made with the release generator tool! All this text has been generated using it 🎉
+
+### Added
+- A release generator tool for making releases that adhere to semantic versioning.
+
 ## [0.0.28] *2022-03-27*
 This release adds a better breakdown of changes happening to the app, with examples shown below. 
 This is a small summary text that can come before the lists of changes in this version

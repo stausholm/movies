@@ -6,7 +6,7 @@
     "serve": "set NODE_ENV=development&& vue-cli-service serve",
     "build": "set NODE_ENV=production&& vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "generate-release": "node generate-release"
+    "generate-release": "node ../../release-generator/index"
   },
   "dependencies": {
     "core-js": "^3.6.5",
