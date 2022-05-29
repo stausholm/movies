@@ -33,12 +33,12 @@ module.exports = {
 
                   try {
                     result = content
-                      .replace('<h3>Added</h3>', '<h3 class="added">Added</h3>')
-                      .replace('<h3>Changed</h3>', '<h3 class="changed">Changed</h3>')
-                      .replace('<h3>Deprecated</h3>', '<h3 class="deprecated">Deprecated</h3>')
-                      .replace('<h3>Removed</h3>', '<h3 class="removed">Removed</h3>')
-                      .replace('<h3>Fixed</h3>', '<h3 class="fixed">Fixed</h3>')
-                      .replace('<h3>Security</h3>', '<h3 class="security">Security</h3>');
+                      .replace(/<h3>Added<\/h3>/gi, '<h3 class="added">Added</h3>')
+                      .replace(/<h3>Changed<\/h3>/gi, '<h3 class="changed">Changed</h3>')
+                      .replace(/<h3>Deprecated<\/h3>/gi, '<h3 class="deprecated">Deprecated</h3>')
+                      .replace(/<h3>Removed<\/h3>/gi, '<h3 class="removed">Removed</h3>')
+                      .replace(/<h3>Fixed<\/h3>/gi, '<h3 class="fixed">Fixed</h3>')
+                      .replace(/<h3>Security<\/h3>/gi, '<h3 class="security">Security</h3>');
                   } catch (error) {
                     loaderContext.emitError(error);
 
