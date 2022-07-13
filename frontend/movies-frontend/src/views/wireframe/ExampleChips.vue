@@ -56,6 +56,11 @@
     <h3 class="mt-2">more chips</h3>
 
     <chip-group label="Filter content by tag" type="radio">
+      <chip v-model="test5" icon="Filmstrip" :showIcon="true" value="a chip">a chip</chip>
+      <chip v-model="test5" icon="Star" :showIcon="true" value="another chip">another chip</chip>
+      <chip v-model="test5" icon="Clock" :showIcon="true" value="a third chip">a third chip</chip>
+    </chip-group>
+    <chip-group label="Filter content by tag" type="radio">
       <chip v-model="test2" value="a chip">a chip</chip>
       <chip v-model="test2" value="another chip">another chip</chip>
       <chip v-model="test2" value="a third chip">a third chip</chip>
@@ -90,6 +95,7 @@ export default defineComponent({
       test2: '',
       test3: true,
       test4: true,
+      test5: '',
       test1Values: [
         { label: 'label', value: 123 },
         { label: 'label2', value: 321 },

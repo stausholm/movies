@@ -25,7 +25,7 @@ export default defineComponent({
 
       // are we really online or in Lie-Fi?
       return window
-        .fetch('/img/icons/favicon-16x16.png?hash=' + new Date().getTime()) // TODO: does this cache buster work?
+        .fetch('/img/icons/favicon-16x16.png?hash=' + new Date().getTime(), { cache: 'no-store' })
         .then((response) => {
           // we're online, even if it returns 400 or 500
           this.isOnline = true;

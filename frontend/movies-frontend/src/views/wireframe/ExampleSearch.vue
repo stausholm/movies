@@ -75,10 +75,10 @@
           comments
         </button>
         <button
-          @click="changeEndpoint('todos')"
-          :style="{ backgroundColor: activeFilter === 'todos' ? 'green' : null }"
+          @click="changeEndpoint('posts')"
+          :style="{ backgroundColor: activeFilter === 'posts' ? 'green' : null }"
         >
-          todos
+          posts
         </button>
         <button
           @click="changeEndpoint('users')"
@@ -171,10 +171,10 @@ export default defineComponent({
       console.log('clicked suggestion', suggestion);
     },
     changeEndpoint(type: string): void {
-      if (type === 'todos') {
-        this.variableApiEndpoint = 'https://jsonplaceholder.typicode.com/todos?q=';
+      if (type === 'posts') {
+        this.variableApiEndpoint = 'https://jsonplaceholder.typicode.com/posts?q=';
         this.variableSearchableProperty = 'title';
-        this.activeFilter = 'todos';
+        this.activeFilter = 'posts';
       }
       if (type === 'comments') {
         this.variableApiEndpoint = 'https://jsonplaceholder.typicode.com/comments?q=';
@@ -183,7 +183,7 @@ export default defineComponent({
       }
       if (type === 'users') {
         this.variableApiEndpoint = 'https://jsonplaceholder.typicode.com/users?q=';
-        this.variableSearchableProperty = 'name';
+        this.variableSearchableProperty = 'website';
         this.activeFilter = 'users';
       }
     },

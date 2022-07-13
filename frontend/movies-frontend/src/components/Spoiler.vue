@@ -26,8 +26,6 @@
 import { defineComponent } from 'vue';
 import { getFocusableChildren } from '@/utils/focus-trap';
 
-// TODO: make sure it's accessible
-
 export default defineComponent({
   name: 'Spoiler',
   data() {
@@ -92,6 +90,7 @@ export default defineComponent({
   > .spoiler-mask {
     opacity: 0;
     transition: opacity 500ms ease;
+    pointer-events: none;
   }
 
   &.spoiled {
@@ -100,6 +99,7 @@ export default defineComponent({
 
     > .spoiler-mask {
       opacity: 1;
+      pointer-events: all;
     }
   }
 }
