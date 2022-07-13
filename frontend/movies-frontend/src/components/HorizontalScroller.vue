@@ -244,8 +244,8 @@ export default defineComponent({
         );
 
         svg {
-          width: 32px;
-          height: 32px;
+          width: $icon-size-large;
+          height: $icon-size-large;
         }
         &:disabled {
           opacity: 0;

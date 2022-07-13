@@ -1,7 +1,9 @@
 $default-spacing: 16px;
 
 $min-touch-target-size: 48px;
+$micro-touch-target-size: 32px; // very small buttons. Use sparringly and make sure that atleast either the x axis or y axis is the $min-touch-target-size;
 
+$icon-size-large: 32px;
 $icon-size-default: 24px;
 $icon-size-small: 18px;
 

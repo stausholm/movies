@@ -126,10 +126,10 @@ export default defineComponent({
 
 .context-menu-button__btn {
   &--small {
-    min-width: 32px;
-    min-height: 32px;
-    width: 32px;
-    height: 32px;
+    min-width: $micro-touch-target-size;
+    min-height: $micro-touch-target-size;
+    width: $micro-touch-target-size;
+    height: $micro-touch-target-size;
     padding: 4px;
 
     // it's important that the touchtarget is still big enough to be easy to hit, so we make sure it's at least always the minimum required size

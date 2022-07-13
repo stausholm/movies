@@ -1,13 +1,15 @@
 <template>
-  <div
-    class="chip-group"
-    :class="{ 'chip-group--scrollable': scrollable }"
-    :aria-label="label"
-    aria-orientation="horizontal"
-    v-bind="computedAttributes"
-  >
-    <div class="chip-group__inner" role="presentation">
-      <slot />
+  <div class="chip-group-wrapper">
+    <div
+      class="chip-group"
+      :class="{ 'chip-group--scrollable': scrollable }"
+      :aria-label="label"
+      aria-orientation="horizontal"
+      v-bind="computedAttributes"
+    >
+      <div class="chip-group__inner" role="presentation">
+        <slot />
+      </div>
     </div>
   </div>
 </template>
@@ -81,15 +83,20 @@ export default defineComponent({
 
 .chip-group {
   display: flex;
-  padding-top: 4px;
-  padding-bottom: 4px;
+  padding-top: math.div($default-spacing, 4);
+  padding-bottom: math.div($default-spacing, 4);
 
   &__inner {
     display: flex;
     flex-flow: wrap;
-    margin-left: -8px;
+    margin-left: math.div(-$default-spacing, 2);
     margin-right: 0;
     min-width: 100%;
+  }
+
+  &-wrapper {
+    margin-top: math.div(-$default-spacing, 2);
+    margin-bottom: math.div(-$default-spacing, 2);
   }
 
   &--scrollable {
@@ -102,7 +109,5 @@ export default defineComponent({
       overflow-x: auto;
     }
   }
-
-  // TODO: clean up css
 }
 </style>

@@ -10,6 +10,7 @@
   >
     <span class="chip__inner">
       <component :is="tag" class="chip__button" @click="handleClick" v-bind="computedAttributes">
+        <span class="chip__hover-overlay" aria-hidden="true"></span>
         <span class="chip__graphic">
           <span class="chip__checkmark">
             <base-icon-async v-if="icon" :name="icon" :width="18" :height="18" />
@@ -176,14 +177,16 @@ export default defineComponent({
 @import '@/design/mixins/index.scss';
 
 .chip {
-  height: 32px;
+  $chip-border-radius: 20px;
+
+  height: $micro-touch-target-size;
   display: inline-flex;
   align-items: center;
-  border-radius: 20px;
-  margin-left: 8px;
+  border-radius: $chip-border-radius;
+  margin-left: math.div($default-spacing, 2);
   margin-right: 0;
-  margin-top: 4px;
-  margin-bottom: 4px;
+  margin-top: math.div($default-spacing, 4);
+  margin-bottom: math.div($default-spacing, 4);
   position: relative;
   max-width: 100%;
 
@@ -197,22 +200,19 @@ export default defineComponent({
 
   &__button {
     padding-left: 0;
-    padding-right: 16px;
+    padding-right: $default-spacing;
     overflow: visible;
     align-items: center;
     background: none;
     border: none;
-    box-sizing: content-box;
     box-sizing: border-box;
-    cursor: pointer;
     display: inline-flex;
     justify-content: center;
-    //outline: none;
     text-decoration: none;
     height: 100%;
     color: inherit;
-    min-width: 32px;
-    border-radius: 20px;
+    min-width: $min-touch-target-size;
+    border-radius: $chip-border-radius;
 
     &::before {
       box-sizing: border-box;
@@ -225,17 +225,53 @@ export default defineComponent({
       width: 100%;
       z-index: 1;
       border-style: solid;
-      border-color: #dadce0;
-      border-width: 1px;
-      border-radius: 20px;
+      border-color: $gray-400;
+      border-width: $border-width-small;
+      border-radius: $chip-border-radius;
+    }
+  }
+
+  &__hover-overlay {
+    inset: 0;
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    border-radius: inherit;
+    transition: opacity 150ms linear;
+    background-color: $black;
+  }
+  // target non "presentation" chips
+  button.chip__button {
+    cursor: pointer;
+    outline-offset: 2px;
+
+    @include hover() {
+      .chip__hover-overlay {
+        opacity: 0.04;
+      }
+    }
+
+    &:active {
+      .chip__hover-overlay {
+        opacity: 0.08;
+      }
+    }
+
+    &[aria-disabled='true'] {
+      pointer-events: none;
+      background-color: $gray-200;
+      color: $gray-600;
+      &::before {
+        border-color: transparent;
+      }
     }
   }
 
   &__graphic {
     width: 0;
-    height: 18px;
-    padding-left: 8px;
-    padding-right: 8px;
+    height: $icon-size-small;
+    padding-left: math.div($default-spacing, 2);
+    padding-right: math.div($default-spacing, 2);
     align-items: center;
     display: inline-flex;
     justify-content: center;
@@ -247,8 +283,8 @@ export default defineComponent({
     transition: width 100ms 0ms cubic-bezier(0.4, 0, 0.2, 1);
 
     &--close {
-      width: 18px;
-      margin-right: -12px;
+      width: $icon-size-small;
+      margin-right: -$default-spacing * 0.75;
     }
   }
 
@@ -264,8 +300,6 @@ export default defineComponent({
   }
 
   &__checkmark {
-    // height: 20px;
-    // width: 20px;
     transition: opacity 50ms 0ms linear, transform 100ms 0ms cubic-bezier(0.4, 0, 0.2, 1);
     transform: translate(-75%, -50%);
     position: absolute;
@@ -278,13 +312,19 @@ export default defineComponent({
     }
   }
   &--checked {
-    background-color: #e8f0fe;
+    background-color: #e8f0fe; // TODO
     color: $brand-primary;
+
+    .chip__button::before {
+      border-color: transparent;
+      // border-color: $brand-primary-lighter;
+      // border-width: $border-width-base;
+    }
   }
   &--checked:not(.chip--icon-off),
   &--icon-on {
     .chip__graphic {
-      width: 18px;
+      width: $icon-size-small;
     }
     .chip__checkmark {
       transform: translate(-50%, -50%);
@@ -297,13 +337,10 @@ export default defineComponent({
     user-select: none;
     text-overflow: ellipsis;
     overflow: hidden;
-    font-size: 0.875rem;
+    font-size: $font-size-body-responsive; // this gives the desired result that it's the same size as body text on mobile, and slightly smaller than body text on desktop
     letter-spacing: 0.0178571429em;
-    font-weight: 500;
+    font-weight: normal;
     text-align: left;
   }
-
-  // TODO: hover, active, focus-visible, and disabled styles
-  // TODO: clean up css
 }
 </style>
