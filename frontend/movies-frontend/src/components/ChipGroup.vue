@@ -3,12 +3,8 @@
     class="chip-group"
     :class="{ 'chip-group--scrollable': scrollable }"
     :aria-label="label"
-    tabindex="0"
-    role="listbox"
-    :aria-required="required"
-    :aria-disabled="disabled"
-    :aria-multiselectable="multiselectable"
     aria-orientation="horizontal"
+    v-bind="computedAttributes"
   >
     <div class="chip-group__inner" role="presentation">
       <slot />
@@ -17,18 +13,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
+import { chipType } from '@/types/Chips';
 
 export default defineComponent({
   name: 'ChipGroup',
   props: {
-    label: {
-      type: String,
+    type: {
+      type: String as PropType<chipType>,
+      // the type that all chips in this chip group are
+      // "presentation": purely presentational, chip not for use as a button, radio, or checkbox
+      // "radio": function as a radiobutton input
+      // "checkbox": function as a checkbox/checkboxlist input
+      // "button" function as a button
       required: true,
     },
-    multiselectable: {
-      // should be set to true with checkbox chips
-      type: Boolean,
+    label: {
+      type: String,
       required: true,
     },
     disabled: {
@@ -43,6 +44,32 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+  },
+  computed: {
+    isPresentation(): boolean {
+      return this.type === 'presentation';
+    },
+    computedAttributes() {
+      if (this.type === 'presentation') {
+        return {
+          role: 'presentation',
+        };
+      }
+      if (this.type === 'button') {
+        return {};
+      }
+
+      return {
+        role: 'listbox',
+        tabindex: '0',
+        'aria-required': this.required,
+        'aria-disabled': this.disabled,
+        'aria-multiselectable': this.type === 'checkbox',
+      };
+    },
+  },
+  provide() {
+    return { ChipType: this.type };
   },
 });
 </script>

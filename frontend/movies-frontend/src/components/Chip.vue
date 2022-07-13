@@ -35,16 +35,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, inject } from 'vue';
 import BaseIcon from '@/components/base/BaseIcon.vue';
 import BaseIconAsync from '@/components/base/BaseIconAsync.vue';
 import IconCheck from '@/components/icons/IconCheck.vue';
 import IconClose from '@/components/icons/IconClose.vue';
-
-type chipType = 'presentation' | 'radio' | 'checkbox' | 'button';
+import { chipType } from '@/types/Chips';
 
 export default defineComponent({
   name: 'Chip',
+  // setup() method is needed for injection, in order to make it work with typescript
+  // inject: ['ChipType'],
+  setup() {
+    const ChipType = inject('ChipType') as chipType;
+
+    return {
+      ChipType,
+    };
+  },
   components: {
     BaseIcon,
     BaseIconAsync,
@@ -53,14 +61,6 @@ export default defineComponent({
   },
   emits: ['close', 'update:modelValue'],
   props: {
-    type: {
-      type: String as PropType<chipType>,
-      // "presentation": purely presentational, not for use as a button, radio, or checkbox
-      // "radio": function as a radiobutton input
-      // "checkbox": function as a checkbox/checkboxlist input
-      // "button" function as a button
-      default: 'button',
-    },
     disabled: {
       type: Boolean,
       default: false,
@@ -99,14 +99,14 @@ export default defineComponent({
         this.$emit('close');
       }
       if (this.modelValue !== undefined) {
-        if (this.type === 'radio') {
+        if (this.ChipType === 'radio') {
           if (this.isChecked) {
             // user deselected the radiochip
             this.$emit('update:modelValue', null); // radio
           } else {
             this.$emit('update:modelValue', this.value); // radio
           }
-        } else if (this.type === 'checkbox') {
+        } else if (this.ChipType === 'checkbox') {
           if (this.isCheckboxList) {
             const modelValue = this.modelValue as unknown[];
             if (this.isChecked) {
@@ -126,7 +126,7 @@ export default defineComponent({
   },
   computed: {
     isPresentation(): boolean {
-      return this.type === 'presentation';
+      return this.ChipType === 'presentation';
     },
     tag(): string {
       return this.isPresentation ? 'span' : 'button';
@@ -139,7 +139,7 @@ export default defineComponent({
       }
 
       return {
-        role: this.type === 'button' ? 'button' : 'option',
+        role: this.ChipType === 'button' ? 'button' : 'option',
         type: 'button',
         tabindex: '0',
         'aria-selected': this.isChecked,
@@ -156,7 +156,7 @@ export default defineComponent({
       if (this.isCheckboxList) {
         return (this.modelValue as unknown[]).includes(this.value);
       }
-      if (!this.isCheckboxList && this.type === 'checkbox') {
+      if (!this.isCheckboxList && this.ChipType === 'checkbox') {
         // boolean checkbox v-model where we don't want to have to pass down a :value prop
         return !!this.modelValue;
       }
