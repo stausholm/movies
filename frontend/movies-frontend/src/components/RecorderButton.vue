@@ -18,7 +18,7 @@
 </template>
 
 <script>
-// TODO: add lang="ts" on <script> which requires types SpeechRecognition and WebkitSpeechRecognition
+// NOTE: component is not in typescript as there's no available types for SpeechRecognition and WebkitSpeechRecognition
 import { defineComponent } from 'vue';
 import BaseIcon from '@/components/base/BaseIcon.vue';
 import IconMicrophone from '@/components/icons/IconMicrophone.vue';
@@ -85,9 +85,10 @@ export default defineComponent({
       }
 
       if (this.isRecording) {
-        // TODO: does this work?
+        // user clicked the recording button again, end the recording early and return a query
+        this.isRecording = false;
+        clearTimeout(this.timeoutFunc);
         this.recognition.stop();
-        // this.isRecording = false is this needed?
       } else {
         this.recognition.start();
         this.finalTranscript = '';
@@ -101,7 +102,6 @@ export default defineComponent({
 
         this.$emit('query', query);
 
-        // TODO: test this.inputEl
         if (this.inputEl) {
           // eslint-disable-next-line vue/no-mutating-props
           this.inputEl.placeholder = this.storedPlaceholder; // restore the input's original placeholder
@@ -135,8 +135,8 @@ export default defineComponent({
     },
   },
   beforeUnmount() {
-    // TODO: is this necessary, and is there anything else that needs to be cleaned up?
-    this.recognition.stop();
+    this.recognition.abort();
+    clearTimeout(this.timeoutFunc);
   },
   created() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -187,7 +187,13 @@ export default defineComponent({
           if (this.timeoutFunc) {
             clearTimeout(this.timeoutFunc);
           }
-          this.timeoutFunc = setTimeout(this.endSpeechAndSearch, continueDelay, interim_transcript);
+          if (this.isRecording) {
+            this.timeoutFunc = setTimeout(
+              this.endSpeechAndSearch,
+              continueDelay,
+              interim_transcript
+            );
+          }
         }
       }
     };
@@ -208,7 +214,6 @@ export default defineComponent({
       // https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognitionErrorEvent/error
       if (event.error !== 'aborted') {
         console.log('[RecorderButton] Voice recognition failed: ', event);
-        // TODO: test what is emitted if user is offline, and emit that, if it has a unique identifier
       }
       if (event.error === 'not-allowed') {
         this.$emit('permissionDenied');

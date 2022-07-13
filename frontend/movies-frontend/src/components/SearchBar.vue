@@ -20,26 +20,35 @@
         @keyup.delete="handleDelete"
         class="js-search-input-field"
       />
-      <button type="submit" @click="searchForString(searchVal)">
+      <button class="search-bar__btn" type="submit" @click="searchForString(searchVal)">
         <span class="visually-hidden">Search</span>
         <base-icon>
           <icon-search />
         </base-icon>
       </button>
       <transition name="button-transition">
-        <button type="reset" v-if="oldVal" @click="reset" @mousedown.prevent>
+        <button
+          class="search-bar__btn search-bar__btn--right"
+          type="reset"
+          v-if="oldVal"
+          @click="reset"
+          @mousedown.prevent
+        >
           <span class="visually-hidden">Clear search</span>
           <base-icon>
             <icon-close />
           </base-icon>
         </button>
-        <button type="button" v-else-if="!oldVal">
-          <!-- TODO: implement -->
-          <span class="visually-hidden">Search by voice</span>
-          <base-icon>
-            <icon-microphone />
-          </base-icon>
-        </button>
+        <div class="search-bar__btn search-bar__btn--right" v-else-if="!oldVal">
+          <recorder-button
+            v-if="microphoneSupported"
+            label="Search by voice"
+            :inputEl="$refs.searchinput"
+            @query="handleVoiceQuery"
+            @unsupportedCreated="microphoneSupported = false"
+            @permissionDenied="handleVoicePermissionDenied"
+          />
+        </div>
       </transition>
     </form>
     <aside
@@ -130,12 +139,14 @@
 import { defineComponent, PropType } from 'vue';
 import BaseIcon from '@/components/base/BaseIcon.vue';
 import IconSearch from '@/components/icons/IconSearch.vue';
-import IconMicrophone from '@/components/icons/IconMicrophone.vue';
 import IconClose from '@/components/icons/IconClose.vue';
 import IconClock from '@/components/icons/IconClock.vue';
 import { LATEST_SEARCHES_STORAGE_KEY } from '@/constants/SiteSettings.json';
 import Loader from '@/components/Loader.vue';
 import levenshtein from '@/utils/levenshteinDistance';
+import RecorderButton from '@/components/RecorderButton.vue';
+import { Toast } from '@/store/toast/types';
+import { ToastMutations } from '@/store/toast/mutations';
 
 // accessibility resources: https://bbc.github.io/gel/components/search/
 
@@ -145,10 +156,10 @@ export default defineComponent({
   components: {
     BaseIcon,
     IconSearch,
-    IconMicrophone,
     IconClose,
     IconClock,
     Loader,
+    RecorderButton,
   },
   props: {
     focusOnMount: {
@@ -199,6 +210,7 @@ export default defineComponent({
       maxResultsShown: 5,
       totalResults: 0,
       showDropdown: false,
+      microphoneSupported: true,
       updateSearchVal: true, // handles if searchVal should be updated, while navigating suggestions with keyboard
       typing: false, // is user actively typing
       levenshteinUsed: false, // is levenshtein distance currently being used to add a typo tolerance for resultsSync?
@@ -433,6 +445,16 @@ export default defineComponent({
           this.$emit('error', err);
         });
     },
+    handleVoiceQuery(query: string) {
+      this.searchVal = query;
+      this.handleFocus();
+      this.handleInput();
+    },
+    handleVoicePermissionDenied() {
+      this.$store.commit(ToastMutations.ADD_TOAST, {
+        content: 'Allow access to the microphone, to use voice search',
+      } as Toast);
+    },
   },
   watch: {
     oldVal() {
@@ -538,7 +560,8 @@ export default defineComponent({
       padding-right: $min-touch-target-size;
     }
 
-    button {
+    .search-bar__btn {
+      left: 0;
       position: absolute;
       top: 0;
       bottom: 0;
@@ -550,6 +573,11 @@ export default defineComponent({
       line-height: 0;
       background-color: transparent;
 
+      &--right {
+        left: auto;
+        right: 0;
+      }
+
       .icon {
         transition: color 0.125s ease-out, transform 0.125s ease-out;
       }
@@ -560,16 +588,6 @@ export default defineComponent({
           transform: scale(0.85);
         }
       }
-    }
-
-    button[type='submit'] {
-      left: 0;
-    }
-    button[type='button'] {
-      right: 0;
-    }
-    button[type='reset'] {
-      right: 0;
     }
   }
   &__suggestions {
@@ -613,6 +631,11 @@ export default defineComponent({
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.05);
     z-index: -1;
+  }
+
+  // resize recorderButton animation to fit the searchbar size
+  .mic-animation {
+    transform: scale(0.5);
   }
 }
 
