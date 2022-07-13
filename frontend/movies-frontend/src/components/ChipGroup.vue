@@ -2,12 +2,12 @@
   <div
     class="chip-group"
     :class="{ 'chip-group--scrollable': scrollable }"
-    aria-label="Filter content by tags"
+    :aria-label="label"
     tabindex="0"
     role="listbox"
-    aria-required="false"
-    aria-disabled="false"
-    aria-multiselectable="true"
+    :aria-required="required"
+    :aria-disabled="disabled"
+    :aria-multiselectable="multiselectable"
     aria-orientation="horizontal"
   >
     <div class="chip-group__inner" role="presentation">
@@ -22,6 +22,23 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'ChipGroup',
   props: {
+    label: {
+      type: String,
+      required: true,
+    },
+    multiselectable: {
+      // should be set to true with checkbox chips
+      type: Boolean,
+      required: true,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    required: {
+      type: Boolean,
+      default: false,
+    },
     scrollable: {
       type: Boolean,
       default: false,
@@ -58,5 +75,7 @@ export default defineComponent({
       overflow-x: auto;
     }
   }
+
+  // TODO: clean up css
 }
 </style>

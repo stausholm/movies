@@ -146,6 +146,7 @@
       data-attribute-test="asdasd"
       :disabled="inputsDisabled"
       enterkeyhint="search"
+      @blur="handleEvent"
     />
 
     <input-extended

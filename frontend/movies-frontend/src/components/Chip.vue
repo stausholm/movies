@@ -1,16 +1,15 @@
 <template>
-  <span class="chip" role="presentation" :class="{ 'chip--checked': checked }">
+  <span
+    class="chip"
+    role="presentation"
+    :class="{
+      'chip--checked': isChecked,
+      'chip--icon-on': showIcon === true,
+      'chip--icon-off': showIcon === false,
+    }"
+  >
     <span class="chip__inner">
-      <button
-        class="chip__button"
-        role="option"
-        aria-label="Filter by TODO"
-        type="button"
-        tabindex="0"
-        aria-selected="todo"
-        aria-disabled="todo"
-        @click="handleClick"
-      >
+      <component :is="tag" class="chip__button" @click="handleClick" v-bind="computedAttributes">
         <span class="chip__graphic">
           <span class="chip__checkmark">
             <base-icon-async v-if="icon" :name="icon" :width="18" :height="18" />
@@ -19,41 +18,30 @@
             </base-icon>
           </span>
         </span>
-        <span class="chip__text">lorem ipsum dolor sit amet</span>
+        <span class="chip__text">
+          <slot></slot>
+        </span>
         <span class="chip__graphic chip__graphic--close" v-if="closable">
+          <span class="visually-hidden">Click to close</span>
           <span class="chip__close">
             <base-icon :width="18" :height="18">
               <icon-close />
             </base-icon>
           </span>
         </span>
-      </button>
-      <!-- <button class="chip__button">
-        <span class="chip__text">extra button</span>
-      </button> -->
+      </component>
     </span>
   </span>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import BaseIcon from '@/components/base/BaseIcon.vue';
 import BaseIconAsync from '@/components/base/BaseIconAsync.vue';
 import IconCheck from '@/components/icons/IconCheck.vue';
 import IconClose from '@/components/icons/IconClose.vue';
 
-/**
- * TODO:
- * make it work as a simple non-interactve chip with option to add custom icon where there is currently a checkmark
- * radio button (no icon, only bg, color, and border change)
- * removable chip with close button
- * checkbox (use checkmark icon)
- * filter (multiple buttons in a single chip)
- *
- * should work with v-model
- *
- * should emit close and click events
- */
+type chipType = 'presentation' | 'radio' | 'checkbox' | 'button';
 
 export default defineComponent({
   name: 'Chip',
@@ -66,36 +54,117 @@ export default defineComponent({
   emits: ['close', 'update:modelValue'],
   props: {
     type: {
-      type: String,
-      // validator(val: string) {
-      //   return ['presentation', 'radio', 'checkbox', 'filter'].includes(val);
-      // },
+      type: String as PropType<chipType>,
+      // "presentation": purely presentational, not for use as a button, radio, or checkbox
+      // "radio": function as a radiobutton input
+      // "checkbox": function as a checkbox/checkboxlist input
+      // "button" function as a button
+      default: 'button',
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    showIcon: {
+      // if left undefined, default logic will be used (show icon when isChecked). if true/false always show/hide the icon
+      type: Boolean,
+      default: undefined,
     },
     icon: {
       type: String,
+    },
+    checked: {
+      //this prop is in case you want to use the component without v-model
+      type: Boolean,
+      default: undefined,
     },
     closable: {
       type: Boolean,
       default: false,
     },
     modelValue: {
-      type: Boolean,
+      type: [String, Boolean, Array],
+      default: undefined,
     },
-  },
-  data() {
-    return {
-      checked: false,
-    };
+    value: {
+      default: undefined,
+    },
   },
   methods: {
     handleClick(): void {
+      if (this.isPresentation || this.disabled) {
+        return;
+      }
       if (this.closable) {
         this.$emit('close');
       }
       if (this.modelValue !== undefined) {
-        this.$emit('update:modelValue', !this.modelValue);
+        if (this.type === 'radio') {
+          if (this.isChecked) {
+            // user deselected the radiochip
+            this.$emit('update:modelValue', null); // radio
+          } else {
+            this.$emit('update:modelValue', this.value); // radio
+          }
+        } else if (this.type === 'checkbox') {
+          if (this.isCheckboxList) {
+            const modelValue = this.modelValue as unknown[];
+            if (this.isChecked) {
+              //remove value from :modelValue array
+              const filtered = modelValue.filter((x) => x !== this.value);
+              this.$emit('update:modelValue', filtered); //checkbox array
+            } else {
+              // add value to the end of :modelValue array
+              this.$emit('update:modelValue', [...modelValue, this.value]); //checkbox array
+            }
+          } else {
+            this.$emit('update:modelValue', !this.modelValue); //checkbox boolean
+          }
+        }
       }
-      this.checked = !this.checked;
+    },
+  },
+  computed: {
+    isPresentation(): boolean {
+      return this.type === 'presentation';
+    },
+    tag(): string {
+      return this.isPresentation ? 'span' : 'button';
+    },
+    computedAttributes() {
+      if (this.isPresentation) {
+        return {
+          role: 'presentation',
+        };
+      }
+
+      return {
+        role: this.type === 'button' ? 'button' : 'option',
+        type: 'button',
+        tabindex: '0',
+        'aria-selected': this.isChecked,
+        'aria-disabled': this.disabled,
+      };
+    },
+    isChecked(): boolean {
+      if (typeof this.checked === 'boolean') {
+        return this.checked;
+      }
+      if (this.modelValue === undefined) {
+        return false;
+      }
+      if (this.isCheckboxList) {
+        return (this.modelValue as unknown[]).includes(this.value);
+      }
+      if (!this.isCheckboxList && this.type === 'checkbox') {
+        // boolean checkbox v-model where we don't want to have to pass down a :value prop
+        return !!this.modelValue;
+      }
+      // default assume radio
+      return this.modelValue === this.value;
+    },
+    isCheckboxList(): boolean {
+      return Array.isArray(this.modelValue);
     },
   },
 });
@@ -116,6 +185,7 @@ export default defineComponent({
   margin-top: 4px;
   margin-bottom: 4px;
   position: relative;
+  max-width: 100%;
 
   &__inner {
     width: 100%;
@@ -142,6 +212,7 @@ export default defineComponent({
     height: 100%;
     color: inherit;
     min-width: 32px;
+    border-radius: 20px;
 
     &::before {
       box-sizing: border-box;
@@ -158,22 +229,6 @@ export default defineComponent({
       border-width: 1px;
       border-radius: 20px;
     }
-
-    // + .chip__button {
-    //   position: relative;
-    //   &::before {
-    //     //border-color: transparent;
-    //   }
-    //   &::after {
-    //     content: '';
-    //     position: absolute;
-    //     left: -12px;
-    //     top: 8px;
-    //     bottom: 8px;
-    //     width: 1px;
-    //     background-color: currentColor;
-    //   }
-    // }
   }
 
   &__graphic {
@@ -223,6 +278,11 @@ export default defineComponent({
     }
   }
   &--checked {
+    background-color: #e8f0fe;
+    color: $brand-primary;
+  }
+  &--checked:not(.chip--icon-off),
+  &--icon-on {
     .chip__graphic {
       width: 18px;
     }
@@ -230,8 +290,6 @@ export default defineComponent({
       transform: translate(-50%, -50%);
       opacity: 1;
     }
-    background-color: #e8f0fe;
-    color: $brand-primary;
   }
 
   &__text {
@@ -242,8 +300,10 @@ export default defineComponent({
     font-size: 0.875rem;
     letter-spacing: 0.0178571429em;
     font-weight: 500;
-    overflow: visible;
     text-align: left;
   }
+
+  // TODO: hover, active, focus-visible, and disabled styles
+  // TODO: clean up css
 }
 </style>

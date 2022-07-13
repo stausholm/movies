@@ -34,24 +34,13 @@
       <button class="btn btn--primary btn--uppercase">CTRL + K</button>
     </base-card>
 
-    <h3 class="mt-2">Type: {{ cardType }}</h3>
-    <ul>
-      <!-- TODO: make into chips -->
-      <li>
-        <button @click="cardType = 'standard'" :class="{ active: cardType === 'standard' }">
-          standard
-        </button>
-      </li>
-      <li>
-        <button @click="cardType = 'tip'" :class="{ active: cardType === 'tip' }">tip</button>
-      </li>
-      <li>
-        <button @click="cardType = 'media'" :class="{ active: cardType === 'media' }">media</button>
-      </li>
-      <li>
-        <button @click="cardType = 'image'" :class="{ active: cardType === 'image' }">image</button>
-      </li>
-    </ul>
+    <h3 class="mt-2">Change type</h3>
+    <chip-group label="Filter content by tag" :multiselectable="false">
+      <chip v-model="cardType" value="standard" type="radio">standard</chip>
+      <chip v-model="cardType" value="tip" type="radio">tip</chip>
+      <chip v-model="cardType" value="media" type="radio">media</chip>
+      <chip v-model="cardType" value="image" type="radio">image</chip>
+    </chip-group>
     <button class="btn btn--primary mt mb" @click="isLoading = !isLoading">
       Show loaders: {{ isLoading }}
     </button>
@@ -299,12 +288,16 @@ import { defineComponent } from 'vue';
 import BaseCard from '@/components/base/BaseCard.vue';
 import ContextMenuButton from '@/components/ContextMenuButton.vue';
 import { APP_NAME } from '@/constants/SiteSettings.json';
+import Chip from '@/components/Chip.vue';
+import ChipGroup from '@/components/ChipGroup.vue';
 
 export default defineComponent({
   name: 'ExampleCard',
   components: {
     BaseCard,
     ContextMenuButton,
+    Chip,
+    ChipGroup,
   },
   data() {
     return {
