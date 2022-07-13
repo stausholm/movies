@@ -66,6 +66,16 @@ module.exports = {
     // https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
     name: APP_NAME,
     themeColor: COLOR_THEME_DEFAULT,
+    iconPaths: {
+      favicon32: 'img/icons/favicon-32x32.png',
+      favicon16: 'img/icons/favicon-16x16.png',
+      appleTouchIcon: 'img/icons/apple-touch-icon.png',
+      maskIcon: 'img/icons/safari-pinned-tab.svg',
+      msTileImage: 'img/icons/mstile-150x150.png',
+      // generate new ones at https://realfavicongenerator.net/
+      // and maskable variants at https://maskable.app/editor
+      // info: https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs#changelog
+    },
   },
   css: { sourceMap: process.env.NODE_ENV === 'development' },
 };
