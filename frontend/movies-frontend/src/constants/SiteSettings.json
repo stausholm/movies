@@ -13,5 +13,6 @@
   "APP_HOST_NAME": "Simply.com",
   "APP_HOST_PRIVACY_URL": "https://www.simply.com/dk/privacy-policy/",
   "APP_HOST_GDPR_URL": "https://www.simply.com/dk/compliance/",
-  "APP_PRIVACY_POLICY_LAST_UPDATED": "Dec 18 2021 12:30:24 GMT+0100"
+  "APP_PRIVACY_POLICY_LAST_UPDATED": "Dec 18 2021 12:30:24 GMT+0100",
+  "MANIFEST_DESCRIPTION": "Get a full overview of all your local videoes with Movies DB. Hassle-free, privacy focused, and without pesky ads."
 }

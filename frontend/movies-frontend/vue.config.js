@@ -4,6 +4,7 @@ const {
   APP_NAME,
   COLOR_THEME_DEFAULT,
   APP_CODE_URL,
+  MANIFEST_DESCRIPTION,
   // eslint-disable-next-line @typescript-eslint/no-var-requires
 } = require('./src/constants/SiteSettings.json');
 
@@ -75,6 +76,49 @@ module.exports = {
       // generate new ones at https://realfavicongenerator.net/
       // and maskable variants at https://maskable.app/editor
       // info: https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs#changelog
+    },
+    manifestOptions: {
+      // https://developer.mozilla.org/en-US/docs/Web/Manifest
+      background_color: COLOR_THEME_DEFAULT,
+      lang: 'en',
+      orientation: 'portrait',
+      categories: ['utilities'],
+      description: MANIFEST_DESCRIPTION,
+      id: 'movies-db',
+      start_url: './?source=pwa',
+      screenshots: [
+        {
+          src: './img/icons/android-chrome-maskable-192x192.png', // TODO
+          sizes: '192x192',
+          type: 'image/png',
+          label: 'Logo of Movies DB',
+        },
+        {
+          src: './img/icons/android-chrome-maskable-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+          label: 'A bigger logo of Movies DB',
+        },
+      ],
+      shortcuts: [
+        {
+          name: 'My library',
+          short_name: 'Library',
+          url: '/library?source=pwa',
+          description: 'My entire library of content',
+          icons: [{ src: './img/icons/android-chrome-maskable-192x192.png', sizes: '192x192' }], // TODO
+        },
+        {
+          name: 'My movies',
+          short_name: 'Movies',
+          url: '/find/movies?source=pwa',
+        },
+        {
+          name: 'My series',
+          short_name: 'Series',
+          url: '/find/series?source=pwa',
+        },
+      ],
     },
   },
   css: { sourceMap: process.env.NODE_ENV === 'development' },

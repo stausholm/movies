@@ -2,60 +2,72 @@
   <transition :name="transition" appear>
     <!-- TODO: get enter/leave transition working again https://v3.vuejs.org/guide/migration/transition-as-root.html#overview -->
     <aside
-      v-if="!dismissed && !!visible"
       :class="[
-        'side-note',
-        `side-note--${type}`,
+        'side-note-wrapper',
         {
-          'side-note--dismissable': dismissable,
-          'hide-icon': hideIcon,
-          'side-note--bordered': bordered,
+          'side-note-wrapper--hide-icon': hideIcon,
+          'side-note-wrapper--bordered': bordered,
         },
       ]"
+      v-if="!dismissed && !!visible"
     >
-      <div class="d-flex align-center mb" v-if="title || !hideIcon">
-        <div
-          class="side-note__icon mr"
-          :class="{ 'side-note__icon--bordered': bordered }"
-          aria-hidden="true"
-          v-if="!hideIcon"
-        >
-          <base-icon-async :width="18" :height="18" :name="iconName" />
+      <div
+        :class="[
+          'side-note',
+          `side-note--${type}`,
+          {
+            'side-note--dismissable': dismissable,
+            'hide-icon': hideIcon,
+            'side-note--bordered': bordered,
+          },
+        ]"
+      >
+        <div class="d-flex align-center mb" v-if="title || !hideIcon">
+          <div
+            class="side-note__icon mr"
+            :class="{ 'side-note__icon--bordered': bordered }"
+            aria-hidden="true"
+            v-if="!hideIcon"
+          >
+            <base-icon-async :width="18" :height="18" :name="iconName" />
+          </div>
+          <strong class="side-note__title" v-if="title">{{ title }}</strong>
         </div>
-        <strong class="side-note__title" v-if="title">{{ title }}</strong>
-      </div>
-      <div v-if="dismissable" class="side-note__dismiss p">
-        <span class="side-note__dismiss-countdown mr text-small" v-if="typeof visible === 'number'"
-          >Dismisses in {{ visible }}s..</span
-        >
-        <button
-          :aria-label="dismissLabel"
-          class="side-note__dismiss-btn btn--absolute-sized"
-          @click="dismiss"
-        >
-          <base-icon-async name="Close" />
-        </button>
-      </div>
-      <div class="side-note__body">
-        <slot />
-        <div class="side-note__expanded" v-if="hasExpandedChildren">
-          <div v-if="!showExpandedChildren">
-            <button
-              @click="handleShowMore"
-              class="side-note__expanded-toggle btn--absolute-sized d-flex align-center fw-bold"
-            >
-              <span>Show more</span>
-              <base-icon-async name="ChevronDown" />
-            </button>
-          </div>
-          <div v-else>
-            <p class="fw-bold" tabindex="-1" ref="continueBelowLabel">Continued below...</p>
-          </div>
-          <transition name="slide-down">
-            <div class="side-note__expanded-content" v-if="showExpandedChildren">
-              <slot name="expanded"></slot>
+        <div v-if="dismissable" class="side-note__dismiss p">
+          <span
+            class="side-note__dismiss-countdown mr text-small"
+            v-if="typeof visible === 'number'"
+            >Dismisses in {{ visible }}s..</span
+          >
+          <button
+            :aria-label="dismissLabel"
+            class="side-note__dismiss-btn btn--absolute-sized"
+            @click="dismiss"
+          >
+            <base-icon-async name="Close" />
+          </button>
+        </div>
+        <div class="side-note__body">
+          <slot />
+          <div class="side-note__expanded" v-if="hasExpandedChildren">
+            <div v-if="!showExpandedChildren">
+              <button
+                @click="handleShowMore"
+                class="side-note__expanded-toggle btn--absolute-sized d-flex align-center fw-bold"
+              >
+                <span>Show more</span>
+                <base-icon-async name="ChevronDown" />
+              </button>
             </div>
-          </transition>
+            <div v-else>
+              <p class="fw-bold" tabindex="-1" ref="continueBelowLabel">Continued below...</p>
+            </div>
+            <transition name="slide-down">
+              <div class="side-note__expanded-content" v-if="showExpandedChildren">
+                <slot name="expanded"></slot>
+              </div>
+            </transition>
+          </div>
         </div>
       </div>
     </aside>
@@ -257,9 +269,17 @@ export default defineComponent({
     }
   }
 
-  // TODO: margins should not be on the component itself
-  margin-top: $default-spacing * 3;
-  margin-bottom: $default-spacing * 4;
+  &-wrapper {
+    padding-top: 21px; // matches icon size + padding + border
+
+    &--bordered {
+      padding-top: 18px; // matches icon size + padding + border
+    }
+
+    &--hide-icon {
+      padding-top: 0;
+    }
+  }
 
   &--info {
     background: $color-muted;

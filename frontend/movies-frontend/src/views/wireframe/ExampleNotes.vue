@@ -9,6 +9,7 @@
     <button @click="testNote = testNote - 1">testNote--</button>
 
     <base-note
+      class="mb-2"
       :bordered="borders"
       dismissable
       hideIcon
@@ -28,15 +29,15 @@
         cumque amet quis velit?
       </p>
     </base-note>
-    <base-note :bordered="borders" title="custom icon" icon="Filmstrip">
+    <base-note class="mb-2" :bordered="borders" title="custom icon" icon="Filmstrip">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, voluptatum adipisci minima
       exercitationem voluptas odit aperiam totam expedita
     </base-note>
-    <base-note :bordered="borders" title="No icon" :hideIcon="true">
+    <base-note class="mb-2" :bordered="borders" title="No icon" :hideIcon="true">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, voluptatum adipisci minima
       exercitationem voluptas odit aperiam totam expedita
     </base-note>
-    <base-note :bordered="borders" type="info" title="down the rabbit hole">
+    <base-note class="mb-2" :bordered="borders" type="info" title="down the rabbit hole">
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci iure expedita provident
         aut hic cum ad molestias cumque maxime. Adipisci dolore dolorum iusto facilis ab aliquid
@@ -68,7 +69,7 @@
         </p>
       </template>
     </base-note>
-    <base-note :bordered="borders" type="warning" title="down the rabbit hole">
+    <base-note class="mb-2" :bordered="borders" type="warning" title="down the rabbit hole">
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci iure expedita provident
         aut hic cum ad molestias cumque maxime. Adipisci dolore dolorum iusto facilis ab aliquid
@@ -93,7 +94,7 @@
         deleniti repudiandae dolorum consequatur dignissimos?
       </p>
     </base-note>
-    <base-note :bordered="borders" type="success" title="down the rabbit hole">
+    <base-note class="mb-2" :bordered="borders" type="success" title="down the rabbit hole">
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci iure expedita provident
         aut hic cum ad molestias cumque maxime. Adipisci dolore dolorum iusto facilis ab aliquid
@@ -113,7 +114,7 @@
         deleniti repudiandae dolorum consequatur dignissimos?
       </p>
     </base-note>
-    <base-note :bordered="borders" type="error" title="down the rabbit hole">
+    <base-note class="mb-2" :bordered="borders" type="error" title="down the rabbit hole">
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci iure expedita provident
         aut hic cum ad molestias cumque maxime. Adipisci dolore dolorum iusto facilis ab aliquid
