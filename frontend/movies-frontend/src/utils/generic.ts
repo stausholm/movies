@@ -15,7 +15,7 @@ export const random = (min: number, max: number): number =>
  * @param {Array} arr - array of items to sample from
  * @returns {any} - item at a random index in the array
  */
-export const sampleOne = (arr: unknown[]): unknown => {
+export const sampleOne = <T>(arr: T[]): T => {
   return arr[Math.floor(Math.random() * arr.length)];
 };
 

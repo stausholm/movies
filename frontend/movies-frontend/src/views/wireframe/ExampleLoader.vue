@@ -2,7 +2,9 @@
   <div class="container">
     <h2>Loaders</h2>
     <h3>Loader</h3>
+    <button @click="showLoader = !showLoader">toggle loader</button>
     <loader
+      v-if="showLoader"
       :size="48"
       message="optional loading message"
       class="d-flex justify-center flex-column align-center"
@@ -25,6 +27,7 @@ export default defineComponent({
   },
   data() {
     return {
+      showLoader: true,
       logoMessage: 'Logo loader loading',
     };
   },

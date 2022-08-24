@@ -15,6 +15,9 @@ export const getters: GetterTree<AppState, RootState> = {
   navigationDisabled(state): boolean {
     return state.navigationDisabled;
   },
+  homePageShown(state): boolean {
+    return state.homePageShown;
+  },
   openOverlaysCount(state): number {
     return state.openOverlays;
   },

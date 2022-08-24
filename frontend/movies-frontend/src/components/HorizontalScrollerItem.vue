@@ -135,7 +135,7 @@ export default defineComponent({
 @import '@/design/functions/index.scss';
 
 .hs-item {
-  transform: translateZ(0); // prevent repainting entire component // TODO: check if necessary
+  transform: translateZ(0); // prevent repainting entire component
 
   &__inner {
     height: 100%;

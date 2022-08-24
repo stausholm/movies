@@ -43,6 +43,12 @@ import BaseIcon from '@/components/base/BaseIcon.vue';
 import IconStar from '@/components/icons/IconStar.vue';
 import HeroApp from '@/components/HeroApp.vue';
 
+/**
+ * TODO:
+ * page is a mix between youtube watch later with swipe actions, and amazon watch list.
+ * Remember 3 vertical dots menu, sort order, and starred video count total
+ */
+
 export default defineComponent({
   name: 'Starred',
   components: {

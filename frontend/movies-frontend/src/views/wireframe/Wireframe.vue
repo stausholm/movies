@@ -20,6 +20,18 @@
     </div>
 
     <div class="container mt-2">
+      <h2>Custom error handler test</h2>
+      <!-- https://vuejs.org/api/options-lifecycle.html#errorcaptured -->
+      <p>
+        Clicking buttons will throw a js error that app.config.errorHandler will handle in
+        production. Normally a component should be able to handle it's own erros using
+        errorCaptured() lifecycle hook
+      </p>
+      <button class="btn btn--primary mr" @click="doStuff()">call undefined function</button>
+      <button class="btn btn--primary" @click="throwError">Throw error</button>
+    </div>
+
+    <div class="container mt-2">
       <h2>Tooltips</h2>
       <p>hold down your finger/mouse on the elements below for ~1s to see a tooltip</p>
       <h3 data-pushtip="this is a tip">tooltip test on text</h3>
@@ -122,27 +134,16 @@
             </div>
           </div>
         </div>
+        <h2>Dynamic assets graphic</h2>
+        <!-- https://blog.lichter.io/posts/dynamic-images-vue-nuxt/ -->
+        <img :src="require(`@/assets/${'STAR-GRAPHIC.svg'.toLowerCase()}`)" alt="" width="100" />
       </div>
     </zone>
 
-    <div class="container mt-2">
+    <div class="container mt-2 mb-2">
       <h2>ratio</h2>
       <div class="ratio ratio-16x9 theme-dark" style="width: 200px">
         <p>test 16:9</p>
-      </div>
-    </div>
-
-    <div class="container mt-2">
-      <h2>Vue3/TS</h2>
-      <p>{{ wow }}</p>
-      <button @click="changeWow('12')">change wow</button>
-
-      <button @click="showStuff = !showStuff">toggle teleport</button>
-      <teleport to="#teleporttarget" v-if="showStuff">
-        <p>showStuff aaa {{ showStuff }}</p>
-      </teleport>
-      <div v-if="dummy">
-        <p v-for="dum in dummy" :key="dum.title"></p>
       </div>
     </div>
 
@@ -189,7 +190,7 @@ const ratios = {
   },
 };
 
-import { defineComponent, PropType } from 'vue';
+import { defineComponent } from 'vue';
 import Episode from '@/types/Episode';
 import Movie from '@/types/Movie';
 import Series from '@/types/Series';
@@ -208,17 +209,8 @@ export default defineComponent({
     HeroApp,
     Zone,
   },
-  props: {
-    dummy: {
-      required: false,
-      type: Array as PropType<Series[]>,
-    },
-  },
   data() {
     return {
-      wow: 'asdasd',
-      numOrString: 25 as number | string,
-      showStuff: true as boolean,
       videos: [] as (Episode | Series | Movie)[],
       imageRatioPercentage: 0,
     };
@@ -240,16 +232,16 @@ export default defineComponent({
     },
   },
   methods: {
-    changeWow(val: string) {
-      this.wow = val;
-      return val;
-    },
     getAveragePosterRatio() {
       const ratio = getAverageImageRatio();
       this.imageRatioPercentage = ratio;
     },
     checkOffline(): void {
       checkOffline();
+    },
+    throwError(): void {
+      console.info('aa');
+      throw new Error('Threw an error');
     },
   },
   created() {

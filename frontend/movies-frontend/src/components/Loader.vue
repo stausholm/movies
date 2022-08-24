@@ -1,5 +1,4 @@
 <template>
-  <!-- TODO: test aria -->
   <div class="loader" role="status">
     <div class="loader__icon">
       <div class="spinner" :style="{ width: size + 'px', height: size + 'px' }">

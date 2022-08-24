@@ -1,9 +1,8 @@
 <template>
   <layout>
     <div class="container">
-      <div class="home-top mb-2 mt-1">
+      <div class="home-top mb-2 mt-1" :class="{ 'home-top--no-animate': pageShown }">
         <div class="home-top__content d-flex align-start justify-between">
-          <!-- TODO: motd should only animate the very first time the user lands on the homepage after opening the app, not on consecutive navigations to the homepage during the same session -->
           <motd class="h2 fw-normal" :animate="false" />
           <pwa-install-button
             class="btn btn--text btn--rounded ml-1 pwa-button"
@@ -15,48 +14,7 @@
           <img src="@/assets/logo-big.svg" alt="" />
         </div>
       </div>
-      <base-card
-        class="mb-2"
-        :title="`Customize what you see in ${appName}`"
-        headingLevel="h2"
-        tags="Did you know?"
-        type="tip"
-      >
-        <!-- TODO: this should only be shown after used has launched app atleast once, and haven't already interacted with the card. 
-      We need to store if the user has clicked on the card buttons or not -->
-        <p>Add or remove favourites, adjust app colors, animations, images & more</p>
-        <template #footer>
-          <router-link class="btn btn--text-primary" :to="{ name: 'Account' }">
-            Go to Settings
-          </router-link>
-          <button class="btn btn--text">Got it</button>
-        </template>
-      </base-card>
-
-      <base-card
-        class="mb-2"
-        title="Browse all tips"
-        headingLevel="h2"
-        tags="Did you know?"
-        type="tip"
-      >
-        <!-- TODO: this should not be shown if another TIP card is showing.  -->
-        <p>See all the hot tips for using {{ appName }}, through the settings page</p>
-        <router-link class="btn btn--primary" :to="{ name: 'Tips' }"> Show me tips </router-link>
-      </base-card>
-
-      <base-card
-        class="mb-2"
-        title="Quick Access"
-        headingLevel="h2"
-        tags="Did you know?"
-        type="tip"
-      >
-        <!-- TODO: this should not be shown if another TIP card is showing.  -->
-        <p>Use Quick Access to get around {{ appName }} quickly. Just press:</p>
-        <!-- Button will open quick access menu -->
-        <button class="btn btn--primary btn--uppercase">CTRL + K</button>
-      </base-card>
+      <app-tips />
     </div>
 
     <div class="container" v-if="hasStarredContent">
@@ -90,7 +48,7 @@
       </horizontal-scroller-item>
     </horizontal-scroller>
 
-    <div class="container">
+    <div class="container" v-if="appLaunchCount > 2">
       <pwa-install-button-in-feed @decline="pwaDeclined" class="mb-2" />
     </div>
 
@@ -128,8 +86,7 @@ import Layout from '@/layouts/Main.vue';
 import PwaInstallButtonInFeed from '@/components/PwaInstallButtonInFeed.vue';
 import PwaInstallButton from '@/components/PwaInstallButton.vue';
 import Motd from '@/components/Motd.vue';
-import BaseCard from '@/components/base/BaseCard.vue';
-import { APP_NAME } from '@/constants/SiteSettings.json';
+import AppTips from '@/components/AppTips.vue';
 import { AppLayoutSizeWidth } from '@/store/app/types';
 import Zone from '@/components/Zone.vue';
 import { Toast } from '@/store/toast/types';
@@ -138,6 +95,7 @@ import SectionHeader from '@/components/SectionHeader.vue';
 import HorizontalScroller from '@/components/HorizontalScroller.vue';
 import HorizontalScrollerItem from '@/components/HorizontalScrollerItem.vue';
 import VideoCard from '@/components/VideoCard.vue';
+import { AppMutations } from '@/store/app/mutations';
 
 export default defineComponent({
   name: 'Home',
@@ -146,17 +104,12 @@ export default defineComponent({
     PwaInstallButtonInFeed,
     PwaInstallButton,
     Motd,
-    BaseCard,
+    AppTips,
     Zone,
     SectionHeader,
     HorizontalScroller,
     HorizontalScrollerItem,
     VideoCard,
-  },
-  data() {
-    return {
-      appName: APP_NAME,
-    };
   },
   computed: {
     hasStarredContent(): boolean {
@@ -169,6 +122,12 @@ export default defineComponent({
         this.$store.getters.layoutSizeWidth !== ('desktop' as AppLayoutSizeWidth)
       );
     },
+    appLaunchCount(): number {
+      return this.$store.getters.appLaunches;
+    },
+    pageShown(): number {
+      return this.$store.getters.homePageShown;
+    },
   },
   methods: {
     pwaDeclined() {
@@ -177,6 +136,9 @@ export default defineComponent({
           'Should you change your mind, you can always install the application from the settings page.',
       } as Toast);
     },
+  },
+  beforeUnmount() {
+    this.$store.commit(AppMutations.SET_HOME_PAGE_SHOWN, true);
   },
 });
 </script>
@@ -233,6 +195,16 @@ export default defineComponent({
     100% {
       transform: translateY(-30px);
       opacity: 0;
+    }
+  }
+
+  &--no-animate {
+    // home-top should only animate the very first time the user lands on the homepage after opening the app, not on consecutive navigations to the homepage during the same session
+    .home-top__content {
+      animation-delay: -2s;
+    }
+    .home-top__logo {
+      display: none;
     }
   }
 }

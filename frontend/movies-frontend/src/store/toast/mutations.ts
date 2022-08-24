@@ -34,8 +34,7 @@ export const mutations: MutationTree<ToastState> = {
     });
   },
   [ToastMutations.REMOVE_TOAST](state, toast: Toast) {
-    // TODO: this could be better in case 2 toasts are identical. Could add a guid for each toast,
-    // but then it becomes harder to programatically remove the toast unless we store that guid where we call the "add" mutation?
+    // NOTE: In case 2 toasts are identical, they will both be removed. In such case you should use a unique ID for each.
     state.toasts = state.toasts.filter((x) => x !== toast);
   },
   [ToastMutations.REMOVE_TOAST_BY_ID](state, id: string) {

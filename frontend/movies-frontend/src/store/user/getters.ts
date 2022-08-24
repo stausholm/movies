@@ -15,4 +15,7 @@ export const getters: GetterTree<UserState, RootState> = {
   devmodeEnabled(state): boolean {
     return state.appSettings.devmode;
   },
+  appLaunches(state): number {
+    return state.appLaunches;
+  },
 };

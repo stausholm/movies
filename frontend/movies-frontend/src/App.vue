@@ -1,11 +1,11 @@
 <template>
   <loader-global :spinner="false" />
+  <announcer />
   <skip-links v-show="!hideNavigation" />
   <navbar v-show="!hideNavigation" />
   <primary-router-view />
 
   <!-- teleport targets -->
-  <div id="teleporttarget"></div>
   <div id="modal"></div>
   <div id="overlay"></div>
 
@@ -16,7 +16,6 @@
   <toast-container />
 
   <pwa-install-listeners />
-  <announcer />
   <offline-notice @offline="handleOffline" @online="handleOnline" />
 </template>
 
@@ -41,6 +40,7 @@ import { ToastMutations } from '@/store/toast/mutations';
 import { Toast } from '@/store/toast/types';
 import { warnAboutMeteredConnection } from '@/utils/networkConnection';
 import ChangelogModal from '@/components/ChangelogModal.vue';
+import { UserMutations } from '@/store/user/mutations';
 
 export default defineComponent({
   components: {
@@ -92,6 +92,7 @@ export default defineComponent({
   },
   created() {
     this.$store.dispatch(ContentActions.LOAD_VIDEOS);
+    this.$store.commit(UserMutations.INCREMENT_LAUNCHES_COUNTER);
 
     window.addEventListener('resize', this.resizeWatcher);
 

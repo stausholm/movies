@@ -1,10 +1,11 @@
-export const getLocalStorageValue = (
+const getStorageValue = (
+  storageType: 'localStorage' | 'sessionStorage',
   key: string,
   defaultValue?: unknown,
   mergeWithDefaultValue = false
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): any => {
-  const storageItem = localStorage.getItem(key);
+  const storageItem = window[storageType].getItem(key);
 
   if (storageItem) {
     try {
@@ -14,8 +15,8 @@ export const getLocalStorageValue = (
       }
       return val;
     } catch (e) {
-      console.error('Failed to parse as JSON from localStorage: ', key);
-      // localStorage.removeItem(key);
+      console.error(`Failed to parse as JSON from ${storageType}: `, key);
+      // window[storageType].removeItem(key);
       return null;
     }
   } else if (defaultValue !== undefined) {
@@ -25,9 +26,32 @@ export const getLocalStorageValue = (
   return null;
 };
 
+export const getSessionStorageValue = (
+  key: string,
+  defaultValue?: unknown,
+  mergeWithDefaultValue = false
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): any => {
+  return getStorageValue('sessionStorage', key, defaultValue, mergeWithDefaultValue);
+};
+
+export const getLocalStorageValue = (
+  key: string,
+  defaultValue?: unknown,
+  mergeWithDefaultValue = false
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): any => {
+  return getStorageValue('localStorage', key, defaultValue, mergeWithDefaultValue);
+};
+
 export const setLocalStorageValue = (key: string, newVal: unknown): void => {
   const parsed = JSON.stringify(newVal);
   localStorage.setItem(key, parsed);
+};
+
+export const setSessionStorageValue = (key: string, newVal: unknown): void => {
+  const parsed = JSON.stringify(newVal);
+  sessionStorage.setItem(key, parsed);
 };
 
 export const isObject = (val: unknown): boolean => {

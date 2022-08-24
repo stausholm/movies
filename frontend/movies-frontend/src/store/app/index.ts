@@ -12,6 +12,7 @@ export const state: AppState = {
   openOverlays: 0,
   navigationDisabled: false,
   routeLoading: false,
+  homePageShown: false,
 };
 
 export const app: Module<AppState, RootState> = {

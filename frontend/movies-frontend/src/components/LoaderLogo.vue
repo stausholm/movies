@@ -1,5 +1,4 @@
 <template>
-  <!-- TODO: test aria -->
   <div class="loader-logo" role="status">
     <div class="logo-wrapper" :style="{ width: `${sizeInternal}px`, height: `${sizeInternal}px` }">
       <div

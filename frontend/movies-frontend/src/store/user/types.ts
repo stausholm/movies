@@ -10,7 +10,8 @@ export type AppSettingPropertyKey =
   | 'avatar'
   | 'devmode'
   | '_devmodeShowWireframe'
-  | '_devmodeEnableLogs';
+  | '_devmodeEnableLogs'
+  | 'buttonClicksActiveReward';
 
 export interface Avatar {
   name: string;
@@ -18,10 +19,20 @@ export interface Avatar {
   colors: [string, string, string, string, string];
 }
 
+export type buttonClickRewardId =
+  | 'partyCone'
+  | 'pirateBicorne'
+  | 'vikingHelmet'
+  | 'santaHat'
+  | 'topHat'
+  | 'wizard'
+  | 'crown';
+
 export interface AppSettings {
   theme: ColorTheme;
   preferReducedMotion: boolean;
   buttonClicks: number;
+  buttonClicksActiveReward: null | buttonClickRewardId;
   imageSaturation: number;
   language: Language;
   showOnboarding: boolean; // has the user seen the onboarding screens or chosen to dismiss them, then this is false
@@ -34,6 +45,7 @@ export interface AppSettings {
 export interface UserState {
   starredIds: string[]; // list of imdbIds
   appSettings: AppSettings;
+  appLaunches: number;
 }
 
 export interface AppSettingPayload {

@@ -1,21 +1,34 @@
 <template>
-  <layout class="button-layout">
+  <layout class="button-layout overflow-hide">
     <div class="container">
       <div class="button-container">
-        <div class="inventory shadow" v-if="showInventoryTemp">
-          <div class="animation"></div>
-          <ul class="shadow-inset">
-            <li><button class="shadow-sm">party cone</button></li>
-            <li><button class="shadow-sm">pirate</button></li>
-            <li><button class="shadow-sm">viking helmet</button></li>
-            <li><button class="shadow-sm">santa</button></li>
-            <li><button class="shadow-sm">tophat</button></li>
-            <li><button class="shadow-sm">wizard</button></li>
-            <li><button class="shadow-sm">Crown</button></li>
-          </ul>
-          <span class="label">Hat-o-meter</span>
-          <div class="progress-bar shadow-inset">
-            <div class="progress shadow-sm" :style="{ width: 20 + '%' }"></div>
+        <div class="inventory" v-if="showInventory">
+          <div class="animation">
+            <div class="animation-mask">
+              <div class="animation-content">
+                <div class="inventory-inner">
+                  <ul class="shadow-inset">
+                    <li v-for="tier in tiers" :key="tier.name">
+                      <button
+                        class="shadow-sm"
+                        :class="{ active: tier.name === buttonClicksActiveReward }"
+                        @click="handleRewardClick(tier.name, tier.unlock)"
+                        :disabled="tier.unlock > clickCount"
+                      >
+                        {{ tier.name }}
+                      </button>
+                    </li>
+                  </ul>
+                  <span class="label">Hat-o-meter</span>
+                  <div class="progress-bar shadow-inset">
+                    <div
+                      class="progress shadow-sm"
+                      :style="{ width: percentageUntilNextUnlock + '%' }"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="justify-center align-center d-flex pb-2">
@@ -32,7 +45,7 @@ import RedButton from '@/components/RedButton.vue';
 import { ToastMutations } from '@/store/toast/mutations';
 import { Toast } from '@/store/toast/types';
 import { UserMutations } from '@/store/user/mutations';
-import { AppSettingPayload } from '@/store/user/types';
+import { AppSettingPayload, buttonClickRewardId } from '@/store/user/types';
 import Layout from '@/layouts/Main.vue';
 
 export default defineComponent({
@@ -44,9 +57,9 @@ export default defineComponent({
   data() {
     return {
       localClickCount: 0,
-      showInventoryTemp: false, // TODO: remove. this is just here to easily make the animations
-      tiers: {
-        partyCone: {
+      tiers: [
+        {
+          name: 'partyCone' as buttonClickRewardId,
           unlock: 10,
           comestic: 'TODO component/image',
           x: 5, // percentage from top of parent el
@@ -54,53 +67,102 @@ export default defineComponent({
           rotate: 0, // transform rotate degree
           size: 20, // percentage width of parent el
         },
-        pirateBicorne: {
+        {
+          name: 'pirateBicorne' as buttonClickRewardId,
           unlock: 50,
         },
-        vikingHelmet: {
+        {
+          name: 'vikingHelmet' as buttonClickRewardId,
           unlock: 120,
         },
-        santaHat: {
+        {
+          name: 'santaHat' as buttonClickRewardId,
           unlock: 200,
         },
-        topHat: {
+        {
+          name: 'topHat' as buttonClickRewardId,
           unlock: 300,
         },
-        wizard: {
+        {
+          name: 'wizard' as buttonClickRewardId,
           unlock: 500,
         },
-        crown: {
+        {
+          name: 'crown' as buttonClickRewardId,
           unlock: 1000,
         },
-      },
+      ],
     };
   },
   computed: {
     storedClickCount(): number {
       return this.$store.getters.getAppSettings.buttonClicks;
     },
+    buttonClicksActiveReward(): string | null {
+      return this.$store.getters.getAppSettings.buttonClicksActiveReward;
+    },
     clickCount(): number {
       return this.storedClickCount + this.localClickCount;
+    },
+    showInventory(): boolean {
+      return this.clickCount >= this.tiers[0].unlock;
+    },
+    percentageUntilNextUnlock(): number {
+      const highestUnlockedUnlock = this.tiers
+        .filter((x) => x.unlock <= this.clickCount)
+        .reverse()[0];
+      if (!highestUnlockedUnlock) return 0; // haven't unlocked anything yet
+
+      const nextUnlock = this.tiers.filter((x) => x.unlock > this.clickCount)[0];
+      if (!nextUnlock) return 100; // have unlocked everything
+
+      const diff = nextUnlock.unlock - highestUnlockedUnlock.unlock; // 100%
+      const currentlyAt = this.clickCount - highestUnlockedUnlock.unlock;
+      const percentage = (currentlyAt / diff) * 100;
+      return percentage;
     },
   },
   methods: {
     handleClick(): void {
       console.log('click');
-      this.showInventoryTemp = !this.showInventoryTemp;
       this.localClickCount++;
+    },
+    handleRewardClick(name: string, unlock: number): void {
+      if (unlock > this.clickCount) return;
+
+      this.$store.commit(UserMutations.SET_APPSETTING, {
+        key: 'buttonClicksActiveReward',
+        val: name === this.buttonClicksActiveReward ? null : name,
+      } as AppSettingPayload);
     },
   },
   watch: {
     clickCount(newVal) {
-      if (newVal === 10) {
+      if (newVal === this.tiers[0].unlock) {
         console.log('clicked 10 times!');
         this.$store.commit(ToastMutations.ADD_TOAST, {
           content: '🎉 Cone unlocked',
         } as Toast);
+
+        // set active hat to be cone
+        this.$store.commit(UserMutations.SET_APPSETTING, {
+          key: 'buttonClicksActiveReward',
+          val: 'partyCone' as buttonClickRewardId,
+        } as AppSettingPayload);
+
         // TODO: show toast, saying 'crown unlocked', and show a crown on the avatarCard component.
         // Could also implement multiple hats, and then this page would be a page to select a hat, and all unlocked hats would show above the button.
         // Not yet unlocked hats could show a black silhouette with a question mark, "Who's that pokémon" style
         // don't show how many times the button has been clicked
+
+        return;
+      }
+
+      const newUnlock = this.tiers.find((x) => x.unlock === newVal);
+      if (newUnlock) {
+        this.$store.commit(ToastMutations.ADD_TOAST, {
+          content: `🎉 ${newUnlock.name} unlocked`,
+        } as Toast);
       }
     },
   },
@@ -118,6 +180,14 @@ export default defineComponent({
 @import '@/design/variables/index.scss';
 @import '@/design/mixins/index.scss';
 
+$border-size: 0.3em;
+$starting-delay: 500ms;
+$reveal-borders-time: 700ms;
+$open-mask-time: 600ms;
+$content-width: 100%;
+$content-height: auto;
+$timing-function: cubic-bezier(0.14, 0.87, 0.05, 0.95);
+
 .button-layout {
   display: flex;
   align-items: center;
@@ -132,9 +202,6 @@ export default defineComponent({
   top: 0;
   left: 0;
   right: 0;
-  background-color: $gray-600;
-  border: 6px solid $gray-600;
-  border-radius: $border-radius-base;
 
   ul {
     border-radius: $border-radius-base;
@@ -162,6 +229,14 @@ export default defineComponent({
         justify-content: center;
         align-items: center;
         border-radius: $border-radius-small;
+
+        &.active {
+          background-color: $gray-700;
+        }
+
+        &:disabled {
+          background-color: $gray-400;
+        }
       }
     }
   }
@@ -187,6 +262,7 @@ export default defineComponent({
       height: 100%;
       border-radius: $border-radius-base;
       background-color: $gray-800;
+      transition: width 0.2s ease-out;
     }
   }
 }
@@ -196,7 +272,30 @@ export default defineComponent({
   position: relative;
 }
 
-@keyframes fade-out {
+.inventory-inner {
+  background-color: $gray-600;
+  border: 6px solid $gray-600;
+  border-radius: $border-radius-base;
+}
+
+@keyframes reveal-mask {
+  from {
+    max-width: $border-size;
+  }
+  to {
+    max-width: 100%;
+  }
+}
+
+@keyframes reveal-content {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes hide-content {
   from {
     opacity: 1;
   }
@@ -204,14 +303,71 @@ export default defineComponent({
     opacity: 0;
   }
 }
+@keyframes reveal-shadow {
+  from {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+  to {
+    box-shadow: $box-shadow;
+  }
+}
 
+@keyframes grow-height {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+// adapted from https://codepen.io/epaezrubio/pen/OoMGXR
 .animation {
-  animation: fade-out 0.3s ease-out 4s forwards;
-  background-color: $body-bg;
-  position: absolute;
-  top: -35px;
-  bottom: -35px;
-  left: -35px;
-  right: -35px;
+  &-mask {
+    animation-name: reveal-mask, reveal-shadow;
+    animation-duration: $open-mask-time, 150ms;
+    animation-timing-function: $timing-function;
+    animation-delay: $starting-delay + $reveal-borders-time;
+    animation-fill-mode: both;
+    max-width: $content-width;
+    height: $content-height;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin: 0 auto;
+    position: relative;
+    border-radius: $border-radius-base;
+
+    &:before {
+      animation-name: grow-height, hide-content;
+      animation-duration: $reveal-borders-time, 50ms;
+      animation-timing-function: $timing-function;
+      animation-delay: $starting-delay, $starting-delay + $reveal-borders-time;
+      animation-fill-mode: both;
+      content: '';
+      display: block;
+      position: absolute;
+      height: 100%;
+      z-index: 1;
+      transform-origin: center center;
+      border-radius: 20px;
+    }
+
+    &:before {
+      border-right: $border-size solid $gray-600;
+      left: 0;
+    }
+  }
+
+  &-content {
+    animation-name: reveal-content;
+    animation-duration: 50ms;
+    animation-timing-function: $timing-function;
+    animation-delay: $starting-delay + $reveal-borders-time;
+    animation-fill-mode: both;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    white-space: nowrap;
+  }
 }
 </style>

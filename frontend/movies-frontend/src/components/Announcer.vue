@@ -16,8 +16,6 @@ import { RouteLocationNormalized } from 'vue-router';
 
 // inspiration https://github.com/vue-a11y/vue-announcer
 
-// TODO: check that everything is announced properly with a screenreader
-
 export default defineComponent({
   name: 'Announcer',
   computed: {
@@ -45,15 +43,14 @@ export default defineComponent({
           title = to.meta.title;
         }
 
-        // TODO: is anything announced if coming from a page with "New page has loaded" to another page with "New page has loaded"?
-        // If not, something like this might solve it, by clearing the value, waiting a frame, and then setting the new value
-        // const delayedRAF = (cb) => requestAnimationFrame(() => requestAnimationFrame(cb));
-        // this.$store.commit(AppMutations.SET_ANNOUNCE_MESSAGE, '');
-        // delayedRAF(() => {
-        //   this.$store.commit(AppMutations.SET_ANNOUNCE_MESSAGE, title + suffix);
-        // });
-
-        this.$store.commit(AppMutations.SET_ANNOUNCE_MESSAGE, title + suffix);
+        // clear the value before setting it, in case navigating from a route with the same title as the new route, to make it more likely that it will be announced
+        // eslint-disable-next-line no-undef
+        const delayedRAF = (cb: FrameRequestCallback) =>
+          requestAnimationFrame(() => requestAnimationFrame(cb));
+        this.$store.commit(AppMutations.SET_ANNOUNCE_MESSAGE, '');
+        delayedRAF(() => {
+          this.$store.commit(AppMutations.SET_ANNOUNCE_MESSAGE, title + suffix);
+        });
       }
     },
   },

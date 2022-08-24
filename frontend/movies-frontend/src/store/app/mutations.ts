@@ -15,6 +15,7 @@ export enum AppMutations {
   DISABLE_NAVIGATION = 'DISABLE_NAVIGATION',
   ENABLE_NAVIGATION = 'ENABLE_NAVIGATION',
   SET_ROUTE_LOADING = 'SET_ROUTE_LOADING',
+  SET_HOME_PAGE_SHOWN = 'SET_HOME_PAGE_SHOWN',
 }
 
 export const mutations: MutationTree<AppState> = {
@@ -52,5 +53,8 @@ export const mutations: MutationTree<AppState> = {
   },
   [AppMutations.SET_ROUTE_LOADING](state, val: boolean) {
     state.routeLoading = val;
+  },
+  [AppMutations.SET_HOME_PAGE_SHOWN](state, val: boolean) {
+    state.homePageShown = val;
   },
 };

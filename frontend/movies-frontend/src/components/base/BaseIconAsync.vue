@@ -63,5 +63,9 @@ export default defineComponent({
       return null;
     },
   },
+  errorCaptured(err, instance, info) {
+    console.error('[BaseIconAsync] Error captured:', err, instance, info);
+    return false; // let the app know that we've handled the error here and don't allow it to bubble up.
+  },
 });
 </script>
