@@ -1,2 +1,2 @@
 User-agent: *
-Disallow:
+Disallow: / # Block all robots from everything, as long as site isn't live yet. TODO: remove "/"

@@ -133,6 +133,21 @@
               <img src="@/assets/star-graphic.svg" alt="" />
             </div>
           </div>
+          <div class="col-6 col-sm-2 col-xs-6">
+            <div class="theme-tertiary p-1 d-flex align-center">
+              <img src="@/assets/question-graphic.svg" alt="" />
+            </div>
+          </div>
+          <div class="col-6 col-sm-2 col-xs-6">
+            <div class="theme-tertiary p-1 d-flex align-center">
+              <img src="@/assets/padlock-graphic.svg" alt="" />
+            </div>
+          </div>
+          <div class="col-6 col-sm-2 col-xs-6">
+            <div class="theme-tertiary p-1 d-flex align-center">
+              <img src="@/assets/video-hero-bg.webp" alt="" />
+            </div>
+          </div>
         </div>
         <h2>Dynamic assets graphic</h2>
         <!-- https://blog.lichter.io/posts/dynamic-images-vue-nuxt/ -->

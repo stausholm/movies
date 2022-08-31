@@ -77,6 +77,9 @@ module.exports = {
       // and maskable variants at https://maskable.app/editor
       // info: https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs#changelog
     },
+    workboxOptions: {
+      exclude: [/\.map$/, /^manifest.*\.js$/, /\.htaccess$/, /img\/posters\/.*\.jpg$/], // TODO: posters are excluded from precache manifest
+    },
     manifestOptions: {
       // https://developer.mozilla.org/en-US/docs/Web/Manifest
       background_color: COLOR_THEME_DEFAULT,
@@ -88,7 +91,7 @@ module.exports = {
       start_url: './?source=pwa',
       screenshots: [
         {
-          src: './img/screenshots/screenshot2-iphone12pro-586x1268.webp', // take new screenshots using chrome devtools' "capture screenshot" command
+          src: './img/screenshots/screenshot1-iphone12pro-586x1268.webp', // take new screenshots using chrome devtools' "capture screenshot" command
           sizes: '586x1268',
           type: 'image/webp',
           label: 'Movies list of Movies DB',
@@ -124,6 +127,7 @@ module.exports = {
       share_target: {
         action: '/share-target/',
         method: 'GET',
+        enctype: 'application/x-www-form-urlencoded',
         params: {
           title: 'shared_title',
           url: 'shared_url',
