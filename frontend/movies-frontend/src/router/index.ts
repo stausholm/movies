@@ -7,6 +7,7 @@ import {
 } from 'vue-router';
 import { nextTick } from 'vue';
 import Home from '@/views/Home.vue';
+import ShareTarget from '@/views/ShareTarget.vue';
 import Library from '@/views/Library.vue';
 import Account from './routes/account';
 import Legal from './routes/legal';
@@ -19,6 +20,7 @@ import store from '@/store';
 import { TRIGGER_SCROLL_EVENT_NAME } from '@/router/utils';
 import { navigatedToNewPage } from '@/router/utils';
 import { AppMutations } from '@/store/app/mutations';
+import { getUrlParamValues } from '@/utils/getUrlParams';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -39,6 +41,11 @@ const routes: Array<RouteRecordRaw> = [
   ...Legal,
   ...Onboarding,
   ...Wireframe,
+  {
+    path: '/share-target',
+    name: 'ShareTarget',
+    component: ShareTarget,
+  },
   {
     path: '/:pathMatch(.*)*',
     name: 'ErrorPage',
@@ -105,6 +112,33 @@ const checkOnboarding = (to: RouteLocationNormalized, next: NavigationGuardNext)
   }
 };
 
+const checkShareTarget = (to: RouteLocationNormalized, next: NavigationGuardNext): void => {
+  // check if user shared content with the app. Works with share_target defined in web manifest (vue.config.js)
+  // https://web.dev/learn/pwa/os-integration/#web-share-target
+  // https://web.dev/web-share-target/
+
+  // IMPORTANT NOTE: Be sure to verify incoming data. Unfortunately, there is no guarantee that other apps will share the appropriate content in the right parameter.
+  // For example, on Android, the "url" field will be empty because it's not supported in Android's share system. Instead, URLs will often appear in the "text" field, or occasionally in the "title" field.
+  if (to.name === 'ShareTarget') {
+    const { shared_title, shared_text, shared_url } = getUrlParamValues([
+      'shared_title',
+      'shared_text',
+      'shared_url',
+    ]);
+
+    console.log('Title shared: ' + shared_title);
+    console.log('Text shared: ' + shared_text);
+    console.log('URL shared: ' + shared_url);
+
+    // if ('some condition') {
+    //   // handle shared content here. e.g. redirect to another page and send down content as props to that view component
+    // }
+
+    // NOTE: for now the app doesn't have any use for share target, so we simply continue the navigation to the dev view component
+    next();
+  }
+};
+
 router.beforeEach((to, from, next) => {
   if (store.getters.navigationDisabled) {
     console.log('Preventing navigation. Navigation is disabled');
@@ -120,6 +154,9 @@ router.beforeEach((to, from, next) => {
   }
   checkOnboarding(to, next);
   // TODO: return if checkOnboarding wants to redirect
+
+  checkShareTarget(to, next);
+  // TODO: return if checkShareTarget wants to redirect
 
   // If this isn't an initial page load and not an in-page navigation to e.g. a hash
   if (from.name !== null && from.name !== undefined && navigatedToNewPage(to, from)) {

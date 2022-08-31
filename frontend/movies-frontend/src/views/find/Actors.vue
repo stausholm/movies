@@ -1,7 +1,11 @@
 <template>
   <layout>
-    <!-- TODO: hero with fancy generic actors image -->
-    <hero-app title="Actors" :background="['primary', 'fade']" :showBackButton="true">
+    <hero-app
+      title="Actors"
+      :showBackButton="true"
+      :background="['primary', 'image', 'fade']"
+      :bgImage="require(`@/assets/video-hero-bg.webp`)"
+    >
       <template v-slot="{ title }">
         <h1 class="mb-0">{{ title }}</h1>
         <span class="text-big">Lorem ipsum dolor {{ actors.length }}</span>

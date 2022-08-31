@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <img src="TODO" alt="" class="fade-up" />
+    <img src="../../assets/question-graphic.svg" alt="" class="fade-up" />
     <h1 class="text-center mt">Why?</h1>
     <icon-list class="mt-2 mb-2">
       <icon-list-item>Filter and sort based on your viewing preferences</icon-list-item>

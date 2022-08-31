@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <img src="TODO" alt="" class="fade-up" />
+    <img src="../../assets/padlock-graphic.svg" alt="" class="fade-up" />
     <h1 class="text-center mt">{{ appName }} is secure</h1>
     <p>
       Your data is yours and yours only. {{ appName }} doesn't do any sort of profiling or analytics

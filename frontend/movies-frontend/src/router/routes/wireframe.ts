@@ -218,6 +218,13 @@ const routes: Array<RouteRecordRaw> = [
           import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleResizeWatcher.vue'),
         meta: {},
       },
+      {
+        path: 'sharing',
+        name: 'ExampleSharing',
+        component: () =>
+          import(/* webpackChunkName: "wireframe" */ '@/views/wireframe/ExampleSharing.vue'),
+        meta: {},
+      },
     ],
   },
 ];

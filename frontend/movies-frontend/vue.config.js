@@ -88,16 +88,16 @@ module.exports = {
       start_url: './?source=pwa',
       screenshots: [
         {
-          src: './img/icons/android-chrome-maskable-192x192.png', // TODO
-          sizes: '192x192',
-          type: 'image/png',
-          label: 'Logo of Movies DB',
+          src: './img/screenshots/screenshot2-iphone12pro-586x1268.webp', // take new screenshots using chrome devtools' "capture screenshot" command
+          sizes: '586x1268',
+          type: 'image/webp',
+          label: 'Movies list of Movies DB',
         },
         {
-          src: './img/icons/android-chrome-maskable-512x512.png',
-          sizes: '512x512',
-          type: 'image/png',
-          label: 'A bigger logo of Movies DB',
+          src: './img/screenshots/screenshot2-iphone12pro-586x1268.webp',
+          sizes: '586x1268',
+          type: 'image/webp',
+          label: 'Account page of Movies DB',
         },
       ],
       shortcuts: [
@@ -106,19 +106,31 @@ module.exports = {
           short_name: 'Library',
           url: '/library?source=pwa',
           description: 'My entire library of content',
-          icons: [{ src: './img/icons/android-chrome-maskable-192x192.png', sizes: '192x192' }], // TODO
+          icons: [{ src: './img/shortcuts/view-list-96x96.png', sizes: '96x96' }],
         },
         {
           name: 'My movies',
           short_name: 'Movies',
           url: '/find/movies?source=pwa',
+          icons: [{ src: './img/shortcuts/view-list-96x96.png', sizes: '96x96' }],
         },
         {
-          name: 'My series',
-          short_name: 'Series',
-          url: '/find/series?source=pwa',
+          name: 'My starred content',
+          short_name: 'Starred',
+          url: '/account/starred?source=pwa',
+          icons: [{ src: './img/shortcuts/star-96x96.png', sizes: '96x96' }],
         },
       ],
+      share_target: {
+        action: '/share-target/',
+        method: 'GET',
+        params: {
+          title: 'shared_title',
+          url: 'shared_url',
+          text: 'shared_text',
+          // files: 'shared_files',
+        },
+      },
     },
   },
   css: { sourceMap: process.env.NODE_ENV === 'development' },

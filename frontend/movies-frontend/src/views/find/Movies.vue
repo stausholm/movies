@@ -1,7 +1,10 @@
 <template>
   <layout>
-    <!-- TODO: hero with fancy generic movie image -->
-    <hero-app title="Movies" :background="['primary', 'fade']">
+    <hero-app
+      title="Movies"
+      :background="['primary', 'image', 'fade']"
+      :bgImage="require(`@/assets/video-hero-bg.webp`)"
+    >
       <template v-slot="{ title }">
         <h1 class="mb-0">{{ title }}</h1>
         <span class="text-big">Thrilling content for hours</span>

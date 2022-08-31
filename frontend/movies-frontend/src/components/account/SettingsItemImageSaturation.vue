@@ -21,7 +21,7 @@
       <div class="col-6">
         <img
           class="rounded no-saturate-filter shadow-sm"
-          src="../../assets/colorful-balls.jpg"
+          src="../../assets/colorful-balls.webp"
           alt=""
         />
         <span class="d-block text-center fw-bold mt text-small">No filters</span>
@@ -29,7 +29,7 @@
       <div class="col-6">
         <img
           class="rounded shadow-sm"
-          src="../../assets/colorful-balls.jpg"
+          src="../../assets/colorful-balls.webp"
           alt=""
           :style="`filter: grayscale(${imageSaturationValueLocal}%)`"
         />
