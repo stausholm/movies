@@ -102,6 +102,7 @@ const checkOnboarding = (to: RouteLocationNormalized, next: NavigationGuardNext)
   // always allow going to TOS and privacypolicy pages
   if (to.name === 'TOS' || to.name === 'PrivacyPolicy') {
     next();
+    return;
   }
 
   // redirect everything else to onboarding

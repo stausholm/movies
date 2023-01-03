@@ -48,75 +48,12 @@
           </button>
         </div>
 
-        <div class="container border p-2 rounded mt">
-          <h1>TODO Deep link test:</h1>
-          <a
-            :href="`https://www.youtube.com/results?search_query=${content.imdbTitle}+${content.releaseYear}+trailer`"
-            target="_blank"
-            class="btn btn--block btn--outline btn--text mt-1"
-            >https://www.youtube.com/results with target=_blank</a
-          >
-          <a
-            :href="`https://www.youtube.com/results?search_query=${content.imdbTitle}+${content.releaseYear}+trailer`"
-            class="btn btn--block btn--outline btn--text mt-1"
-            >https://www.youtube.com/results</a
-          >
-          <a
-            :href="`vnd.youtube://www.youtube.com/results?search_query=${content.imdbTitle}+${content.releaseYear}+trailer`"
-            target="_blank"
-            class="btn btn--block btn--outline btn--text mt-1"
-            >vnd.youtube://www.youtube.com/results with target=_blank</a
-          >
-          <a
-            :href="`vnd.youtube://www.youtube.com/results?search_query=${content.imdbTitle}+${content.releaseYear}+trailer`"
-            class="btn btn--block btn--outline btn--text mt-1"
-            >vnd.youtube://www.youtube.com/results</a
-          >
-          <a
-            :href="`intent://www.youtube.com/results?search_query=${content.imdbTitle}+${content.releaseYear}+trailer`"
-            target="_blank"
-            class="btn btn--block btn--outline btn--text mt-1"
-            >intent://www.youtube.com/results with target=_blank</a
-          >
-          <a
-            :href="`intent://www.youtube.com/results?search_query=${content.imdbTitle}+${content.releaseYear}+trailer`"
-            class="btn btn--block btn--outline btn--text mt-1"
-            >intent://www.youtube.com/results</a
-          >
-          <a
-            :href="`youtube://www.youtube.com/results?search_query=${content.imdbTitle}+${content.releaseYear}+trailer`"
-            target="_blank"
-            class="btn btn--block btn--outline btn--text mt-1"
-            >youtube://www.youtube.com/results with target=_blank</a
-          >
-          <a
-            :href="`youtube://www.youtube.com/results?search_query=${content.imdbTitle}+${content.releaseYear}+trailer`"
-            class="btn btn--block btn--outline btn--text mt-1"
-            >youtube://www.youtube.com/results</a
-          >
-          <a
-            :href="`youtube:///results?q=search%20query=${content.imdbTitle}+${content.releaseYear}+trailer`"
-            target="_blank"
-            class="btn btn--block btn--outline btn--text mt-1"
-            >youtube:///results?q=search%20query with target=_blank</a
-          >
-          <a
-            :href="`youtube:///results?q=search%20query=${content.imdbTitle}+${content.releaseYear}+trailer`"
-            class="btn btn--block btn--outline btn--text mt-1"
-            >youtube:///results?q=search%20query</a
-          >
-        </div>
-
         <ul class="mt-2 row">
           <li class="col">
             <favorite-toggle :imdbID="content.imdbId" class="btn btn--block btn--icon" />
           </li>
           <li class="col">
-            <a
-              :href="`https://www.youtube.com/results?search_query=${content.imdbTitle}+${content.releaseYear}+trailer`"
-              target="_blank"
-              class="btn btn--block btn--icon"
-            >
+            <a :href="trailerLink" target="_blank" class="btn btn--block btn--icon">
               <base-icon>
                 <icon-youtube />
               </base-icon>
@@ -256,6 +193,17 @@ export default defineComponent({
         DVD: localizeDate(this.content.DVD, 'da'),
         runtimeMinutes: formatMinutes(this.content.runtimeMinutes),
       };
+    },
+    trailerLink(): string {
+      if (this.loading) {
+        return '';
+      }
+
+      // const protocol = "vnd.youtube:"; // this protocol also works for deeplinking on mobile
+      const protocol = 'https:';
+      const title = this.content.imdbTitle;
+      const releaseYear = this.content.releaseYear;
+      return `${protocol}//www.youtube.com/results?search_query=${title}+${releaseYear}+trailer`;
     },
   },
   methods: {

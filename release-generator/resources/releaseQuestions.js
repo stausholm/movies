@@ -7,9 +7,12 @@ const getNextSemanticVersion = (currentVersion, bumpType) => {
   switch (bumpType) {
     case RELEASE_TYPES.MAJOR:
       major += 1;
+      minor = 0;
+      patch = 0;
       break;
     case RELEASE_TYPES.MINOR:
       minor += 1;
+      patch = 0;
       break;
     case RELEASE_TYPES.PATCH:
       patch += 1;

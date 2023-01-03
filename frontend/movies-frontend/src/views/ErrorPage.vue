@@ -6,7 +6,8 @@
           <h1>404</h1>
           <h2>Woah.. that wasn't supposed to happen</h2>
           <p>
-            Looks like you requested a <strong>{{ resource }}</strong> that doesn't exists
+            Looks like you requested a <strong>{{ resource }}</strong> at
+            <code>{{ location }}</code> that doesn't exists
           </p>
         </template>
         <template v-else-if="type === 'networkIssue'">
@@ -63,6 +64,9 @@ export default defineComponent({
   computed: {
     showGoBack(): boolean {
       return window.history.length > 1 && window.history.state.back;
+    },
+    location(): string {
+      return location.pathname;
     },
   },
 });

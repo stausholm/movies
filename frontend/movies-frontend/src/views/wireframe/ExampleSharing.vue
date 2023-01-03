@@ -91,6 +91,7 @@ export default defineComponent({
         files: [''],
       })
         .then(this.handleSharingCallback)
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         .catch((err) => {
           this.handleSharingCallback('error');
         });

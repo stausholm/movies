@@ -37,6 +37,10 @@
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, voluptatum adipisci minima
       exercitationem voluptas odit aperiam totam expedita
     </base-note>
+    <base-note class="mb-2" :bordered="borders" title="Icon inline" :inlineIcon="true">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, voluptatum adipisci minima
+      exercitationem voluptas odit aperiam totam expedita
+    </base-note>
     <base-note class="mb-2" :bordered="borders" type="info" title="down the rabbit hole">
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci iure expedita provident

@@ -61,7 +61,7 @@ export default defineComponent({
         {
           name: 'partyCone' as buttonClickRewardId,
           unlock: 10,
-          comestic: 'TODO component/image',
+          cosmetic: 'TODO component/image',
           x: 5, // percentage from top of parent el
           y: 5, // percentage from left of parent el
           rotate: 0, // transform rotate degree

@@ -7,6 +7,7 @@
         {
           'side-note-wrapper--hide-icon': hideIcon,
           'side-note-wrapper--bordered': bordered,
+          'side-note-wrapper--inline': inlineIcon,
         },
       ]"
       v-if="!dismissed && !!visible"
@@ -25,7 +26,10 @@
         <div class="d-flex align-center mb" v-if="title || !hideIcon">
           <div
             class="side-note__icon mr"
-            :class="{ 'side-note__icon--bordered': bordered }"
+            :class="{
+              'side-note__icon--bordered': bordered,
+              'side-note__icon--inline': inlineIcon,
+            }"
             aria-hidden="true"
             v-if="!hideIcon"
           >
@@ -115,6 +119,11 @@ export default defineComponent({
     },
     hideIcon: {
       // optionally hide the icon
+      type: Boolean,
+      default: false,
+    },
+    inlineIcon: {
+      // optionally move the icon next to the title
       type: Boolean,
       default: false,
     },
@@ -253,20 +262,9 @@ export default defineComponent({
     padding-right: $default-spacing * 2;
   }
 
-  &.side-note--bordered {
+  &--bordered {
     border-width: $border-width-base;
     border-style: solid;
-
-    .side-note__icon {
-      background: $color-background;
-      border-width: $border-width-base;
-      transform: translateY(calc(50% - math.div($border-width-base, 2))) translateX(-50%);
-
-      @include breakpoint(sm) {
-        left: $default-spacing * 2 - $border-width-base;
-        transform: translateY(calc(50% - math.div($border-width-base, 2)));
-      }
-    }
   }
 
   &-wrapper {
@@ -276,7 +274,8 @@ export default defineComponent({
       padding-top: 18px; // matches icon size + padding + border
     }
 
-    &--hide-icon {
+    &--hide-icon,
+    &--inline {
       padding-top: 0;
     }
   }
@@ -393,7 +392,7 @@ export default defineComponent({
     left: 50%;
     border-style: solid;
 
-    // non --bordered stykes
+    // non --bordered styles
     border-width: $border-width-large;
     transform: translateY(50%) translateX(-50%);
 
@@ -404,6 +403,25 @@ export default defineComponent({
 
     svg {
       display: block;
+    }
+
+    &--inline {
+      position: static;
+      padding: 2px;
+      transform: none !important;
+      border: none;
+    }
+
+    &--bordered {
+      background: $color-background !important;
+      border-style: solid;
+      border-width: $border-width-base;
+      transform: translateY(calc(50% - math.div($border-width-base, 2))) translateX(-50%);
+
+      @include breakpoint(sm) {
+        left: $default-spacing * 2 - $border-width-base;
+        transform: translateY(calc(50% - math.div($border-width-base, 2)));
+      }
     }
   }
 
