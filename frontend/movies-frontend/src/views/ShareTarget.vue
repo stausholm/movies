@@ -4,7 +4,6 @@
       <h1 class="mt-2">ShareTarget</h1>
       <div class="bg-warning p-1 mb-1">
         <p class="fw-bold m-0">
-          <!-- TODO: test that webshare actually works -->
           This page should not be shown to the user. Router should handle the shared data and
           redirect to wherever needed. This page is only for dev purposes
         </p>
