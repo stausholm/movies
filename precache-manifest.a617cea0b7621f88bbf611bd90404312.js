@@ -232,7 +232,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/movies/img/video-hero-bg.a193c2cc.webp"
   },
   {
-    "revision": "c5112e5fe5e49211da9df6eb5787513e",
+    "revision": "3c1a49925c9481762efcd6996c2de881",
     "url": "/movies/index.html"
   },
   {
