@@ -5,10 +5,12 @@ const {
   COLOR_THEME_DEFAULT,
   APP_CODE_URL,
   MANIFEST_DESCRIPTION,
+  PROD_BASE_URL,
   // eslint-disable-next-line @typescript-eslint/no-var-requires
 } = require('./src/constants/SiteSettings.json');
 
 module.exports = {
+  publicPath: process.env.NODE_ENV === 'production' ? PROD_BASE_URL : '/',
   chainWebpack: (config) => {
     // https://cli.vuejs.org/guide/webpack.html#modifying-options-of-a-plugin
     // properties used in index.html
