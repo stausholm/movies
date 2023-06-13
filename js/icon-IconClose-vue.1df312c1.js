@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["icon-IconClose-vue"],{fabf:function(n,e,t){"use strict";t.r(e);var c=t("7a23"),o=Object(c["k"])("path",{d:"M0 0h24v24H0V0z",fill:"none"},null,-1),l=Object(c["k"])("path",{d:"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"},null,-1),u=[o,l];function a(n,e){return Object(c["C"])(),Object(c["j"])("g",null,u)}var b=t("6b0d"),r=t.n(b);const d={},i=r()(d,[["render",a]]);e["default"]=i}}]);
-//# sourceMappingURL=icon-IconClose-vue.1df312c1.js.map

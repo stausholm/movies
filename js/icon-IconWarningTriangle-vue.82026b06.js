@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["icon-IconWarningTriangle-vue"],{"535a":function(n,e,t){"use strict";t.r(e);var c=t("7a23"),a=Object(c["k"])("path",{d:"M0 0h24v24H0V0z",fill:"none"},null,-1),l=Object(c["k"])("path",{d:"M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"},null,-1),o=[a,l];function r(n,e){return Object(c["C"])(),Object(c["j"])("g",null,o)}var u=t("d959"),h=t.n(u);const i={},v=h()(i,[["render",r]]);e["default"]=v}}]);
+//# sourceMappingURL=icon-IconWarningTriangle-vue.82026b06.js.map
